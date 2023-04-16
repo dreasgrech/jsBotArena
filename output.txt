@@ -1,0 +1,554 @@
+ 
+----- 
+C:\Users\Administrator\Documents\robocode clone\index.html 
+<!DOCTYPE html>
+<html>
+<head>
+  <title>RoboCode Clone</title>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <canvas id="canvas" width="800" height="600"></canvas>
+  <script type="module" src="./main.js"></script>
+</body>
+</html>
+
+ 
+----- 
+----- 
+C:\Users\Administrator\Documents\robocode clone\constants.js 
+export const BULLET_SIZE = 5;
+export const BULLET_SPEED = 1;
+export const BULLET_DAMAGE = 10;
+
+export const ROBOT_SIZE = 50;
+export const ROBOT_RADIUS = ROBOT_SIZE / 2;
+
+export const SHOOTING_RANGE = 100;
+export const SHOT_COOLDOWN = 25;
+export const TARGET_SWITCH_COOLDOWN = 3000; // in milliseconds
+
+
+// ---------
+export const robots = [];
+export const bullets = [];
+// ---------
+
+export function distance(x1, y1, x2, y2) {
+    return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
+}
+
+export function moveToTarget(robot, target, speed, timeDelta) {
+    const targetAngle = Math.atan2(target.y - robot.y, target.x - robot.x);
+
+    robot.angle = targetAngle;
+    robot.x += Math.cos(robot.angle) * speed * timeDelta;
+    robot.y += Math.sin(robot.angle) * speed * timeDelta;
+}
+
+export function moveAwayFromTarget(robot, target, speed, timeDelta) {
+    const targetAngle = Math.atan2(robot.y - target.y, robot.x - target.x);
+
+    robot.angle = targetAngle;
+    robot.x += Math.cos(robot.angle) * speed * timeDelta;
+    robot.y += Math.sin(robot.angle) * speed * timeDelta;
+}
+
+ 
+----- 
+----- 
+C:\Users\Administrator\Documents\robocode clone\main.js 
+import {
+    ROBOT_SIZE,
+    SHOOTING_RANGE,
+    ROBOT_RADIUS,
+    BULLET_DAMAGE,
+    BULLET_SIZE,
+    SHOT_COOLDOWN,
+    TARGET_SWITCH_COOLDOWN,	
+    distance,
+	robots,
+	bullets
+} from './constants.js';
+import {
+    Robot,
+    Bullet,
+    wander
+} from './robot.js';
+import { shredderBehavior } from './robots/shredder.js';
+import { rangerBehavior } from './robots/ranger.js';
+import { sniperBehavior } from './robots/sniper.js';
+import { medicBehavior } from './robots/medic.js';
+import { distractorBehavior } from './robots/distractor.js';
+
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+let currentRobotIndex = 0;
+let lastShotTime = Date.now() + SHOT_COOLDOWN;
+
+const ARENA_WIDTH = canvas.width;
+const ARENA_HEIGHT = canvas.height;
+
+function drawArena() {
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const canvasX = centerX - ARENA_WIDTH / 2;
+    const canvasY = centerY - ARENA_HEIGHT / 2;
+    canvas.style.left = canvasX + 'px';
+    canvas.style.top = canvasY + 'px';
+}
+
+for (let i = 0; i < 10; i++) {
+    let x, y;
+    let overlapping = true;
+    while (overlapping) {
+        x = Math.random() * canvas.width;
+        y = Math.random() * canvas.height;
+        overlapping = false;
+        for (let j = 0; j < robots.length; j++) {
+            const otherRobot = robots[j];
+            if (distance(x, y, otherRobot.x, otherRobot.y) < ROBOT_SIZE * 2) {
+                overlapping = true;
+                break;
+            }
+        }
+    }
+    let color = `rgb(${Math.random() * 256},${Math.random() * 256},${Math.random() * 256})`;
+    // let behavior = i < 5 ? shredderBehavior : rangerBehavior;
+	let robotSpeed = 10
+    let behavior = rangerBehavior;
+    let robot = new Robot(x, y, color, behavior, robotSpeed);
+    robots.push(robot);
+}
+
+let lastUpdateTime = Date.now();
+
+function update() {
+    // Calculate time since last update
+    const currentTime = Date.now();
+    const timeDelta = (currentTime - lastUpdateTime) / 1000;
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    // Draw the arena
+    drawArena();
+
+    // Update and draw the robots
+    for (let i = 0; i < robots.length; i++) {
+        const robot = robots[i];
+        if (Date.now() - robot.lastTargetSwitchTime >= TARGET_SWITCH_COOLDOWN) {
+            robot.behavior(robot, robots, ARENA_WIDTH, ARENA_HEIGHT, timeDelta);
+            robot.lastTargetSwitchTime = Date.now();
+        } else {
+            robot.behavior(robot, robots, ARENA_WIDTH, ARENA_HEIGHT, timeDelta, false);
+        }
+        robot.draw(ctx);
+        if (robot.health <= 0) {
+            robots.splice(i, 1);
+            i--;
+        }
+
+        // Check for collision with other robots
+        for (let j = i + 1; j < robots.length; j++) {
+            const otherRobot = robots[j];
+            if (distance(robot.x, robot.y, otherRobot.x, otherRobot.y) < ROBOT_SIZE) {
+                // Collision detected, reverse direction
+                robot.angle += Math.PI;
+                otherRobot.angle += Math.PI;
+            }
+        }
+
+        // Check for collision with walls
+        if (robot.x < ROBOT_SIZE / 2) {
+            robot.x = ROBOT_SIZE / 2;
+            robot.angle += Math.PI;
+        } else if (robot.x > ARENA_WIDTH - ROBOT_SIZE / 2) {
+            robot.x = ARENA_WIDTH - ROBOT_SIZE / 2;
+            robot.angle += Math.PI;
+        }
+        if (robot.y < ROBOT_SIZE / 2) {
+            robot.y = ROBOT_SIZE / 2;
+            robot.angle += Math.PI;
+        } else if (robot.y > ARENA_HEIGHT - ROBOT_SIZE / 2) {
+            robot.y = ARENA_HEIGHT - ROBOT_SIZE / 2;
+            robot.angle += Math.PI;
+        }
+    }
+
+    // Update and draw the bullets
+    let i = -1;
+    for (let bullet of bullets) {
+        i++;
+        bullet.move();
+        bullet.draw(ctx);
+        if (bullet.x < 0 || bullet.x > ARENA_WIDTH || bullet.y < 0 || bullet.y > ARENA_HEIGHT) {
+            bullets.splice(i, 1);
+            continue;
+        }
+        for (let robot of robots) {
+            // Skip the current robot that fired the bullet
+            if (robot === bullet.firedBy) {
+                continue;
+            }
+            if (distance(robot.x, robot.y, bullet.x, bullet.y) < ROBOT_RADIUS) {
+                robot.hit(BULLET_DAMAGE);
+                bullets.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    // Increment the current robot index
+    currentRobotIndex++;
+    if (currentRobotIndex >= robots.length) {
+        currentRobotIndex = 0;
+    }
+
+    // Update the last update time
+    lastUpdateTime = currentTime;
+
+    // Call update function again using requestAnimationFrame
+    requestAnimationFrame(update);
+}
+
+function shootCurrentRobot() {
+    if (Date.now() - lastShotTime > SHOT_COOLDOWN) {
+        const robot = robots[currentRobotIndex];
+        const bullet = new Bullet(robot.x, robot.y, robot.angle, robot);
+        bullets.push(bullet);
+        lastShotTime = Date.now();
+    }
+}
+
+update();
+ 
+----- 
+----- 
+C:\Users\Administrator\Documents\robocode clone\robot.js 
+import { ROBOT_SIZE, ROBOT_RADIUS, BULLET_SPEED, BULLET_SIZE } from './constants.js';
+
+export class Robot {
+    constructor(x, y, color, behavior, speed) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.angle = 0;
+        this.health = 100;
+        this.turretLength = ROBOT_SIZE / 2;
+        this.behavior = behavior;
+        this.speed = speed;
+        this.lastTargetSwitchTime = Date.now();
+    }
+
+  draw(ctx) {
+    ctx.save();
+    ctx.translate(this.x, this.y);
+    ctx.rotate(this.angle);
+    ctx.fillStyle = this.color;
+    ctx.fillRect(-ROBOT_SIZE / 2, -ROBOT_SIZE / 2, ROBOT_SIZE, ROBOT_SIZE);
+    ctx.fillStyle = 'black';
+    ctx.fillRect(ROBOT_SIZE / 4, -ROBOT_SIZE / 4, this.turretLength, ROBOT_SIZE / 2);
+    ctx.restore();
+  }
+
+  hit(damage) {
+    this.health -= damage;
+    if (this.health <= 0) {
+      this.health = 0;
+      console.log('Robot destroyed!');
+    }
+  }
+
+  shoot(bullets) {
+    const bullet = new Bullet(this.x, this.y, this.angle);
+    bullets.push(bullet);
+  }
+}
+
+export function wander(robot, robots, arenaWidth, arenaHeight, timeDelta) {
+  const angleDelta = Math.PI / 64;
+  robot.angle += (Math.random() - 0.5) * angleDelta;
+  robot.x += Math.cos(robot.angle) * speed * timeDelta;
+  robot.y += Math.sin(robot.angle) * speed * timeDelta;
+
+  // Check for collision with arena boundaries
+  if (robot.x < ROBOT_RADIUS) {
+    robot.x = ROBOT_RADIUS;
+    robot.angle += Math.PI;
+  } else if (robot.x > arenaWidth - ROBOT_RADIUS) {
+    robot.x = arenaWidth - ROBOT_RADIUS;
+    robot.angle += Math.PI;
+  }
+  if (robot.y < ROBOT_RADIUS) {
+    robot.y = ROBOT_RADIUS;
+    robot.angle += Math.PI;
+  } else if (robot.y > arenaHeight - ROBOT_RADIUS) {
+    robot.y = arenaHeight - ROBOT_RADIUS;
+    robot.angle += Math.PI;
+  }
+
+  // Check for collision with other robots
+  for (let otherRobot of robots) {
+    if (otherRobot === robot) {
+      continue;
+    }
+    const distance = Math.sqrt((robot.x - otherRobot.x) ** 2 + (robot.y - otherRobot.y) ** 2);
+    if (distance < ROBOT_RADIUS * 2) {
+      const angleToOtherRobot = Math.atan2(otherRobot.y - robot.y, otherRobot.x - robot.x);
+      const angleDiff = angleToOtherRobot - robot.angle;
+      if (angleDiff > Math.PI) {
+        robot.angle += angleDelta;
+      } else {
+        robot.angle -= angleDelta;
+      }
+    }
+  }
+}
+
+export class Bullet {
+    constructor(x, y, angle, firedBy) {
+    this.x = x;
+    this.y = y;
+    this.angle = angle;
+    this.firedBy = firedBy;
+  }
+
+  move() {
+    this.x += Math.cos(this.angle) * BULLET_SPEED;
+    this.y += Math.sin(this.angle) * BULLET_SPEED;
+  }
+
+  draw(ctx) {
+    ctx.fillStyle = 'red';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, BULLET_SIZE, 0, 2 * Math.PI);
+    ctx.fill();
+  }
+}
+ 
+----- 
+----- 
+C:\Users\Administrator\Documents\robocode clone\robots\distractor.js 
+import {
+    distance,
+	moveToTarget,
+	moveAwayFromTarget
+} from './../constants.js';
+
+function findClosestRobot(robot, robots) {
+    let closestRobot = null;
+    let closestDistance = Infinity;
+
+    for (const otherRobot of robots) {
+        if (otherRobot === robot) {
+            continue;
+        }
+
+        const currentDistance = distance(robot.x, robot.y, otherRobot.x, otherRobot.y);
+
+        if (currentDistance < closestDistance) {
+            closestDistance = currentDistance;
+            closestRobot = otherRobot;
+        }
+    }
+
+    return { closestRobot, closestDistance };
+}
+
+export function distractorBehavior(robot, robots, arenaWidth, arenaHeight, timeDelta, allowSwitch = true) {
+    const distractionDistance = 100;
+    const { closestRobot, closestDistance } = findClosestRobot(robot, robots);
+
+    if (closestRobot) {
+        if (closestDistance > distractionDistance) {
+            moveToTarget(robot, closestRobot, robot.speed, timeDelta);
+        } else {
+            moveAwayFromTarget(robot, closestRobot, robot.speed, timeDelta);
+        }
+    }
+}
+
+ 
+----- 
+----- 
+C:\Users\Administrator\Documents\robocode clone\robots\medic.js 
+import {
+    distance,
+	bullets,
+	moveToTarget
+} from './../constants.js';
+
+function findLowestHealthRobot(robot, robots) {
+    let lowestHealthRobot = null;
+    let lowestHealth = Infinity;
+
+    for (const otherRobot of robots) {
+        if (otherRobot === robot) {
+            continue;
+        }
+
+        if (otherRobot.health < lowestHealth) {
+            lowestHealth = otherRobot.health;
+            lowestHealthRobot = otherRobot;
+        }
+    }
+
+    return lowestHealthRobot;
+}
+
+export function medicBehavior(robot, robots, arenaWidth, arenaHeight, timeDelta, bullets, allowSwitch = true) {
+    const targetRobot = findLowestHealthRobot(robot, robots);
+
+    if (targetRobot) {
+        moveToTarget(robot, targetRobot, robot.speed, timeDelta);
+
+        const healingDistance = 50;
+        if (distance(robot.x, robot.y, targetRobot.x, targetRobot.y) <= healingDistance) {
+            targetRobot.health += robot.healingRate * timeDelta;
+        }
+    }
+}
+
+ 
+----- 
+----- 
+C:\Users\Administrator\Documents\robocode clone\robots\ranger.js 
+import {
+    distance,
+    moveToTarget,
+	bullets
+} from './../constants.js';
+
+function findFurthestRobot(robot, robots) {
+    let furthestRobot = null;
+    let furthestDistance = 0;
+
+    for (const otherRobot of robots) {
+        if (otherRobot === robot) {
+            continue;
+        }
+
+        const currentDistance = distance(robot.x, robot.y, otherRobot.x, otherRobot.y);
+
+        if (currentDistance > furthestDistance) {
+            furthestDistance = currentDistance;
+            furthestRobot = otherRobot;
+        }
+    }
+
+    return { furthestRobot, furthestDistance };
+}
+
+export function rangerBehavior(robot, robots, arenaWidth, arenaHeight, timeDelta, allowSwitch = true) {
+    const speed = 50;
+    const minShootingDistance = 150;
+    const maxShootingDistance = 300;
+
+    const { furthestRobot, furthestDistance } = findFurthestRobot(robot, robots);
+
+    if (furthestRobot) {
+        if (furthestDistance > maxShootingDistance) {
+            moveToTarget(robot, furthestRobot, speed, timeDelta);
+        } else if (furthestDistance < minShootingDistance) {
+            moveAwayFromTarget(robot, furthestRobot, speed, timeDelta);
+        } else {
+            robot.shoot(bullets);
+        }
+    }
+}
+ 
+----- 
+----- 
+C:\Users\Administrator\Documents\robocode clone\robots\shredder.js 
+import {
+    moveToTarget
+} from './../constants.js';
+
+function findClosestRobot(robot, robots) {
+    let closestRobot = null;
+    let closestDistance = Infinity;
+
+    for (const otherRobot of robots) {
+        if (otherRobot === robot) {
+            continue;
+        }
+
+        const distance = Math.sqrt((robot.x - otherRobot.x) ** 2 + (robot.y - otherRobot.y) ** 2);
+
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            closestRobot = otherRobot;
+        }
+    }
+
+    return { closestRobot, closestDistance };
+}
+
+export function shredderBehavior(robot, robots, arenaWidth, arenaHeight, timeDelta, allowSwitch = true) {
+    const speed = 100;
+    const rammingDistance = 10;
+
+    const { closestRobot, closestDistance } = findClosestRobot(robot, robots);
+
+    if (closestRobot) {
+        if (closestDistance > rammingDistance) {
+            moveToTarget(robot, closestRobot, speed, timeDelta);
+        } else {
+            // Ram the target
+            robot.angle += Math.PI;
+            robot.x += Math.cos(robot.angle) * speed * timeDelta;
+            robot.y += Math.sin(robot.angle) * speed * timeDelta;
+        }
+    }
+}
+ 
+----- 
+----- 
+C:\Users\Administrator\Documents\robocode clone\robots\sniper.js 
+import {
+    distance,
+    moveToTarget,
+    moveAwayFromTarget,
+    bullets
+} from './../constants.js';
+
+function findClosestRobot(robot, robots) {
+    let closestRobot = null;
+    let closestDistance = Infinity;
+
+    for (const otherRobot of robots) {
+        if (otherRobot === robot) {
+            continue;
+        }
+
+        const currentDistance = distance(robot.x, robot.y, otherRobot.x, otherRobot.y);
+
+        if (currentDistance < closestDistance) {
+            closestDistance = currentDistance;
+            closestRobot = otherRobot;
+        }
+    }
+
+    return { closestRobot, closestDistance };
+}
+
+export function sniperBehavior(robot, robots, arenaWidth, arenaHeight, timeDelta, allowSwitch = true) {
+    const minShootingDistance = 250;
+    const maxShootingDistance = 500;
+
+    const { closestRobot, closestDistance } = findClosestRobot(robot, robots);
+
+    if (closestRobot) {
+        if (closestDistance < minShootingDistance) {
+            moveAwayFromTarget(robot, closestRobot, robot.speed, timeDelta);
+        } else if (closestDistance > maxShootingDistance) {
+            moveToTarget(robot, closestRobot, robot.speed, timeDelta);
+        } else {
+            robot.shoot(bullets);
+        }
+    }
+}
+ 
+----- 
