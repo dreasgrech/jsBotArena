@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.js"></script>
 </head>
 <body>
 
 <script>
     var GAME_WIDTH = 1024,
-        GAME_HEIGHT = 768;
+        GAME_HEIGHT = 1024;
 
     var config = {
         type: Phaser.AUTO,
@@ -20,16 +20,18 @@
         }
     };
 
+    var gameContext;
+
     var game = new Phaser.Game(config);
 
-    function preload ()
-    {
+    function preload () {
+        gameContext = this;
+
         // var floor = this.load.image('arena_floor', 'images/arena_floor.png');
         this.load.image('floor_image', 'images/Floor - Dirt 2 64x64.png');
         this.load.image('wall_image', 'images/Wall - Brick 2 64x64.png');
 
         this.load.tilemapTiledJSON('arena_json', 'arena_map.json');
-
     }
 
     function create () {
@@ -52,13 +54,37 @@
         var floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
         var wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
 
-        map.createStaticLayer('Floor Layer', floorTilesetImage);
-        map.createStaticLayer('Walls Layer', wallTilesetImage);
+        var floorLayer = map.createStaticLayer('Floor Layer', floorTilesetImage);
+        var wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
+
+        // Set collision on the walls
+        wallsLayer.setCollisionByProperty({ collides: true });
+
+        helperFunctions.showDebugLayerCollisions(wallsLayer);
     }
 
     function update ()
     {
-    }</script>
+    }
+
+    var helperFunctions = (function() {
+
+        // Shows collision on a layer with a different color for debugging.
+        var showDebugLayerCollisions = function(layer) {
+            var debugGraphics = gameContext.add.graphics().setAlpha(0.75);
+            layer.renderDebug(debugGraphics,
+                {
+                    tileColor: null, // Color of non-colliding tiles
+                    collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+                    faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+                });
+        };
+
+        return {
+            showDebugLayerCollisions: showDebugLayerCollisions
+        };
+    }());
+</script>
 
 </body>
 </html>
