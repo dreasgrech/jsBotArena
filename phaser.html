@@ -27,30 +27,34 @@
         return physicsCategories;
     }());
 
-    //console.log(PhysicsCategories.RobotBody);
-    //console.log(PhysicsCategories.RobotTurret);
-    //console.log(PhysicsCategories.Walls);
-
     var RobotAPIFactory = (function() {
         var createAPI = function(robotIndex) {
             return (function(robotIndex) {
-                var setAhead = function(distance) {
+
+                var move = function() {
                     var tankBody = RobotsData.robotBodyImages[robotIndex];
+                    var tankSpeed = RobotsData.robotSpeeds[robotIndex];
 
                     var angle = Phaser.Math.DegToRad(tankBody.angle);
-                    // Calculate the target position
-                    var targetX = tankBody.x + Math.cos(angle) * distance;
-                    var targetY = tankBody.y + Math.sin(angle) * distance;
-                    tankBody.targetPosition = new Phaser.Math.Vector2(targetX, targetY);
-                    // Set a flag to start moving
-                    tankBody.shouldMove = true;
+                    var force = new Phaser.Math.Vector2(Math.cos(angle) * tankSpeed, Math.sin(angle) * tankSpeed); // * tankSpeed;
+                    tankBody.applyForce(force);
+                };
 
-                    //console.log('[' + robotIndex + ']' + ' setAhead: ' + distance + '.  Force: ' + force);
-                    // console.log(force);
+                //var rotateLeft = function() {
+                //    var tankBody = RobotsData.robotBodyImages[robotIndex];
+                //    var rotationAngle = -30; // change this value to adjust the rotation angle
+                //    tankBody.setAngle(tankBody.angle + rotationAngle);
+                //};
+                var rotateLeft = function() {
+                    var tankBody = RobotsData.robotBodyImages[robotIndex];
+                    var angularVelocity = -0.05; // change this value to adjust the rotation speed
+                
+                    tankBody.setAngularVelocity(angularVelocity);
                 };
 
                 return {
-                    setAhead: setAhead
+                    move: move,
+                    rotateLeft: rotateLeft
                 };
             }(robotIndex));
         };
@@ -73,6 +77,8 @@
         };
 
         var create = function() {
+            // Enable Matter physics
+            this.matter.world.setBounds();
             /*
                 var floorImage = this.textures.get('arena_floor').getSourceImage();
                 var floorImageWidth = floorImage.width;
@@ -97,34 +103,20 @@
 
             // Set collision on the walls
             wallsLayer.setCollisionByProperty({ collides: true });
-            var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer(wallsLayer, PhysicsCategories.Walls, PhysicsCategories.RobotBody);
-            //for (var i = 0; i < matterBodies.length; i++) {
-            //    console.log("Wall group: " + matterBodies[i].collisionFilter.group);
-            //    console.log("Wall category: " + matterBodies[i].collisionFilter.category);
-            //}
-                console.log("Wall group: " + matterBodies[0].collisionFilter.group);
-                console.log("Wall category: " + matterBodies[0].collisionFilter.category);
-                console.log("Wall mask: " + matterBodies[0].collisionFilter.mask);
-            /*
-            wallsLayer.setCollisionCategory(PhysicsCategories.Walls);
-            wallsLayer.setCollidesWith(PhysicsCategories.RobotBody);
-            */
+            PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer(wallsLayer, PhysicsCategories.Walls, PhysicsCategories.RobotBody);
+            // var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer(wallsLayer, PhysicsCategories.Walls, PhysicsCategories.RobotBody);
+            //console.log("Wall group: " + matterBodies[0].collisionFilter.group);
+            //console.log("Wall category: " + matterBodies[0].collisionFilter.category);
+            //console.log("Wall mask: " + matterBodies[0].collisionFilter.mask);
 
             // helperFunctions.showDebugLayerCollisions(wallsLayer);
 
-
-            /*********************************/
-            // Enable Matter physics
-            this.matter.world.setBounds();
-            /*********************************/
-
             robotManager.addRobot(shredder);
-
         };
 
 
-        var update = function() {
-            robotManager.update();
+        var update = function(time, delta) {
+            robotManager.update(time, delta);
         };
 
         return {
@@ -142,6 +134,7 @@
         var robotBodyImages = [];
         var robotTurretImages = [];
         var robotAPIs = [];
+        var robotSpeeds = [];
 
         return {
             ids: ids,
@@ -150,7 +143,8 @@
             updateFunctions: updateFunctions,
             robotBodyImages: robotBodyImages,
             robotTurretImages: robotTurretImages,
-            robotAPIs: robotAPIs
+            robotAPIs: robotAPIs,
+            robotSpeeds: robotSpeeds
         };
     }());
 
@@ -192,13 +186,17 @@
             var api = RobotAPIFactory.createAPI(currentRobotIndex);
             RobotsData.robotAPIs[currentRobotIndex] = api;
 
+            RobotsData.robotSpeeds[currentRobotIndex] = 0.1;
+
             //// Update the turret rotation based on pointer location
+            /*
             gameContext.input.on('pointermove', (pointer) => {
                 // const angle = Phaser.Math.Angle.Between(tankTurret.x, tankTurret.y, pointer.x, pointer.y);
                 const angle = Phaser.Math.Angle.Between(tankBody.x, tankBody.y, pointer.x, pointer.y);
                 // tankTurret.setAngle(Phaser.Math.RadToDeg(angle));
                 tankBody.setAngle(Phaser.Math.RadToDeg(angle));
             });
+            */
 
             // Listen for a pointerdown event to apply force to the tank body
             /*
@@ -215,42 +213,17 @@
             currentRobotIndex++;
         };
 
-        var update = function() {
+        var update = function(time, delta) {
             for (var i = 0; i < totalRobots; i++) {
                 var updateFunction = RobotsData.updateFunctions[i];
                 var api = RobotsData.robotAPIs[i];
-                updateFunction(api);
+                updateFunction(api, time, delta);
 
+                /*
                 var tankBody = RobotsData.robotBodyImages[i];
                 // controlRobotMovement(tankBody, 0.005); // Adjust the speed as needed
                 controlRobotMovement(tankBody);
-            }
-        };
-
-        var controlRobotMovement = function (tankBody) {
-            if (tankBody.shouldMove && tankBody.targetPosition) {
-                var distance = Phaser.Math.Distance.Between(
-                    tankBody.x,
-                    tankBody.y,
-                    tankBody.targetPosition.x,
-                    tankBody.targetPosition.y
-                );
-
-                if (distance <= 1) {
-                    tankBody.setPosition(tankBody.targetPosition.x, tankBody.targetPosition.y);
-                    tankBody.shouldMove = false;
-                    tankBody.targetPosition = null;
-                    tankBody.setVelocity(0, 0);
-                } else {
-                    var angle = Phaser.Math.Angle.Between(
-                        tankBody.x,
-                        tankBody.y,
-                        tankBody.targetPosition.x,
-                        tankBody.targetPosition.y
-                    );
-                    var force = new Phaser.Math.Vector2(Math.cos(angle), Math.sin(angle));
-                    tankBody.applyForce(force);
-                }
+                */
             }
         };
 
@@ -263,8 +236,27 @@
     /****************************************/
     var shredder = (function(robotManager) {
 
-        var update = function(api) {
-            api.setAhead(0.5);
+        var timeElapsed = 0;
+        var interval = 3000; // Move for one second, then stop for two seconds
+        var rotateTimer = 0;
+        var rotateInterval = 1000; // Rotate every one second
+
+        var update = function(api, time, delta) {
+            timeElapsed += delta;
+            rotateTimer += delta;
+
+            if (rotateTimer >= rotateInterval) {
+                api.rotateLeft();
+                rotateTimer = 0;
+            }
+
+            if (timeElapsed < 1000) { // move
+                //api.move();
+            } else if (timeElapsed < interval) { // stop
+                // Do nothing
+            } else { // Move for one second
+                timeElapsed = 0;
+            }
         };
 
         return {
