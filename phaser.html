@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser-arcade-physics.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.js"></script> -->
+    <script src="phaser-3.15.1.js"></script>
 </head>
 <body>
 
@@ -10,6 +11,12 @@
         GAME_HEIGHT = 1024;
 
     var gameContext;
+
+    const PhysicsCategories = {
+        RobotBody : 2^0,
+        RobotTurret: 2 ^ 1,
+        Walls: 2^2
+    }
 
     var gameManager = (function() {
 
@@ -44,16 +51,32 @@
             var wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
 
             var floorLayer = map.createStaticLayer('Floor Layer', floorTilesetImage);
+            // var wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
             var wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
 
             // Set collision on the walls
             wallsLayer.setCollisionByProperty({ collides: true });
+            PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer(wallsLayer, PhysicsCategories.Walls, PhysicsCategories.RobotBody);
+            /*
+            wallsLayer.setCollisionCategory(PhysicsCategories.Walls);
+            wallsLayer.setCollidesWith(PhysicsCategories.RobotBody);
+            */
 
-            helperFunctions.showDebugLayerCollisions(wallsLayer);
+            // helperFunctions.showDebugLayerCollisions(wallsLayer);
+
+
+            /*********************************/
+            // Enable Matter physics
+            this.matter.world.setBounds();
+            /*********************************/
+
+            robotManager.addRobot(shredder);
+
         };
 
-        var update = function() {
 
+        var update = function() {
+            robotManager.update();
         };
 
         return {
@@ -61,6 +84,115 @@
             create: create,
             update: update
         }
+    }());
+
+    var robotManager = (function() {
+        var ids = [];
+        var positionXs = [];
+        var positionYs = [];
+        var updateFunctions = [];
+        var robotBodyImages = [];
+        var robotTurretImages = [];
+
+        var currentRobotIndex = 0;
+        var totalRobots = 0;
+
+        var addRobot = function(newRobot) {
+            updateFunctions[currentRobotIndex] = newRobot.update;
+
+            /*****************************/
+            // Create tank body and turret
+            var tankBody = gameContext.matter.add.image(400, 300, 'tankBody');
+            tankBody.setAngle(-90);
+            tankBody.setFrictionAir(0.2);
+            tankBody.setMass(10);
+            tankBody.setCollisionCategory(PhysicsCategories.RobotBody);
+            robotBodyImages[currentRobotIndex] = tankBody;
+
+            // const tankTurret = this.matter.add.image(400, 300, 'tankTurret');
+            var tankTurret = gameContext.add.image(400, 300, 'tankTurret');
+
+            // Set the origin of the turret to the base of the turret
+            tankTurret.setOrigin(0.5, 0.75);
+
+            // Create a constraint to attach the turret to the body
+            //const turretConstraint = this.matter.add.constraint(tankBody, tankTurret, 0, 1);
+            robotTurretImages[currentRobotIndex] = tankTurret;
+
+            //// Update the turret rotation based on pointer location
+            //this.input.on('pointermove', (pointer) => {
+            //    const angle = Phaser.Math.Angle.Between(tankTurret.x, tankTurret.y, pointer.x, pointer.y);
+            //    tankTurret.setAngle(Phaser.Math.RadToDeg(angle));
+            //});
+
+            // Listen for a pointerdown event to apply force to the tank body
+            /*
+            gameContext.input.on('pointerdown', () => {
+                var forceMagnitude = 0.005; // Change this value to adjust the force applied
+                var angle = this.tankTurret.rotation;
+                var force = new Phaser.Math.Vector2(Math.cos(angle) * forceMagnitude, Math.sin(angle) * forceMagnitude);
+                tankBody.applyForce(force);
+            });
+            */
+            /*****************************/
+
+            totalRobots++;
+            currentRobotIndex++;
+        };
+
+        var update = function() {
+            for (var i = 0; i < totalRobots; i++) {
+                var updateFunction = updateFunctions[i];
+                updateFunction();
+            }
+        };
+
+        return {
+            addRobot: addRobot,
+            update: update
+        };
+    }());
+
+    var robotDefinition = (function() {
+
+    });
+
+    /****************************************/
+    var shredder = (function(robotManager) {
+
+        var update = function() {
+        };
+
+        return {
+            update: update
+        };
+    }(robotManager));
+    /****************************************/
+
+    var PhysicsHelperFunctions = (function() {
+
+        return {
+            // Matter physics does not support tilemap collisions (which is what the arena is made up of).
+            // So I created this method with the help of ChatGPT4 which converts the tiles into matter bodies.
+            createMatterBodiesFromTilemapLayer: function createMatterBodiesFromTilemapLayer(layer, collisionCategory, collidesWith) {
+                const matterBodies = [];
+                layer.forEachTile(tile => {
+                    if (tile.properties.collides) {
+                        const x = tile.getCenterX();
+                        const y = tile.getCenterY();
+                        const w = tile.width;
+                        const h = tile.height;
+                        const body = gameContext.matter.add.rectangle(x, y, w, h, { isStatic: true });
+                        // body.collisionFilter.category = PhysicsCategories.Walls;
+                        // body.collisionFilter.mask = PhysicsCategories.RobotBody;
+                        body.collisionFilter.category = collisionCategory;
+                        body.collisionFilter.mask = collidesWith;
+                        matterBodies.push(body);
+                    }
+                });
+                return matterBodies;
+            }
+        };
     }());
 
     var helperFunctions = (function() {
@@ -89,7 +221,17 @@
             preload: gameManager.preload,
             create: gameManager.create,
             update: gameManager.update
-        }
+        },
+        physics: {
+            default: 'matter',
+            matter: {
+                debug: true,
+                gravity: {
+                    x: 0,
+                    y: 0
+                }
+            }
+        },
     };
     var game = new Phaser.Game(config);
 </script>
