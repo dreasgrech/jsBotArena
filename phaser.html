@@ -9,63 +9,59 @@
     var GAME_WIDTH = 1024,
         GAME_HEIGHT = 1024;
 
-    var config = {
-        type: Phaser.AUTO,
-        width: GAME_WIDTH,
-        height: GAME_HEIGHT,
-        scene: {
+    var gameContext;
+
+    var gameManager = (function() {
+
+        var preload = function() {
+            gameContext = this;
+
+            // var floor = this.load.image('arena_floor', 'images/arena_floor.png');
+            this.load.image('floor_image', 'images/Floor - Dirt 2 64x64.png');
+            this.load.image('wall_image', 'images/Wall - Brick 2 64x64.png');
+
+            this.load.tilemapTiledJSON('arena_json', 'arena_map.json');
+        };
+
+        var create = function() {
+            /*
+                var floorImage = this.textures.get('arena_floor').getSourceImage();
+                var floorImageWidth = floorImage.width;
+                var floorImageHeight = floorImage.height;
+        
+                console.log(floorImageWidth);
+                console.log(floorImageHeight);
+        
+                var posX = 0, posY = 0;
+                var floor = this.add.tileSprite(posX, posY, GAME_WIDTH, GAME_HEIGHT, "arena_floor");
+                floor.setOrigin(0, 0);
+            */
+
+            //this.add.image(0, 0, 'floor');
+            var map = this.make.tilemap({ key: 'arena_json' });
+
+            var floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
+            var wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
+
+            var floorLayer = map.createStaticLayer('Floor Layer', floorTilesetImage);
+            var wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
+
+            // Set collision on the walls
+            wallsLayer.setCollisionByProperty({ collides: true });
+
+            helperFunctions.showDebugLayerCollisions(wallsLayer);
+        };
+
+        var update = function() {
+
+        };
+
+        return {
             preload: preload,
             create: create,
             update: update
         }
-    };
-
-    var gameContext;
-
-    var game = new Phaser.Game(config);
-
-    function preload () {
-        gameContext = this;
-
-        // var floor = this.load.image('arena_floor', 'images/arena_floor.png');
-        this.load.image('floor_image', 'images/Floor - Dirt 2 64x64.png');
-        this.load.image('wall_image', 'images/Wall - Brick 2 64x64.png');
-
-        this.load.tilemapTiledJSON('arena_json', 'arena_map.json');
-    }
-
-    function create () {
-        /*
-            var floorImage = this.textures.get('arena_floor').getSourceImage();
-            var floorImageWidth = floorImage.width;
-            var floorImageHeight = floorImage.height;
-    
-            console.log(floorImageWidth);
-            console.log(floorImageHeight);
-    
-            var posX = 0, posY = 0;
-            var floor = this.add.tileSprite(posX, posY, GAME_WIDTH, GAME_HEIGHT, "arena_floor");
-            floor.setOrigin(0, 0);
-        */
-
-        //this.add.image(0, 0, 'floor');
-        var map = this.make.tilemap({ key: 'arena_json' });
-
-        var floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
-        var wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
-
-        var floorLayer = map.createStaticLayer('Floor Layer', floorTilesetImage);
-        var wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
-
-        // Set collision on the walls
-        wallsLayer.setCollisionByProperty({ collides: true });
-
-        helperFunctions.showDebugLayerCollisions(wallsLayer);
-    }
-
-    function update ()
-    {
-    }
+    }());
 
     var helperFunctions = (function() {
 
@@ -84,6 +80,18 @@
             showDebugLayerCollisions: showDebugLayerCollisions
         };
     }());
+
+    var config = {
+        type: Phaser.AUTO,
+        width: GAME_WIDTH,
+        height: GAME_HEIGHT,
+        scene: {
+            preload: gameManager.preload,
+            create: gameManager.create,
+            update: gameManager.update
+        }
+    };
+    var game = new Phaser.Game(config);
 </script>
 
 </body>
