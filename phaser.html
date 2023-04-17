@@ -13,10 +13,28 @@
     var gameContext;
 
     const PhysicsCategories = {
-        RobotBody : 2^0,
+        RobotBody: 2 ^ 0,
         RobotTurret: 2 ^ 1,
-        Walls: 2^2
-    }
+        Walls: 2 ^ 2
+    };
+
+    var RobotAPIFactory = (function() {
+        var createAPI = function(robotIndex) {
+            return (function(robotIndex) {
+                var setAhead = function(distance) {
+                    // console.log('[' + robotIndex + ']' + ' setAhead: ' + distance);
+                };
+
+                return {
+                    setAhead: setAhead
+                };
+            }(robotIndex));
+        };
+
+        return {
+            createAPI: createAPI
+        };
+    }());
 
     var gameManager = (function() {
 
@@ -51,7 +69,6 @@
             var wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
 
             var floorLayer = map.createStaticLayer('Floor Layer', floorTilesetImage);
-            // var wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
             var wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
 
             // Set collision on the walls
@@ -87,18 +104,33 @@
     }());
 
     var robotManager = (function() {
-        var ids = [];
-        var positionXs = [];
-        var positionYs = [];
-        var updateFunctions = [];
-        var robotBodyImages = [];
-        var robotTurretImages = [];
+        // todo: put robots variables in their own obj
+
+        var RobotsData = (function() {
+            var ids = [];
+            var positionXs = [];
+            var positionYs = [];
+            var updateFunctions = [];
+            var robotBodyImages = [];
+            var robotTurretImages = [];
+            var robotAPIs = [];
+
+            return {
+                ids: ids,
+                positionXs: positionXs,
+                positionYs: positionYs,
+                updateFunctions: updateFunctions,
+                robotBodyImages: robotBodyImages,
+                robotTurretImages: robotTurretImages,
+                robotAPIs: robotAPIs
+            };
+        }());
 
         var currentRobotIndex = 0;
         var totalRobots = 0;
 
         var addRobot = function(newRobot) {
-            updateFunctions[currentRobotIndex] = newRobot.update;
+            RobotsData.updateFunctions[currentRobotIndex] = newRobot.update;
 
             /*****************************/
             // Create tank body and turret
@@ -107,20 +139,26 @@
             tankBody.setFrictionAir(0.2);
             tankBody.setMass(10);
             tankBody.setCollisionCategory(PhysicsCategories.RobotBody);
-            robotBodyImages[currentRobotIndex] = tankBody;
+            tankBody.setCollidesWith(PhysicsCategories.RobotBody);
+            RobotsData.robotBodyImages[currentRobotIndex] = tankBody;
 
             // const tankTurret = this.matter.add.image(400, 300, 'tankTurret');
-            var tankTurret = gameContext.add.image(400, 300, 'tankTurret');
+            var tankTurret = gameContext.matter.add.image(400, 300, 'tankTurret');
+            tankTurret.setCollisionCategory(PhysicsCategories.RobotTurret);
+            tankTurret.setCollidesWith(0);
 
             // Set the origin of the turret to the base of the turret
             tankTurret.setOrigin(0.5, 0.75);
 
             // Create a constraint to attach the turret to the body
             //const turretConstraint = this.matter.add.constraint(tankBody, tankTurret, 0, 1);
-            robotTurretImages[currentRobotIndex] = tankTurret;
+            RobotsData.robotTurretImages[currentRobotIndex] = tankTurret;
+
+            var api = RobotAPIFactory.createAPI(currentRobotIndex);
+            RobotsData.robotAPIs[currentRobotIndex] = api;
 
             //// Update the turret rotation based on pointer location
-            //this.input.on('pointermove', (pointer) => {
+            //gameContext.input.on('pointermove', (pointer) => {
             //    const angle = Phaser.Math.Angle.Between(tankTurret.x, tankTurret.y, pointer.x, pointer.y);
             //    tankTurret.setAngle(Phaser.Math.RadToDeg(angle));
             //});
@@ -142,8 +180,8 @@
 
         var update = function() {
             for (var i = 0; i < totalRobots; i++) {
-                var updateFunction = updateFunctions[i];
-                updateFunction();
+                var updateFunction = RobotsData.updateFunctions[i];
+                updateFunction(RobotsData.robotAPIs[i]);
             }
         };
 
@@ -153,14 +191,11 @@
         };
     }());
 
-    var robotDefinition = (function() {
-
-    });
-
     /****************************************/
     var shredder = (function(robotManager) {
 
-        var update = function() {
+        var update = function(api) {
+            api.setAhead(666);
         };
 
         return {
@@ -198,6 +233,7 @@
     var helperFunctions = (function() {
 
         // Shows collision on a layer with a different color for debugging.
+        // TODO: move this function to PhysicsHelperFunctions
         var showDebugLayerCollisions = function(layer) {
             var debugGraphics = gameContext.add.graphics().setAlpha(0.75);
             layer.renderDebug(debugGraphics,
@@ -231,7 +267,7 @@
                     y: 0
                 }
             }
-        },
+        }
     };
     var game = new Phaser.Game(config);
 </script>
