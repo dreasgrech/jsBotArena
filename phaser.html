@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <!--<script src="https://cdn.jsdelivr.net/npm/phaser@3.15.1/dist/phaser.js"></script> -->
     <script src="phaser-3.15.1.js"></script>
 </head>
 <body>
@@ -12,14 +11,25 @@
 
     var gameContext;
 
-    const PhysicsCategories = {
-        //RobotBody: 2 ^ 0,
-        //RobotTurret: 2 ^ 1,
-        //Walls: 2 ^ 2
-        RobotBody: 2 ^ 0,
-        RobotTurret: 2 ^ 0,
-        Walls: 2 ^ 0
-    };
+    const PhysicsCategories = (function() {
+        var categories = [
+            'RobotBody',
+            'RobotTurret',
+            'Walls'
+        ];
+
+        // Assign the correct 2^n value to each category
+        var physicsCategories = {};
+        for (var i = 0; i < categories.length; i++) {
+            physicsCategories[categories[i]] = Math.pow(2, i);
+        }
+
+        return physicsCategories;
+    }());
+
+    //console.log(PhysicsCategories.RobotBody);
+    //console.log(PhysicsCategories.RobotTurret);
+    //console.log(PhysicsCategories.Walls);
 
     var RobotAPIFactory = (function() {
         var createAPI = function(robotIndex) {
@@ -87,7 +97,14 @@
 
             // Set collision on the walls
             wallsLayer.setCollisionByProperty({ collides: true });
-            PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer(wallsLayer, PhysicsCategories.Walls, PhysicsCategories.RobotBody);
+            var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer(wallsLayer, PhysicsCategories.Walls, PhysicsCategories.RobotBody);
+            //for (var i = 0; i < matterBodies.length; i++) {
+            //    console.log("Wall group: " + matterBodies[i].collisionFilter.group);
+            //    console.log("Wall category: " + matterBodies[i].collisionFilter.category);
+            //}
+                console.log("Wall group: " + matterBodies[0].collisionFilter.group);
+                console.log("Wall category: " + matterBodies[0].collisionFilter.category);
+                console.log("Wall mask: " + matterBodies[0].collisionFilter.mask);
             /*
             wallsLayer.setCollisionCategory(PhysicsCategories.Walls);
             wallsLayer.setCollidesWith(PhysicsCategories.RobotBody);
@@ -151,10 +168,13 @@
             tankBody.setFrictionAir(0.2);
             // tankBody.setMass(10);
             tankBody.setMass(100);
-            tankBody.setCollisionCategory(PhysicsCategories.RobotBody);
-            tankBody.setCollidesWith(PhysicsCategories.RobotBody | PhysicsCategories.Walls);
             RobotsData.robotBodyImages[currentRobotIndex] = tankBody;
+            PhysicsHelperFunctions.setCollisionProperties(tankBody.body, 0, PhysicsCategories.RobotBody, PhysicsCategories.RobotBody | PhysicsCategories.Walls);
+            console.log("tank group:" + tankBody.body.collisionFilter.group);
+            console.log("tank category:" + tankBody.body.collisionFilter.category);
+            console.log("tank mask:" + tankBody.body.collisionFilter.mask);
 
+            /*
             // const tankTurret = this.matter.add.image(400, 300, 'tankTurret');
             var tankTurret = gameContext.matter.add.image(400, 300, 'tankTurret');
             tankTurret.setCollisionCategory(PhysicsCategories.RobotTurret);
@@ -167,14 +187,16 @@
             var turretConstraint = gameContext.matter.add.constraint(tankBody, tankTurret, 0, 1);
 
             RobotsData.robotTurretImages[currentRobotIndex] = tankTurret;
+            */
 
             var api = RobotAPIFactory.createAPI(currentRobotIndex);
             RobotsData.robotAPIs[currentRobotIndex] = api;
 
             //// Update the turret rotation based on pointer location
             gameContext.input.on('pointermove', (pointer) => {
-                const angle = Phaser.Math.Angle.Between(tankTurret.x, tankTurret.y, pointer.x, pointer.y);
-                tankTurret.setAngle(Phaser.Math.RadToDeg(angle));
+                // const angle = Phaser.Math.Angle.Between(tankTurret.x, tankTurret.y, pointer.x, pointer.y);
+                const angle = Phaser.Math.Angle.Between(tankBody.x, tankBody.y, pointer.x, pointer.y);
+                // tankTurret.setAngle(Phaser.Math.RadToDeg(angle));
                 tankBody.setAngle(Phaser.Math.RadToDeg(angle));
             });
 
@@ -252,11 +274,16 @@
     /****************************************/
 
     var PhysicsHelperFunctions = (function() {
+        var setCollisionProperties = function(physicsObject, group, category, collidesWithCategories) {
+            physicsObject.collisionFilter.group = group;
+            physicsObject.collisionFilter.category = category;
+            physicsObject.collisionFilter.mask = collidesWithCategories;
+        };
 
         return {
             // Matter physics does not support tilemap collisions (which is what the arena is made up of).
             // So I created this method with the help of ChatGPT4 which converts the tiles into matter bodies.
-            createMatterBodiesFromTilemapLayer: function createMatterBodiesFromTilemapLayer(layer, collisionCategory, collidesWith) {
+            createMatterBodiesFromTilemapLayer: function(layer, collisionCategory, collidesWith) {
                 const matterBodies = [];
                 layer.forEachTile(tile => {
                     if (tile.properties.collides) {
@@ -267,14 +294,15 @@
                         const body = gameContext.matter.add.rectangle(x, y, w, h, { isStatic: true });
                         // body.collisionFilter.category = PhysicsCategories.Walls;
                         // body.collisionFilter.mask = PhysicsCategories.RobotBody;
-                        body.collisionFilter.category = collisionCategory;
-                        body.collisionFilter.mask = collidesWith;
+                        setCollisionProperties(body, 0, collisionCategory, collidesWith);
                         matterBodies.push(body);
+                        // console.log("terrain group:" + body.collisionFilter.group);
                     }
                 });
 
                 return matterBodies;
-            }
+            },
+            setCollisionProperties: setCollisionProperties
         };
     }());
 
