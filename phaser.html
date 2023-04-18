@@ -84,6 +84,8 @@
         var preload = function() {
             gameContext = this;
 
+            ImageDatabase.loadAllImages();
+
             // var floor = this.load.image('arena_floor', 'images/arena_floor.png');
             this.load.image('floor_image', 'images/Floor - Dirt 2 64x64.png');
             this.load.image('wall_image', 'images/Wall - Brick 2 64x64.png');
@@ -233,6 +235,55 @@
         };
     }());
 
+    var ImageDatabase = (function() {
+        const tankImagesDirectory = 'images/robots';
+        const totalHullsColors = 4, totalHullsVariations = 8;
+        const totalWeaponsColors = 4, totalWeaponsVariations = 8;
+
+        var loadAllImages = function() {
+
+            // Iterate Hulls colors
+            for (var i = 0; i < totalHullsColors; i++) {
+                let characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
+                let directoryName = `Hulls_Color_${String.fromCharCode(characterCode)}`;
+                // Iterate Hulls variations
+                for (var j = 0; j < totalHullsVariations; j++) {
+                    let fileName = `Hull_0${j+1}`;
+                    let fullPath = `${tankImagesDirectory}/${directoryName}/${fileName}.png`;
+
+                    let imageIdentifier = `${directoryName}/${fileName}`;
+                    //console.log(imageIdentifier);
+                    console.log(fullPath);
+
+                    // load the hull image
+                    gameContext.load.image(imageIdentifier, fullPath);
+                }
+            }
+
+            // Iterate weapons colors
+            for (var i = 0; i < totalWeaponsColors; i++) {
+                var characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
+                var directoryName = `Weapon_Color_${String.fromCharCode(characterCode)}`;
+                // Iterate weapons variations
+                for (var j = 0; j < totalWeaponsVariations; j++) {
+                    let fileName = `Gun_0${j+1}`;
+                    let fullPath = `${tankImagesDirectory}/${directoryName}/${fileName}.png`;
+
+                    let imageIdentifier = `${directoryName}/${fileName}`;
+                    //console.log(imageIdentifier);
+                    console.log(fullPath);
+
+                    // load the weapon image
+                    gameContext.load.image(imageIdentifier, fullPath);
+                }
+            }
+        };
+
+        return {
+            loadAllImages: loadAllImages
+        };
+    }());
+
     var robotManager = (function() {
         var currentRobotIndex = 0;
         var totalRobots = 0;
@@ -261,12 +312,15 @@
         var addRobot = function(newRobot) {
             RobotsData.updateFunctions[currentRobotIndex] = newRobot.update;
 
+            var robotScale = 0.4;
+
             /*****************************/
             // Create tank body and turret
             //var x = Math.random() * (GAME_WIDTH*.7);
             //var y = Math.random() * (GAME_HEIGHT*.7);
             // var tankBody = gameContext.matter.add.image(600, 300, 'tankBody');
-            var tankBody = gameContext.matter.add.image(GAME_WIDTH*.5, GAME_HEIGHT*.5, 'tankBody');
+            var tankBody = gameContext.matter.add.image(GAME_WIDTH * .5, GAME_HEIGHT * .5, 'Hulls_Color_C/Hull_03');
+            tankBody.setScale(robotScale);
             //placeRobotInArena(tankBody);
 
 
@@ -281,9 +335,9 @@
             //console.log("tank category:" + tankBody.body.collisionFilter.category);
             //console.log("tank mask:" + tankBody.body.collisionFilter.mask);
 
-            /*
             // const tankTurret = this.matter.add.image(400, 300, 'tankTurret');
-            var tankTurret = gameContext.matter.add.image(400, 300, 'tankTurret');
+            var tankTurret = gameContext.matter.add.image(400, 300, 'Weapon_Color_C/Gun_01');
+            tankTurret.setScale(robotScale);
             tankTurret.setCollisionCategory(PhysicsCategories.RobotTurret);
             tankTurret.setCollidesWith(0);
 
@@ -294,7 +348,6 @@
             var turretConstraint = gameContext.matter.add.constraint(tankBody, tankTurret, 0, 1);
 
             RobotsData.robotTurretImages[currentRobotIndex] = tankTurret;
-            */
 
             var api = RobotAPIFactory.createAPI(currentRobotIndex);
             RobotsData.robotAPIs[currentRobotIndex] = api;
