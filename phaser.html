@@ -2,6 +2,8 @@
 <html>
 <head>
     <script src="phaser-3.15.1.js"></script>
+    <script type="text/javascript" src="./scripts/FilePathHelpers.js"></script>
+    <script type="text/javascript" src="./scripts/ImageDatabase.js"></script>
 </head>
 <body>
 
@@ -91,10 +93,6 @@
 
             ImageDatabase.loadAllImages();
 
-            // var floor = this.load.image('arena_floor', 'images/arena_floor.png');
-            this.load.image('floor_image', 'images/Floor - Dirt 2 64x64.png');
-            this.load.image('wall_image', 'images/Wall - Brick 2 64x64.png');
-
             this.load.tilemapTiledJSON('arena_json', 'arena_map.json');
         };
 
@@ -133,7 +131,6 @@
             robotManager.addRobot(shredder);
             robotManager.addRobot(circleBot);
         };
-
 
         var update = function(time, delta) {
             robotManager.update(time, delta);
@@ -237,55 +234,6 @@
             arenaBodies: arenaBodies,
             addArenaBodies: addArenaBodies,
             isBodyOverlappingWithArenaBodies: isBodyOverlappingWithArenaBodies
-        };
-    }());
-
-    var ImageDatabase = (function() {
-        const tankImagesDirectory = 'images/robots';
-        const totalHullsColors = 4, totalHullsVariations = 8;
-        const totalWeaponsColors = 4, totalWeaponsVariations = 8;
-
-        var loadAllImages = function() {
-
-            // Iterate Hulls colors
-            for (var i = 0; i < totalHullsColors; i++) {
-                let characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
-                let directoryName = `Hulls_Color_${String.fromCharCode(characterCode)}`;
-                // Iterate Hulls variations
-                for (var j = 0; j < totalHullsVariations; j++) {
-                    let fileName = `Hull_0${j+1}`;
-                    let fullPath = `${tankImagesDirectory}/${directoryName}/${fileName}.png`;
-
-                    let imageIdentifier = `${directoryName}/${fileName}`;
-                    //console.log(imageIdentifier);
-                    console.log(fullPath);
-
-                    // load the hull image
-                    gameContext.load.image(imageIdentifier, fullPath);
-                }
-            }
-
-            // Iterate weapons colors
-            for (var i = 0; i < totalWeaponsColors; i++) {
-                var characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
-                var directoryName = `Weapon_Color_${String.fromCharCode(characterCode)}`;
-                // Iterate weapons variations
-                for (var j = 0; j < totalWeaponsVariations; j++) {
-                    let fileName = `Gun_0${j+1}`;
-                    let fullPath = `${tankImagesDirectory}/${directoryName}/${fileName}.png`;
-
-                    let imageIdentifier = `${directoryName}/${fileName}`;
-                    //console.log(imageIdentifier);
-                    console.log(fullPath);
-
-                    // load the weapon image
-                    gameContext.load.image(imageIdentifier, fullPath);
-                }
-            }
-        };
-
-        return {
-            loadAllImages: loadAllImages
         };
     }());
 
