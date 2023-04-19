@@ -37,9 +37,13 @@
                     var tankBody = RobotsData.robotBodyImages[robotIndex];
                     var tankSpeed = RobotsData.robotSpeeds[robotIndex];
 
-                    var angle = Phaser.Math.DegToRad(tankBody.angle);
-                    var force = new Phaser.Math.Vector2(Math.cos(angle) * tankSpeed * direction, Math.sin(angle) * tankSpeed * direction); // * tankSpeed;
+                    var angle = tankBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+                    var angleRadians = Phaser.Math.DegToRad(angle);
+
+                    //console.log(angle);
+                    var force = new Phaser.Math.Vector2(Math.cos(angleRadians) * tankSpeed * direction, Math.sin(angleRadians) * tankSpeed * direction); // * tankSpeed;
                     tankBody.applyForce(force);
+                    // tankBody.thrust(0.1);
                 };
 
                 var moveForward = function() {
@@ -314,17 +318,23 @@
 
             var robotScale = 0.4;
 
+            //var gameObject = scene.matter.add.gameObject(gameObject);
+
+
             /*****************************/
             // Create tank body and turret
             //var x = Math.random() * (GAME_WIDTH*.7);
             //var y = Math.random() * (GAME_HEIGHT*.7);
             // var tankBody = gameContext.matter.add.image(600, 300, 'tankBody');
-            var tankBody = gameContext.matter.add.image(GAME_WIDTH * .5, GAME_HEIGHT * .5, 'Hulls_Color_C/Hull_03');
+            var tankBody = gameContext.matter.add.image(GAME_WIDTH * .5, GAME_HEIGHT * .5, 'Hulls_Color_A/Hull_01');
             tankBody.setScale(robotScale);
             //placeRobotInArena(tankBody);
 
 
-            tankBody.setAngle(-90);
+            tankBody.setAngle(45);
+            //tankBody.body.angle = 180;
+            // tankBody.angle = 0;
+            // tankBody.body.angle = 0;
             tankBody.setFrictionAir(0.2);
             // tankBody.setMass(10);
             tankBody.setMass(100);
@@ -336,8 +346,9 @@
             //console.log("tank mask:" + tankBody.body.collisionFilter.mask);
 
             // const tankTurret = this.matter.add.image(400, 300, 'tankTurret');
-            var tankTurret = gameContext.matter.add.image(400, 300, 'Weapon_Color_C/Gun_01');
+            var tankTurret = gameContext.matter.add.image(400, 300, 'Weapon_Color_A/Gun_01');
             tankTurret.setScale(robotScale);
+            tankTurret.setAngle(0);
             tankTurret.setCollisionCategory(PhysicsCategories.RobotTurret);
             tankTurret.setCollidesWith(0);
 
@@ -353,7 +364,8 @@
             RobotsData.robotAPIs[currentRobotIndex] = api;
 
             // RobotsData.robotSpeeds[currentRobotIndex] = 0.1;
-            RobotsData.robotSpeeds[currentRobotIndex] = Math.random() * 0.5;
+            // RobotsData.robotSpeeds[currentRobotIndex] = Math.random() * 0.5;
+            RobotsData.robotSpeeds[currentRobotIndex] = 0.05;
 
             //// Update the turret rotation based on pointer location
             /*
@@ -412,7 +424,7 @@
             timeElapsed += delta;
             rotateTimer += delta;
 
-            //if (rotateTimer >= rotateInterval)
+            if (rotateTimer >= rotateInterval)
             {
                 if (Math.random() > 0.5) {
                     api.rotateLeft();
@@ -430,6 +442,7 @@
             } else { // Move for one second
                 timeElapsed = 0;
             }
+            //api.move();
         };
 
         return {
