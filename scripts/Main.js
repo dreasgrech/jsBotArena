@@ -6,7 +6,6 @@ var GAME_WIDTH = 1024,
 var gameManager = (function() {
 
     var preload = function() {
-        // gameContext = this;
         GameContextHolder.gameContext = this;
 
         ImageDatabase.loadAllImages();
@@ -44,7 +43,7 @@ var gameManager = (function() {
         var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({ layer: wallsLayer, collisionCategory: PhysicsCategories.Walls, collidesWith: PhysicsCategories.RobotBody });
         PhysicsBodies.addArenaBodies(matterBodies); // Add all the bodies from the arena to the arena bodies collection
 
-        // helperFunctions.showDebugLayerCollisions(wallsLayer);
+        // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
         robotManager.addRobot(shredder);
         robotManager.addRobot(circleBot);
@@ -59,25 +58,6 @@ var gameManager = (function() {
         create: create,
         update: update
     }
-}());
-
-var helperFunctions = (function() {
-
-    // Shows collision on a layer with a different color for debugging.
-    // TODO: move this function to PhysicsHelperFunctions
-    var showDebugLayerCollisions = function(layer) {
-        var debugGraphics = GameContextHolder.gameContext.add.graphics().setAlpha(0.75);
-        layer.renderDebug(debugGraphics,
-            {
-                tileColor: null, // Color of non-colliding tiles
-                collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
-                faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
-            });
-    };
-
-    return {
-        showDebugLayerCollisions: showDebugLayerCollisions
-    };
 }());
 
 var game = new Phaser.Game({

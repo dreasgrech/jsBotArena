@@ -48,6 +48,7 @@ var robotManager = (function() {
         RobotsData.robotBodyImages[currentRobotIndex] = tankBody;
         PhysicsHelperFunctions.setCollisionProperties({physicsObject: tankBody.body, group: 0, category: PhysicsCategories.RobotBody, collidesWithCategories: PhysicsCategories.RobotBody | PhysicsCategories.Walls});
         PhysicsBodies.addArenaBodies([tankBody]);
+        //PhysicsBodies.isBodyOverlappingWithArenaBodies(tankBody);
 
         // const tankTurret = this.matter.add.image(400, 300, 'tankTurret');
         var tankTurret = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01'});

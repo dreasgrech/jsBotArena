@@ -7,16 +7,16 @@ var PhysicsBodies = (function() {
     var addArenaBodies = function(bodies) {
         var arenaBodiesTotalBeforeAdd = arenaBodies.length;
         arenaBodies = arenaBodies.concat(bodies);
-        for (var i = 0; i < bodies.length; i++) {
-            //arenaBodiesBounds.push(bodies[i].getBounds());
-            var body = bodies[i];
-            //    var tankAABB = new Phaser.Geom.Rectangle(
-            //        body.bounds.min.x,
-            //        body.bounds.min.y,
-            //        body.bounds.max.x - body.bounds.min.x,
-            //        body.bounds.max.y - body.bounds.min.y
-            //    );
-        }
+        //for (var i = 0; i < bodies.length; i++) {
+        //    //arenaBodiesBounds.push(bodies[i].getBounds());
+        //    var body = bodies[i];
+        //    //    var tankAABB = new Phaser.Geom.Rectangle(
+        //    //        body.bounds.min.x,
+        //    //        body.bounds.min.y,
+        //    //        body.bounds.max.x - body.bounds.min.x,
+        //    //        body.bounds.max.y - body.bounds.min.y
+        //    //    );
+        //}
         console.assert(arenaBodies.length === arenaBodiesTotalBeforeAdd + bodies.length,
             "Make sure that all the elements were added");
     };
@@ -38,15 +38,19 @@ var PhysicsBodies = (function() {
     }
 
     var isBodyOverlappingWithArenaBodies = function(body) {
-        var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
-        console.log(bodyBounds);
-        return false;
-        /*
+        //var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
+        //console.log(bodyBounds);
+        //return false;
         // const tankAABB = computeAABB(body.vertices);
         // console.log(tankAABB);
         //console.log(body.parts);
-        var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
-        console.log(bodyBounds.body.vertices);
+        // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
+        // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
+        // console.log(bodyBounds.body.vertices);
+        // var bodyBounds = body.getCenter();
+        
+        // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds();
+        var bodyBounds = body.getBounds();
 
 // Phaser.Physics.Matter.Matter.Bounds.overlaps(tankBody.bounds, existingTankBody.bounds)
         //if (Phaser.Physics.Matter.Matter.Bounds.overlaps(tankBody.bounds, existingTankBody.bounds))
@@ -54,7 +58,8 @@ var PhysicsBodies = (function() {
 
         for (var i = 0; i < arenaBodies.length; i++) {
             var arenaBody = arenaBodies[i];
-            var arenaBodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(arenaBody);
+            // var arenaBodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(arenaBody);
+            var arenaBodyBounds = arenaBody.getBounds();
 
             var collides = Phaser.Physics.Matter.Matter.Bounds.overlaps(bodyBounds, arenaBodyBounds);
             if (collides) {
@@ -63,7 +68,6 @@ var PhysicsBodies = (function() {
         }
 
         return false;
-        */
     };
 
     return {

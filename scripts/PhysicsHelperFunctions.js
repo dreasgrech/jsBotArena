@@ -2,9 +2,10 @@
 
 var PhysicsHelperFunctions = (function() {
     var setCollisionProperties = function({ physicsObject, group, category, collidesWithCategories }) {
-        physicsObject.collisionFilter.group = group;
-        physicsObject.collisionFilter.category = category;
-        physicsObject.collisionFilter.mask = collidesWithCategories;
+        var collisionFilter = physicsObject.collisionFilter;
+        collisionFilter.group = group;
+        collisionFilter.category = category;
+        collisionFilter.mask = collidesWithCategories;
     };
 
     return {
@@ -30,6 +31,16 @@ var PhysicsHelperFunctions = (function() {
             });
 
             return matterBodies;
+        },
+        // Shows collision on a layer with a different color for debugging.
+        showDebugLayerCollisions: function(layer) {
+            var debugGraphics = GameContextHolder.gameContext.add.graphics().setAlpha(0.75);
+            layer.renderDebug(debugGraphics,
+                {
+                    tileColor: null, // Color of non-colliding tiles
+                    collidingTileColor: new Phaser.Display.Color(243, 134, 48, 255), // Color of colliding tiles
+                    faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
+                });
         },
         setCollisionProperties: setCollisionProperties
     };

@@ -18,6 +18,8 @@ var RobotAPIFactory = (function() {
                 var force = new Phaser.Math.Vector2(Math.cos(angleRadians) * tankSpeed * direction,
                     Math.sin(angleRadians) * tankSpeed * direction); // * tankSpeed;
                 tankBody.applyForce(force);
+                //console.log(tankBody.getCenter());
+                // console.log(tankBody.getBounds());
                 // tankBody.thrust(0.1);
             };
 
