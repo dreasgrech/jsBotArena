@@ -1,3 +1,5 @@
+"use strict";
+
 var ImageDatabase = (function() {
     const baseImagesDirectory = 'images';
     const tankImagesDirectory = `${baseImagesDirectory}/robots`;
@@ -11,7 +13,7 @@ var ImageDatabase = (function() {
     const totalTracks = 4;
 
     var loadImage = function(identifier, filePath) {
-        gameContext.load.image(identifier, filePath);
+        GameContextHolder.gameContext.load.image(identifier, filePath);
         console.log(identifier, filePath);
     };
 
