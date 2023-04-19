@@ -6,6 +6,7 @@
 <body>
 
 <script>
+    "use strict";
     var GAME_WIDTH = 1024,
         GAME_HEIGHT = 1024;
 
@@ -124,7 +125,7 @@
 
             // Set collision on the walls
             // wallsLayer.setCollisionByProperty({ collides: true });
-            var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer(wallsLayer, PhysicsCategories.Walls, PhysicsCategories.RobotBody);
+            var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({ layer: wallsLayer, collisionCategory: PhysicsCategories.Walls, collidesWith: PhysicsCategories.RobotBody });
             PhysicsBodies.addArenaBodies(matterBodies); // Add all the bodies from the arena to the arena bodies collection
 
             // helperFunctions.showDebugLayerCollisions(wallsLayer);
@@ -332,21 +333,14 @@
 
 
             tankBody.setAngle(45);
-            //tankBody.body.angle = 180;
-            // tankBody.angle = 0;
-            // tankBody.body.angle = 0;
             tankBody.setFrictionAir(0.2);
-            // tankBody.setMass(10);
-            tankBody.setMass(100);
+            tankBody.setMass(10);
             RobotsData.robotBodyImages[currentRobotIndex] = tankBody;
-            PhysicsHelperFunctions.setCollisionProperties(tankBody.body, 0, PhysicsCategories.RobotBody, PhysicsCategories.RobotBody | PhysicsCategories.Walls);
+            PhysicsHelperFunctions.setCollisionProperties({physicsObject: tankBody.body, group: 0, category: PhysicsCategories.RobotBody, collidesWithCategories: PhysicsCategories.RobotBody | PhysicsCategories.Walls});
             PhysicsBodies.addArenaBodies([tankBody]);
-            //console.log("tank group:" + tankBody.body.collisionFilter.group);
-            //console.log("tank category:" + tankBody.body.collisionFilter.category);
-            //console.log("tank mask:" + tankBody.body.collisionFilter.mask);
 
             // const tankTurret = this.matter.add.image(400, 300, 'tankTurret');
-            var tankTurret = gameContext.matter.add.image(400, 300, 'Weapon_Color_A/Gun_01');
+            var tankTurret = gameContext.matter.add.image(0, 0, 'Weapon_Color_A/Gun_01');
             tankTurret.setScale(robotScale);
             tankTurret.setAngle(0);
             tankTurret.setCollisionCategory(PhysicsCategories.RobotTurret);
@@ -397,12 +391,6 @@
                 var updateFunction = RobotsData.updateFunctions[i];
                 var api = RobotsData.robotAPIs[i];
                 updateFunction(api, time, delta);
-
-                /*
-                var tankBody = RobotsData.robotBodyImages[i];
-                // controlRobotMovement(tankBody, 0.005); // Adjust the speed as needed
-                controlRobotMovement(tankBody);
-                */
             }
         };
 
@@ -475,16 +463,16 @@
 /****************************************/
 
     var PhysicsHelperFunctions = (function() {
-        var setCollisionProperties = function(physicsObject, group, category, collidesWithCategories) {
+        var setCollisionProperties = function({physicsObject, group, category, collidesWithCategories}) {
             physicsObject.collisionFilter.group = group;
             physicsObject.collisionFilter.category = category;
             physicsObject.collisionFilter.mask = collidesWithCategories;
         };
 
         return {
-            // Matter physics does not support tilemap collisions (which is what the arena is made up of).
+            // Andreas: Matter physics does not support tilemap collisions (which is what the arena is made up of).
             // So I created this method with the help of ChatGPT4 which converts the tiles into matter bodies.
-            createMatterBodiesFromTilemapLayer: function(layer, collisionCategory, collidesWith) {
+            createMatterBodiesFromTilemapLayer: function({layer, collisionCategory, collidesWith}) {
                 const matterBodies = [];
                 layer.forEachTile(tile => {
                     if (tile.properties.collides) {
@@ -493,11 +481,8 @@
                         const w = tile.width;
                         const h = tile.height;
                         const body = gameContext.matter.add.rectangle(x, y, w, h, { isStatic: true });
-                        // body.collisionFilter.category = PhysicsCategories.Walls;
-                        // body.collisionFilter.mask = PhysicsCategories.RobotBody;
-                        setCollisionProperties(body, 0, collisionCategory, collidesWith);
+                        setCollisionProperties({physicsObject: body, group: 0, category: collisionCategory, collidesWithCategories: collidesWith});
                         matterBodies.push(body);
-                        // console.log("terrain group:" + body.collisionFilter.group);
                     }
                 });
 
