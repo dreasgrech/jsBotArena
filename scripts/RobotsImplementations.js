@@ -58,3 +58,7 @@ var circleBot = (function(robotManager) {
         update: update
     };
 }(robotManager));
+
+var doNothingBot = (function() {
+    return { update: function() { } };
+}());

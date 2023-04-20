@@ -47,6 +47,7 @@ var gameManager = (function() {
 
         robotManager.addRobot(shredder);
         robotManager.addRobot(circleBot);
+        robotManager.addRobot(doNothingBot);
     };
 
     var update = function(time, delta) {
@@ -60,7 +61,7 @@ var gameManager = (function() {
     }
 }());
 
-var game = new Phaser.Game({
+GameContextHolder.game = new Phaser.Game({
     type: Phaser.AUTO,
     width: GAME_WIDTH,
     height: GAME_HEIGHT,
@@ -80,3 +81,4 @@ var game = new Phaser.Game({
         }
     }
 });
+

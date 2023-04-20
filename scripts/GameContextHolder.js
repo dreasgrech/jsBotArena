@@ -2,6 +2,7 @@
 
 var GameContextHolder = (function() {
     var holder = {
+        game: null,
         gameContext: null
     };
 

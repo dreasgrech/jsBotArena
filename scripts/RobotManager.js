@@ -105,6 +105,8 @@ var robotManager = (function() {
             var updateFunction = RobotsData.updateFunctions[i];
             var api = RobotsData.robotAPIs[i];
             updateFunction(api, time, delta);
+
+            api.drawRadarArc();
         }
     };
 

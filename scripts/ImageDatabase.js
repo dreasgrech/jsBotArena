@@ -14,7 +14,7 @@ var ImageDatabase = (function() {
 
     var loadImage = function(identifier, filePath) {
         GameContextHolder.gameContext.load.image(identifier, filePath);
-        console.log(identifier, filePath);
+        // console.log(identifier, filePath);
     };
 
     // Loads all the filenames in the directory

@@ -6,6 +6,38 @@ var RobotAPIFactory = (function() {
 
             var constantAngularVelocityForRotation = 0.05;
 
+            var radar = {
+                angle: 45,
+                maxRotation: 45, // 45 degrees per tick
+                maxScanDistance: 1200
+            };
+
+            var game = GameContextHolder.game;
+
+            // Add radar visualization
+            var radarGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
+            game.scene.scenes[0].add.existing(radarGraphics);
+
+            var drawRadarArc = function () {
+                var tankBody = RobotsData.robotBodyImages[robotIndex];
+                var tankPosition = tankBody.getCenter();
+
+                radarGraphics.clear();
+                radarGraphics.lineStyle(1, 0x00ff00, 0.5);
+                radarGraphics.fillStyle(0x00ff00, 0.2);
+
+                radarGraphics.beginPath();
+                radarGraphics.moveTo(tankPosition.x, tankPosition.y);
+                radarGraphics.arc(tankPosition.x, tankPosition.y, radar.maxScanDistance, Phaser.Math.DegToRad(radar.angle - radar.maxRotation / 2), Phaser.Math.DegToRad(radar.angle + radar.maxRotation / 2));
+                radarGraphics.closePath();
+                radarGraphics.fillPath();
+                radarGraphics.strokePath();
+
+                /******************************/
+                radar.angle += 1;
+                /******************************/
+            };
+
             var move = function(direction) {
                 var tankBody = RobotsData.robotBodyImages[robotIndex];
                 var tankSpeed = RobotsData.robotSpeeds[robotIndex];
@@ -15,8 +47,7 @@ var RobotAPIFactory = (function() {
                 var angleRadians = Phaser.Math.DegToRad(angle);
 
                 //console.log(angle);
-                var force = new Phaser.Math.Vector2(Math.cos(angleRadians) * tankSpeed * direction,
-                    Math.sin(angleRadians) * tankSpeed * direction); // * tankSpeed;
+                var force = new Phaser.Math.Vector2(Math.cos(angleRadians) * tankSpeed * direction, Math.sin(angleRadians) * tankSpeed * direction); // * tankSpeed;
                 tankBody.applyForce(force);
                 //console.log(tankBody.getCenter());
                 // console.log(tankBody.getBounds());
@@ -38,11 +69,11 @@ var RobotAPIFactory = (function() {
                 tankBody.setAngularVelocity(angularVelocity);
             };
 
-            var rotateLeft = function(direction) {
+            var rotateLeft = function() {
                 rotate(1);
             };
 
-            var rotateRight = function(direction) {
+            var rotateRight = function() {
                 rotate(-1);
             };
 
@@ -50,7 +81,8 @@ var RobotAPIFactory = (function() {
                 move: moveForward,
                 reverse: moveReverse,
                 rotateLeft: rotateLeft,
-                rotateRight: rotateRight
+                rotateRight: rotateRight,
+                drawRadarArc: drawRadarArc
             };
         }(robotIndex));
     };
