@@ -75,6 +75,9 @@ var robotManager = (function() {
         // RobotsData.robotSpeeds[currentRobotIndex] = Math.random() * 0.5;
         RobotsData.robotSpeeds[currentRobotIndex] = 0.05;
 
+        // Create the radar
+        RobotsRadar.createRadar(currentRobotIndex);
+
         //// Update the turret rotation based on pointer location
         /*
         GameContextHolder.gameContext.input.on('pointermove', (pointer) => {
@@ -106,7 +109,12 @@ var robotManager = (function() {
             var api = RobotsData.robotAPIs[i];
             updateFunction(api, time, delta);
 
-            api.drawRadarArc();
+            var robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
+            RobotsData.positionXs[i] = robotCenterPosition.x;
+            RobotsData.positionYs[i] = robotCenterPosition.y;
+
+            // api.drawRadarArc();
+            RobotsRadar.drawRadarArc(i);
         }
     };
 

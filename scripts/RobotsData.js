@@ -2,13 +2,18 @@
 
 var RobotsData = (function() {
     var ids = [];
-    var positionXs = [];
-    var positionYs = [];
+    var robotAPIs = [];
     var updateFunctions = [];
     var robotBodyImages = [];
     var robotTurretImages = [];
-    var robotAPIs = [];
     var robotSpeeds = [];
+    var radarGraphics = [];
+
+    var positionXs = [];
+    var positionYs = [];
+    var radarAngles = [];
+    var radarMaxRotation = [];
+    var radarMaxScanDistance = [];
 
     return {
         ids: ids,
@@ -18,6 +23,10 @@ var RobotsData = (function() {
         robotBodyImages: robotBodyImages,
         robotTurretImages: robotTurretImages,
         robotAPIs: robotAPIs,
-        robotSpeeds: robotSpeeds
+        robotSpeeds: robotSpeeds,
+        radarAngles: radarAngles,
+        radarGraphics: radarGraphics,
+        radarMaxRotation: radarMaxRotation,
+        radarMaxScanDistance: radarMaxScanDistance
     };
 }());
