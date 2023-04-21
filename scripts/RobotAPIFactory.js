@@ -7,8 +7,8 @@ var RobotAPIFactory = (function() {
             var constantAngularVelocityForRotation = 0.05;
 
             var move = function(direction) {
-                var tankBody = RobotsData.robotBodyImages[robotIndex];
-                var tankSpeed = RobotsData.robotSpeeds[robotIndex];
+                var tankBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
+                var tankSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
 
                 var angle = tankBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
                 var angleRadians = Phaser.Math.DegToRad(angle);
@@ -30,7 +30,7 @@ var RobotAPIFactory = (function() {
             };
 
             var rotate = function(direction) {
-                var tankBody = RobotsData.robotBodyImages[robotIndex];
+                var tankBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
                 var angularVelocity = constantAngularVelocityForRotation * direction;
 
                 tankBody.setAngularVelocity(angularVelocity);

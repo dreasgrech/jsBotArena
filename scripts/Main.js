@@ -46,16 +46,16 @@ var gameManager = (function() {
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
-        //robotManager.addRobot(shredder);
-        //robotManager.addRobot(circleBot);
-        robotManager.addRobot(doNothingBot);
-        robotManager.addRobot(doNothingBot);
+        RobotManager.addRobot(shredder);
+        RobotManager.addRobot(circleBot);
+        RobotManager.addRobot(doNothingBot);
+        RobotManager.addRobot(doNothingBot);
 
         UIManager.initialCreate();
     };
 
     var update = function(time, delta) {
-        robotManager.update(time, delta);
+        RobotManager.update(time, delta);
 
         UIManager.update(time, delta);
     };

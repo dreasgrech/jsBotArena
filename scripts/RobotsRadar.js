@@ -5,11 +5,13 @@ var RobotsRadar = (function() {
     var scanForRobots = function(robotIndex) {
         // console.log(`scanning for robots: `, robotIndex);
 
-        var tankPositionX = RobotsData.positionXs[robotIndex];
-        var tankPositionY = RobotsData.positionYs[robotIndex];
-        var radarAngle = RobotsData.currentRadarAngles[robotIndex];
-        var radarMaxScanDistance = RobotsData.radarMaxScanDistance[robotIndex];
-        var radarFOVAngle = RobotsData.radarFOVAngles[robotIndex];
+        //var tankPositionX = RobotsData.positionXs[robotIndex];
+        //var tankPositionY = RobotsData.positionYs[robotIndex];
+        var tankPositionX = RobotsData_CurrentData.positionXs[robotIndex];
+        var tankPositionY = RobotsData_CurrentData.positionYs[robotIndex];
+        var radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
+        var radarMaxScanDistance = RobotsData_Radar.radarMaxScanDistance[robotIndex];
+        var radarFOVAngle = RobotsData_Radar.radarFOVAngles[robotIndex];
 
         // todo: change to *0.5 instead of /2
         var radarStartAngle = Phaser.Math.DegToRad(radarAngle - radarFOVAngle / 2);
@@ -17,15 +19,17 @@ var RobotsRadar = (function() {
 
         var scannedRobots = [];
 
-        var totalRobots = RobotsData.totalRobots;
+        var totalRobots = RobotManager.getTotalRobots();
         for (let i = 0; i < totalRobots; i++) {
             // Skip scanning the current tank
             if (i === robotIndex) {
                 continue;
             }
 
-            var otherTankPositionX = RobotsData.positionXs[i];
-            var otherTankPositionY = RobotsData.positionYs[i];
+            //var otherTankPositionX = RobotsData.positionXs[i];
+            //var otherTankPositionY = RobotsData.positionYs[i];
+            var otherTankPositionX = RobotsData_CurrentData.positionXs[i];
+            var otherTankPositionY = RobotsData_CurrentData.positionYs[i];
             var distanceBetweenTanks = Phaser.Math.Distance.Between(tankPositionX, tankPositionY, otherTankPositionX, otherTankPositionY);
             //console.log('distanceBetweenTanks', distanceBetweenTanks);
 
@@ -66,20 +70,20 @@ var RobotsRadar = (function() {
             var radarGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
             game.scene.scenes[0].add.existing(radarGraphics);
 
-            RobotsData.radarGraphics[index] = radarGraphics;
-            RobotsData.currentRadarAngles[index] = 0;
-            RobotsData.radarFOVAngles[index] = 45;
-            RobotsData.radarMaxScanDistance[index] = 200;
+            RobotsData_Radar.radarGraphics[index] = radarGraphics;
+            RobotsData_CurrentData.currentRadarAngles[index] = 0;
+            RobotsData_Radar.radarFOVAngles[index] = 45;
+            RobotsData_Radar.radarMaxScanDistance[index] = 200;
         },
         scanForRobots: scanForRobots,
         drawRadarArc: function(robotIndex) {
-            var radarGraphics = RobotsData.radarGraphics[robotIndex];
-            var radarFOVAngle = RobotsData.radarFOVAngles[robotIndex];
-            var radarMaxScanDistance = RobotsData.radarMaxScanDistance[robotIndex];
-            var radarAngle = RobotsData.currentRadarAngles[robotIndex];
+            var radarGraphics = RobotsData_Radar.radarGraphics[robotIndex];
+            var radarFOVAngle = RobotsData_Radar.radarFOVAngles[robotIndex];
+            var radarMaxScanDistance = RobotsData_Radar.radarMaxScanDistance[robotIndex];
+            var radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
 
-            var tankPositionX = RobotsData.positionXs[robotIndex];
-            var tankPositionY = RobotsData.positionYs[robotIndex];
+            var tankPositionX = RobotsData_CurrentData.positionXs[robotIndex];
+            var tankPositionY = RobotsData_CurrentData.positionYs[robotIndex];
 
             radarGraphics.clear();
             radarGraphics.lineStyle(1, 0x00ff00, 0.5);
@@ -95,10 +99,6 @@ var RobotsRadar = (function() {
             radarGraphics.closePath();
             radarGraphics.fillPath();
             radarGraphics.strokePath();
-
-            /******************************/
-            RobotsData.currentRadarAngles[robotIndex] += 1;
-            /******************************/
         }
     };
 

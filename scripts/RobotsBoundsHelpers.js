@@ -4,7 +4,7 @@ var RobotsBoundsHelpers = (function() {
 
     var obj = {
         getCenter: function(index) {
-            var robotBodyImage = RobotsData.robotBodyImages[index];
+            var robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
             return robotBodyImage.getCenter();
         }
     };

@@ -1,7 +1,8 @@
 "use strict";
 
-var robotManager = (function() {
+var RobotManager = (function() {
     var currentRobotIndex = 0;
+    var totalRobots = 0;
 
     //var placeRobotInArena = function(tankBody) {
     //    var maxAttempts = 10;
@@ -25,9 +26,11 @@ var robotManager = (function() {
     //};
 
     var addRobot = function(newRobot) {
-        RobotsData.ids[currentRobotIndex] = currentRobotIndex;
-        RobotsData.names[currentRobotIndex] = newRobot.name;
-        RobotsData.updateFunctions[currentRobotIndex] = newRobot.update;
+        // RobotsData.ids[currentRobotIndex] = currentRobotIndex;
+        RobotsData_Instance.ids[currentRobotIndex] = currentRobotIndex;
+        // RobotsData.names[currentRobotIndex] = newRobot.name;
+        RobotsData_Instance.names[currentRobotIndex] = newRobot.name;
+        RobotsData_Instance.updateFunctions[currentRobotIndex] = newRobot.update;
 
         var robotScale = 0.4;
 
@@ -41,7 +44,7 @@ var robotManager = (function() {
         tankBody.setFrictionAir(0.2);
         tankBody.setMass(10);
         // tankBody.setAngle(45);
-        RobotsData.robotBodyImages[currentRobotIndex] = tankBody;
+        RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = tankBody;
         PhysicsHelperFunctions.setCollisionProperties({physicsObject: tankBody.body, group: 0, category: PhysicsCategories.RobotBody, collidesWithCategories: PhysicsCategories.RobotBody | PhysicsCategories.Walls});
         PhysicsBodies.addArenaBodies([tankBody]);
         //PhysicsBodies.isBodyOverlappingWithArenaBodies(tankBody);
@@ -58,17 +61,17 @@ var robotManager = (function() {
         // Create a constraint to attach the turret to the body
         var turretConstraint = GameContextHolder.gameContext.matter.add.constraint(tankBody, tankTurret, 0, 1);
 
-        RobotsData.robotTurretImages[currentRobotIndex] = tankTurret;
+        RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = tankTurret;
 
         // Create the tracks
         // var trackA = 
 
+        // Create the API for the robot
         var api = RobotAPIFactory.createAPI(currentRobotIndex);
-        RobotsData.robotAPIs[currentRobotIndex] = api;
+        RobotsData_Instance.robotAPIs[currentRobotIndex] = api;
 
-        // RobotsData.robotSpeeds[currentRobotIndex] = 0.1;
-        // RobotsData.robotSpeeds[currentRobotIndex] = Math.random() * 0.5;
-        RobotsData.robotSpeeds[currentRobotIndex] = 0.05;
+        // Set the speed
+        RobotsData_Instance.robotSpeeds[currentRobotIndex] = 0.05;
 
         // Create the radar
         RobotsRadar.createRadar(currentRobotIndex);
@@ -94,42 +97,43 @@ var robotManager = (function() {
         */
         /*****************************/
 
-        RobotsData.totalRobots++;
+        // RobotsData.totalRobots++;
+        totalRobots++;
         currentRobotIndex++;
     };
 
     var update = function(time, delta) {
-        var totalRobots = RobotsData.totalRobots;
         for (var i = 0; i < totalRobots; i++) {
-            var updateFunction = RobotsData.updateFunctions[i];
-            var api = RobotsData.robotAPIs[i];
+            var updateFunction = RobotsData_Instance.updateFunctions[i];
+            var api = RobotsData_Instance.robotAPIs[i];
             updateFunction(api, time, delta);
 
             var robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
-            RobotsData.positionXs[i] = robotCenterPosition.x;
-            RobotsData.positionYs[i] = robotCenterPosition.y;
+            RobotsData_CurrentData.positionXs[i] = robotCenterPosition.x;
+            RobotsData_CurrentData.positionYs[i] = robotCenterPosition.y;
 
-            var robotBody = RobotsData.robotBodyImages[i];
-            RobotsData.currentRobotAngles[i] = robotBody.angle;
+            var robotBody = RobotsData_PhysicsBodies.robotBodyImages[i];
+            RobotsData_CurrentData.currentRobotAngles[i] = robotBody.angle;
 
-            var turretImage = RobotsData.robotTurretImages[i];
-            RobotsData.currentTurretAngles[i] = turretImage.angle;
-
-            // var radarAngle
+            var turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
+            RobotsData_CurrentData.currentTurretAngles[i] = turretImage.angle;
 
             RobotsRadar.scanForRobots(i);
 
-            // api.drawRadarArc();
             RobotsRadar.drawRadarArc(i);
 
             /*************************/
             // testing turret rotation
             turretImage.angle += 1;
+
+            // testing radar rotation
+            RobotsData_CurrentData.currentRadarAngles[i] += 1;
             /*************************/
         }
     };
 
     return {
+        getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update
     };

@@ -1,6 +1,6 @@
 "use strict";
 
-var shredder = (function(robotManager) {
+var shredder = (function() {
 
     var timeElapsed = 0;
     var interval = 3000; // Move for one second, then stop for two seconds
@@ -36,9 +36,9 @@ var shredder = (function(robotManager) {
         name: 'shredder',
         update: update
     };
-}(robotManager));
+}());
 
-var circleBot = (function(robotManager) {
+var circleBot = (function() {
 
     var forwardSpeed = 1; // Adjust this value to change the forward speed
     var rotationSpeed = 30; // Adjust this value to change the rotation speed
@@ -59,7 +59,7 @@ var circleBot = (function(robotManager) {
         name: 'circles',
         update: update
     };
-}(robotManager));
+}());
 
 var doNothingBot = (function() {
     return {
