@@ -10,8 +10,7 @@ var RobotAPIFactory = (function() {
                 var tankBody = RobotsData.robotBodyImages[robotIndex];
                 var tankSpeed = RobotsData.robotSpeeds[robotIndex];
 
-                var angle = tankBody.angle -
-                    90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+                var angle = tankBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
                 var angleRadians = Phaser.Math.DegToRad(angle);
 
                 //console.log(angle);

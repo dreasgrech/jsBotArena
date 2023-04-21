@@ -2,7 +2,6 @@
 
 var robotManager = (function() {
     var currentRobotIndex = 0;
-    var totalRobots = 0;
 
     //var placeRobotInArena = function(tankBody) {
     //    var maxAttempts = 10;
@@ -99,11 +98,12 @@ var robotManager = (function() {
         */
         /*****************************/
 
-        totalRobots++;
+        RobotsData.totalRobots++;
         currentRobotIndex++;
     };
 
     var update = function(time, delta) {
+        var totalRobots = RobotsData.totalRobots;
         for (var i = 0; i < totalRobots; i++) {
             var updateFunction = RobotsData.updateFunctions[i];
             var api = RobotsData.robotAPIs[i];
@@ -112,6 +112,9 @@ var robotManager = (function() {
             var robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
             RobotsData.positionXs[i] = robotCenterPosition.x;
             RobotsData.positionYs[i] = robotCenterPosition.y;
+
+            var robotBody = RobotsData.robotBodyImages[i];
+            RobotsData.robotAngles[i] = robotBody.angle;
 
             // api.drawRadarArc();
             RobotsRadar.drawRadarArc(i);
