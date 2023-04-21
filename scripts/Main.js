@@ -14,6 +14,7 @@ var gameManager = (function() {
         gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
 
         gameContext.load.json('Hulls_CollisionData', './CollisionData/Hulls_CollisionData.json');
+        gameContext.load.json('Projectiles_CollisionData', './CollisionData/Projectiles_CollisionData.json');
     };
 
     var create = function() {

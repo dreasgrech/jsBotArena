@@ -50,7 +50,7 @@ var RobotsRadar = (function() {
         });
 
         if (scannedRobots.length > 0) {
-            console.log(`[${robotIndex}] Scanned robots: ${scannedRobots.length}`);
+            //console.log(`[${robotIndex}] Scanned robots: ${scannedRobots.length}`);
         }
 
         //    // Trigger the custom event 'onScannedRobot' with the scannedRobots array

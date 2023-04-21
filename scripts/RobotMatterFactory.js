@@ -7,6 +7,14 @@ var RobotHullColors = {
     Blue: 'D'
 };
 
+var ProjectileTypes = {
+    Granade: 'Granade_Shell',
+    Heavy: 'Heavy_Shell',
+    Light: 'Light_Shell',
+    Medium: 'Medium_Shell',
+    Shotgun: 'Shotgun_Shell'
+};
+
 var RobotMatterFactory = (function() {
     var createRobot = function({ currentRobotIndex, x, y, scale, robotHullColor = RobotHullColors.Blue }) {
         var gameContext = GameContextHolder.gameContext;
@@ -25,8 +33,6 @@ var RobotMatterFactory = (function() {
         tankBody.setFrictionAir(0.2);
         tankBody.setMass(10);
 
-        RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = tankBody;
-
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: tankBody.body,
             group: 0,
@@ -36,6 +42,8 @@ var RobotMatterFactory = (function() {
                 PhysicsCategories.Walls |
                 PhysicsCategories.RobotProjectile
         });
+
+        RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = tankBody;
 
         PhysicsBodies.addArenaBodies([tankBody]);
 
@@ -50,7 +58,7 @@ var RobotMatterFactory = (function() {
         tankTurret.setOrigin(0.5, 0.75);
 
         // Create a constraint to attach the turret to the body
-        var turretConstraint = GameContextHolder.gameContext.matter.add.constraint(tankBody, tankTurret, 0, 1);
+        var turretConstraint = gameContext.matter.add.constraint(tankBody, tankTurret, 0, 1);
 
         RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = tankTurret;
     };
