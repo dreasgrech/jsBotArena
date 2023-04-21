@@ -33,6 +33,7 @@ var shredder = (function(robotManager) {
     };
 
     return {
+        name: 'shredder',
         update: update
     };
 }(robotManager));
@@ -55,10 +56,14 @@ var circleBot = (function(robotManager) {
     };
 
     return {
+        name: 'circles',
         update: update
     };
 }(robotManager));
 
 var doNothingBot = (function() {
-    return { update: function() { } };
+    return {
+        name: 'doNothing',
+        update: function() {}
+    };
 }());

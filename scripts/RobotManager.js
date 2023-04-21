@@ -25,6 +25,7 @@ var robotManager = (function() {
     //};
 
     var addRobot = function(newRobot) {
+        RobotsData.ids[currentRobotIndex] = currentRobotIndex;
         RobotsData.updateFunctions[currentRobotIndex] = newRobot.update;
 
         var robotScale = 0.4;
@@ -33,11 +34,6 @@ var robotManager = (function() {
 
 
         /*****************************/
-        // Create tank body and turret
-        //var x = Math.random() * (GAME_WIDTH*.7);
-        //var y = Math.random() * (GAME_HEIGHT*.7);
-        // var tankBody = gameContext.matter.add.image(600, 300, 'tankBody');
-        // var tankBody = gameContext.matter.add.image(GAME_WIDTH * .5, GAME_HEIGHT * .5, 'Hulls_Color_A/Hull_01');
         var tankBody = MatterPhysicsHelpers.loadImage({ x: GAME_WIDTH * .5, y: GAME_HEIGHT * .5, id: 'Hulls_Color_A/Hull_01'});
         //placeRobotInArena(tankBody);
         tankBody.setScale(robotScale);
@@ -49,7 +45,6 @@ var robotManager = (function() {
         PhysicsBodies.addArenaBodies([tankBody]);
         //PhysicsBodies.isBodyOverlappingWithArenaBodies(tankBody);
 
-        // const tankTurret = this.matter.add.image(400, 300, 'tankTurret');
         var tankTurret = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01'});
         tankTurret.setScale(robotScale);
         tankTurret.setAngle(0);
@@ -116,6 +111,8 @@ var robotManager = (function() {
             var robotBody = RobotsData.robotBodyImages[i];
             RobotsData.robotAngles[i] = robotBody.angle;
 
+            RobotsRadar.scanForRobots(i);
+
             // api.drawRadarArc();
             RobotsRadar.drawRadarArc(i);
         }
@@ -126,3 +123,4 @@ var robotManager = (function() {
         update: update
     };
 }());
+

@@ -16,6 +16,7 @@ var gameManager = (function() {
     var create = function() {
         // Enable Matter physics
         this.matter.world.setBounds();
+
         /*
             var floorImage = this.textures.get('arena_floor').getSourceImage();
             var floorImageWidth = floorImage.width;
@@ -48,10 +49,14 @@ var gameManager = (function() {
         robotManager.addRobot(shredder);
         robotManager.addRobot(circleBot);
         robotManager.addRobot(doNothingBot);
+
+        UIManager.initialCreate();
     };
 
     var update = function(time, delta) {
         robotManager.update(time, delta);
+
+        UIManager.update(time, delta);
     };
 
     return {
