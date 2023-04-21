@@ -3,11 +3,8 @@
 var RobotsRadar = (function() {
 
     var scanForRobots = function(robotIndex) {
-        //var tankBody = RobotsData.robotBodyImages[robotIndex];
-        //var tankPosition = tankBody.getCenter();
         // console.log(`scanning for robots: `, robotIndex);
 
-        // var tankPosition = RobotsData.getPosition(robotIndex);
         var tankPositionX = RobotsData.positionXs[robotIndex];
         var tankPositionY = RobotsData.positionYs[robotIndex];
         var radarAngle = RobotsData.radarAngles[robotIndex];
@@ -27,17 +24,12 @@ var RobotsRadar = (function() {
                 continue;
             }
 
-            //var otherTank = RobotsData.robotBodyImages[i];
-            //var otherTankPosition = otherTank.getCenter();
-            // var otherTankPosition = RobotsData.getPosition(i);
             var otherTankPositionX = RobotsData.positionXs[i];
             var otherTankPositionY = RobotsData.positionYs[i];
-            // var distance = Phaser.Math.Distance.BetweenPoints(tankPosition, otherTankPosition);
-            var distance = Phaser.Math.Distance.Between(tankPositionX, tankPositionY, otherTankPositionX, otherTankPositionY);
-            //var distance = tankPosition - otherTankPosition;
-            //console.log('distance', distance);
+            var distanceBetweenTanks = Phaser.Math.Distance.Between(tankPositionX, tankPositionY, otherTankPositionX, otherTankPositionY);
+            //console.log('distanceBetweenTanks', distanceBetweenTanks);
 
-            if (distance > radarMaxScanDistance) {
+            if (distanceBetweenTanks > radarMaxScanDistance) {
                 continue;
             }
 
@@ -46,14 +38,14 @@ var RobotsRadar = (function() {
             if (angleBetween >= radarStartAngle && angleBetween <= radarEndAngle) {
                 scannedRobots.push({
                     index: i,
-                    distance: distance
+                    distanceBetweenTanks: distanceBetweenTanks
                 });
             }
         }
 
-        // Sort scannedRobots by distance
+        // Sort scannedRobots by distanceBetweenTanks
         scannedRobots.sort(function(a, b) {
-            return a.distance - b.distance;
+            return a.distanceBetweenTanks - b.distanceBetweenTanks;
         });
 
         if (scannedRobots.length > 0) {

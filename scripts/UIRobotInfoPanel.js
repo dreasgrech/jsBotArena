@@ -46,15 +46,19 @@ var UIRobotInfoPanel = (function() {
                 const name = RobotsData.names[i];
                 const positionX = RobotsData.positionXs[i];
                 const positionY = RobotsData.positionYs[i];
-                const angle = RobotsData.robotBodyImages[i].angle;
-                const turretRotation = RobotsData.robotTurretImages[i].rotation;
+                // const angle = RobotsData.robotBodyImages[i].angle;
+                const angle = RobotsData.robotAngles[i];
+                // const turretRotation = RobotsData.robotTurretImages[i].rotation;
+                const turretRotation = RobotsData.turretAngles[i];
 
                 const infoText = `
 Robot ${id}: ${name}
 Position: (${positionX.toFixed(2)}, ${positionY.toFixed(2)})
 Angle: ${angle.toFixed(2)}°
-Turret Rotation: ${Phaser.Math.RadToDeg(turretRotation).toFixed(2)}°
+Radar Angle: ${angle.toFixed(2)}°
+Turret Rotation: ${turretRotation.toFixed(2)}°
 `;
+//Turret Rotation: ${Phaser.Math.RadToDeg(turretRotation).toFixed(2)}°
                 robotInfoTexts[i].setText(infoText);
             }
         }

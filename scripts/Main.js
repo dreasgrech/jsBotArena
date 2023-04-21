@@ -46,8 +46,9 @@ var gameManager = (function() {
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
-        robotManager.addRobot(shredder);
-        robotManager.addRobot(circleBot);
+        //robotManager.addRobot(shredder);
+        //robotManager.addRobot(circleBot);
+        robotManager.addRobot(doNothingBot);
         robotManager.addRobot(doNothingBot);
 
         UIManager.initialCreate();

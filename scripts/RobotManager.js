@@ -112,10 +112,20 @@ var robotManager = (function() {
             var robotBody = RobotsData.robotBodyImages[i];
             RobotsData.robotAngles[i] = robotBody.angle;
 
+            var turretImage = RobotsData.robotTurretImages[i];
+            RobotsData.turretAngles[i] = turretImage.angle;
+
+            // var radarAngle
+
             RobotsRadar.scanForRobots(i);
 
             // api.drawRadarArc();
             RobotsRadar.drawRadarArc(i);
+
+            /*************************/
+            // testing turret rotation
+            turretImage.angle += 1;
+            /*************************/
         }
     };
 

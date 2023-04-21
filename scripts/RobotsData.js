@@ -11,6 +11,7 @@ var RobotsData = (function() {
         updateFunctions: [],
         robotBodyImages: [],
         robotTurretImages: [],
+        turretAngles: [],
         robotAPIs: [],
         robotSpeeds: [],
         radarAngles: [],
