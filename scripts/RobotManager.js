@@ -26,6 +26,7 @@ var robotManager = (function() {
 
     var addRobot = function(newRobot) {
         RobotsData.ids[currentRobotIndex] = currentRobotIndex;
+        RobotsData.names[currentRobotIndex] = newRobot.name;
         RobotsData.updateFunctions[currentRobotIndex] = newRobot.update;
 
         var robotScale = 0.4;

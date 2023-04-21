@@ -29,7 +29,6 @@ var UIRobotInfoPanel = (function() {
             // Create a Text object for each robot
             var totalRobots = RobotsData.totalRobots;
             for (let i = 0; i < totalRobots; i++) {
-                console.log('creating text for ', i);
                 const infoText = gameContext.add.text(panelX + 10,
                     panelY + 50 + i * 100,
                     '',
@@ -44,13 +43,14 @@ var UIRobotInfoPanel = (function() {
             var totalRobots = RobotsData.totalRobots;
             for (let i = 0; i < totalRobots; i++) {
                 const id = RobotsData.ids[i];
+                const name = RobotsData.names[i];
                 const positionX = RobotsData.positionXs[i];
                 const positionY = RobotsData.positionYs[i];
                 const angle = RobotsData.robotBodyImages[i].angle;
                 const turretRotation = RobotsData.robotTurretImages[i].rotation;
 
                 const infoText = `
-Robot ${id}:
+Robot ${id}: ${name}
 Position: (${positionX.toFixed(2)}, ${positionY.toFixed(2)})
 Angle: ${angle.toFixed(2)}°
 Turret Rotation: ${Phaser.Math.RadToDeg(turretRotation).toFixed(2)}°
