@@ -110,10 +110,10 @@ var robotManager = (function() {
             RobotsData.positionYs[i] = robotCenterPosition.y;
 
             var robotBody = RobotsData.robotBodyImages[i];
-            RobotsData.robotAngles[i] = robotBody.angle;
+            RobotsData.currentRobotAngles[i] = robotBody.angle;
 
             var turretImage = RobotsData.robotTurretImages[i];
-            RobotsData.turretAngles[i] = turretImage.angle;
+            RobotsData.currentTurretAngles[i] = turretImage.angle;
 
             // var radarAngle
 

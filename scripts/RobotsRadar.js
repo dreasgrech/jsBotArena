@@ -7,7 +7,7 @@ var RobotsRadar = (function() {
 
         var tankPositionX = RobotsData.positionXs[robotIndex];
         var tankPositionY = RobotsData.positionYs[robotIndex];
-        var radarAngle = RobotsData.radarAngles[robotIndex];
+        var radarAngle = RobotsData.currentRadarAngles[robotIndex];
         var radarMaxScanDistance = RobotsData.radarMaxScanDistance[robotIndex];
         var radarFOVAngle = RobotsData.radarFOVAngles[robotIndex];
 
@@ -67,7 +67,7 @@ var RobotsRadar = (function() {
             game.scene.scenes[0].add.existing(radarGraphics);
 
             RobotsData.radarGraphics[index] = radarGraphics;
-            RobotsData.radarAngles[index] = 0;
+            RobotsData.currentRadarAngles[index] = 0;
             RobotsData.radarFOVAngles[index] = 45;
             RobotsData.radarMaxScanDistance[index] = 200;
         },
@@ -76,7 +76,7 @@ var RobotsRadar = (function() {
             var radarGraphics = RobotsData.radarGraphics[robotIndex];
             var radarFOVAngle = RobotsData.radarFOVAngles[robotIndex];
             var radarMaxScanDistance = RobotsData.radarMaxScanDistance[robotIndex];
-            var radarAngle = RobotsData.radarAngles[robotIndex];
+            var radarAngle = RobotsData.currentRadarAngles[robotIndex];
 
             var tankPositionX = RobotsData.positionXs[robotIndex];
             var tankPositionY = RobotsData.positionYs[robotIndex];
@@ -97,7 +97,7 @@ var RobotsRadar = (function() {
             radarGraphics.strokePath();
 
             /******************************/
-            RobotsData.radarAngles[robotIndex] += 1;
+            RobotsData.currentRadarAngles[robotIndex] += 1;
             /******************************/
         }
     };

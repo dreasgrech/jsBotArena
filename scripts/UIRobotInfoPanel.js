@@ -47,9 +47,9 @@ var UIRobotInfoPanel = (function() {
                 const positionX = RobotsData.positionXs[i];
                 const positionY = RobotsData.positionYs[i];
                 // const angle = RobotsData.robotBodyImages[i].angle;
-                const angle = RobotsData.robotAngles[i];
+                const angle = RobotsData.currentRobotAngles[i];
                 // const turretRotation = RobotsData.robotTurretImages[i].rotation;
-                const turretRotation = RobotsData.turretAngles[i];
+                const turretRotation = RobotsData.currentTurretAngles[i];
 
                 const infoText = `
 Robot ${id}: ${name}

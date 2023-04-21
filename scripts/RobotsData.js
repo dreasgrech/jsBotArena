@@ -1,20 +1,21 @@
 "use strict";
 
 var RobotsData = (function() {
+    //var hull = { };
     var obj = {
         totalRobots: 0,
         ids: [],
         names: [],
         positionXs: [],
         positionYs: [],
-        robotAngles: [],
+        currentRobotAngles: [],
         updateFunctions: [],
         robotBodyImages: [],
         robotTurretImages: [],
-        turretAngles: [],
+        currentTurretAngles: [],
         robotAPIs: [],
         robotSpeeds: [],
-        radarAngles: [],
+        currentRadarAngles: [],
         radarGraphics: [],
         radarFOVAngles: [],
         radarMaxScanDistance: [],
