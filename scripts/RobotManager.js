@@ -45,7 +45,12 @@ var RobotManager = (function() {
         tankBody.setMass(10);
         // tankBody.setAngle(45);
         RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = tankBody;
-        PhysicsHelperFunctions.setCollisionProperties({physicsObject: tankBody.body, group: 0, category: PhysicsCategories.RobotBody, collidesWithCategories: PhysicsCategories.RobotBody | PhysicsCategories.Walls});
+        PhysicsHelperFunctions.setCollisionProperties({
+            physicsObject: tankBody.body,
+            group: 0,
+            category: PhysicsCategories.RobotBody,
+            collidesWithCategories: PhysicsCategories.RobotBody | PhysicsCategories.Walls | PhysicsCategories.RobotProjectile
+        });
         PhysicsBodies.addArenaBodies([tankBody]);
         //PhysicsBodies.isBodyOverlappingWithArenaBodies(tankBody);
 
@@ -124,10 +129,10 @@ var RobotManager = (function() {
 
             /*************************/
             // testing turret rotation
-            turretImage.angle += 1;
+            // turretImage.angle += 1;
 
             // testing radar rotation
-            RobotsData_CurrentData.currentRadarAngles[i] += 1;
+            // RobotsData_CurrentData.currentRadarAngles[i] += 1;
             /*************************/
         }
     };

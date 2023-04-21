@@ -41,13 +41,17 @@ var gameManager = (function() {
 
         // Set collision on the walls
         // wallsLayer.setCollisionByProperty({ collides: true });
-        var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({ layer: wallsLayer, collisionCategory: PhysicsCategories.Walls, collidesWith: PhysicsCategories.RobotBody });
+        var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
+            layer: wallsLayer,
+            collisionCategory: PhysicsCategories.Walls,
+            collidesWith: PhysicsCategories.RobotBody | PhysicsCategories.RobotProjectile
+        });
         PhysicsBodies.addArenaBodies(matterBodies); // Add all the bodies from the arena to the arena bodies collection
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
-        RobotManager.addRobot(shredder);
-        RobotManager.addRobot(circleBot);
+        //RobotManager.addRobot(shredder);
+        //RobotManager.addRobot(circleBot);
         RobotManager.addRobot(doNothingBot);
         RobotManager.addRobot(doNothingBot);
 

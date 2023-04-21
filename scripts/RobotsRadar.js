@@ -5,8 +5,6 @@ var RobotsRadar = (function() {
     var scanForRobots = function(robotIndex) {
         // console.log(`scanning for robots: `, robotIndex);
 
-        //var tankPositionX = RobotsData.positionXs[robotIndex];
-        //var tankPositionY = RobotsData.positionYs[robotIndex];
         var tankPositionX = RobotsData_CurrentData.positionXs[robotIndex];
         var tankPositionY = RobotsData_CurrentData.positionYs[robotIndex];
         var radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
@@ -26,14 +24,13 @@ var RobotsRadar = (function() {
                 continue;
             }
 
-            //var otherTankPositionX = RobotsData.positionXs[i];
-            //var otherTankPositionY = RobotsData.positionYs[i];
             var otherTankPositionX = RobotsData_CurrentData.positionXs[i];
             var otherTankPositionY = RobotsData_CurrentData.positionYs[i];
             var distanceBetweenTanks = Phaser.Math.Distance.Between(tankPositionX, tankPositionY, otherTankPositionX, otherTankPositionY);
             //console.log('distanceBetweenTanks', distanceBetweenTanks);
 
             if (distanceBetweenTanks > radarMaxScanDistance) {
+                console.log(`skipping `);
                 continue;
             }
 
