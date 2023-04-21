@@ -30,7 +30,7 @@ var RobotsRadar = (function() {
             //console.log('distanceBetweenTanks', distanceBetweenTanks);
 
             if (distanceBetweenTanks > radarMaxScanDistance) {
-                console.log(`skipping `);
+                // console.log(`skipping `);
                 continue;
             }
 

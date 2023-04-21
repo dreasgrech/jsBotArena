@@ -26,19 +26,51 @@ var RobotManager = (function() {
     //};
 
     var addRobot = function(newRobot) {
-        // RobotsData.ids[currentRobotIndex] = currentRobotIndex;
         RobotsData_Instance.ids[currentRobotIndex] = currentRobotIndex;
-        // RobotsData.names[currentRobotIndex] = newRobot.name;
         RobotsData_Instance.names[currentRobotIndex] = newRobot.name;
         RobotsData_Instance.updateFunctions[currentRobotIndex] = newRobot.update;
 
         var robotScale = 0.4;
 
+        var gameContext = GameContextHolder.gameContext;
+
         //var gameObject = scene.matter.add.gameObject(gameObject);
+        /*********************/
+        // createCustomBody()
+        const x = GAME_WIDTH * .5,
+            y = GAME_HEIGHT * .5;
+
+        //console.log('vertices', vertices);
+        /*
+        console.log(fixtures);
+        var bodyParts = fixtures.map(function (fixture) {
+            var vertices = fixture.vertices.map(function (vertex) {
+                return { x: vertex.x * robotScale, y: vertex.y * robotScale };
+            });
+
+            return gameContext.matter.bodies.fromVertices(0, 0, vertices, {
+                isStatic: shapeData.isStatic,
+                density: shapeData.density,
+                restitution: shapeData.restitution,
+                friction: shapeData.friction,
+                frictionAir: shapeData.frictionAir,
+                frictionStatic: shapeData.frictionStatic,
+                collisionFilter: shapeData.collisionFilter,
+            });
+        });
+        */
+        /*********************/
 
 
         /*****************************/
-        var tankBody = MatterPhysicsHelpers.loadImage({ x: GAME_WIDTH * .5, y: GAME_HEIGHT * .5, id: 'Hulls_Color_A/Hull_01'});
+        /*
+        var tankBody =
+            MatterPhysicsHelpers.loadImage({
+                x: x,
+                y: y,
+                id: 'Hulls_Color_A/Hull_01',
+                //shapes: shapes
+            });
         //placeRobotInArena(tankBody);
         tankBody.setScale(robotScale);
         tankBody.setFrictionAir(0.2);
@@ -67,6 +99,15 @@ var RobotManager = (function() {
         var turretConstraint = GameContextHolder.gameContext.matter.add.constraint(tankBody, tankTurret, 0, 1);
 
         RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = tankTurret;
+        */
+
+        RobotMatterFactory.createRobot({
+            currentRobotIndex: currentRobotIndex,
+            scale: 0.4,
+            x: x,
+            y: y,
+            robotHullColor: RobotHullColors.Brown
+        });
 
         // Create the tracks
         // var trackA = 
@@ -101,6 +142,9 @@ var RobotManager = (function() {
         });
         */
         /*****************************/
+
+        // Inform the UI information panel about the new robot
+        UIRobotInfoPanel.add(currentRobotIndex);
 
         // RobotsData.totalRobots++;
         totalRobots++;

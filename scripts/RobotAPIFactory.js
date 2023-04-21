@@ -7,7 +7,7 @@ var RobotAPIFactory = (function() {
             var constantAngularVelocityForRotation = 0.05;
 
             var createBullet = function (startX, startY, angle) {
-                var bullet = GameContextHolder.gameContext.add.image(startX, startY, "bullet");
+                var bullet = GameContextHolder.gameContext.add.image(startX, startY, "Light_Shell");
                 bullet.setAngle(angle);
 
                 var velocity = {
@@ -19,8 +19,6 @@ var RobotAPIFactory = (function() {
                 bullet.setVelocity(velocity.x, velocity.y);
                 bullet.setFrictionAir(0);
                 bullet.setBounce(1);
-                //bullet.setCollisionCategory(PhysicsCategories.RobotProjectile);
-                //bullet.setCollidesWith([PhysicsCategories.RobotBody, PhysicsCategories.Walls]);
                 PhysicsHelperFunctions.setCollisionProperties({
                     physicsObject: bullet.body,
                     group: 0,

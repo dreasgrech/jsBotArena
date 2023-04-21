@@ -16,7 +16,7 @@ const PhysicsCategories = (function() {
 
     // return physicsCategories;
 
-    var categories = {
+    const categories = {
         RobotBody: 0,
         RobotTurret: 0,
         Walls: 0,

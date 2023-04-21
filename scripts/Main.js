@@ -6,16 +6,21 @@ var GAME_WIDTH = 1024,
 var gameManager = (function() {
 
     var preload = function() {
-        GameContextHolder.gameContext = this;
+        var gameContext = this;
+        GameContextHolder.gameContext = gameContext;
 
         ImageDatabase.loadAllImages();
 
-        this.load.tilemapTiledJSON('arena_json', 'arena_map.json');
+        gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
+
+        gameContext.load.json('Hulls_CollisionData', './CollisionData/Hulls_CollisionData.json');
     };
 
     var create = function() {
         // Enable Matter physics
         this.matter.world.setBounds();
+
+        var gameContext = GameContextHolder.gameContext;
 
         /*
             var floorImage = this.textures.get('arena_floor').getSourceImage();
@@ -50,12 +55,29 @@ var gameManager = (function() {
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
-        //RobotManager.addRobot(shredder);
-        //RobotManager.addRobot(circleBot);
+        /*
+        RobotManager.addRobot(shredder);
+        RobotManager.addRobot(circleBot);
+        // RobotManager.addRobot(doNothingBot);
         RobotManager.addRobot(doNothingBot);
-        RobotManager.addRobot(doNothingBot);
+        */
+        setTimeout(() => { RobotManager.addRobot(shredder); }, 1000);
+        setTimeout(() => { RobotManager.addRobot(circleBot); }, 1500);
+        setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2000);
+        setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);
 
         UIManager.initialCreate();
+
+        /*************************/
+        //var x = GAME_WIDTH*0.5, y = GAME_HEIGHT*0.5;
+        //RobotMatterFactory.createRobot({
+        //    currentRobotIndex: 0,
+        //    scale: 0.4,
+        //    x: x,
+        //    y: y,
+        //    robotHullColor: RobotHullColors.Brown
+        //});
+        /*************************/
     };
 
     var update = function(time, delta) {
@@ -91,4 +113,6 @@ GameContextHolder.game = new Phaser.Game({
         }
     }
 });
+
+var compoundBody;
 
