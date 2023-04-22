@@ -30,6 +30,11 @@ var shredder = (function() {
             timeElapsed = 0;
         }
         //api.move();
+
+        var collisionThisFrame = api.collisionsThisFrame;
+        if (collisionThisFrame.length > 0) {
+            console.log(`[${FrameCounter.current}] Shredder collisions: ${collisionThisFrame.length}: `, collisionThisFrame);
+        }
     };
 
     return {

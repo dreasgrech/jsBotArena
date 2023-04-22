@@ -6,7 +6,9 @@ var CollisionManager = (function() {
         const collidingBodyID = collidingBody.parent.id;
         const collidingBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidingBodyID];
 
-        if (collidingBodyRobotIndex) {
+        // console.log(`Checking for body id: ${collidingBodyID}.  Robot Index: ${collidingBodyRobotIndex}`);
+
+        if (collidingBodyRobotIndex !== undefined) {
             let collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
             if (!collidingBodyRobotCollisions) {
                 collidingBodyRobotCollisions = [];
@@ -18,6 +20,7 @@ var CollisionManager = (function() {
             collidingBodyRobotCollisions.push(collidedWithBodyObjectType);
 
             RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
+            // console.log(`Saved RobotsData_CurrentData.robotCollisions[${collidingBodyRobotIndex}] = ${collidingBodyRobotCollisions.length}`);
         }
     };
 
@@ -26,7 +29,7 @@ var CollisionManager = (function() {
             const eventPairs = event.pairs;
 
             if (eventPairs.length > 0) {
-                console.log(`[${FrameCounter.current}] Total pairs: ${eventPairs.length} `);
+                // console.log(`[${FrameCounter.current}] Total pairs: ${eventPairs.length} `);
                 RobotsData_CurrentData.totalCollisions = eventPairs.length;
 
                 for (let i = 0; i < eventPairs.length; i++) {
@@ -41,13 +44,14 @@ var CollisionManager = (function() {
             }
         },
         clearPerFrameData: function() {
+            // Clear all the collisions
             var totalRobots = RobotManager.getTotalRobots();
             for (let i = 0; i < totalRobots; i++) {
-                RobotsData_CurrentData.robotCollisions[i] = undefined;
+                RobotsData_CurrentData.robotCollisions[i] = [];
+                // console.log(`cleared: ${RobotsData_CurrentData.robotCollisions[i].length} `);
             }
 
             RobotsData_CurrentData.totalCollisions = 0;
-
         }
     };
 

@@ -10,7 +10,7 @@ var RobotsData_PhysicsBodies = (function() {
 }());
 
 // Data that is updated per frame
-var RobotsData_CurrentData = (function() {
+const RobotsData_CurrentData = (function() {
     const obj = {
         positionXs: [],
         positionYs: [],

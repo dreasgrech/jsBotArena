@@ -146,6 +146,9 @@ var RobotManager = (function() {
         // Inform the UI information panel about the new robot
         UIRobotInfoPanel.add(currentRobotIndex);
 
+        // Add the entry for the robot in the per-frame robotCollisions array
+        RobotsData_CurrentData.robotCollisions[currentRobotIndex] = [];
+
         // RobotsData.totalRobots++;
         totalRobots++;
         currentRobotIndex++;
@@ -153,10 +156,6 @@ var RobotManager = (function() {
 
     var update = function(time, delta) {
         for (var i = 0; i < totalRobots; i++) {
-            var updateFunction = RobotsData_Instance.updateFunctions[i];
-            var api = RobotsData_Instance.robotAPIs[i];
-            updateFunction(api, time, delta);
-
             var robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
             RobotsData_CurrentData.positionXs[i] = robotCenterPosition.x;
             RobotsData_CurrentData.positionYs[i] = robotCenterPosition.y;
@@ -178,6 +177,16 @@ var RobotManager = (function() {
             // testing radar rotation
             RobotsData_CurrentData.currentRadarAngles[i] += 1;
             /*************************/
+
+            var api = RobotsData_Instance.robotAPIs[i];
+            var collisionsThisFrame = RobotsData_CurrentData.robotCollisions[i];
+            api.collisionsThisFrame = collisionsThisFrame;
+            // console.log(`<${FrameCounter.current}> RobotsData_CurrentData.robotCollisions[${i}]: ${api.collisionsThisFrame}`);
+            // console.log(`<${FrameCounter.current}> RobotsData_CurrentData.robotCollisions[${i}]: ${RobotsData_CurrentData.robotCollisions[i]}`);
+            // console.log(RobotsData_CurrentData.robotCollisions[i].length);
+
+            var updateFunction = RobotsData_Instance.updateFunctions[i];
+            updateFunction(api, time, delta);
         }
     };
 
