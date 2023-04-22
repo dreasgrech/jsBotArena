@@ -3,8 +3,9 @@
 var PhysicsBodies = (function() {
     var arenaBodies = [];
     var arenaBodiesBounds = [];
+    var matterBodyToObjectType = {};
 
-    var addArenaBodies = function(bodies) {
+    var addArenaBodies = function(physicsObjectType, bodies) {
         var arenaBodiesTotalBeforeAdd = arenaBodies.length;
         arenaBodies = arenaBodies.concat(bodies);
         //for (var i = 0; i < bodies.length; i++) {
@@ -19,6 +20,17 @@ var PhysicsBodies = (function() {
         //}
         console.assert(arenaBodies.length === arenaBodiesTotalBeforeAdd + bodies.length,
             "Make sure that all the elements were added");
+
+        for (let i = 0; i < bodies.length; i++) {
+            let body = bodies[i];
+            console.log(body);
+            matterBodyToObjectType[body.id] =
+            {
+                type: physicsObjectType
+            };
+
+            // console.log(i, matterBodies[i]);
+        }
     };
 
     function computeAABB(vertices) {
@@ -73,6 +85,7 @@ var PhysicsBodies = (function() {
     return {
         arenaBodies: arenaBodies,
         addArenaBodies: addArenaBodies,
+        matterBodyToObjectType: matterBodyToObjectType,
         isBodyOverlappingWithArenaBodies: isBodyOverlappingWithArenaBodies
     };
 }());

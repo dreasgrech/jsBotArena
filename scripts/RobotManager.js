@@ -173,10 +173,10 @@ var RobotManager = (function() {
 
             /*************************/
             // testing turret rotation
-            // turretImage.angle += 1;
+            turretImage.angle += 1;
 
             // testing radar rotation
-            // RobotsData_CurrentData.currentRadarAngles[i] += 1;
+            RobotsData_CurrentData.currentRadarAngles[i] += 1;
             /*************************/
         }
     };
@@ -185,7 +185,7 @@ var RobotManager = (function() {
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update,
-        matterBodyToObjectType: {}
+        // matterBodyToObjectType: {}
     };
 
     return obj;
