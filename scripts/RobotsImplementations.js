@@ -47,6 +47,7 @@ var shredder = (function() {
 
     return {
         name: 'shredder',
+        create: function(){},
         update: update
     };
 }());
@@ -70,13 +71,46 @@ var circleBot = (function() {
 
     return {
         name: 'circles',
+        create: function(){},
         update: update
+    };
+}());
+
+var keyBot = (function() {
+    let gameContext;
+    let cursors;
+
+    return {
+        name: 'keyBot',
+        create: function() {
+            gameContext = GameContextHolder.gameContext;
+
+            cursors = gameContext.input.keyboard.createCursorKeys();
+        },
+        update: function(api, time, delta) {
+            if (cursors.left.isDown) {
+                api.rotateLeft();
+            } else if (cursors.right.isDown) {
+                api.rotateRight();
+            }
+
+            if (cursors.up.isDown) {
+                api.move();
+            } else if (cursors.down.isDown) {
+                api.reverse();
+            }
+
+        //    if (cursors.space.isDown) {
+        //        api.fire(ProjectileTypes.Heavy);
+        //    }
+        }
     };
 }());
 
 var doNothingBot = (function() {
     return {
         name: 'doNothing',
-        update: function() {}
+        create: function(){},
+        update: function(api, time, delta) {}
     };
 }());

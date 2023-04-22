@@ -36,10 +36,10 @@ const RobotAPIFactory = (function() {
                     move(-1);
                 },
                 rotateLeft: function() {
-                    rotate(1);
+                    rotate(-1);
                 },
                 rotateRight: function() {
-                    rotate(-1);
+                    rotate(1);
                 },
                 fire: function(projectileType) {
                     ProjectileManager.fireRobotProjectile(robotIndex, projectileType);

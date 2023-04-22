@@ -4,16 +4,14 @@ const CollisionManager = (function() {
 
     const saveBodyCollision = function(collidingBody, collidedWithBody) {
         const collidingBodyID = collidingBody.parent.id;
-        const collidingBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidingBodyID];
+        const collidingBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidingBodyID];
 
         // console.log(`Checking for body id: ${collidingBodyID}.  Robot Index: ${collidingBodyRobotIndex}`);
 
-        // If this robot has collided with another robot...
-        if (collidingBodyRobotIndex !== undefined) {
-            let collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
-            if (!collidingBodyRobotCollisions) {
-                collidingBodyRobotCollisions = [];
-            }
+        // If this colliding body is a robot...
+        if (collidingBodyObjectType.type === PhysicsObjectType.RobotBody) {
+            const collidingBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidingBodyID];
+            const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
 
             // Add the information about the other collision for this robot
             const collidedWithBodyID = collidedWithBody.parent.id;
@@ -23,18 +21,21 @@ const CollisionManager = (function() {
                 return;
             }
 
-            let eventInfo = {
+            // Create the event info object which will be passed to the robots api
+            const eventInfo = {
                 type: collidedWithBodyObjectType.type,
                 data: {}
             };
 
+            // If this robot has collided with another robot...
             if (collidedWithBodyObjectType.type === PhysicsObjectType.RobotBody) {
-                let collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
+                const collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
                 // console.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
 
                 // Create the event info data
                 const data = {
-                    name: "", // todo: name of the robot?
+                    robotIndex: collidedWithBodyRobotIndex,
+                    name: RobotsData_Instance.names[collidedWithBodyRobotIndex], 
                     angle: RobotsData_CurrentData.currentRobotAngles[collidedWithBodyRobotIndex],
                     velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBodyRobotIndex]
                 };

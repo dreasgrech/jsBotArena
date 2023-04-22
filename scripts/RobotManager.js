@@ -149,6 +149,8 @@ var RobotManager = (function() {
         // Add the entry for the robot in the per-frame robotCollisions array
         RobotsData_CurrentData.robotCollisions[currentRobotIndex] = [];
 
+        newRobot.create();
+
         // RobotsData.totalRobots++;
         totalRobots++;
         currentRobotIndex++;
