@@ -3,6 +3,8 @@
 var GAME_WIDTH = 1024,
     GAME_HEIGHT = 1024;
 
+var gameRunning = true;
+
 var FrameCounter = (function() {
     const obj = {
         current: 0
@@ -68,7 +70,7 @@ var gameManager = (function() {
         RobotManager.addRobot(shredder);
         setTimeout(() => { RobotManager.addRobot(circleBot); }, 1500);
         setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2000);
-        setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);
+        //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);
 
         UIManager.initialCreate();
 
@@ -83,6 +85,9 @@ var gameManager = (function() {
     };
 
     const update = function(time, delta) {
+        if (!gameRunning) {
+            return;
+        }
         RobotManager.update(time, delta);
 
         UIManager.update(time, delta);

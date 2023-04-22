@@ -31,9 +31,17 @@ var shredder = (function() {
         }
         //api.move();
 
-        var collisionThisFrame = api.collisionsThisFrame;
-        if (collisionThisFrame.length > 0) {
-            console.log(`[${FrameCounter.current}] Shredder collisions: ${collisionThisFrame.length}: `, collisionThisFrame);
+        var collisionsThisFrame = api.collisionsThisFrame;
+        if (collisionsThisFrame.length > 0) {
+            console.log(`[${FrameCounter.current}] Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
+            for (let i = 0; i < collisionsThisFrame.length; i++) {
+                var collisionThisFrame = collisionsThisFrame[i];
+                if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
+                    console.log('firing!');
+                    // api.fire(ProjectileTypes.Medium);
+                }
+
+            }
         }
     };
 

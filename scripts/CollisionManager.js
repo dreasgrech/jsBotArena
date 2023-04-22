@@ -1,13 +1,14 @@
 "use strict";
 
-var CollisionManager = (function() {
+const CollisionManager = (function() {
 
-    var saveBodyCollision = function(collidingBody, collidedWithBody) {
+    const saveBodyCollision = function(collidingBody, collidedWithBody) {
         const collidingBodyID = collidingBody.parent.id;
         const collidingBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidingBodyID];
 
         // console.log(`Checking for body id: ${collidingBodyID}.  Robot Index: ${collidingBodyRobotIndex}`);
 
+        // If this robot has collided with another robot...
         if (collidingBodyRobotIndex !== undefined) {
             let collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
             if (!collidingBodyRobotCollisions) {
@@ -17,7 +18,31 @@ var CollisionManager = (function() {
             // Add the information about the other collision for this robot
             const collidedWithBodyID = collidedWithBody.parent.id;
             const collidedWithBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidedWithBodyID];
-            collidingBodyRobotCollisions.push(collidedWithBodyObjectType);
+            if (collidedWithBodyObjectType == null) {
+                throw "collidedWithBodyObjectType is undefined!!";
+                return;
+            }
+
+            let eventInfo = {
+                type: collidedWithBodyObjectType.type,
+                data: {}
+            };
+
+            if (collidedWithBodyObjectType.type === PhysicsObjectType.RobotBody) {
+                let collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
+                // console.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
+
+                // Create the event info data
+                const data = {
+                    name: "", // todo: name of the robot?
+                    angle: RobotsData_CurrentData.currentRobotAngles[collidedWithBodyRobotIndex],
+                    velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBodyRobotIndex]
+                };
+
+                eventInfo.data = data;
+            }
+
+            collidingBodyRobotCollisions.push(eventInfo);
 
             RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
             // console.log(`Saved RobotsData_CurrentData.robotCollisions[${collidingBodyRobotIndex}] = ${collidingBodyRobotCollisions.length}`);
@@ -45,7 +70,7 @@ var CollisionManager = (function() {
         },
         clearPerFrameData: function() {
             // Clear all the collisions
-            var totalRobots = RobotManager.getTotalRobots();
+            const totalRobots = RobotManager.getTotalRobots();
             for (let i = 0; i < totalRobots; i++) {
                 RobotsData_CurrentData.robotCollisions[i] = [];
                 // console.log(`cleared: ${RobotsData_CurrentData.robotCollisions[i].length} `);

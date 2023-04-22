@@ -160,8 +160,12 @@ var RobotManager = (function() {
             RobotsData_CurrentData.positionXs[i] = robotCenterPosition.x;
             RobotsData_CurrentData.positionYs[i] = robotCenterPosition.y;
 
-            var robotBody = RobotsData_PhysicsBodies.robotBodyImages[i];
-            RobotsData_CurrentData.currentRobotAngles[i] = robotBody.angle;
+            var robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
+            var robotBodyImagePhysicsBody = robotBodyImage.body;
+            RobotsData_CurrentData.currentRobotAngles[i] = robotBodyImage.angle;
+            RobotsData_CurrentData.currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
+
+            // console.log(robotBody.body.velocity);
 
             var turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
             RobotsData_CurrentData.currentTurretAngles[i] = turretImage.angle;
