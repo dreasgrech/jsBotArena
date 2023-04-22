@@ -23,26 +23,26 @@ var PhysicsObjectType = {
 
 var RobotMatterFactory = (function() {
     var createRobot = function({ currentRobotIndex, x, y, scale, robotHullColor = RobotHullColors.Blue }) {
-        var gameContext = GameContextHolder.gameContext;
+        const gameContext = GameContextHolder.gameContext;
 
-        var shapes = gameContext.cache.json.get('Hulls_CollisionData');
+        const shapes = gameContext.cache.json.get('Hulls_CollisionData');
 
-        // TANK BODY
-        const tankBody = gameContext.matter.add.image(
+        // ROBOT HULL
+        const hullImage = gameContext.matter.add.image(
             x, y,
             `Hulls_Color_${robotHullColor}/Hull_01`,
             null,
             {
                 shape: shapes['Hull_01']
             });
-        tankBody.setScale(scale);
-        tankBody.setFrictionAir(0.2);
-        tankBody.setMass(10);
+        hullImage.setScale(scale);
+        hullImage.setFrictionAir(0.2);
+        hullImage.setMass(10);
 
-        var robotMatterBody = tankBody.body;
+        const hullImagePhysicsBody = hullImage.body;
 
         PhysicsHelperFunctions.setCollisionProperties({
-            physicsObject: robotMatterBody,
+            physicsObject: hullImagePhysicsBody,
             group: 0,
             category: PhysicsCategories.RobotBody,
             collidesWithCategories:
@@ -51,36 +51,28 @@ var RobotMatterFactory = (function() {
                 PhysicsCategories.RobotProjectile
         });
 
-        RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = tankBody;
+        RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = hullImage;
 
-        // PhysicsBodies.addArenaBodies(PhysicsObjectType.RobotBody, [tankBody]); // Add all the bodies from the arena to the arena bodies collection
-        PhysicsBodies.addArenaBodies(PhysicsObjectType.RobotBody, [robotMatterBody]); // Add all the bodies from the arena to the arena bodies collection
+        // PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.RobotBody, [tankBody]); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
-        // var tankBodyID = tankBody.body.id;
-        //var tankBodyID = tankBody.id;
-        //RobotManager.matterBodyToObjectType[tankBodyID] =
-        //{
-        //    type: PhysicsObjectType.RobotBody
-        //};
-        //console.log('Added ', tankBodyID, RobotManager.matterBodyToObjectType[tankBodyID]);
-
-        // TANK TURRET
-        var tankTurret = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01' });
-        tankTurret.setScale(scale);
-        tankTurret.setAngle(0);
-        tankTurret.setCollisionCategory(PhysicsCategories.RobotTurret);
-        tankTurret.setCollidesWith(0);
+        // ROBOT TURRET
+        const turretImage = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01' });
+        turretImage.setScale(scale);
+        turretImage.setAngle(0);
+        turretImage.setCollisionCategory(PhysicsCategories.RobotTurret);
+        turretImage.setCollidesWith(0);
 
         // Set the origin of the turret to the base of the turret
-        tankTurret.setOrigin(0.5, 0.75);
+        turretImage.setOrigin(0.5, 0.75);
 
         // Create a constraint to attach the turret to the body
-        var turretConstraint = gameContext.matter.add.constraint(tankBody, tankTurret, 0, 1);
+        const turretConstraint = gameContext.matter.add.constraint(hullImage, turretImage, 0, 1);
 
-        RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = tankTurret;
+        RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = turretImage;
     };
 
-    var obj = {
+    const obj = {
         createRobot: createRobot
     };
 

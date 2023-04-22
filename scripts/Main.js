@@ -53,17 +53,7 @@ var gameManager = (function() {
             collidesWith: PhysicsCategories.RobotBody | PhysicsCategories.RobotProjectile
         });
 
-        //for (let i = 0; i < matterBodies.length; i++) {
-        //    let body = matterBodies[i];
-        //    RobotManager.matterBodyToObjectType[body.id] =
-        //    {
-        //        type: PhysicsObjectType.ArenaWall
-        //    };
-
-        //    // console.log(i, matterBodies[i]);
-        //}
-
-        PhysicsBodies.addArenaBodies(PhysicsObjectType.ArenaWall, matterBodies); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.ArenaWall, matterBodies); // Add all the bodies from the arena to the arena bodies collection
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 

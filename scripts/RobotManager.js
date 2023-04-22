@@ -83,7 +83,7 @@ var RobotManager = (function() {
             category: PhysicsCategories.RobotBody,
             collidesWithCategories: PhysicsCategories.RobotBody | PhysicsCategories.Walls | PhysicsCategories.RobotProjectile
         });
-        PhysicsBodies.addArenaBodies([tankBody]);
+        PhysicsBodies.addArenaPhysicsBodies([tankBody]);
         //PhysicsBodies.isBodyOverlappingWithArenaBodies(tankBody);
 
         var tankTurret = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01'});
