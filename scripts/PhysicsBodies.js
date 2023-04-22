@@ -4,6 +4,7 @@ var PhysicsBodies = (function() {
     var arenaBodies = [];
     // var arenaBodiesBounds = [];
     const matterBodyToObjectType = {};
+    const matterObjectIDToRobotIndex = {};
 
     function computeAABB(vertices) {
         let minX = vertices[0].x;
@@ -73,7 +74,7 @@ var PhysicsBodies = (function() {
 
             for (let i = 0; i < bodies.length; i++) {
                 let body = bodies[i];
-                console.log(body);
+                // console.log(body);
                 matterBodyToObjectType[body.id] =
                 {
                     type: physicsObjectType
@@ -83,6 +84,7 @@ var PhysicsBodies = (function() {
             }
         },
         matterBodyToObjectType: matterBodyToObjectType,
+        matterObjectIDToEntityIndex: matterObjectIDToRobotIndex,
         isBodyOverlappingWithArenaBodies: isBodyOverlappingWithArenaBodies
     };
 

@@ -53,8 +53,12 @@ var RobotMatterFactory = (function() {
 
         RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = hullImage;
 
-        // PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.RobotBody, [tankBody]); // Add all the bodies from the arena to the arena bodies collection
         PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
+
+        // Make a reference to the current robot index from the matter object id
+        var hullImagePhysicsBodyID = hullImagePhysicsBody.id;
+        PhysicsBodies.matterObjectIDToEntityIndex[hullImagePhysicsBodyID] = currentRobotIndex;
+        console.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 
         // ROBOT TURRET
         const turretImage = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01' });

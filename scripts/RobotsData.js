@@ -1,7 +1,7 @@
 "use strict";
 
 var RobotsData_PhysicsBodies = (function() {
-    var obj = {
+    const obj = {
         robotBodyImages: [],
         robotTurretImages: []
     };
@@ -9,13 +9,16 @@ var RobotsData_PhysicsBodies = (function() {
     return obj;
 }());
 
+// Data that is updated per frame
 var RobotsData_CurrentData = (function() {
-    var obj = {
+    const obj = {
         positionXs: [],
         positionYs: [],
         currentRobotAngles: [],
         currentTurretAngles: [],
         currentRadarAngles: [],
+        robotCollisions: [], // [[{,,}], [{,,}], [{,,}]]
+        totalCollisions: 0,
         getPosition: function(index) {
             return new Phaser.Math.Vector2(obj.positionXs[index], obj.positionYs[index]);
         }
@@ -25,7 +28,7 @@ var RobotsData_CurrentData = (function() {
 }());
 
 var RobotsData_Instance = (function() {
-    var obj = {
+    const obj = {
         ids: [],
         names: [],
         updateFunctions: [],
@@ -37,7 +40,7 @@ var RobotsData_Instance = (function() {
 }());
 
 var RobotsData_Radar = (function() {
-    var obj = {
+    const obj = {
         radarGraphics: [],
         radarFOVAngles: [],
         radarMaxScanDistance: []

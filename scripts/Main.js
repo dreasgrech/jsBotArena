@@ -3,6 +3,14 @@
 var GAME_WIDTH = 1024,
     GAME_HEIGHT = 1024;
 
+var FrameCounter = (function() {
+    const obj = {
+        current: 0
+    };
+
+    return obj;
+}());
+
 var gameManager = (function() {
 
     var preload = function() {
@@ -65,54 +73,29 @@ var gameManager = (function() {
         UIManager.initialCreate();
 
         gameContext.matter.world.on('collisionstart',
-            // function(event, bodyA, bodyB) {
-            function(event) {
-                const eventPairs = event.pairs;
-                if (eventPairs.length > 0) {
-                    console.log("Total pairs ", eventPairs.length);
-                    for (let i = 0; i < eventPairs.length; i++) {
-                        const pair = eventPairs[i];
-                        const bodyA = pair.bodyA;
-                        const bodyB = pair.bodyB;
-
-                        // console.log('collision', bodyA, bodyB);
-                        // var bodyA_ID = bodyA.id;
-                        const bodyA_ID = bodyA.parent.id;
-                        //var bodyA_ID = bodyA.gameObject.body.id;
-                        //var bodyB_ID = bodyB.id;
-                        // var bodyB_ID = bodyB.gameObject.body.id;
-                        const bodyB_ID = bodyB.parent.id;
-
-                        //console.log('a: ', bodyA_ID, ', b: ', bodyB_ID);
-
-                        const bodyA_objectType = PhysicsBodies.matterBodyToObjectType[bodyA_ID];
-                        const bodyB_objectType = PhysicsBodies.matterBodyToObjectType[bodyB_ID];
-
-                        console.log(`A (${bodyA_ID})`, bodyA_objectType, `B (${bodyB_ID})`, bodyB_objectType);
-                        // console.log(bodyA, bodyB);
-
-                        // console.log(pair);
-                    }
-                }
-                // console.log(event.pairs);
+            function(event /* , bodyA, bodyB */) {
+                CollisionManager.handleEvent_CollisionStart(event);
             });
-
-        /*************************/
-        //var x = GAME_WIDTH*0.5, y = GAME_HEIGHT*0.5;
-        //RobotMatterFactory.createRobot({
-        //    currentRobotIndex: 0,
-        //    scale: 0.4,
-        //    x: x,
-        //    y: y,
-        //    robotHullColor: RobotHullColors.Brown
-        //});
-        /*************************/
     };
 
-    var update = function(time, delta) {
+    const clearPerFrameData = function() {
+        CollisionManager.clearPerFrameData();
+    };
+
+    const update = function(time, delta) {
         RobotManager.update(time, delta);
 
         UIManager.update(time, delta);
+
+        //if (RobotsData_CurrentData.totalCollisions > 0) {
+        //    console.log(`<${FrameCounter.current}> Total Pairs: ${RobotsData_CurrentData.totalCollisions}`);
+        //}
+
+        // Since we're now at the end of frame, clear any per-frame data
+        clearPerFrameData();
+
+        // Increase the frame counter
+        FrameCounter.current++;
     };
 
     return {
@@ -142,6 +125,3 @@ GameContextHolder.game = new Phaser.Game({
         }
     }
 });
-
-var compoundBody;
-
