@@ -15,6 +15,12 @@ var ProjectileTypes = {
     Shotgun: 'Shotgun_Shell'
 };
 
+var PhysicsObjectType = {
+    RobotBody: 'RobotBody',
+    ArenaWall: 'ArenaWall',
+    Projectile: 'Projectile'
+};
+
 var RobotMatterFactory = (function() {
     var createRobot = function({ currentRobotIndex, x, y, scale, robotHullColor = RobotHullColors.Blue }) {
         var gameContext = GameContextHolder.gameContext;
@@ -46,6 +52,14 @@ var RobotMatterFactory = (function() {
         RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = tankBody;
 
         PhysicsBodies.addArenaBodies([tankBody]);
+
+        var tankBodyID = tankBody.body.id;
+        //var tankBodyID = tankBody.id;
+        RobotManager.matterBodyToObjectType[tankBodyID] =
+        {
+            type: PhysicsObjectType.RobotBody
+        };
+        console.log('Added ', tankBodyID, RobotManager.matterBodyToObjectType[tankBodyID]);
 
         // TANK TURRET
         var tankTurret = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01' });

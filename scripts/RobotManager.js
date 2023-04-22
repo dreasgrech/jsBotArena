@@ -181,10 +181,13 @@ var RobotManager = (function() {
         }
     };
 
-    return {
+    var obj = {
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
-        update: update
+        update: update,
+        matterBodyToObjectType: {}
     };
+
+    return obj;
 }());
 

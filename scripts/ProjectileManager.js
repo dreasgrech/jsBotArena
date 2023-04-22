@@ -34,10 +34,10 @@ var ProjectileManager = (function() {
                 PhysicsCategories.RobotProjectile
         });
 
-        bullet.body.onCollideCallback = function() {
-            console.log('collided');
-            bullet.destroy();
-        };
+        //bullet.body.onCollideCallback = function() {
+        //    console.log('collided');
+        //    bullet.destroy();
+        //};
 
         return bullet;
     };

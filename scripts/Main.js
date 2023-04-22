@@ -52,22 +52,46 @@ var gameManager = (function() {
             collisionCategory: PhysicsCategories.Walls,
             collidesWith: PhysicsCategories.RobotBody | PhysicsCategories.RobotProjectile
         });
+
+        for (let i = 0; i < matterBodies.length; i++) {
+            let body = matterBodies[i];
+            RobotManager.matterBodyToObjectType[body.id] =
+            {
+                type: PhysicsObjectType.ArenaWall
+            };
+
+            // console.log(i, matterBodies[i]);
+        }
+
         PhysicsBodies.addArenaBodies(matterBodies); // Add all the bodies from the arena to the arena bodies collection
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
-        /*
         RobotManager.addRobot(shredder);
-        RobotManager.addRobot(circleBot);
-        // RobotManager.addRobot(doNothingBot);
-        RobotManager.addRobot(doNothingBot);
-        */
-        setTimeout(() => { RobotManager.addRobot(shredder); }, 1000);
-        setTimeout(() => { RobotManager.addRobot(circleBot); }, 1500);
-        setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2000);
-        setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);
+        //setTimeout(() => { RobotManager.addRobot(circleBot); }, 1500);
+        //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2000);
+        //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);
 
         UIManager.initialCreate();
+
+        gameContext.matter.world.on('collisionstart',
+            function(event, bodyA, bodyB) {
+                // console.log('collision', bodyA, bodyB);
+                // var bodyA_ID = bodyA.id;
+                var bodyA_ID = bodyA.parent.id;
+                //var bodyA_ID = bodyA.gameObject.body.id;
+                //var bodyB_ID = bodyB.id;
+                // var bodyB_ID = bodyB.gameObject.body.id;
+                var bodyB_ID = bodyB.parent.id;
+
+                //console.log('a: ', bodyA_ID, ', b: ', bodyB_ID);
+
+                var bodyA_objectType = RobotManager.matterBodyToObjectType[bodyA_ID];
+                var bodyB_objectType = RobotManager.matterBodyToObjectType[bodyB_ID];
+
+                console.log(`A (${bodyA_ID})`, bodyA_objectType, `B (${bodyB_ID})`, bodyB_objectType);
+                // console.log(bodyA, bodyB);
+            });
 
         /*************************/
         //var x = GAME_WIDTH*0.5, y = GAME_HEIGHT*0.5;
