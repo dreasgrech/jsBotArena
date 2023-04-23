@@ -4,13 +4,14 @@ const RobotAPIFactory = (function() {
     const createAPI = function(robotIndex) {
         return (function(robotIndex) {
 
-            const constantAngularVelocityForRotation = 0.05;
+            const constantAngularVelocityForRotation = 0.01;
 
             const move = function(direction) {
                 const tankBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
                 const tankSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
 
-                const angle = tankBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+                // const angle = tankBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+                const angle = RobotsData_CurrentData.currentRobotAngles[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
                 const angleRadians = Phaser.Math.DegToRad(angle);
 
                 //console.log(angle);
@@ -23,8 +24,8 @@ const RobotAPIFactory = (function() {
 
             const rotate = function(direction) {
                 const tankBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
-                const angularVelocity = constantAngularVelocityForRotation * direction;
 
+                const angularVelocity = constantAngularVelocityForRotation * direction;
                 tankBody.setAngularVelocity(angularVelocity);
             };
 

@@ -1,8 +1,8 @@
 "use strict";
 
-var RobotManager = (function() {
-    var currentRobotIndex = 0;
-    var totalRobots = 0;
+const RobotManager = (function() {
+    let currentRobotIndex = 0;
+    let totalRobots = 0;
 
     //var placeRobotInArena = function(tankBody) {
     //    var maxAttempts = 10;
@@ -25,14 +25,14 @@ var RobotManager = (function() {
     //    }
     //};
 
-    var addRobot = function(newRobot) {
+    const addRobot = function(newRobot) {
         RobotsData_Instance.ids[currentRobotIndex] = currentRobotIndex;
         RobotsData_Instance.names[currentRobotIndex] = newRobot.name;
         RobotsData_Instance.updateFunctions[currentRobotIndex] = newRobot.update;
 
-        var robotScale = 0.4;
+        const robotScale = 0.4;
 
-        var gameContext = GameContextHolder.gameContext;
+        const gameContext = GameContextHolder.gameContext;
 
         //var gameObject = scene.matter.add.gameObject(gameObject);
         /*********************/
@@ -113,7 +113,7 @@ var RobotManager = (function() {
         // var trackA = 
 
         // Create the API for the robot
-        var api = RobotAPIFactory.createAPI(currentRobotIndex);
+        const api = RobotAPIFactory.createAPI(currentRobotIndex);
         RobotsData_Instance.robotAPIs[currentRobotIndex] = api;
 
         // Set the speed
@@ -149,6 +149,7 @@ var RobotManager = (function() {
         // Add the entry for the robot in the per-frame robotCollisions array
         RobotsData_CurrentData.robotCollisions[currentRobotIndex] = [];
 
+        // Call the robot's create() method
         newRobot.create();
 
         // RobotsData.totalRobots++;
@@ -156,20 +157,20 @@ var RobotManager = (function() {
         currentRobotIndex++;
     };
 
-    var update = function(time, delta) {
-        for (var i = 0; i < totalRobots; i++) {
-            var robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
+    const update = function(time, delta) {
+        for (let i = 0; i < totalRobots; i++) {
+            const robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
             RobotsData_CurrentData.positionXs[i] = robotCenterPosition.x;
             RobotsData_CurrentData.positionYs[i] = robotCenterPosition.y;
 
-            var robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
-            var robotBodyImagePhysicsBody = robotBodyImage.body;
+            const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
+            const robotBodyImagePhysicsBody = robotBodyImage.body;
             RobotsData_CurrentData.currentRobotAngles[i] = robotBodyImage.angle;
             RobotsData_CurrentData.currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
             // console.log(robotBody.body.velocity);
 
-            var turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
+            const turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
             RobotsData_CurrentData.currentTurretAngles[i] = turretImage.angle;
 
             RobotsRadar.scanForRobots(i);
@@ -184,19 +185,19 @@ var RobotManager = (function() {
             RobotsData_CurrentData.currentRadarAngles[i] += 1;
             /*************************/
 
-            var api = RobotsData_Instance.robotAPIs[i];
-            var collisionsThisFrame = RobotsData_CurrentData.robotCollisions[i];
+            const api = RobotsData_Instance.robotAPIs[i];
+            const collisionsThisFrame = RobotsData_CurrentData.robotCollisions[i];
             api.collisionsThisFrame = collisionsThisFrame;
             // console.log(`<${FrameCounter.current}> RobotsData_CurrentData.robotCollisions[${i}]: ${api.collisionsThisFrame}`);
             // console.log(`<${FrameCounter.current}> RobotsData_CurrentData.robotCollisions[${i}]: ${RobotsData_CurrentData.robotCollisions[i]}`);
             // console.log(RobotsData_CurrentData.robotCollisions[i].length);
 
-            var updateFunction = RobotsData_Instance.updateFunctions[i];
+            const updateFunction = RobotsData_Instance.updateFunctions[i];
             updateFunction(api, time, delta);
         }
     };
 
-    var obj = {
+    const obj = {
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update,

@@ -33,13 +33,18 @@ var RobotMatterFactory = (function() {
             `Hulls_Color_${robotHullColor}/Hull_01`,
             null,
             {
-                shape: shapes['Hull_01']
+                shape: shapes['Hull_01'],
+                // density: 100 // doesnt work
             });
         hullImage.setScale(scale);
         hullImage.setFrictionAir(0.2);
-        hullImage.setMass(10);
 
         const hullImagePhysicsBody = hullImage.body;
+
+        var area = hullImagePhysicsBody.area;
+        var density = 0.01;
+        hullImage.setDensity(density);
+        console.log("area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
 
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: hullImagePhysicsBody,

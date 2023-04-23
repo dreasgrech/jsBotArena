@@ -103,6 +103,19 @@ var keyBot = (function() {
         //    if (cursors.space.isDown) {
         //        api.fire(ProjectileTypes.Heavy);
         //    }
+
+        var collisionsThisFrame = api.collisionsThisFrame;
+        if (collisionsThisFrame.length > 0) {
+            console.log(`[${FrameCounter.current}] KeyBot collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
+            for (let i = 0; i < collisionsThisFrame.length; i++) {
+                var collisionThisFrame = collisionsThisFrame[i];
+                if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
+                    console.log('firing!');
+                    // api.fire(ProjectileTypes.Medium);
+                }
+
+            }
+        }
         }
     };
 }());
