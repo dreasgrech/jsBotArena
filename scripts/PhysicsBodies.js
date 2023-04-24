@@ -26,8 +26,8 @@ var PhysicsBodies = (function() {
         //var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
         //console.log(bodyBounds);
         //return false;
-        // const tankAABB = computeAABB(body.vertices);
-        // console.log(tankAABB);
+        // const robotAABB = computeAABB(body.vertices);
+        // console.log(robotAABB);
         //console.log(body.parts);
         // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
         // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
@@ -37,8 +37,8 @@ var PhysicsBodies = (function() {
         // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds();
         var bodyBounds = body.getBounds();
 
-// Phaser.Physics.Matter.Matter.Bounds.overlaps(tankBody.bounds, existingTankBody.bounds)
-        //if (Phaser.Physics.Matter.Matter.Bounds.overlaps(tankBody.bounds, existingTankBody.bounds))
+// Phaser.Physics.Matter.Matter.Bounds.overlaps(robotBody.bounds, existingRobotBody.bounds)
+        //if (Phaser.Physics.Matter.Matter.Bounds.overlaps(robotBody.bounds, existingRobotBody.bounds))
 
 
         for (var i = 0; i < arenaBodies.length; i++) {
@@ -62,7 +62,7 @@ var PhysicsBodies = (function() {
             //for (var i = 0; i < bodies.length; i++) {
             //    //arenaBodiesBounds.push(bodies[i].getBounds());
             //    var body = bodies[i];
-            //    //    var tankAABB = new Phaser.Geom.Rectangle(
+            //    //    var robotAABB = new Phaser.Geom.Rectangle(
             //    //        body.bounds.min.x,
             //    //        body.bounds.min.y,
             //    //        body.bounds.max.x - body.bounds.min.x,

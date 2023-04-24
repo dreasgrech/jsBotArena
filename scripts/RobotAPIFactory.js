@@ -7,26 +7,26 @@ const RobotAPIFactory = (function() {
             const constantAngularVelocityForRotation = 0.01;
 
             const move = function(direction) {
-                const tankBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
-                const tankSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
+                const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
+                const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
 
-                // const angle = tankBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+                // const angle = robotBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
                 const angle = RobotsData_CurrentData.currentRobotAngles[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
                 const angleRadians = Phaser.Math.DegToRad(angle);
 
                 //console.log(angle);
-                const force = new Phaser.Math.Vector2(Math.cos(angleRadians) * tankSpeed * direction, Math.sin(angleRadians) * tankSpeed * direction); // * tankSpeed;
-                tankBody.applyForce(force);
-                //console.log(tankBody.getCenter());
-                // console.log(tankBody.getBounds());
-                // tankBody.thrust(0.1);
+                const force = new Phaser.Math.Vector2(Math.cos(angleRadians) * robotSpeed * direction, Math.sin(angleRadians) * robotSpeed * direction);
+                robotBody.applyForce(force);
+                //console.log(robotBody.getCenter());
+                // console.log(robotBody.getBounds());
+                // robotBody.thrust(0.1);
             };
 
             const rotate = function(direction) {
-                const tankBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
+                const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
 
                 const angularVelocity = constantAngularVelocityForRotation * direction;
-                tankBody.setAngularVelocity(angularVelocity);
+                robotBody.setAngularVelocity(angularVelocity);
             };
 
             const obj = {

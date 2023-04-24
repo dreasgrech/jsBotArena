@@ -4,24 +4,24 @@ const RobotManager = (function() {
     let currentRobotIndex = 0;
     let totalRobots = 0;
 
-    //var placeRobotInArena = function(tankBody) {
+    //var placeRobotInArena = function(robotBody) {
     //    var maxAttempts = 10;
     //    var attempts = 0;
     //    var x, y;
 
-    //    while (attempts < maxAttempts && PhysicsBodies.isBodyOverlappingWithArenaBodies(tankBody)) {
+    //    while (attempts < maxAttempts && PhysicsBodies.isBodyOverlappingWithArenaBodies(robotBody)) {
     //        // Generate new random position
     //        x = Math.random() * (GAME_WIDTH * 0.7);
     //        y = Math.random() * (GAME_HEIGHT * 0.7);
 
-    //        // Update tankBody position
-    //        tankBody.setPosition(x, y);
+    //        // Update robotBody position
+    //        robotBody.setPosition(x, y);
 
     //        attempts++;
     //    }
 
     //    if (attempts >= maxAttempts) {
-    //        console.log("Failed to place the tank without overlapping after", maxAttempts, "attempts.");
+    //        console.log("Failed to place the robot without overlapping after", maxAttempts, "attempts.");
     //    }
     //};
 
@@ -63,44 +63,6 @@ const RobotManager = (function() {
 
 
         /*****************************/
-        /*
-        var tankBody =
-            MatterPhysicsHelpers.loadImage({
-                x: x,
-                y: y,
-                id: 'Hulls_Color_A/Hull_01',
-                //shapes: shapes
-            });
-        //placeRobotInArena(tankBody);
-        tankBody.setScale(robotScale);
-        tankBody.setFrictionAir(0.2);
-        tankBody.setMass(10);
-        // tankBody.setAngle(45);
-        RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = tankBody;
-        PhysicsHelperFunctions.setCollisionProperties({
-            physicsObject: tankBody.body,
-            group: 0,
-            category: PhysicsCategories.RobotBody,
-            collidesWithCategories: PhysicsCategories.RobotBody | PhysicsCategories.Walls | PhysicsCategories.RobotProjectile
-        });
-        PhysicsBodies.addArenaPhysicsBodies([tankBody]);
-        //PhysicsBodies.isBodyOverlappingWithArenaBodies(tankBody);
-
-        var tankTurret = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01'});
-        tankTurret.setScale(robotScale);
-        tankTurret.setAngle(0);
-        tankTurret.setCollisionCategory(PhysicsCategories.RobotTurret);
-        tankTurret.setCollidesWith(0);
-
-        // Set the origin of the turret to the base of the turret
-        tankTurret.setOrigin(0.5, 0.75);
-
-        // Create a constraint to attach the turret to the body
-        var turretConstraint = GameContextHolder.gameContext.matter.add.constraint(tankBody, tankTurret, 0, 1);
-
-        RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = tankTurret;
-        */
-
         RobotMatterFactory.createRobot({
             currentRobotIndex: currentRobotIndex,
             scale: 0.4,
@@ -125,20 +87,12 @@ const RobotManager = (function() {
         //// Update the turret rotation based on pointer location
         /*
         GameContextHolder.gameContext.input.on('pointermove', (pointer) => {
-            // const angle = Phaser.Math.Angle.Between(tankTurret.x, tankTurret.y, pointer.x, pointer.y);
-            const angle = Phaser.Math.Angle.Between(tankBody.x, tankBody.y, pointer.x, pointer.y);
-            // tankTurret.setAngle(Phaser.Math.RadToDeg(angle));
-            tankBody.setAngle(Phaser.Math.RadToDeg(angle));
         });
         */
 
-        // Listen for a pointerdown event to apply force to the tank body
+        // Listen for a pointerdown event to apply force to the robot body
         /*
         GameContextHolder.gameContext.input.on('pointerdown', () => {
-            var forceMagnitude = 0.005; // Change this value to adjust the force applied
-            var angle = this.tankTurret.rotation;
-            var force = new Phaser.Math.Vector2(Math.cos(angle) * forceMagnitude, Math.sin(angle) * forceMagnitude);
-            tankBody.applyForce(force);
         });
         */
         /*****************************/

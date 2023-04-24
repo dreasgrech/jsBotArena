@@ -2,7 +2,7 @@
 
 var ImageDatabase = (function() {
     const baseImagesDirectory = 'images';
-    const tankImagesDirectory = `${baseImagesDirectory}/robots`;
+    const robotImagesDirectory = `${baseImagesDirectory}/robots`;
     const projectileImagesDirectory = `${baseImagesDirectory}/Projectiles`;
     const tracksImagesDirectory = `${baseImagesDirectory}/Tracks`;
 
@@ -42,7 +42,7 @@ var ImageDatabase = (function() {
             // Iterate Hulls variations
             for (let j = 0; j < totalHullsVariations; j++) {
                 let fileName = `Hull_0${j + 1}`;
-                let fullPath = `${tankImagesDirectory}/${directoryName}/${fileName}.png`;
+                let fullPath = `${robotImagesDirectory}/${directoryName}/${fileName}.png`;
 
                 let imageIdentifier = `${directoryName}/${fileName}`;
 
@@ -58,7 +58,7 @@ var ImageDatabase = (function() {
             // Iterate weapons variations
             for (let j = 0; j < totalWeaponsVariations; j++) {
                 let fileName = `Gun_0${j + 1}`;
-                let fullPath = `${tankImagesDirectory}/${directoryName}/${fileName}.png`;
+                let fullPath = `${robotImagesDirectory}/${directoryName}/${fileName}.png`;
 
                 let imageIdentifier = `${directoryName}/${fileName}`;
 
