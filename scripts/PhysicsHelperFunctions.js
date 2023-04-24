@@ -1,8 +1,8 @@
 "use strict";
 
-var PhysicsHelperFunctions = (function() {
-    var setCollisionProperties = function({ physicsObject, group, category, collidesWithCategories }) {
-        var collisionFilter = physicsObject.collisionFilter;
+const PhysicsHelperFunctions = (function() {
+    const setCollisionProperties = function({ physicsObject, group, category, collidesWithCategories }) {
+        const collisionFilter = physicsObject.collisionFilter;
         collisionFilter.group = group;
         collisionFilter.category = category;
         collisionFilter.mask = collidesWithCategories;
@@ -34,7 +34,7 @@ var PhysicsHelperFunctions = (function() {
         },
         // Shows collision on a layer with a different color for debugging.
         showDebugLayerCollisions: function(layer) {
-            var debugGraphics = GameContextHolder.gameContext.add.graphics().setAlpha(0.75);
+            const debugGraphics = GameContextHolder.gameContext.add.graphics().setAlpha(0.75);
             layer.renderDebug(debugGraphics,
                 {
                     tileColor: null, // Color of non-colliding tiles

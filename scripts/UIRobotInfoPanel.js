@@ -1,19 +1,19 @@
 "use strict";
 
-var UIRobotInfoPanel = (function() {
+const UIRobotInfoPanel = (function() {
     const panelWidth = 300; // Width of the panel
     const panelHeight = 600; // Height of the panel
 
     const panelY = 0; // Y position of the panel
 
-    var robotIds = [];
-    var robotInfoTexts = [];
+    const robotIds = [];
+    const robotInfoTexts = [];
 
-    var titleText;
+    let titleText;
 
-    var obj = {
+    const obj = {
         create: function() {
-            var gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.gameContext;
 
             const panelX = gameContext.cameras.main.width - panelWidth; // X position of the panel
 
@@ -32,7 +32,7 @@ var UIRobotInfoPanel = (function() {
                 }).setOrigin(0.5, 0);
         },
         add: function(robotIndex) {
-            var gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.gameContext;
 
             robotIds.push(robotIndex);
 

@@ -1,13 +1,13 @@
 "use strict";
 
-var shredder = (function() {
+const shredder = (function() {
 
-    var timeElapsed = 0;
-    var interval = 3000; // Move for one second, then stop for two seconds
-    var rotateTimer = 0;
-    var rotateInterval = 1000; // Rotate every one second
+    let timeElapsed = 0;
+    const interval = 3000; // Move for one second, then stop for two seconds
+    let rotateTimer = 0;
+    const rotateInterval = 1000; // Rotate every one second
 
-    var update = function(api, time, delta) {
+    const update = function(api, time, delta) {
         timeElapsed += delta;
         rotateTimer += delta;
 
@@ -31,11 +31,11 @@ var shredder = (function() {
         }
         //api.move();
 
-        var collisionsThisFrame = api.collisionsThisFrame;
+        const collisionsThisFrame = api.collisionsThisFrame;
         if (collisionsThisFrame.length > 0) {
             console.log(`[${FrameCounter.current}] Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
             for (let i = 0; i < collisionsThisFrame.length; i++) {
-                var collisionThisFrame = collisionsThisFrame[i];
+                const collisionThisFrame = collisionsThisFrame[i];
                 if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
                     console.log('firing!');
                     // api.fire(ProjectileTypes.Medium);
@@ -52,12 +52,12 @@ var shredder = (function() {
     };
 }());
 
-var circleBot = (function() {
+const circleBot = (function() {
 
-    var forwardSpeed = 1; // Adjust this value to change the forward speed
-    var rotationSpeed = 30; // Adjust this value to change the rotation speed
+    const forwardSpeed = 1; // Adjust this value to change the forward speed
+    const rotationSpeed = 30; // Adjust this value to change the rotation speed
 
-    var update = function(api, time, delta) {
+    const update = function(api, time, delta) {
         // Constantly move forward with a custom forward speed
         for (let i = 0; i < forwardSpeed; i++) {
             api.move();
@@ -76,7 +76,7 @@ var circleBot = (function() {
     };
 }());
 
-var keyBot = (function() {
+const keyBot = (function() {
     let gameContext;
     let cursors;
 
@@ -104,11 +104,11 @@ var keyBot = (function() {
         //        api.fire(ProjectileTypes.Heavy);
         //    }
 
-        var collisionsThisFrame = api.collisionsThisFrame;
+        const collisionsThisFrame = api.collisionsThisFrame;
         if (collisionsThisFrame.length > 0) {
             console.log(`[${FrameCounter.current}] KeyBot collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
             for (let i = 0; i < collisionsThisFrame.length; i++) {
-                var collisionThisFrame = collisionsThisFrame[i];
+                const collisionThisFrame = collisionsThisFrame[i];
                 if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
                     console.log('firing!');
                     // api.fire(ProjectileTypes.Medium);
@@ -120,7 +120,7 @@ var keyBot = (function() {
     };
 }());
 
-var doNothingBot = (function() {
+const doNothingBot = (function() {
     return {
         name: 'doNothing',
         create: function(){},

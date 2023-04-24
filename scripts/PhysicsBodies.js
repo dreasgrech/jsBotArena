@@ -1,8 +1,8 @@
 "use strict";
 
-var PhysicsBodies = (function() {
-    var arenaBodies = [];
-    // var arenaBodiesBounds = [];
+const PhysicsBodies = (function() {
+    let arenaBodies = [];
+    // const arenaBodiesBounds = [];
     const matterBodyToObjectType = {};
     const matterObjectIDToRobotIndex = {};
 
@@ -22,31 +22,31 @@ var PhysicsBodies = (function() {
         return new Phaser.Geom.Rectangle(minX, minY, maxX - minX, maxY - minY);
     }
 
-    var isBodyOverlappingWithArenaBodies = function(body) {
-        //var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
+    const isBodyOverlappingWithArenaBodies = function(body) {
+        //const bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
         //console.log(bodyBounds);
         //return false;
         // const robotAABB = computeAABB(body.vertices);
         // console.log(robotAABB);
         //console.log(body.parts);
-        // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
-        // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
+        // const bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
+        // const bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
         // console.log(bodyBounds.body.vertices);
-        // var bodyBounds = body.getCenter();
+        // const bodyBounds = body.getCenter();
 
-        // var bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds();
-        var bodyBounds = body.getBounds();
+        // const bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds();
+        const bodyBounds = body.getBounds();
 
 // Phaser.Physics.Matter.Matter.Bounds.overlaps(robotBody.bounds, existingRobotBody.bounds)
         //if (Phaser.Physics.Matter.Matter.Bounds.overlaps(robotBody.bounds, existingRobotBody.bounds))
 
 
         for (var i = 0; i < arenaBodies.length; i++) {
-            var arenaBody = arenaBodies[i];
-            // var arenaBodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(arenaBody);
-            var arenaBodyBounds = arenaBody.getBounds();
+            const arenaBody = arenaBodies[i];
+            // const arenaBodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(arenaBody);
+            const arenaBodyBounds = arenaBody.getBounds();
 
-            var collides = Phaser.Physics.Matter.Matter.Bounds.overlaps(bodyBounds, arenaBodyBounds);
+            const collides = Phaser.Physics.Matter.Matter.Bounds.overlaps(bodyBounds, arenaBodyBounds);
             if (collides) {
                 return true;
             }
@@ -57,12 +57,12 @@ var PhysicsBodies = (function() {
 
     const obj = {
         addArenaPhysicsBodies: function(physicsObjectType, bodies) {
-            var arenaBodiesTotalBeforeAdd = arenaBodies.length;
+            const arenaBodiesTotalBeforeAdd = arenaBodies.length;
             arenaBodies = arenaBodies.concat(bodies);
             //for (var i = 0; i < bodies.length; i++) {
             //    //arenaBodiesBounds.push(bodies[i].getBounds());
-            //    var body = bodies[i];
-            //    //    var robotAABB = new Phaser.Geom.Rectangle(
+            //    const body = bodies[i];
+            //    //    const robotAABB = new Phaser.Geom.Rectangle(
             //    //        body.bounds.min.x,
             //    //        body.bounds.min.y,
             //    //        body.bounds.max.x - body.bounds.min.x,

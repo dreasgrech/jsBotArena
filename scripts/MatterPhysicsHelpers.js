@@ -1,15 +1,15 @@
 "use strict";
 
-var MatterPhysicsHelpers = (function() {
+const MatterPhysicsHelpers = (function() {
 
-    var loadImage = function({ x, y, id, shapes }) {
-        var options = {};
+    const loadImage = function({ x, y, id, shapes }) {
+        const options = {};
         if (shapes) {
             options.vertices = shapes;
             //console.log(shapes);
         }
 
-        var image = GameContextHolder.gameContext.matter.add.image(x, y, id, null, options);
+        const image = GameContextHolder.gameContext.matter.add.image(x, y, id, null, options);
         return image;
     }
 

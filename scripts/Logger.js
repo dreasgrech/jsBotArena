@@ -1,6 +1,6 @@
 "use strict";
 
-var Logger = (function() {
+const Logger = (function() {
     const formatMessage = function(text) {
         return `<${FrameCounter.current}> ${text}`;
     };

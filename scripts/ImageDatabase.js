@@ -1,6 +1,6 @@
 "use strict";
 
-var ImageDatabase = (function() {
+const ImageDatabase = (function() {
     const baseImagesDirectory = 'images';
     const robotImagesDirectory = `${baseImagesDirectory}/robots`;
     const projectileImagesDirectory = `${baseImagesDirectory}/Projectiles`;
@@ -12,13 +12,13 @@ var ImageDatabase = (function() {
     const totalWeaponsColors = 4, totalWeaponsVariations = 8;
     const totalTracks = 4;
 
-    var loadImage = function(identifier, filePath) {
+    const loadImage = function(identifier, filePath) {
         GameContextHolder.gameContext.load.image(identifier, filePath);
         // console.log(identifier, filePath);
     };
 
     // Loads all the filenames in the directory
-    var loadImageList = function(filenames, directory) {
+    const loadImageList = function(filenames, directory) {
         for (let i = 0; i < filenames.length; i++) {
             let filename = filenames[i];
             let fullPath = `${directory}/${filename}`;
@@ -29,7 +29,7 @@ var ImageDatabase = (function() {
         }
     };
 
-    var loadAllImages = function() {
+    const loadAllImages = function() {
 
         // Load arena images
         loadImage('floor_image', 'images/Floor - Dirt 2 64x64.png');

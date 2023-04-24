@@ -1,10 +1,10 @@
 "use strict";
 
-var RobotsBoundsHelpers = (function() {
+const RobotsBoundsHelpers = (function() {
 
-    var obj = {
+    const obj = {
         getCenter: function(index) {
-            var robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
+            const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
             return robotBodyImage.getCenter();
         }
     };

@@ -1,6 +1,6 @@
 "use strict";
 
-var RobotsData_PhysicsBodies = (function() {
+const RobotsData_PhysicsBodies = (function() {
     const obj = {
         robotBodyImages: [],
         robotTurretImages: []
@@ -28,7 +28,7 @@ const RobotsData_CurrentData = (function() {
     return obj;
 }());
 
-var RobotsData_Instance = (function() {
+const RobotsData_Instance = (function() {
     const obj = {
         ids: [],
         names: [],
@@ -40,7 +40,7 @@ var RobotsData_Instance = (function() {
     return obj;
 }());
 
-var RobotsData_Radar = (function() {
+const RobotsData_Radar = (function() {
     const obj = {
         radarGraphics: [],
         radarFOVAngles: [],

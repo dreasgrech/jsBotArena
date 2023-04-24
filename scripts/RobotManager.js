@@ -4,8 +4,8 @@ const RobotManager = (function() {
     let currentRobotIndex = 0;
     let totalRobots = 0;
 
-    //var placeRobotInArena = function(robotBody) {
-    //    var maxAttempts = 10;
+    //const placeRobotInArena = function(robotBody) {
+    //    const maxAttempts = 10;
     //    var attempts = 0;
     //    var x, y;
 
@@ -34,7 +34,7 @@ const RobotManager = (function() {
 
         const gameContext = GameContextHolder.gameContext;
 
-        //var gameObject = scene.matter.add.gameObject(gameObject);
+        //const gameObject = scene.matter.add.gameObject(gameObject);
         /*********************/
         // createCustomBody()
         const x = GAME_WIDTH * .5,
@@ -43,8 +43,8 @@ const RobotManager = (function() {
         //console.log('vertices', vertices);
         /*
         console.log(fixtures);
-        var bodyParts = fixtures.map(function (fixture) {
-            var vertices = fixture.vertices.map(function (vertex) {
+        const bodyParts = fixtures.map(function (fixture) {
+            const vertices = fixture.vertices.map(function (vertex) {
                 return { x: vertex.x * robotScale, y: vertex.y * robotScale };
             });
 
@@ -72,7 +72,7 @@ const RobotManager = (function() {
         });
 
         // Create the tracks
-        // var trackA = 
+        // const trackA = 
 
         // Create the API for the robot
         const api = RobotAPIFactory.createAPI(currentRobotIndex);

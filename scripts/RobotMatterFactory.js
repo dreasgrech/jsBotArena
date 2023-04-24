@@ -1,13 +1,13 @@
 "use strict";
 
-var RobotHullColors = {
+const RobotHullColors = {
     Brown: 'A',
     Green: 'B',
     Aqua: 'C',
     Blue: 'D'
 };
 
-var ProjectileTypes = {
+const ProjectileTypes = {
     Granade: 'Granade_Shell',
     Heavy: 'Heavy_Shell',
     Light: 'Light_Shell',
@@ -15,14 +15,14 @@ var ProjectileTypes = {
     Shotgun: 'Shotgun_Shell'
 };
 
-var PhysicsObjectType = {
+const PhysicsObjectType = {
     RobotBody: 'RobotBody',
     ArenaWall: 'ArenaWall',
     Projectile: 'Projectile'
 };
 
-var RobotMatterFactory = (function() {
-    var createRobot = function({ currentRobotIndex, x, y, scale, robotHullColor = RobotHullColors.Blue }) {
+const RobotMatterFactory = (function() {
+    const createRobot = function({ currentRobotIndex, x, y, scale, robotHullColor = RobotHullColors.Blue }) {
         const gameContext = GameContextHolder.gameContext;
 
         const shapes = gameContext.cache.json.get('Hulls_CollisionData');
@@ -41,8 +41,8 @@ var RobotMatterFactory = (function() {
 
         const hullImagePhysicsBody = hullImage.body;
 
-        var area = hullImagePhysicsBody.area;
-        var density = 0.01;
+        const area = hullImagePhysicsBody.area;
+        const density = 0.01;
         hullImage.setDensity(density);
         console.log("area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
 
@@ -61,7 +61,7 @@ var RobotMatterFactory = (function() {
         PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
         // Make a reference to the current robot index from the matter object id
-        var hullImagePhysicsBodyID = hullImagePhysicsBody.id;
+        const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
         PhysicsBodies.matterObjectIDToEntityIndex[hullImagePhysicsBodyID] = currentRobotIndex;
         console.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 

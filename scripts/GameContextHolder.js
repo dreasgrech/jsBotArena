@@ -1,7 +1,7 @@
 "use strict";
 
-var GameContextHolder = (function() {
-    var holder = {
+const GameContextHolder = (function() {
+    const holder = {
         game: null,
         gameContext: null
     };

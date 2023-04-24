@@ -1,10 +1,10 @@
 "use script";
 
-var ProjectileManager = (function() {
-    var createProjectile = function({ x, y, angle, projectileType }) {
-        var gameContext = GameContextHolder.gameContext;
+const ProjectileManager = (function() {
+    const createProjectile = function({ x, y, angle, projectileType }) {
+        const gameContext = GameContextHolder.gameContext;
 
-        var projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
+        const projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
         const bullet = gameContext.matter.add.sprite(
             x,
             y,
@@ -13,10 +13,10 @@ var ProjectileManager = (function() {
             {
                 shape: projectilesCollisionData[projectileType]
             });
-        //var bullet = GameContextHolder.gameContext.add.image(x, y, projectileType);
+        //const bullet = GameContextHolder.gameContext.add.image(x, y, projectileType);
         bullet.setAngle(angle);
 
-        var velocity = {
+        const velocity = {
             x: Math.cos(Phaser.Math.DegToRad(angle)) * 10, // Adjust bullet speed (multiplier) as needed
             y: Math.sin(Phaser.Math.DegToRad(angle)) * 10, // Adjust bullet speed (multiplier) as needed
         };
@@ -42,12 +42,12 @@ var ProjectileManager = (function() {
         return bullet;
     };
 
-    var obj = {
+    const obj = {
         fireRobotProjectile: function(robotIndex, projectileType) {
-            var turret = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-            var angle = turret.angle - 90;
+            const turret = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            const angle = turret.angle - 90;
 
-            var turretTipPosition = new Phaser.Math.Vector2();
+            const turretTipPosition = new Phaser.Math.Vector2();
             turret.getTopLeft(turretTipPosition); // Get the turret's top-left position
             turretTipPosition.x += turret.width * Math.cos(Phaser.Math.DegToRad(angle)); // Calculate the tip's x position
             turretTipPosition.y += turret.width * Math.sin(Phaser.Math.DegToRad(angle)); // Calculate the tip's y position

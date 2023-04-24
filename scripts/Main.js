@@ -1,11 +1,11 @@
 "use strict";
 
-var GAME_WIDTH = 1024,
+const GAME_WIDTH = 1024,
     GAME_HEIGHT = 1024;
 
 var gameRunning = true;
 
-var FrameCounter = (function() {
+const FrameCounter = (function() {
     const obj = {
         current: 0
     };
@@ -13,10 +13,10 @@ var FrameCounter = (function() {
     return obj;
 }());
 
-var gameManager = (function() {
+const gameManager = (function() {
 
-    var preload = function() {
-        var gameContext = this;
+    const preload = function() {
+        const gameContext = this;
         GameContextHolder.gameContext = gameContext;
 
         ImageDatabase.loadAllImages();
@@ -27,37 +27,37 @@ var gameManager = (function() {
         gameContext.load.json('Projectiles_CollisionData', './CollisionData/Projectiles_CollisionData.json');
     };
 
-    var create = function() {
+    const create = function() {
         // Enable Matter physics
         this.matter.world.setBounds();
 
-        var gameContext = GameContextHolder.gameContext;
+        const gameContext = GameContextHolder.gameContext;
 
         /*
-            var floorImage = this.textures.get('arena_floor').getSourceImage();
-            var floorImageWidth = floorImage.width;
-            var floorImageHeight = floorImage.height;
+            const floorImage = this.textures.get('arena_floor').getSourceImage();
+            const floorImageWidth = floorImage.width;
+            const floorImageHeight = floorImage.height;
     
             console.log(floorImageWidth);
             console.log(floorImageHeight);
     
             var posX = 0, posY = 0;
-            var floor = this.add.tileSprite(posX, posY, GAME_WIDTH, GAME_HEIGHT, "arena_floor");
+            const floor = this.add.tileSprite(posX, posY, GAME_WIDTH, GAME_HEIGHT, "arena_floor");
             floor.setOrigin(0, 0);
         */
 
         //this.add.image(0, 0, 'floor');
-        var map = this.make.tilemap({ key: 'arena_json' });
+        const map = this.make.tilemap({ key: 'arena_json' });
 
-        var floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
-        var wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
+        const floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
+        const wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
 
-        var floorLayer = map.createStaticLayer('Floor Layer', floorTilesetImage);
-        var wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
+        const floorLayer = map.createStaticLayer('Floor Layer', floorTilesetImage);
+        const wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
 
         // Set collision on the walls
         // wallsLayer.setCollisionByProperty({ collides: true });
-        var matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
+        const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
             layer: wallsLayer,
             collisionCategory: PhysicsCategories.Walls,
             collidesWith: PhysicsCategories.RobotBody | PhysicsCategories.RobotProjectile

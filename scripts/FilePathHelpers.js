@@ -1,6 +1,6 @@
 "use strict";
 
-var FilePathHelpers = (function() {
+const FilePathHelpers = (function() {
 
     return {
         removeFileExtension: function(fileName) {

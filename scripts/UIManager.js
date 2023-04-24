@@ -1,7 +1,7 @@
 "use strict";
 
-var UIManager = (function() {
-    var obj = {
+const UIManager = (function() {
+    const obj = {
         initialCreate: function() {
             UIRobotInfoPanel.create();
         },
