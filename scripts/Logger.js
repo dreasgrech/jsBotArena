@@ -15,7 +15,6 @@ const Logger = (function() {
     };
 
     const callConsole = function(operation) {
-
         // Skip the operation arg so that we just have the logging arguments
         var logArgs = arguments[1];
 

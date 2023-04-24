@@ -48,6 +48,12 @@ const RobotAPIFactory = (function() {
                 radarEnabled: true,
                 collisionsThisFrame: [],
                 scannedRobots: []
+                /*
+                 * TODO:
+                 *      Rename collisionsThisFrame to collisionsWithRobots
+                 *      Add collisionsWithArena:[] contains info about collisions with arena walls and obstacles
+                 *      Add scannedArena:[] contains info about scanned arena walls and obstacles
+                 */
             };
 
             return obj;

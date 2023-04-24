@@ -34,11 +34,11 @@ const shredder = (function() {
 
         const collisionsThisFrame = api.collisionsThisFrame;
         if (collisionsThisFrame.length > 0) {
-            console.log(`[${FrameCounter.current}] Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
+            Logger.log(`[${FrameCounter.current}] Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
             for (let i = 0; i < collisionsThisFrame.length; i++) {
                 const collisionThisFrame = collisionsThisFrame[i];
                 if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
-                    console.log('firing!');
+                    Logger.log('firing!');
                     // api.fire(ProjectileTypes.Medium);
                 }
 
@@ -101,22 +101,28 @@ const keyBot = (function() {
                 api.reverse();
             }
 
-        //    if (cursors.space.isDown) {
-        //        api.fire(ProjectileTypes.Heavy);
-        //    }
+            //    if (cursors.space.isDown) {
+            //        api.fire(ProjectileTypes.Heavy);
+            //    }
 
-        const collisionsThisFrame = api.collisionsThisFrame;
-        if (collisionsThisFrame.length > 0) {
-            console.log(`[${FrameCounter.current}] KeyBot collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
-            for (let i = 0; i < collisionsThisFrame.length; i++) {
-                const collisionThisFrame = collisionsThisFrame[i];
-                if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
-                    console.log('firing!');
-                    // api.fire(ProjectileTypes.Medium);
+            const collisionsThisFrame = api.collisionsThisFrame;
+            if (collisionsThisFrame.length > 0) {
+                Logger.log(`KeyBot collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
+                for (let i = 0; i < collisionsThisFrame.length; i++) {
+                    const collisionThisFrame = collisionsThisFrame[i];
+                    if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
+                        Logger.log('firing!');
+                        // api.fire(ProjectileTypes.Medium);
+                    }
+
                 }
-
             }
-        }
+
+            var scannedRobots = api.scannedRobots;
+            var totalScannedRobots = scannedRobots.length;
+            if (totalScannedRobots > 0) {
+                Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+            }
         }
     };
 }());
