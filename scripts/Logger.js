@@ -1,19 +1,40 @@
 "use strict";
 
 const Logger = (function() {
-    const formatMessage = function(text) {
-        return `<${FrameCounter.current}> ${text}`;
+    const getFrameCount = function(text) {
+        return `<${FrameCounter.current}>`;
     };
 
+    const getTimestamp = function () {
+        const now = new Date();
+        const hours = now.getHours().toString().padStart(2, '0');
+        const minutes = now.getMinutes().toString().padStart(2, '0');
+        const seconds = now.getSeconds().toString().padStart(2, '0');
+        const milliseconds = now.getMilliseconds().toString().padStart(3, '0');
+        return `[${hours}:${minutes}:${seconds}.${milliseconds}]`;
+    };
+
+    const callConsole = function(operation) {
+
+        // Skip the operation arg so that we just have the logging arguments
+        var logArgs = arguments[1];
+
+        // Add the frame-count and the timestamp
+        Array.prototype.unshift.call(logArgs, getFrameCount());
+        Array.prototype.unshift.call(logArgs, getTimestamp());
+
+        console[operation].apply(console, logArgs);
+    }
+
     const obj = {
-        log: function(text) {
-            console.log(formatMessage(text));
+        log: function() {
+            callConsole('log', arguments);
         },
-        warn: function(text) {
-            console.warn(formatMessage(text));
+        warn: function() {
+            callConsole('warn', arguments);
         },
-        error: function(text) {
-            console.error(formatMessage(text));
+        error: function() {
+            callConsole('error', arguments);
         }
     };
 
