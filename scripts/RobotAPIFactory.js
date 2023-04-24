@@ -4,7 +4,8 @@ const RobotAPIFactory = (function() {
     const createAPI = function(robotIndex) {
         return (function(robotIndex) {
 
-            const constantAngularVelocityForRotation = 0.01;
+            const constantAngularVelocityForHullRotation = 0.01;
+            const constantAngularVelocityForTurretRotation = 10;
 
             const moveHull = function(direction) {
                 const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
@@ -25,8 +26,14 @@ const RobotAPIFactory = (function() {
             const rotateHull = function(direction) {
                 const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
 
-                const angularVelocity = constantAngularVelocityForRotation * direction;
+                const angularVelocity = constantAngularVelocityForHullRotation * direction;
                 robotBody.setAngularVelocity(angularVelocity);
+            };
+
+            const rotateTurret = function(direction) {
+                const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+                turretImage.angle += constantAngularVelocityForTurretRotation * direction;
+                Logger.log("new angle", turretImage.angle);
             };
 
             const obj = {
@@ -41,6 +48,12 @@ const RobotAPIFactory = (function() {
                 },
                 rotateRight: function() {
                     rotateHull(1);
+                },
+                rotateTurretRight: function() {
+                    rotateTurret(1);
+                },
+                rotateTurretLeft: function() {
+                    rotateTurret(-1);
                 },
                 fire: function(projectileType) {
                     ProjectileManager.fireRobotProjectile(robotIndex, projectileType);

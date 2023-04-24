@@ -39,7 +39,7 @@ const RobotMatterFactory = (function() {
         hullImage.setScale(scale);
         hullImage.setAngle(0);
         hullImage.setFrictionAir(0.2);
-        hullImage.depth = DepthManager.RobotBody;
+        hullImage.depth = GameObjectDepths.RobotBody;
 
         const hullImagePhysicsBody = hullImage.body;
 
@@ -80,7 +80,7 @@ const RobotMatterFactory = (function() {
         
         turretImage.setOrigin(0.5, 0.75); // Set the origin of the turret to the base of the turret
         Logger.log(turretImage.body);
-        turretImage.depth = DepthManager.RobotTurret;
+        turretImage.depth = GameObjectDepths.RobotTurret;
         turretImage.setScale(scale);
         turretImage.setAngle(0);
         // turretImage.setDensity(.1);
@@ -122,16 +122,4 @@ const RobotMatterFactory = (function() {
     };
 
     return obj;
-}());
-
-const DepthManager = (function() {
-
-    const obj = {
-        Projectile: 4,
-        RobotBody: 5,
-        RobotTurret: 6,
-    };
-
-    return obj;
-
 }());

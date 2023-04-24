@@ -79,7 +79,7 @@ const circleBot = (function() {
 
 const keyBot = (function() {
     let gameContext;
-    let cursors;
+    let cursors, wasdKeys;
     let firingKeyPressedLastFrame = false;
 
     var handleInput = function(api) {
@@ -100,6 +100,10 @@ const keyBot = (function() {
             api.fire(ProjectileTypes.Heavy);
         }
 
+        if (wasdKeys.A.isDown) {
+            console.log('a');
+        }
+
         firingKeyPressedLastFrame = firingKeyDown;;
     };
 
@@ -109,6 +113,7 @@ const keyBot = (function() {
             gameContext = GameContextHolder.gameContext;
 
             cursors = gameContext.input.keyboard.createCursorKeys();
+            wasdKeys = gameContext.input.keyboard.addKeys('W,S,A,D');
         },
         update: function(api, time, delta) {
             handleInput(api);

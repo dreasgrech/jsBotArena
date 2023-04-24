@@ -41,8 +41,7 @@ const ProjectileManager = (function() {
                     shape: projectilesCollisionData[projectileType]
                 });
 
-            // bullet.depth = -1;
-            bullet.depth = DepthManager.Projectile;
+            bullet.depth = GameObjectDepths.Projectile;
             bullet.setDensity(5);
             bullet.setAngle(angle);
             bullet.setFrictionAir(0);

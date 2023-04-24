@@ -40,7 +40,7 @@ const RobotManager = (function() {
         /*****************************/
         RobotMatterFactory.createRobot({
             currentRobotIndex: currentRobotIndex,
-            scale: 0.4,
+            scale: 0.9,
             x: x,
             y: y,
             robotHullColor: RobotHullColors.Brown
@@ -128,7 +128,7 @@ const RobotManager = (function() {
             /*************************/
             // testing turret rotation
             // turretImage.angle += 1;
-            turretImage.angle = RobotsData_CurrentData.currentRobotAngles[i];
+            //turretImage.angle = RobotsData_CurrentData.currentRobotAngles[i];
 
             // testing radar rotation
             if (api.radarEnabled) {

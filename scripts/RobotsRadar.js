@@ -81,6 +81,7 @@ const RobotsRadar = (function() {
             const game = GameContextHolder.game;
 
             const radarGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
+            radarGraphics.depth = GameObjectDepths.RobotRadarArc;
             game.scene.scenes[0].add.existing(radarGraphics);
 
             RobotsData_Radar.radarGraphics[index] = radarGraphics;
