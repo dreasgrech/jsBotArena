@@ -4,6 +4,7 @@ const shredder = (function() {
 
     let timeElapsed = 0;
     const interval = 3000; // Move for one second, then stop for two seconds
+
     let rotateTimer = 0;
     const rotateInterval = 1000; // Rotate every one second
 

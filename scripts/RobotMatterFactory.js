@@ -37,6 +37,7 @@ const RobotMatterFactory = (function() {
                 // density: 100 // doesnt work
             });
         hullImage.setScale(scale);
+        hullImage.setAngle(0);
         hullImage.setFrictionAir(0.2);
 
         const hullImagePhysicsBody = hullImage.body;
@@ -44,7 +45,7 @@ const RobotMatterFactory = (function() {
         const area = hullImagePhysicsBody.area;
         const density = 0.01;
         hullImage.setDensity(density);
-        console.log("area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
+        Logger.log("area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
 
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: hullImagePhysicsBody,
@@ -63,14 +64,20 @@ const RobotMatterFactory = (function() {
         // Make a reference to the current robot index from the matter object id
         const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
         PhysicsBodies.matterObjectIDToEntityIndex[hullImagePhysicsBodyID] = currentRobotIndex;
-        console.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
+        Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 
         // ROBOT TURRET
         const turretImage = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01' });
         turretImage.setScale(scale);
         turretImage.setAngle(0);
-        turretImage.setCollisionCategory(PhysicsCategories.RobotTurret);
-        turretImage.setCollidesWith(0);
+
+        const turretImagePhysicsBody = turretImage.body;
+        PhysicsHelperFunctions.setCollisionProperties({
+            physicsObject: turretImagePhysicsBody,
+            group: 0,
+            category: PhysicsCategories.RobotTurret,
+            collidesWithCategories: 0
+        });
 
         // Set the origin of the turret to the base of the turret
         turretImage.setOrigin(0.5, 0.75);

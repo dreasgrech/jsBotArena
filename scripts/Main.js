@@ -89,13 +89,10 @@ const gameManager = (function() {
         if (!gameRunning) {
             return;
         }
+
         RobotManager.update(time, delta);
 
         UIManager.update(time, delta);
-
-        //if (RobotsData_CurrentData.totalCollisions > 0) {
-        //    console.log(`<${FrameCounter.current}> Total Pairs: ${RobotsData_CurrentData.totalCollisions}`);
-        //}
 
         // Since we're now at the end of frame, clear any per-frame data
         clearPerFrameData();

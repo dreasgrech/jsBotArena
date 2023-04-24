@@ -30,35 +30,10 @@ const RobotManager = (function() {
         RobotsData_Instance.names[currentRobotIndex] = newRobot.name;
         RobotsData_Instance.updateFunctions[currentRobotIndex] = newRobot.update;
 
-        const robotScale = 0.4;
-
-        const gameContext = GameContextHolder.gameContext;
-
-        //const gameObject = scene.matter.add.gameObject(gameObject);
         /*********************/
-        // createCustomBody()
         const x = GAME_WIDTH * .5,
             y = GAME_HEIGHT * .5;
 
-        //console.log('vertices', vertices);
-        /*
-        console.log(fixtures);
-        const bodyParts = fixtures.map(function (fixture) {
-            const vertices = fixture.vertices.map(function (vertex) {
-                return { x: vertex.x * robotScale, y: vertex.y * robotScale };
-            });
-
-            return gameContext.matter.bodies.fromVertices(0, 0, vertices, {
-                isStatic: shapeData.isStatic,
-                density: shapeData.density,
-                restitution: shapeData.restitution,
-                friction: shapeData.friction,
-                frictionAir: shapeData.frictionAir,
-                frictionStatic: shapeData.frictionStatic,
-                collisionFilter: shapeData.collisionFilter,
-            });
-        });
-        */
         /*********************/
 
 
