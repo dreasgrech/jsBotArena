@@ -6,7 +6,7 @@ const RobotAPIFactory = (function() {
 
             const constantAngularVelocityForRotation = 0.01;
 
-            const move = function(direction) {
+            const moveHull = function(direction) {
                 const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
                 const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
 
@@ -22,7 +22,7 @@ const RobotAPIFactory = (function() {
                 // robotBody.thrust(0.1);
             };
 
-            const rotate = function(direction) {
+            const rotateHull = function(direction) {
                 const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
 
                 const angularVelocity = constantAngularVelocityForRotation * direction;
@@ -31,16 +31,16 @@ const RobotAPIFactory = (function() {
 
             const obj = {
                 move: function() {
-                    move(1);
+                    moveHull(1);
                 },
                 reverse: function() {
-                    move(-1);
+                    moveHull(-1);
                 },
                 rotateLeft: function() {
-                    rotate(-1);
+                    rotateHull(-1);
                 },
                 rotateRight: function() {
-                    rotate(1);
+                    rotateHull(1);
                 },
                 fire: function(projectileType) {
                     ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
