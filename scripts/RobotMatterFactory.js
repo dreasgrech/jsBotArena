@@ -39,6 +39,7 @@ const RobotMatterFactory = (function() {
         hullImage.setScale(scale);
         hullImage.setAngle(0);
         hullImage.setFrictionAir(0.2);
+        hullImage.depth = DepthManager.RobotBody;
 
         const hullImagePhysicsBody = hullImage.body;
 
@@ -47,15 +48,18 @@ const RobotMatterFactory = (function() {
         hullImage.setDensity(density);
         Logger.log("area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
 
+        const robotID = RobotsData_Instance.ids[currentRobotIndex];
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: hullImagePhysicsBody,
-            group: 0,
+            // group: 0,
+            group: -robotID,
             category: PhysicsCategories.RobotBody,
             collidesWithCategories:
                 PhysicsCategories.RobotBody |
                 PhysicsCategories.Walls |
                 PhysicsCategories.RobotProjectile
         });
+        // Logger.log("Setting group of robot to", -robotID);
 
         RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = hullImage;
 
@@ -63,14 +67,25 @@ const RobotMatterFactory = (function() {
 
         // Make a reference to the current robot index from the matter object id
         const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
-        PhysicsBodies.matterObjectIDToEntityIndex[hullImagePhysicsBodyID] = currentRobotIndex;
+        // PhysicsBodies.matterObjectIDToEntityIndex[hullImagePhysicsBodyID] = currentRobotIndex;
+        PhysicsBodies.mapMatterObjectIDToEntityIndex(hullImagePhysicsBodyID, currentRobotIndex);
         Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 
         // ROBOT TURRET
-        const turretImage = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01' });
+        // const turretImage = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01' });
+        const turretImage = GameContextHolder.gameContext.add.image(
+            hullImage.x,
+            hullImage.y,
+            'Weapon_Color_A/Gun_04');
+        
+        turretImage.setOrigin(0.5, 0.75); // Set the origin of the turret to the base of the turret
+        Logger.log(turretImage.body);
+        turretImage.depth = DepthManager.RobotTurret;
         turretImage.setScale(scale);
         turretImage.setAngle(0);
+        // turretImage.setDensity(.1);
 
+        /*
         const turretImagePhysicsBody = turretImage.body;
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: turretImagePhysicsBody,
@@ -78,19 +93,45 @@ const RobotMatterFactory = (function() {
             category: PhysicsCategories.RobotTurret,
             collidesWithCategories: 0
         });
+        */
 
-        // Set the origin of the turret to the base of the turret
-        turretImage.setOrigin(0.5, 0.75);
 
         // Create a constraint to attach the turret to the body
-        const turretConstraint = gameContext.matter.add.constraint(hullImage, turretImage, 0, 1);
+        /*
+        const turretConstraint = gameContext.matter.add.constraint(hullImage, turretImage, 0, 1,
+        // const turretConstraint = gameContext.matter.add.constraint(turretImage, hullImage, 0, 1,
+            {
+                // pointA: {x: 0, y: 8},
+                pointA: {x: 0, y: 5},
+            });
+            */
 
         RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = turretImage;
     };
 
     const obj = {
-        createRobot: createRobot
+        createRobot: createRobot,
+        updateParts: function(robotIndex) {
+
+            // Update the position of the turret to remain attached to the robot
+            var robotTurretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            var robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
+            var robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
+            robotTurretImage.setPosition(robotPositionX, robotPositionY);
+        }
     };
 
     return obj;
+}());
+
+const DepthManager = (function() {
+
+    const obj = {
+        Projectile: 4,
+        RobotBody: 5,
+        RobotTurret: 6,
+    };
+
+    return obj;
+
 }());

@@ -80,6 +80,28 @@ const circleBot = (function() {
 const keyBot = (function() {
     let gameContext;
     let cursors;
+    let firingKeyPressedLastFrame = false;
+
+    var handleInput = function(api) {
+        if (cursors.left.isDown) {
+            api.rotateLeft();
+        } else if (cursors.right.isDown) {
+            api.rotateRight();
+        }
+
+        if (cursors.up.isDown) {
+            api.move();
+        } else if (cursors.down.isDown) {
+            api.reverse();
+        }
+
+        const firingKeyDown = cursors.space.isDown;
+        if (firingKeyDown && !firingKeyPressedLastFrame) {
+            api.fire(ProjectileTypes.Heavy);
+        }
+
+        firingKeyPressedLastFrame = firingKeyDown;;
+    };
 
     return {
         name: 'keyBot',
@@ -89,21 +111,7 @@ const keyBot = (function() {
             cursors = gameContext.input.keyboard.createCursorKeys();
         },
         update: function(api, time, delta) {
-            if (cursors.left.isDown) {
-                api.rotateLeft();
-            } else if (cursors.right.isDown) {
-                api.rotateRight();
-            }
-
-            if (cursors.up.isDown) {
-                api.move();
-            } else if (cursors.down.isDown) {
-                api.reverse();
-            }
-
-            //    if (cursors.space.isDown) {
-            //        api.fire(ProjectileTypes.Heavy);
-            //    }
+            handleInput(api);
 
             const collisionsThisFrame = api.collisionsThisFrame;
             if (collisionsThisFrame.length > 0) {
@@ -130,7 +138,7 @@ const keyBot = (function() {
 const doNothingBot = (function() {
     return {
         name: 'doNothing',
-        create: function(){},
+        create: function() {},
         update: function(api, time, delta) {}
     };
 }());

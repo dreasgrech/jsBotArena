@@ -23,6 +23,7 @@ const Logger = (function() {
         Array.prototype.unshift.call(logArgs, getTimestamp());
 
         console[operation].apply(console, logArgs);
+        // console.trace();
     }
 
     const obj = {

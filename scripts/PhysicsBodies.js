@@ -1,7 +1,7 @@
 "use strict";
 
 const PhysicsBodies = (function() {
-    let arenaBodies = [];
+    let arenaBodies = []; // contains all the physics bodies in the arena
     // const arenaBodiesBounds = [];
     const matterBodyToObjectType = {};
     const matterObjectIDToRobotIndex = {};
@@ -80,11 +80,18 @@ const PhysicsBodies = (function() {
                     type: physicsObjectType
                 };
 
-                // console.log(i, matterBodies[i]);
+                Logger.log("Setting", body.id, "to", physicsObjectType);
             }
         },
-        matterBodyToObjectType: matterBodyToObjectType,
-        matterObjectIDToEntityIndex: matterObjectIDToRobotIndex,
+        mapMatterObjectIDToEntityIndex: function(matterObjectID, entityIndex) {
+            matterObjectIDToRobotIndex[matterObjectID] = entityIndex;
+        },
+        resolveEntityIndexFromMatterObjectID: function(matterObjectID) {
+            return matterObjectIDToRobotIndex[matterObjectID];
+        },
+        resolveObjectTypeFromMatterObjectID: function(matterObjectID) {
+            return matterBodyToObjectType[matterObjectID];
+        },
         isBodyOverlappingWithArenaBodies: isBodyOverlappingWithArenaBodies
     };
 

@@ -4,18 +4,22 @@ const CollisionManager = (function() {
 
     const saveBodyCollision = function(collidingBody, collidedWithBody) {
         const collidingBodyID = collidingBody.parent.id;
-        const collidingBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidingBodyID];
+        // const collidingBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidingBodyID];
+        const collidingBodyObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(collidingBodyID);
 
-        // console.log(`Checking for body id: ${collidingBodyID}.  Robot Index: ${collidingBodyRobotIndex}`);
+        // console.log(`Checking for body id: ${collidingBodyID}.  Body Type: ${collidingBodyObjectType}`);
+        Logger.log(`Checking for body id: `, collidingBodyID, `.  Body Type: `, collidingBodyObjectType);
 
         // If this colliding body is a robot...
         if (collidingBodyObjectType.type === PhysicsObjectType.RobotBody) {
-            const collidingBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidingBodyID];
+            // const collidingBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidingBodyID];
+            const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
             const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
 
             // Add the information about the other collision for this robot
             const collidedWithBodyID = collidedWithBody.parent.id;
-            const collidedWithBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidedWithBodyID];
+            // const collidedWithBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidedWithBodyID];
+            const collidedWithBodyObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(collidedWithBodyID);
             if (collidedWithBodyObjectType == null) {
                 throw "collidedWithBodyObjectType is undefined!!";
                 return;
@@ -29,7 +33,8 @@ const CollisionManager = (function() {
 
             // If this robot has collided with another robot...
             if (collidedWithBodyObjectType.type === PhysicsObjectType.RobotBody) {
-                const collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
+                // const collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
+                const collidedWithBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidedWithBodyID);
                 // console.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
 
                 // Create the event info data
@@ -63,6 +68,8 @@ const CollisionManager = (function() {
 
                     const bodyA = pair.bodyA;
                     const bodyB = pair.bodyB;
+
+                    Logger.log(bodyA, bodyB);
 
                     saveBodyCollision(bodyA, bodyB);
                     saveBodyCollision(bodyB, bodyA);

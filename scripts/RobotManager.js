@@ -26,7 +26,7 @@ const RobotManager = (function() {
     //};
 
     const addRobot = function(newRobot) {
-        RobotsData_Instance.ids[currentRobotIndex] = currentRobotIndex;
+        RobotsData_Instance.ids[currentRobotIndex] = currentRobotIndex + 1;
         RobotsData_Instance.names[currentRobotIndex] = newRobot.name;
         RobotsData_Instance.updateFunctions[currentRobotIndex] = newRobot.update;
 
@@ -107,6 +107,8 @@ const RobotManager = (function() {
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
             RobotsData_CurrentData.currentTurretAngles[i] = turretImage.angle;
 
+            RobotMatterFactory.updateParts(i);
+
             RobotsRadar.drawRadarArc(i);
 
             const api = RobotsData_Instance.robotAPIs[i];
@@ -126,6 +128,7 @@ const RobotManager = (function() {
             /*************************/
             // testing turret rotation
             // turretImage.angle += 1;
+            turretImage.angle = RobotsData_CurrentData.currentRobotAngles[i];
 
             // testing radar rotation
             if (api.radarEnabled) {

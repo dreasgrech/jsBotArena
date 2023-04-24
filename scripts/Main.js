@@ -25,6 +25,7 @@ const gameManager = (function() {
 
         gameContext.load.json('Hulls_CollisionData', './CollisionData/Hulls_CollisionData.json');
         gameContext.load.json('Projectiles_CollisionData', './CollisionData/Projectiles_CollisionData.json');
+        //ProjectileManager.preload();
     };
 
     const create = function() {
@@ -79,6 +80,12 @@ const gameManager = (function() {
             function(event /* , bodyA, bodyB */) {
                 CollisionManager.handleEvent_CollisionStart(event);
             });
+
+        var classesToOnCreate = [ProjectileManager];
+        for (let i = 0; i < classesToOnCreate.length; i++) {
+            const toLoad = classesToOnCreate[i];
+            toLoad.onCreate();
+        }
     };
 
     const clearPerFrameData = function() {
