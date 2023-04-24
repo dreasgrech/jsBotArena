@@ -45,7 +45,9 @@ const RobotAPIFactory = (function() {
                 fire: function(projectileType) {
                     ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
                 },
-                collisionsThisFrame: []
+                radarEnabled: true,
+                collisionsThisFrame: [],
+                scannedRobots: []
             };
 
             return obj;

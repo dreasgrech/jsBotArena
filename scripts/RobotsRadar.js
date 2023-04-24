@@ -1,41 +1,62 @@
 "use strict";
 
-var RobotsRadar = (function() {
+const RobotsRadar = (function() {
 
-    var scanForRobots = function(robotIndex) {
+    const isRadarEnabled = function(robotIndex) {
+        const api = RobotsData_Instance.robotAPIs[robotIndex];
+        return api.radarEnabled;
+    };
+
+    const scanForRobots = function(robotIndex) {
+        const radarEnabled = isRadarEnabled(robotIndex);
+        if (!radarEnabled) {
+            return [];
+        }
+
         // console.log(`scanning for robots: `, robotIndex);
 
-        var tankPositionX = RobotsData_CurrentData.positionXs[robotIndex];
-        var tankPositionY = RobotsData_CurrentData.positionYs[robotIndex];
-        var radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
-        var radarMaxScanDistance = RobotsData_Radar.radarMaxScanDistance[robotIndex];
-        var radarFOVAngle = RobotsData_Radar.radarFOVAngles[robotIndex];
+        const tankPositionX = RobotsData_CurrentData.positionXs[robotIndex];
+        const tankPositionY = RobotsData_CurrentData.positionYs[robotIndex];
+        const radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
+        const radarMaxScanDistance = RobotsData_Radar.radarMaxScanDistance[robotIndex];
+        const radarFOVAngle = RobotsData_Radar.radarFOVAngles[robotIndex];
 
-        // todo: change to *0.5 instead of /2
-        var radarStartAngle = Phaser.Math.DegToRad(radarAngle - radarFOVAngle / 2);
-        var radarEndAngle = Phaser.Math.DegToRad(radarAngle + radarFOVAngle / 2);
+        //console.log('tankPositionX:', tankPositionX);
+        //console.log('tankPositionY:', tankPositionY);
+        //console.log('radarAngle:', radarAngle);
+        //console.log('radarMaxScanDistance:', radarMaxScanDistance);
+        //console.log('radarFOVAngle:', radarFOVAngle);
 
-        var scannedRobots = [];
+        const radarStartAngle = Phaser.Math.DegToRad(radarAngle - radarFOVAngle * 0.5);
+        const radarEndAngle = Phaser.Math.DegToRad(radarAngle + radarFOVAngle * 0.5);
 
-        var totalRobots = RobotManager.getTotalRobots();
+        //console.log('radarStartAngle:', radarStartAngle);
+        //console.log('radarEndAngle:', radarEndAngle);
+
+        const scannedRobots = [];
+
+        const totalRobots = RobotManager.getTotalRobots();
         for (let i = 0; i < totalRobots; i++) {
-            // Skip scanning the current tank
             if (i === robotIndex) {
                 continue;
             }
 
-            var otherTankPositionX = RobotsData_CurrentData.positionXs[i];
-            var otherTankPositionY = RobotsData_CurrentData.positionYs[i];
-            var distanceBetweenTanks = Phaser.Math.Distance.Between(tankPositionX, tankPositionY, otherTankPositionX, otherTankPositionY);
-            //console.log('distanceBetweenTanks', distanceBetweenTanks);
+            const otherTankPositionX = RobotsData_CurrentData.positionXs[i];
+            const otherTankPositionY = RobotsData_CurrentData.positionYs[i];
+            const distanceBetweenTanks = Phaser.Math.Distance.Between(tankPositionX, tankPositionY, otherTankPositionX, otherTankPositionY);
+
+            //console.log(`otherTankPositionX [${i}]:`, otherTankPositionX);
+            //console.log(`otherTankPositionY [${i}]:`, otherTankPositionY);
+            //console.log(`distanceBetweenTanks [${i}]:`, distanceBetweenTanks);
 
             if (distanceBetweenTanks > radarMaxScanDistance) {
-                // console.log(`skipping `);
                 continue;
             }
 
-            // var angleBetween = Phaser.Math.Angle.BetweenPoints(tankPosition, otherTankPosition);
-            var angleBetween = Phaser.Math.Angle.Between(tankPositionX, tankPositionY, otherTankPositionX, otherTankPositionY);
+            const angleBetween = Phaser.Math.Angle.Between(tankPositionX, tankPositionY, otherTankPositionX, otherTankPositionY);
+
+            //console.log(`angleBetween [${i}]:`, angleBetween);
+
             if (angleBetween >= radarStartAngle && angleBetween <= radarEndAngle) {
                 scannedRobots.push({
                     index: i,
@@ -44,27 +65,22 @@ var RobotsRadar = (function() {
             }
         }
 
-        // Sort scannedRobots by distanceBetweenTanks
         scannedRobots.sort(function(a, b) {
             return a.distanceBetweenTanks - b.distanceBetweenTanks;
         });
 
-        if (scannedRobots.length > 0) {
-            //console.log(`[${robotIndex}] Scanned robots: ${scannedRobots.length}`);
+        if (scannedRobots > 0) {
+            Logger.log(`Scanned robots:`, scannedRobots);
         }
 
-        //    // Trigger the custom event 'onScannedRobot' with the scannedRobots array
-        //    if (scannedRobots.length > 0) {
-        //        onScannedRobot(scannedRobots);
-        //    }
         return scannedRobots;
     };
 
-    var obj = {
+    const obj = {
         createRadar: function(index) {
-            var game = GameContextHolder.game;
+            const game = GameContextHolder.game;
 
-            var radarGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
+            const radarGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
             game.scene.scenes[0].add.existing(radarGraphics);
 
             RobotsData_Radar.radarGraphics[index] = radarGraphics;
@@ -74,15 +90,22 @@ var RobotsRadar = (function() {
         },
         scanForRobots: scanForRobots,
         drawRadarArc: function(robotIndex) {
-            var radarGraphics = RobotsData_Radar.radarGraphics[robotIndex];
-            var radarFOVAngle = RobotsData_Radar.radarFOVAngles[robotIndex];
-            var radarMaxScanDistance = RobotsData_Radar.radarMaxScanDistance[robotIndex];
-            var radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
-
-            var tankPositionX = RobotsData_CurrentData.positionXs[robotIndex];
-            var tankPositionY = RobotsData_CurrentData.positionYs[robotIndex];
-
+            const radarGraphics = RobotsData_Radar.radarGraphics[robotIndex];
             radarGraphics.clear();
+
+            // Don't draw the radar arc is the radar is not enabled
+            const radarEnabled = isRadarEnabled(robotIndex);
+            if (!radarEnabled) {
+                return;
+            }
+            
+            const radarFOVAngle = RobotsData_Radar.radarFOVAngles[robotIndex];
+            const radarMaxScanDistance = RobotsData_Radar.radarMaxScanDistance[robotIndex];
+            const radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
+
+            const tankPositionX = RobotsData_CurrentData.positionXs[robotIndex];
+            const tankPositionY = RobotsData_CurrentData.positionYs[robotIndex];
+
             radarGraphics.lineStyle(1, 0x00ff00, 0.5);
             radarGraphics.fillStyle(0x00ff00, 0.2);
 

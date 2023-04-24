@@ -56,13 +56,14 @@ var UIRobotInfoPanel = (function() {
                 const positionX = RobotsData_CurrentData.positionXs[i];
                 const positionY = RobotsData_CurrentData.positionYs[i];
                 const angle = RobotsData_CurrentData.currentRobotAngles[i];
+                const radarAngle = RobotsData_CurrentData.currentRadarAngles[i];
                 const turretRotation = RobotsData_CurrentData.currentTurretAngles[i];
 
                 const infoText = `
 Robot ${id}: ${name}
 Position: (${positionX.toFixed(2)}, ${positionY.toFixed(2)})
 Angle: ${angle.toFixed(2)}°
-Radar Angle: ${angle.toFixed(2)}°
+Radar Angle: ${radarAngle.toFixed(2)}°
 Turret Rotation: ${turretRotation.toFixed(2)}°
 `;
 //Turret Rotation: ${Phaser.Math.RadToDeg(turretRotation).toFixed(2)}°
@@ -74,3 +75,4 @@ Turret Rotation: ${turretRotation.toFixed(2)}°
 
     return obj;
 }());
+

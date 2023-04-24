@@ -157,6 +157,10 @@ const RobotManager = (function() {
         currentRobotIndex++;
     };
 
+    const normalizeAngle = function (angle) {
+        return ((angle % 360) + 360) % 360;
+    };
+
     const update = function(time, delta) {
         for (let i = 0; i < totalRobots; i++) {
             const robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
@@ -166,6 +170,7 @@ const RobotManager = (function() {
             const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
             const robotBodyImagePhysicsBody = robotBodyImage.body;
             RobotsData_CurrentData.currentRobotAngles[i] = robotBodyImage.angle;
+            // RobotsData_CurrentData.currentRobotAngles[i] = normalizeAngle(robotBodyImage.angle);
             RobotsData_CurrentData.currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
             // console.log(robotBody.body.velocity);
@@ -173,27 +178,32 @@ const RobotManager = (function() {
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
             RobotsData_CurrentData.currentTurretAngles[i] = turretImage.angle;
 
-            RobotsRadar.scanForRobots(i);
-
             RobotsRadar.drawRadarArc(i);
+
+            const api = RobotsData_Instance.robotAPIs[i];
+
+            // Set the radar scanned robots to the api
+            const scannedRobots = RobotsRadar.scanForRobots(i);
+            api.scannedRobots = scannedRobots;
+
+            // Set the robot collisions to the api
+            const collisionsThisFrame = RobotsData_CurrentData.robotCollisions[i];
+            api.collisionsThisFrame = collisionsThisFrame;
+
+            // Call the robot's update function
+            const updateFunction = RobotsData_Instance.updateFunctions[i];
+            updateFunction(api, time, delta);
 
             /*************************/
             // testing turret rotation
-            turretImage.angle += 1;
+            // turretImage.angle += 1;
 
             // testing radar rotation
-            RobotsData_CurrentData.currentRadarAngles[i] += 1;
+            if (api.radarEnabled) {
+                const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles[i];
+                RobotsData_CurrentData.currentRadarAngles[i] = normalizeAngle(currentRadarAngle + 1);
+            }
             /*************************/
-
-            const api = RobotsData_Instance.robotAPIs[i];
-            const collisionsThisFrame = RobotsData_CurrentData.robotCollisions[i];
-            api.collisionsThisFrame = collisionsThisFrame;
-            // console.log(`<${FrameCounter.current}> RobotsData_CurrentData.robotCollisions[${i}]: ${api.collisionsThisFrame}`);
-            // console.log(`<${FrameCounter.current}> RobotsData_CurrentData.robotCollisions[${i}]: ${RobotsData_CurrentData.robotCollisions[i]}`);
-            // console.log(RobotsData_CurrentData.robotCollisions[i].length);
-
-            const updateFunction = RobotsData_Instance.updateFunctions[i];
-            updateFunction(api, time, delta);
         }
     };
 
