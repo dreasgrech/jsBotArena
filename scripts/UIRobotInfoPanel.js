@@ -9,6 +9,9 @@ const UIRobotInfoPanel = (function() {
     const robotIds = [];
     const robotInfoTexts = [];
 
+    const panelDepth = GameObjectDepths.UI_RobotInformationPanel;
+    const panelTextDepth = panelDepth + 1;
+
     let titleText;
 
     const obj = {
@@ -19,6 +22,7 @@ const UIRobotInfoPanel = (function() {
 
             // Create a Graphics object for the panel background
             const panelGraphics = gameContext.add.graphics();
+            panelGraphics.depth = panelDepth;
             panelGraphics.fillStyle(0x333333, 0.8); // Set panel background color and alpha
             panelGraphics.fillRect(panelX, panelY, panelWidth, panelHeight); // Draw the panel background
 
@@ -28,8 +32,9 @@ const UIRobotInfoPanel = (function() {
                 'Robot Information',
                 {
                     fontSize: '24px',
-                    color: '#ffffff',
+                    color: '#ffffff'
                 }).setOrigin(0.5, 0);
+            titleText.depth = panelTextDepth;
         },
         add: function(robotIndex) {
             const gameContext = GameContextHolder.gameContext;
@@ -45,6 +50,7 @@ const UIRobotInfoPanel = (function() {
                     fontSize: '16px',
                     color: '#ffffff'
                 });
+            infoText.depth = panelTextDepth;
             robotInfoTexts.push(infoText);
         },
         update: function() {

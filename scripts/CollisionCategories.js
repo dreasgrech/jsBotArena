@@ -12,8 +12,7 @@ const CollisionCategories = (function() {
     var i = 0;
     for (let category in categories) {
         if (Object.prototype.hasOwnProperty.call(categories, category)) {
-            categories[category] = Math.pow(2, i);
-            i++;
+            categories[category] = Math.pow(2, i++);
         }
     }
 
