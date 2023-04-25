@@ -8,7 +8,7 @@ const ProjectileManager = (function() {
             var gameContext = GameContextHolder.gameContext;
 
             projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
-            console.log("projectilesCollisionData", projectilesCollisionData);
+            // console.log("projectilesCollisionData", projectilesCollisionData);
         },
         fireRobotProjectile: function(robotIndex, projectileType) {
             const turret = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];

@@ -63,7 +63,7 @@ const RobotMatterFactory = (function() {
         const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
         // PhysicsBodies.matterObjectIDToEntityIndex[hullImagePhysicsBodyID] = currentRobotIndex;
         PhysicsBodies.mapMatterObjectIDToEntityIndex(hullImagePhysicsBodyID, currentRobotIndex);
-        Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
+        // Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 
         // ROBOT TURRET
         // const turretImage = MatterPhysicsHelpers.loadImage({ x: 0, y: 0, id: 'Weapon_Color_A/Gun_01' });
@@ -73,7 +73,6 @@ const RobotMatterFactory = (function() {
             'Weapon_Color_A/Gun_04');
         
         turretImage.setOrigin(0.5, 0.75); // Set the origin of the turret to the base of the turret
-        Logger.log(turretImage.body);
         turretImage.depth = GameObjectDepths.RobotTurret;
         turretImage.setScale(scale);
         turretImage.setAngle(0);

@@ -2,62 +2,60 @@
 
 const CollisionManager = (function() {
 
-    const saveBodyCollision = function(collidingBody, collidedWithBody) {
-        const collidingBodyID = collidingBody.parent.id;
-        // const collidingBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidingBodyID];
-        const collidingBodyObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(collidingBodyID);
+    const saveCollision_RobotToRobot = function(collidingBody, collidedWithBody) {
+        // const collidingBodyID = collidingBody.parent.id;
 
         // Logger.log(`Checking for body id: `, collidingBodyID, `.  Body Type: `, collidingBodyObjectType);
 
-        // If this colliding body is a robot...
-        if (collidingBodyObjectType.type === PhysicsCategories.RobotBody) {
-            // const collidingBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidingBodyID];
-            const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
-            const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
+        // const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
+        // const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
 
-            // Add the information about the other collision for this robot
-            const collidedWithBodyID = collidedWithBody.parent.id;
-            // const collidedWithBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidedWithBodyID];
-            const collidedWithBodyObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(collidedWithBodyID);
-            if (collidedWithBodyObjectType == null) {
-                throw "collidedWithBodyObjectType is undefined!!";
-                return;
-            }
-
-            // Create the event info object which will be passed to the robots api
-            const eventInfo = {
-                type: collidedWithBodyObjectType.type,
-                data: {}
-            };
-
-            // If this robot has collided with another robot...
-            if (collidedWithBodyObjectType.type === PhysicsCategories.RobotBody) {
-                // const collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
-                const collidedWithBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidedWithBodyID);
-                // console.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
-
-                // Create the event info data
-                const data = {
-                    robotIndex: collidedWithBodyRobotIndex,
-                    name: RobotsData_Instance.names[collidedWithBodyRobotIndex], 
-                    angle: RobotsData_CurrentData.currentRobotAngles[collidedWithBodyRobotIndex],
-                    velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBodyRobotIndex]
-                };
-
-                eventInfo.data = data;
-            }
-
-            collidingBodyRobotCollisions.push(eventInfo);
-
-            RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
-            // console.log(`Saved RobotsData_CurrentData.robotCollisions[${collidingBodyRobotIndex}] = ${collidingBodyRobotCollisions.length}`);
+        // Add the information about the other collision for this robot
+        const collidedWithBodyID = collidedWithBody.parent.id;
+        // const collidedWithBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidedWithBodyID];
+        const collidedWithBodyObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(collidedWithBodyID);
+        if (collidedWithBodyObjectType == null) {
+            throw "collidedWithBodyObjectType is undefined!!";
+            return;
         }
+
+        // Create the event info object which will be passed to the robots api
+        const eventInfo = {
+            type: collidedWithBodyObjectType.type,
+            data: {}
+        };
+
+        // const collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
+        const collidedWithBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidedWithBodyID);
+        // console.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
+
+        // Create the event info data
+        const data = {
+            robotIndex: collidedWithBodyRobotIndex,
+            name: RobotsData_Instance.names[collidedWithBodyRobotIndex],
+            angle: RobotsData_CurrentData.currentRobotAngles[collidedWithBodyRobotIndex],
+            velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBodyRobotIndex]
+        };
+
+        eventInfo.data = data;
+
+        // Save the collisions in the colliding robot's data
+        const collidingBodyID = collidingBody.parent.id;
+        const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
+        const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
+        collidingBodyRobotCollisions.push(eventInfo);
+        RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
+        // console.log(`Saved RobotsData_CurrentData.robotCollisions[${collidingBodyRobotIndex}] = ${collidingBodyRobotCollisions.length}`);
     };
 
     // Holds the keys that map to the different collisions that can happen
     const collisionHandlers = {};
 
-    const handleCollision_RobotToRobot = function(bodyA, bodyB) {};
+    const handleCollision_RobotToRobot = function(bodyA, bodyB) {
+        saveCollision_RobotToRobot(bodyA, bodyB);
+        saveCollision_RobotToRobot(bodyB, bodyA);
+    };
+
     const handleCollision_RobotToProjectile = function(bodyA, bodyB) {};
     const handleCollision_RobotToArena = function(bodyA, bodyB) {};
     const handleCollision_ProjectileToProjectile = function(bodyA, bodyB) {};
@@ -73,7 +71,7 @@ const CollisionManager = (function() {
             collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotProjectile, PhysicsCategories.RobotProjectile)] = handleCollision_ProjectileToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotProjectile, PhysicsCategories.Walls)] = handleCollision_ProjectileToArena;
 
-            Logger.log(collisionHandlers);
+            // Logger.log(collisionHandlers);
         },
         handleEvent_CollisionStart: function(event) {
             const eventPairs = event.pairs;
@@ -87,26 +85,23 @@ const CollisionManager = (function() {
 
                     const bodyA = pair.bodyA;
                     const bodyA_id = bodyA.parent.id;
-                    const bodyA_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyA_id);
+                    const bodyA_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyA_id).type;
 
                     const bodyB = pair.bodyB;
                     const bodyB_id = bodyB.parent.id;
-                    const bodyB_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyB_id);
+                    const bodyB_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyB_id).type;
 
                     const collisionLookupKey = EnumHelpers.createLookupKey(bodyA_ObjectType, bodyB_ObjectType);
                     const collisionHandler = collisionHandlers[collisionLookupKey];
 
                     if (collisionHandler != null) {
-                        console.log('Found handler:', collisionHandler);
                         Logger.log('Found handler:', collisionHandler, ' => ', bodyA_ObjectType, 'and', bodyB_ObjectType, '. Key:', collisionLookupKey);
+                        collisionHandler(bodyA, bodyB);
                     } else {
                         Logger.error('Unable to find collision handler for', bodyA_ObjectType, 'and', bodyB_ObjectType, '. Key:', collisionLookupKey);
                     }
 
-                    Logger.log(bodyA, bodyB);
-
-                    saveBodyCollision(bodyA, bodyB);
-                    saveBodyCollision(bodyB, bodyA);
+                    // Logger.log(bodyA, bodyB);
                 }
             }
         },

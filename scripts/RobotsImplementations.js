@@ -34,7 +34,7 @@ const shredder = (function() {
 
         const collisionsThisFrame = api.collisionsThisFrame;
         if (collisionsThisFrame.length > 0) {
-            Logger.log(`[${FrameCounter.current}] Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
+            Logger.log(`Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
             for (let i = 0; i < collisionsThisFrame.length; i++) {
                 const collisionThisFrame = collisionsThisFrame[i];
                 if (collisionThisFrame.type === PhysicsCategories.RobotBody) {

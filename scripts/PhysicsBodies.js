@@ -74,13 +74,12 @@ const PhysicsBodies = (function() {
 
             for (let i = 0; i < bodies.length; i++) {
                 let body = bodies[i];
-                // console.log(body);
                 matterBodyToObjectType[body.id] =
                 {
                     type: physicsObjectType
                 };
 
-                Logger.log("Setting", body.id, "to", physicsObjectType);
+                // Logger.log("Setting", body.id, "to", physicsObjectType);
             }
         },
         mapMatterObjectIDToEntityIndex: function(matterObjectID, entityIndex) {
