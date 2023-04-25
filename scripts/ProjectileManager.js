@@ -55,7 +55,7 @@ const ProjectileManager = (function() {
                 group: -robotID,
                 category: CollisionCategories.RobotProjectile,
                 collidesWithCategories: CollisionCategories.RobotBody |
-                    CollisionCategories.Walls |
+                    CollisionCategories.Arena |
                     CollisionCategories.RobotProjectile
             });
 

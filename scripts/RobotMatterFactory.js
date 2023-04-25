@@ -50,7 +50,7 @@ const RobotMatterFactory = (function() {
             category: CollisionCategories.RobotBody,
             collidesWithCategories:
                 CollisionCategories.RobotBody |
-                CollisionCategories.Walls |
+                CollisionCategories.Arena |
                 CollisionCategories.RobotProjectile
         });
         // Logger.log("Setting group of robot to", -robotID);

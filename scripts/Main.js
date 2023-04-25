@@ -60,11 +60,11 @@ const gameManager = (function() {
         // wallsLayer.setCollisionByProperty({ collides: true });
         const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
             layer: wallsLayer,
-            collisionCategory: CollisionCategories.Walls,
+            collisionCategory: CollisionCategories.Arena,
             collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
         });
 
-        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.Walls, matterBodies); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.Arena, matterBodies); // Add all the bodies from the arena to the arena bodies collection
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 

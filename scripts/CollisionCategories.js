@@ -4,7 +4,7 @@ const CollisionCategories = (function() {
     const categories = {
         RobotBody: 0,
         RobotTurret: 0,
-        Walls: 0,
+        Arena: 0,
         RobotProjectile: 0
     };
 
