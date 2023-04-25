@@ -75,6 +75,7 @@ const gameManager = (function() {
         //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);
 
         UIManager.initialCreate();
+        CollisionManager.initialCreate();
 
         gameContext.matter.world.on('collisionstart',
             function(event /* , bodyA, bodyB */) {

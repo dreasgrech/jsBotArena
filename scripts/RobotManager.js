@@ -40,7 +40,7 @@ const RobotManager = (function() {
         /*****************************/
         RobotMatterFactory.createRobot({
             currentRobotIndex: currentRobotIndex,
-            scale: 0.9,
+            scale: 0.4,
             x: x,
             y: y,
             robotHullColor: RobotHullColors.Brown

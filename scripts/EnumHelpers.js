@@ -10,6 +10,16 @@ const EnumHelpers = (function() {
             }
 
             return Object.freeze(enumObject);
+        },
+        // Creates a lookup key based on two numbers.  
+        // Inversing the numbers returns the same results
+        createLookupKey: function(number1, number2) {
+            var key = Math.min(number1, number2) * 1000 + Math.max(number1, number2);
+            if (isNaN(key)) {
+                throw `${number1} and ${number2} have created a NaN key!`;
+            }
+
+            return key;
         }
     };
 

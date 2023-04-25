@@ -5,7 +5,7 @@ const RobotAPIFactory = (function() {
         return (function(robotIndex) {
 
             const constantAngularVelocityForHullRotation = 0.01;
-            const constantAngularVelocityForTurretRotation = 10;
+            const turretRotationPerFrameSpeed = 0.6;
 
             const moveHull = function(direction) {
                 const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
@@ -32,8 +32,8 @@ const RobotAPIFactory = (function() {
 
             const rotateTurret = function(direction) {
                 const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-                turretImage.angle += constantAngularVelocityForTurretRotation * direction;
-                Logger.log("new angle", turretImage.angle);
+                turretImage.angle += turretRotationPerFrameSpeed * direction;
+                // aaaLogger.log("new angle", turretImage.angle);
             };
 
             const obj = {

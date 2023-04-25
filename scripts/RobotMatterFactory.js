@@ -15,12 +15,6 @@ const ProjectileTypes = {
     Shotgun: 'Shotgun_Shell'
 };
 
-const PhysicsObjectType = {
-    RobotBody: 'RobotBody',
-    ArenaWall: 'ArenaWall',
-    Projectile: 'Projectile'
-};
-
 const RobotMatterFactory = (function() {
     const createRobot = function({ currentRobotIndex, x, y, scale, robotHullColor = RobotHullColors.Blue }) {
         const gameContext = GameContextHolder.gameContext;

@@ -7,8 +7,7 @@ const CollisionManager = (function() {
         // const collidingBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidingBodyID];
         const collidingBodyObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(collidingBodyID);
 
-        // console.log(`Checking for body id: ${collidingBodyID}.  Body Type: ${collidingBodyObjectType}`);
-        Logger.log(`Checking for body id: `, collidingBodyID, `.  Body Type: `, collidingBodyObjectType);
+        // Logger.log(`Checking for body id: `, collidingBodyID, `.  Body Type: `, collidingBodyObjectType);
 
         // If this colliding body is a robot...
         if (collidingBodyObjectType.type === PhysicsObjectType.RobotBody) {
@@ -55,7 +54,27 @@ const CollisionManager = (function() {
         }
     };
 
+    // Holds the keys that map to the different collisions that can happen
+    const collisionHandlers = {};
+
+    const handleCollision_RobotToRobot = function(bodyA, bodyB) {};
+    const handleCollision_RobotToProjectile = function(bodyA, bodyB) {};
+    const handleCollision_RobotToArena = function(bodyA, bodyB) {};
+    const handleCollision_ProjectileToProjectile = function(bodyA, bodyB) {};
+    const handleCollision_ProjectileToArena = function(bodyA, bodyB) {};
+
     const obj = {
+        initialCreate: function() {
+
+            // Set up all the collision handlers lookups
+            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.RobotBody)] = handleCollision_RobotToRobot;
+            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
+            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.Arena)] = handleCollision_RobotToArena;
+            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotProjectile, PhysicsCategories.RobotProjectile)] = handleCollision_ProjectileToProjectile;
+            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotProjectile, PhysicsCategories.Arena)] = handleCollision_ProjectileToArena;
+
+            Logger.log(collisionHandlers);
+        },
         handleEvent_CollisionStart: function(event) {
             const eventPairs = event.pairs;
 
@@ -67,7 +86,22 @@ const CollisionManager = (function() {
                     const pair = eventPairs[i];
 
                     const bodyA = pair.bodyA;
+                    const bodyA_id = bodyA.parent.id;
+                    const bodyA_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyA_id);
+
                     const bodyB = pair.bodyB;
+                    const bodyB_id = bodyB.parent.id;
+                    const bodyB_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyB_id);
+
+                    const collisionLookupKey = EnumHelpers.createLookupKey(bodyA_ObjectType, bodyB_ObjectType);
+                    const collisionHandler = collisionHandlers[collisionLookupKey];
+
+                    if (collisionHandler != null) {
+                        console.log('Found handler:', collisionHandler);
+                        Logger.log('Found handler:', collisionHandler, ' => ', bodyA_ObjectType, 'and', bodyB_ObjectType, '. Key:', collisionLookupKey);
+                    } else {
+                        Logger.error('Unable to find collision handler for', bodyA_ObjectType, 'and', bodyB_ObjectType, '. Key:', collisionLookupKey);
+                    }
 
                     Logger.log(bodyA, bodyB);
 

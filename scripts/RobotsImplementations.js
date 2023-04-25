@@ -101,7 +101,11 @@ const keyBot = (function() {
         }
 
         if (wasdKeys.A.isDown) {
-            console.log('a');
+            api.rotateTurretLeft();
+        }
+
+        if (wasdKeys.D.isDown) {
+            api.rotateTurretRight();
         }
 
         firingKeyPressedLastFrame = firingKeyDown;;

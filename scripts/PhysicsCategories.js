@@ -33,3 +33,13 @@ const PhysicsCategories = (function() {
 
     return categories;
 }());
+
+const PhysicsObjectType = {
+    //RobotBody: 'RobotBody',
+    //ArenaWall: 'ArenaWall',
+    //Projectile: 'Projectile'
+    RobotBody: Math.pow(2, 0),
+    ArenaWall: Math.pow(2, 1),
+    Projectile: Math.pow(2, 2),
+};
+
