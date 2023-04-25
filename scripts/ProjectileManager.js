@@ -53,15 +53,15 @@ const ProjectileManager = (function() {
                 physicsObject: bullet.body,
                 // group: 0,
                 group: -robotID,
-                category: PhysicsCategories.RobotProjectile,
-                collidesWithCategories: PhysicsCategories.RobotBody |
-                    PhysicsCategories.Walls |
-                    PhysicsCategories.RobotProjectile
+                category: CollisionCategories.RobotProjectile,
+                collidesWithCategories: CollisionCategories.RobotBody |
+                    CollisionCategories.Walls |
+                    CollisionCategories.RobotProjectile
             });
 
             var bulletPhysicsBody = bullet.body;
 
-            PhysicsBodies.addArenaPhysicsBodies(PhysicsCategories.RobotProjectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
+            PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
             var speed = 100;
             /*

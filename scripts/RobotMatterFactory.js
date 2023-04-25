@@ -47,17 +47,17 @@ const RobotMatterFactory = (function() {
             physicsObject: hullImagePhysicsBody,
             // group: 0,
             group: -robotID,
-            category: PhysicsCategories.RobotBody,
+            category: CollisionCategories.RobotBody,
             collidesWithCategories:
-                PhysicsCategories.RobotBody |
-                PhysicsCategories.Walls |
-                PhysicsCategories.RobotProjectile
+                CollisionCategories.RobotBody |
+                CollisionCategories.Walls |
+                CollisionCategories.RobotProjectile
         });
         // Logger.log("Setting group of robot to", -robotID);
 
         RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = hullImage;
 
-        PhysicsBodies.addArenaPhysicsBodies(PhysicsCategories.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
         // Make a reference to the current robot index from the matter object id
         const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
@@ -83,7 +83,7 @@ const RobotMatterFactory = (function() {
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: turretImagePhysicsBody,
             group: 0,
-            category: PhysicsCategories.RobotTurret,
+            category: CollisionCategories.RobotTurret,
             collidesWithCategories: 0
         });
         */
