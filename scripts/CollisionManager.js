@@ -11,33 +11,26 @@ const CollisionManager = (function() {
         // const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
 
         // Add the information about the other collision for this robot
-        const collidedWithBodyID = collidedWithBody.parent.id;
-        // const collidedWithBodyObjectType = PhysicsBodies.matterBodyToObjectType[collidedWithBodyID];
-        const collidedWithBodyObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(collidedWithBodyID);
-        if (collidedWithBodyObjectType == null) {
+        const collidedWithBody_ID = collidedWithBody.parent.id;
+        const collidedWithBody_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(collidedWithBody_ID);
+        if (collidedWithBody_CollisionCategory == null) {
             throw "collidedWithBodyObjectType is undefined!!";
             return;
         }
 
-        // Create the event info object which will be passed to the robots api
-        const eventInfo = {
-            type: collidedWithBodyObjectType.type,
-            data: {}
-        };
-
-        // const collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
-        const collidedWithBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidedWithBodyID);
+        const collidedWithBody_RobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidedWithBody_ID);
         // console.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
 
-        // Create the event info data
-        const data = {
-            robotIndex: collidedWithBodyRobotIndex,
-            name: RobotsData_Instance.names[collidedWithBodyRobotIndex],
-            angle: RobotsData_CurrentData.currentRobotAngles[collidedWithBodyRobotIndex],
-            velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBodyRobotIndex]
+        // Create the event info object which will be passed to the robots api
+        const eventInfo = {
+            type: collidedWithBody_CollisionCategory.type,
+            data: {
+                robotIndex: collidedWithBody_RobotIndex,
+                name: RobotsData_Instance.names[collidedWithBody_RobotIndex],
+                angle: RobotsData_CurrentData.currentRobotAngles[collidedWithBody_RobotIndex],
+                velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBody_RobotIndex]
+            }
         };
-
-        eventInfo.data = data;
 
         // Save the collisions in the colliding robot's data
         const collidingBodyID = collidingBody.parent.id;
@@ -85,26 +78,24 @@ const CollisionManager = (function() {
 
                     const bodyA = pair.bodyA;
                     const bodyA_id = bodyA.parent.id;
-                    const bodyA_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyA_id).type;
+                    const bodyA_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyA_id).type;
 
                     const bodyB = pair.bodyB;
                     const bodyB_id = bodyB.parent.id;
-                    const bodyB_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyB_id).type;
+                    const bodyB_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyB_id).type;
 
-                    // TODO: RENAME OBJECT TYPE TO PHYSICSCATEGORY
                     // TODO: ALSO PUT THE ENUMS IN THEIR OWN FILES
                     // TODO: ALSO, CAN THE PHYSICS CATEGORY BE DETERMINED FROM THE BODY ITSELF INSTEAD OF FROM AN ARRAY?
 
-
                     // Resolve the lookup key based on the physics category
-                    const collisionLookupKey = EnumHelpers.createLookupKey(bodyA_ObjectType, bodyB_ObjectType);
+                    const collisionLookupKey = EnumHelpers.createLookupKey(bodyA_CollisionCategory, bodyB_CollisionCategory);
                     const collisionHandler = collisionHandlers[collisionLookupKey];
 
                     if (collisionHandler != null) {
-                        Logger.log('Found handler:', collisionHandler, ' => ', bodyA_ObjectType, 'and', bodyB_ObjectType, '. Key:', collisionLookupKey);
+                        // Logger.log('Found handler:', collisionHandler, ' => ', bodyA_CollisionCategory, 'and', bodyB_CollisionCategory, '. Key:', collisionLookupKey);
                         collisionHandler(bodyA, bodyB);
                     } else {
-                        Logger.error('Unable to find collision handler for', bodyA_ObjectType, 'and', bodyB_ObjectType, '. Key:', collisionLookupKey);
+                        Logger.error('Unable to find collision handler for', bodyA_CollisionCategory, 'and', bodyB_CollisionCategory, '. Key:', collisionLookupKey);
                     }
 
                     // Logger.log(bodyA, bodyB);

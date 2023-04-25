@@ -3,7 +3,8 @@
 const PhysicsBodies = (function() {
     let arenaBodies = []; // contains all the physics bodies in the arena
     // const arenaBodiesBounds = [];
-    const matterBodyToObjectType = {};
+    // const matterBodyToObjectType = {};
+    const matterBodyToCollisionCategory = {};
     const matterObjectIDToRobotIndex = {};
 
     function computeAABB(vertices) {
@@ -56,7 +57,7 @@ const PhysicsBodies = (function() {
     };
 
     const obj = {
-        addArenaPhysicsBodies: function(physicsObjectType, bodies) {
+        addArenaPhysicsBodies: function(collisionCategory, bodies) {
             const arenaBodiesTotalBeforeAdd = arenaBodies.length;
             arenaBodies = arenaBodies.concat(bodies);
             //for (var i = 0; i < bodies.length; i++) {
@@ -74,12 +75,12 @@ const PhysicsBodies = (function() {
 
             for (let i = 0; i < bodies.length; i++) {
                 let body = bodies[i];
-                matterBodyToObjectType[body.id] =
+                matterBodyToCollisionCategory[body.id] =
                 {
-                    type: physicsObjectType
+                    type: collisionCategory
                 };
 
-                // Logger.log("Setting", body.id, "to", physicsObjectType);
+                // Logger.log("Setting", body.id, "to", collisionCategory);
             }
         },
         mapMatterObjectIDToEntityIndex: function(matterObjectID, entityIndex) {
@@ -88,8 +89,8 @@ const PhysicsBodies = (function() {
         resolveEntityIndexFromMatterObjectID: function(matterObjectID) {
             return matterObjectIDToRobotIndex[matterObjectID];
         },
-        resolveObjectTypeFromMatterObjectID: function(matterObjectID) {
-            return matterBodyToObjectType[matterObjectID];
+        resolveCollisionCategoryFromMatterObjectID: function(matterObjectID) {
+            return matterBodyToCollisionCategory[matterObjectID];
         },
         isBodyOverlappingWithArenaBodies: isBodyOverlappingWithArenaBodies
     };
