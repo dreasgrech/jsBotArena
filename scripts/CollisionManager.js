@@ -10,7 +10,7 @@ const CollisionManager = (function() {
         // Logger.log(`Checking for body id: `, collidingBodyID, `.  Body Type: `, collidingBodyObjectType);
 
         // If this colliding body is a robot...
-        if (collidingBodyObjectType.type === PhysicsObjectType.RobotBody) {
+        if (collidingBodyObjectType.type === PhysicsCategories.RobotBody) {
             // const collidingBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidingBodyID];
             const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
             const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
@@ -31,7 +31,7 @@ const CollisionManager = (function() {
             };
 
             // If this robot has collided with another robot...
-            if (collidedWithBodyObjectType.type === PhysicsObjectType.RobotBody) {
+            if (collidedWithBodyObjectType.type === PhysicsCategories.RobotBody) {
                 // const collidedWithBodyRobotIndex = PhysicsBodies.matterObjectIDToEntityIndex[collidedWithBodyID];
                 const collidedWithBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidedWithBodyID);
                 // console.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
@@ -69,9 +69,9 @@ const CollisionManager = (function() {
             // Set up all the collision handlers lookups
             collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.RobotBody)] = handleCollision_RobotToRobot;
             collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
-            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.Arena)] = handleCollision_RobotToArena;
+            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.Walls)] = handleCollision_RobotToArena;
             collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotProjectile, PhysicsCategories.RobotProjectile)] = handleCollision_ProjectileToProjectile;
-            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotProjectile, PhysicsCategories.Arena)] = handleCollision_ProjectileToArena;
+            collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotProjectile, PhysicsCategories.Walls)] = handleCollision_ProjectileToArena;
 
             Logger.log(collisionHandlers);
         },

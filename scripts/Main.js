@@ -64,7 +64,7 @@ const gameManager = (function() {
             collidesWith: PhysicsCategories.RobotBody | PhysicsCategories.RobotProjectile
         });
 
-        PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.ArenaWall, matterBodies); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodies.addArenaPhysicsBodies(PhysicsCategories.Walls, matterBodies); // Add all the bodies from the arena to the arena bodies collection
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 

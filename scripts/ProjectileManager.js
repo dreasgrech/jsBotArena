@@ -61,7 +61,7 @@ const ProjectileManager = (function() {
 
             var bulletPhysicsBody = bullet.body;
 
-            PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.Projectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
+            PhysicsBodies.addArenaPhysicsBodies(PhysicsCategories.RobotProjectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
             var speed = 100;
             /*

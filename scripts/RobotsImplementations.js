@@ -37,7 +37,7 @@ const shredder = (function() {
             Logger.log(`[${FrameCounter.current}] Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
             for (let i = 0; i < collisionsThisFrame.length; i++) {
                 const collisionThisFrame = collisionsThisFrame[i];
-                if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
+                if (collisionThisFrame.type === PhysicsCategories.RobotBody) {
                     Logger.log('firing!');
                     // api.fire(ProjectileTypes.Medium);
                 }
@@ -127,7 +127,7 @@ const keyBot = (function() {
                 Logger.log(`KeyBot collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
                 for (let i = 0; i < collisionsThisFrame.length; i++) {
                     const collisionThisFrame = collisionsThisFrame[i];
-                    if (collisionThisFrame.type === PhysicsObjectType.RobotBody) {
+                    if (collisionThisFrame.type === PhysicsCategories.RobotBody) {
                         Logger.log('firing!');
                         // api.fire(ProjectileTypes.Medium);
                     }

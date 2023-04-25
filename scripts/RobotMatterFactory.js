@@ -57,7 +57,7 @@ const RobotMatterFactory = (function() {
 
         RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = hullImage;
 
-        PhysicsBodies.addArenaPhysicsBodies(PhysicsObjectType.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodies.addArenaPhysicsBodies(PhysicsCategories.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
         // Make a reference to the current robot index from the matter object id
         const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
