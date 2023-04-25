@@ -64,7 +64,7 @@ const CollisionManager = (function() {
     const obj = {
         initialCreate: function() {
 
-            // Set up all the collision handlers lookups
+            // Set up all the collision handlers lookups.  This is the matrix which allows for the collision handler resolution
             collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.RobotBody)] = handleCollision_RobotToRobot;
             collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(PhysicsCategories.RobotBody, PhysicsCategories.Walls)] = handleCollision_RobotToArena;
@@ -91,6 +91,12 @@ const CollisionManager = (function() {
                     const bodyB_id = bodyB.parent.id;
                     const bodyB_ObjectType = PhysicsBodies.resolveObjectTypeFromMatterObjectID(bodyB_id).type;
 
+                    // TODO: RENAME OBJECT TYPE TO PHYSICSCATEGORY
+                    // TODO: ALSO PUT THE ENUMS IN THEIR OWN FILES
+                    // TODO: ALSO, CAN THE PHYSICS CATEGORY BE DETERMINED FROM THE BODY ITSELF INSTEAD OF FROM AN ARRAY?
+
+
+                    // Resolve the lookup key based on the physics category
                     const collisionLookupKey = EnumHelpers.createLookupKey(bodyA_ObjectType, bodyB_ObjectType);
                     const collisionHandler = collisionHandlers[collisionLookupKey];
 
