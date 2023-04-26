@@ -5,14 +5,6 @@ const GAME_WIDTH = 1024,
 
 var gameRunning = true;
 
-const FrameCounter = (function() {
-    const obj = {
-        current: 0
-    };
-
-    return obj;
-}());
-
 const gameManager = (function() {
 
     const preload = function() {

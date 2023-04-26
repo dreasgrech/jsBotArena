@@ -72,7 +72,6 @@ const CollisionManager = (function() {
         const arenaBody = isBodyA_Arena ? bodyA : bodyB;
 
         console.log("projectile", projectileBody, "arena", arenaBody);
-
     };
 
     const obj = {
@@ -98,12 +97,18 @@ const CollisionManager = (function() {
                     const pair = eventPairs[i];
 
                     const bodyA = pair.bodyA;
-                    const bodyA_id = bodyA.parent.id;
-                    const bodyA_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyA_id).type;
+                    const bodyA_parent = bodyA.parent;
+                    // const bodyA_id = bodyA_parent.id;
+                    // const bodyA_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyA_id).type;
+                    const bodyA_CollisionCategory = bodyA_parent.collisionFilter.category;
+                    console.log(bodyA.collisionFilter.category, bodyA.parent.collisionFilter.category);
 
                     const bodyB = pair.bodyB;
-                    const bodyB_id = bodyB.parent.id;
-                    const bodyB_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyB_id).type;
+                    const bodyB_parent = bodyB.parent;
+                    //const bodyB_id = bodyB_parent.id;
+                    //const bodyB_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyB_id).type;
+                    const bodyB_CollisionCategory = bodyB_parent.collisionFilter.category;
+                    console.log(bodyB.parent.collisionFilter.category);
 
                     // TODO: ALSO PUT THE ENUMS IN THEIR OWN FILES
                     // TODO: ALSO, CAN THE PHYSICS CATEGORY BE DETERMINED FROM THE BODY ITSELF INSTEAD OF FROM AN ARRAY?
