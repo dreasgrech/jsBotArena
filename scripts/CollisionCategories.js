@@ -21,29 +21,3 @@ const CollisionCategories = (function() {
 
     return categories;
 }());
-
-const PoolFactory = (function() {
-    const poolFactory = {
-        createPool: function({ beforePush, afterPop }) {
-            return (function({ beforePush, afterPop }) {
-                var elements = [];
-
-                const pool = {
-                    push: function(element) {
-                        beforePush(element);
-                        elements.push(element);
-                    },
-                    pop: function() {
-                        var element = elements.pop();
-                        afterPop(element);
-                        return element;
-                    }
-                };
-
-                return pool;
-            }({ beforePush, afterPop }));
-        }
-    };
-
-    return poolFactory;
-}());

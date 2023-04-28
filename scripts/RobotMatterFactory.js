@@ -12,7 +12,7 @@ const ProjectileTypes = {
     Heavy: 'Heavy_Shell',
     Light: 'Light_Shell',
     Medium: 'Medium_Shell',
-    Shotgun: 'Shotgun_Shell'
+    Shotgun: 'Shotgun_Shells'
 };
 
 const RobotMatterFactory = (function() {
