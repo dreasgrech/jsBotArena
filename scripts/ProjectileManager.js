@@ -21,6 +21,8 @@ const ProjectileManager = (function() {
 
     const projectileMatterBodyID_to_ProjectileIndex = {};
 
+    const queuedProjectilesForRemoval = new Set();
+
     const projectileManager = {
         onCreate: function() {
             gameContext = GameContextHolder.gameContext;
@@ -58,6 +60,15 @@ const ProjectileManager = (function() {
 
                 pools[projectileType] = pool;
             }
+        },
+        update: function(time, delta) { },
+        onEndOfFrame: function() {
+            for (const projectile of queuedProjectilesForRemoval) {
+                // console.log(projectile);
+                projectileManager.destroyProjectile(projectile);
+            }
+
+            queuedProjectilesForRemoval.clear();
         },
         fireRobotProjectile: function(robotIndex, projectileType) {
             const turret = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
@@ -132,6 +143,10 @@ const ProjectileManager = (function() {
             // Logger.log("mapping", bullet.body.id, "to", currentProjectileIndex);
 
             currentProjectileIndex++;
+        },
+        markProjectileForRemoval: function(projectile) {
+            // Add the projectile to the queue so that it gets removed later
+            queuedProjectilesForRemoval.add(projectile);
         },
         destroyProjectile: function(projectile) {
             const projectileIndex = projectileMatterBodyID_to_ProjectileIndex[projectile.body.id];

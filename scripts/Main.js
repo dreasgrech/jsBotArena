@@ -81,21 +81,31 @@ const gameManager = (function() {
         }
     };
 
-    const clearPerFrameData = function() {
-        CollisionManager.clearPerFrameData();
-    };
+    const objectsWith_onEndOfFrame = [
+        CollisionManager,
+        ProjectileManager
+    ];
+    const totalObjectsWith_onEndOfFrame = objectsWith_onEndOfFrame.length;
+
+    const objectsWith_update = [
+        RobotManager,
+        UIManager
+    ];
+    const totalObjectsWith_update = objectsWith_update.length;
 
     const update = function(time, delta) {
         if (!gameRunning) {
             return;
         }
 
-        RobotManager.update(time, delta);
-
-        UIManager.update(time, delta);
+        for (let i = 0; i < totalObjectsWith_update; i++) {
+            objectsWith_update[i].update(time, delta);
+        }
 
         // Since we're now at the end of frame, clear any per-frame data
-        clearPerFrameData();
+        for (let i = 0; i < totalObjectsWith_onEndOfFrame; i++) {
+            objectsWith_onEndOfFrame[i].onEndOfFrame();
+        }
 
         // Increase the frame counter
         FrameCounter.current++;

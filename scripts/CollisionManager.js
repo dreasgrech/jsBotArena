@@ -9,7 +9,7 @@ const CollisionManager = (function() {
 
         // const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
         // const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
-        console.log(collidedWithBody)
+        Logger.log(collidedWithBody);
 
         // Add the information about the other collision for this robot
         const collidedWithBody_ID = collidedWithBody.parent.id;
@@ -20,7 +20,7 @@ const CollisionManager = (function() {
         }
 
         const collidedWithBody_RobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidedWithBody_ID);
-        // console.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
+        // Logger.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
 
         // Create the event info object which will be passed to the robots api
         const eventInfo = {
@@ -39,7 +39,7 @@ const CollisionManager = (function() {
         const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
         collidingBodyRobotCollisions.push(eventInfo);
         RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
-        // console.log(`Saved RobotsData_CurrentData.robotCollisions[${collidingBodyRobotIndex}] = ${collidingBodyRobotCollisions.length}`);
+        // Logger.log(`Saved RobotsData_CurrentData.robotCollisions[${collidingBodyRobotIndex}] = ${collidingBodyRobotCollisions.length}`);
     };
 
     // Holds the keys that map to the different collisions that can happen
@@ -56,7 +56,7 @@ const CollisionManager = (function() {
         const robotBody = isBodyA_Robot ? bodyA : bodyB;
         const projectileBody = isBodyA_Robot ? bodyB : bodyA;
 
-        console.log("robot", robotBody, "projectile", projectileBody);
+        Logger.log("robot", robotBody, "projectile", projectileBody);
     };
 
     const handleCollision_RobotToArena = function(bodyA, bodyB) {
@@ -64,7 +64,7 @@ const CollisionManager = (function() {
         const robotBody = isBodyA_Arena ? bodyB : bodyA;
         const arenaBody = isBodyA_Arena ? bodyA : bodyB;
 
-        console.log("robot", robotBody, "arena", arenaBody);
+        Logger.log("robot", robotBody, "arena", arenaBody);
     };
     const handleCollision_ProjectileToProjectile = function(bodyA, bodyB) {};
     const handleCollision_ProjectileToArena = function(bodyA, bodyB) {
@@ -72,9 +72,10 @@ const CollisionManager = (function() {
         const projectileBody = isBodyA_Arena ? bodyB : bodyA;
         const arenaBody = isBodyA_Arena ? bodyA : bodyB;
 
-        console.log("projectile", projectileBody, "arena", arenaBody);
+        Logger.log("projectile", projectileBody, "arena", arenaBody);
 
-        ProjectileManager.destroyProjectile(projectileBody.parent.gameObject);
+        // ProjectileManager.destroyProjectile(projectileBody.parent.gameObject);
+        ProjectileManager.markProjectileForRemoval(projectileBody.parent.gameObject);
     };
 
     const obj = {
@@ -105,14 +106,14 @@ const CollisionManager = (function() {
                     // const bodyA_id = bodyA_parent.id;
                     // const bodyA_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyA_id).type;
                     const bodyA_CollisionCategory = bodyA_parent.collisionFilter.category;
-                    // console.log(bodyA.collisionFilter.category, bodyA.parent.collisionFilter.category);
+                    // Logger.log(bodyA.collisionFilter.category, bodyA.parent.collisionFilter.category);
 
                     const bodyB = pair.bodyB;
                     const bodyB_parent = bodyB.parent;
                     //const bodyB_id = bodyB_parent.id;
                     //const bodyB_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyB_id).type;
                     const bodyB_CollisionCategory = bodyB_parent.collisionFilter.category;
-                    // console.log(bodyB.parent.collisionFilter.category);
+                    // Logger.log(bodyB.parent.collisionFilter.category);
 
                     // TODO: ALSO PUT THE ENUMS IN THEIR OWN FILES
                     // TODO: ALSO, CAN THE PHYSICS CATEGORY BE DETERMINED FROM THE BODY ITSELF INSTEAD OF FROM AN ARRAY?
@@ -132,12 +133,12 @@ const CollisionManager = (function() {
                 }
             }
         },
-        clearPerFrameData: function() {
+        onEndOfFrame: function() {
             // Clear all the collisions
             const totalRobots = RobotManager.getTotalRobots();
             for (let i = 0; i < totalRobots; i++) {
                 RobotsData_CurrentData.robotCollisions[i] = [];
-                // console.log(`cleared: ${RobotsData_CurrentData.robotCollisions[i].length} `);
+                // Logger.log(`cleared: ${RobotsData_CurrentData.robotCollisions[i].length} `);
             }
 
             RobotsData_CurrentData.totalCollisions = 0;
