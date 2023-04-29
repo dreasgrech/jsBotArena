@@ -13,7 +13,7 @@ const CollisionCategories = (function() {
     for (let category in categories) {
         if (Object.prototype.hasOwnProperty.call(categories, category)) {
             const value = Math.pow(2, i);
-            Logger.log(category, `value ${value} = pow(2, ${i})`);
+            // Logger.log(category, `value ${value} = pow(2, ${i})`);
             categories[category] = value;
             i++;
         }

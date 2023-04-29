@@ -93,7 +93,8 @@ const CollisionManager = (function() {
             const eventPairs = event.pairs;
 
             if (eventPairs.length > 0) {
-                // console.log(`[${FrameCounter.current}] Total pairs: ${eventPairs.length} `);
+                Logger.log(`Total pairs: ${eventPairs.length}`);
+                Logger.log(eventPairs[0], eventPairs[1]);
                 RobotsData_CurrentData.totalCollisions = eventPairs.length;
 
                 for (let i = 0; i < eventPairs.length; i++) {
@@ -127,7 +128,7 @@ const CollisionManager = (function() {
                         Logger.error('Unable to find collision handler for', bodyA_CollisionCategory, 'and', bodyB_CollisionCategory, '. Key:', collisionLookupKey);
                     }
 
-                    // Logger.log(bodyA, bodyB);
+                    Logger.log(bodyA, bodyB);
                 }
             }
         },

@@ -40,7 +40,7 @@ const RobotMatterFactory = (function() {
         const area = hullImagePhysicsBody.area;
         const density = 0.01;
         hullImage.setDensity(density);
-        Logger.log("area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
+        // Logger.log("area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
 
         const robotID = RobotsData_Instance.ids[currentRobotIndex];
         PhysicsHelperFunctions.setCollisionProperties({

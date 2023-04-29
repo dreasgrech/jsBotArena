@@ -39,7 +39,7 @@ const ProjectileManager = (function() {
                 const pool = MatterBodyPoolFactory.createMatterBodyPool({
                     poolName: `Projectiles (${projectileType})`,
                     createElement: function() {
-                        console.log("creating projectile", projectileType);
+                        // Logger.log("creating projectile", projectileType);
                         const projectileImage = gameContext.matter.add.sprite(
                             300,
                             300,
@@ -94,7 +94,7 @@ const ProjectileManager = (function() {
             bullet.setFrictionAir(0);
             bullet.setBounce(0);
 
-            Logger.log("created projectile", bullet);
+            // Logger.log("created projectile", bullet);
 
             const robotID = RobotsData_Instance.ids[robotIndex];
             // Logger.log("Setting group of projectile to", -robotID);
@@ -129,7 +129,7 @@ const ProjectileManager = (function() {
             ProjectilesData.projectileType[currentProjectileIndex] = projectileType;
             projectileMatterBodyID_to_ProjectileIndex[bullet.body.id] = currentProjectileIndex;
             // console.log(bullet);
-            console.log("mapping", bullet.body.id, "to", currentProjectileIndex);
+            // Logger.log("mapping", bullet.body.id, "to", currentProjectileIndex);
 
             currentProjectileIndex++;
         },
