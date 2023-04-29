@@ -120,6 +120,9 @@ const keyBot = (function() {
             wasdKeys = gameContext.input.keyboard.addKeys('W,S,A,D');
         },
         update: function(api, time, delta) {
+
+            api.turretFollowHull = true;
+
             handleInput(api);
 
             const collisionsThisFrame = api.collisionsThisFrame;

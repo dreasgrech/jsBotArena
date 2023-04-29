@@ -25,19 +25,17 @@ const RobotAPIFactory = (function() {
             };
 
             const rotateHull = function(direction) {
-                const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
-
                 const angularVelocity = constantAngularVelocityForHullRotation * direction;
+
+                const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
                 robotBody.setAngularVelocity(angularVelocity);
             };
 
             const rotateTurret = function(direction) {
-                const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-                turretImage.angle += turretRotationPerFrameSpeed * direction;
-                // Logger.log("new angle", turretImage.angle);
+                RobotManager.incrementTurretAngle(robotIndex, turretRotationPerFrameSpeed * direction);
             };
 
-            const obj = {
+            const api = {
                 move: function() {
                     moveHull(1);
                 },
@@ -59,6 +57,7 @@ const RobotAPIFactory = (function() {
                 fire: function(projectileType) {
                     ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
                 },
+                turretFollowHull: false,
                 radarEnabled: true,
                 collisionsThisFrame: [],
                 scannedRobots: []
@@ -70,7 +69,7 @@ const RobotAPIFactory = (function() {
                  */
             };
 
-            return obj;
+            return api;
         }(robotIndex));
     };
 

@@ -98,14 +98,14 @@ const RobotManager = (function() {
 
             const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
             const robotBodyImagePhysicsBody = robotBodyImage.body;
-            RobotsData_CurrentData.currentRobotAngles[i] = robotBodyImage.angle;
+            const hullAngle = robotBodyImage.angle;
+            RobotsData_CurrentData.currentRobotAngles[i] = hullAngle;
             // RobotsData_CurrentData.currentRobotAngles[i] = normalizeAngle(robotBodyImage.angle);
             RobotsData_CurrentData.currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
-            // console.log(robotBody.body.velocity);
-
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
-            RobotsData_CurrentData.currentTurretAngles[i] = turretImage.angle;
+            const turretAngle = turretImage.angle;
+            RobotsData_CurrentData.currentTurretAngles[i] = turretAngle;
 
             RobotMatterFactory.updateParts(i);
 
@@ -125,6 +125,11 @@ const RobotManager = (function() {
             const updateFunction = RobotsData_Instance.updateFunctions[i];
             updateFunction(api, time, delta);
 
+            const turretFollowHull = api.turretFollowHull;
+            if (turretFollowHull) {
+                robotManager.setTurretAngle(i, hullAngle);
+            }
+
             /*************************/
             // testing turret rotation
             // turretImage.angle += 1;
@@ -139,13 +144,21 @@ const RobotManager = (function() {
         }
     };
 
-    const obj = {
+    const robotManager = {
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update,
+        setTurretAngle: function(robotIndex, angle) {
+            const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            turretImage.angle = angle;
+        },
+        incrementTurretAngle: function(robotIndex, angle) {
+            const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            turretImage.angle += angle;
+        }
         // matterBodyToObjectType: {}
     };
 
-    return obj;
+    return robotManager;
 }());
 

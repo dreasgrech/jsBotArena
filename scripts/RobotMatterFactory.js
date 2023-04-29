@@ -102,7 +102,7 @@ const RobotMatterFactory = (function() {
         RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = turretImage;
     };
 
-    const obj = {
+    const robotMatterFactory = {
         createRobot: createRobot,
         updateParts: function(robotIndex) {
 
@@ -114,5 +114,5 @@ const RobotMatterFactory = (function() {
         }
     };
 
-    return obj;
+    return robotMatterFactory;
 }());
