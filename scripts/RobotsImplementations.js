@@ -108,7 +108,7 @@ const keyBot = (function() {
 
         const firingKeyDown = cursors.space.isDown;
         if (firingKeyDown && !firingKeyPressedLastFrame) {
-            api.fire(ProjectileTypes.Heavy);
+            api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
         }
 
         if (wasdKeys.A.isDown) {

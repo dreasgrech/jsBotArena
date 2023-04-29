@@ -1,7 +1,7 @@
 "use script";
 
 const EnumHelpers = (function() {
-    const obj = {
+    const enumHelpers = {
         // Usage: const directions = EnumHelpers.createEnum(['Up', 'Down', 'Left', 'Right']);
         createEnum: function(values) {
             const enumObject = {};
@@ -20,8 +20,18 @@ const EnumHelpers = (function() {
             }
 
             return key;
+        },
+        getRandomKey: function(obj) {
+            const keys = Object.keys(obj);
+
+            return keys[Math.floor(Math.random() * keys.length)];
+        },
+        getRandomValue: function(obj) {
+            const values = Object.values(obj);
+
+            return values[Math.floor(Math.random() * values.length)];
         }
     };
 
-    return obj;
+    return enumHelpers;
 }());

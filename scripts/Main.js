@@ -69,10 +69,7 @@ const gameManager = (function() {
         UIManager.initialCreate();
         CollisionManager.initialCreate();
 
-        gameContext.matter.world.on('collisionstart',
-            function(event /* , bodyA, bodyB */) {
-                CollisionManager.handleEvent_CollisionStart(event);
-            });
+        gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
 
         var classesToOnCreate = [ProjectileManager];
         for (let i = 0; i < classesToOnCreate.length; i++) {
