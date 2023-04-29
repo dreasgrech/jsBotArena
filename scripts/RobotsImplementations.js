@@ -44,6 +44,13 @@ const shredder = (function() {
 
             }
         }
+
+        var scannedRobots = api.scannedRobots;
+        var totalScannedRobots = scannedRobots.length;
+        if (totalScannedRobots > 0) {
+            Logger.log(`Shredder scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+            api.fire(ProjectileTypes.Medium);
+        }
     };
 
     return {
@@ -141,7 +148,7 @@ const keyBot = (function() {
             var scannedRobots = api.scannedRobots;
             var totalScannedRobots = scannedRobots.length;
             if (totalScannedRobots > 0) {
-                Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+                // Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
             }
         }
     };
