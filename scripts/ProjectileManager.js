@@ -37,14 +37,13 @@ const ProjectileManager = (function() {
 
                 const projectileType = ProjectileTypes[projectileTypeField];
 
-                // const pool = PoolFactory.createPool({
                 const pool = MatterBodyPoolFactory.createMatterBodyPool({
                     poolName: `Projectiles (${projectileType})`,
                     createElement: function() {
                         // Logger.log("creating projectile", projectileType);
                         const projectileImage = gameContext.matter.add.sprite(
-                            300,
-                            300,
+                            0,
+                            0,
                             projectileType//,
                             //null,
                             // { shape: projectilesCollisionData[projectileType] }
