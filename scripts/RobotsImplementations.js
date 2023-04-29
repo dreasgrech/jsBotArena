@@ -47,8 +47,8 @@ const shredder = (function() {
             }
         }
 
-        var scannedRobots = api.scannedRobots;
-        var totalScannedRobots = scannedRobots.length;
+        const scannedRobots = api.scannedRobots;
+        const totalScannedRobots = scannedRobots.length;
         if (totalScannedRobots > 0) {
             Logger.log(`Shredder scannedRobots: ${totalScannedRobots}: `, scannedRobots);
             api.fire(ProjectileTypes.Medium);
@@ -91,7 +91,7 @@ const keyBot = (function() {
     let cursors, wasdKeys;
     let firingKeyPressedLastFrame = false;
 
-    var handleInput = function(api) {
+    const handleInput = function(api) {
         const turret = api.turret;
 
         if (cursors.left.isDown) {
@@ -124,6 +124,10 @@ const keyBot = (function() {
 
     return {
         name: 'keyBot',
+        setup: {
+            hullColor: RobotHullColors.Green,
+            turretColor: RobotTurretColors.Green
+        },
         create: function() {
             gameContext = GameContextHolder.gameContext;
 
@@ -163,8 +167,8 @@ const keyBot = (function() {
                 }
             }
 
-            var scannedRobots = api.scannedRobots;
-            var totalScannedRobots = scannedRobots.length;
+            const scannedRobots = api.scannedRobots;
+            const totalScannedRobots = scannedRobots.length;
             if (totalScannedRobots > 0) {
                 // Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
             }

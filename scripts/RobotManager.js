@@ -8,12 +8,15 @@ const RobotManager = (function() {
         const maxAttempts = 10;
         let attempts = 0;
 
+        const gameWidth = GameSetup.Width,
+            gameHeight = GameSetup.Height;
+
         while (attempts++ < maxAttempts && PhysicsBodies.isBodyOverlappingWithArenaBodies(robotBody)) {
             // Generate new random position
             //const x = Math.random() * (GAME_WIDTH * 0.7);
             //const y = Math.random() * (GAME_HEIGHT * 0.7);
-            const x = Math.random() * (GAME_WIDTH);
-            const y = Math.random() * (GAME_HEIGHT);
+            const x = Math.random() * gameWidth;
+            const y = Math.random() * gameHeight;
 
             robotBody.setPosition(x, y);
         }
@@ -28,12 +31,10 @@ const RobotManager = (function() {
         RobotsData_Instance.names[currentRobotIndex] = newRobot.name;
         RobotsData_Instance.updateFunctions[currentRobotIndex] = newRobot.update;
 
-        /*********************/
-        const x = GAME_WIDTH * .5,
-            y = GAME_HEIGHT * .5;
+        const gameWidth = GameSetup.Width, gameHeight = GameSetup.Height;
+        const x = gameWidth * .5, y = gameHeight * .5;
 
-        /*********************/
-
+        const robotSetup = newRobot.setup;
 
         /*****************************/
         RobotMatterFactory.createRobot({
@@ -41,7 +42,7 @@ const RobotManager = (function() {
             scale: 0.4,
             x: x,
             y: y,
-            robotHullColor: RobotHullColors.Brown
+            robotSetup: robotSetup
         });
 
         placeRobotInArena(RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex]);

@@ -1,8 +1,5 @@
 "use strict";
 
-const GAME_WIDTH = 1024,
-    GAME_HEIGHT = 1024;
-
 var gameRunning = true;
 
 const gameManager = (function() {
@@ -24,28 +21,13 @@ const gameManager = (function() {
         const gameContext = GameContextHolder.gameContext;
 
         // Enable Matter physics
-        gameContext.matter.world.setBounds();
+        // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
+        //gameContext.matter.world.setBounds();
 
-
-        /*
-            const floorImage = this.textures.get('arena_floor').getSourceImage();
-            const floorImageWidth = floorImage.width;
-            const floorImageHeight = floorImage.height;
-    
-            console.log(floorImageWidth);
-            console.log(floorImageHeight);
-    
-            var posX = 0, posY = 0;
-            const floor = this.add.tileSprite(posX, posY, GAME_WIDTH, GAME_HEIGHT, "arena_floor");
-            floor.setOrigin(0, 0);
-        */
-
-        //this.add.image(0, 0, 'floor');
         const map = gameContext.make.tilemap({ key: 'arena_json' });
 
         const floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
         const wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
-        Logger.log(map, floorTilesetImage);
 
         const floorLayer = map.createLayer('Floor Layer', floorTilesetImage);
         const wallsLayer = map.createLayer('Walls Layer', wallTilesetImage);
@@ -63,7 +45,9 @@ const gameManager = (function() {
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
         RobotManager.addRobot(keyBot);
-        // RobotManager.addRobot(shredder);
+        RobotManager.addRobot(shredder);
+        RobotManager.addRobot(doNothingBot);
+        RobotManager.addRobot(doNothingBot);
         //setTimeout(() => { RobotManager.addRobot(circleBot); }, 1500);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2000);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);
@@ -119,8 +103,8 @@ const gameManager = (function() {
 
 GameContextHolder.game = new Phaser.Game({
     type: Phaser.AUTO,
-    width: GAME_WIDTH,
-    height: GAME_HEIGHT,
+    width: GameSetup.Width,
+    height: GameSetup.Height,
     scene: {
         preload: gameManager.preload,
         create: gameManager.create,

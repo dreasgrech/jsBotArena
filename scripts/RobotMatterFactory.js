@@ -7,6 +7,13 @@ const RobotHullColors = {
     Blue: 'D'
 };
 
+const RobotTurretColors = {
+    Brown: 'A',
+    Green: 'B',
+    Aqua: 'C',
+    Blue: 'D'
+};
+
 const ProjectileTypes = {
     Granade: 'Granade_Shell',
     Heavy: 'Heavy_Shell',
@@ -16,15 +23,20 @@ const ProjectileTypes = {
 };
 
 const RobotMatterFactory = (function() {
-    const createRobot = function({ currentRobotIndex, x, y, scale, robotHullColor = RobotHullColors.Blue }) {
+    const createRobot = function({ currentRobotIndex, x, y, scale, robotSetup }) {
         const gameContext = GameContextHolder.gameContext;
 
         const shapes = gameContext.cache.json.get('Hulls_CollisionData');
 
+        robotSetup = robotSetup ?? RobotSetup;
+
+        const hullColor = robotSetup.hullColor;
+        const turretColor = robotSetup.turretColor;
+
         // ROBOT HULL
         const hullImage = gameContext.matter.add.image(
             x, y,
-            `Hulls_Color_${robotHullColor}/Hull_01`,
+            `Hulls_Color_${hullColor}/Hull_01`,
             null,
             {
                 shape: shapes['Hull_01'],
@@ -70,7 +82,7 @@ const RobotMatterFactory = (function() {
         const turretImage = GameContextHolder.gameContext.add.image(
             hullImage.x,
             hullImage.y,
-            'Weapon_Color_A/Gun_04');
+            `Weapon_Color_${turretColor}/Gun_04`);
         
         turretImage.setOrigin(0.5, 0.75); // Set the origin of the turret to the base of the turret
         turretImage.depth = GameObjectDepths.RobotTurret;
