@@ -34,7 +34,12 @@ const RobotManager = (function() {
         const gameWidth = GameSetup.Width, gameHeight = GameSetup.Height;
         const x = gameWidth * .5, y = gameHeight * .5;
 
-        const robotSetup = newRobot.setup;
+        // const robotSetup = newRobot.setup;
+
+        // Call the robot's create() method
+        const robotSetup = RobotSetupFactory.createRobotSetup();
+        // newRobot.create({ robotSetup: robotSetup });
+        newRobot.create(robotSetup);
 
         /*****************************/
         RobotMatterFactory.createRobot({
@@ -79,9 +84,6 @@ const RobotManager = (function() {
         // Add the entry for the robot in the per-frame collisions arrays
         RobotsData_CurrentData.robotCollisions[currentRobotIndex] = [];
         RobotsData_CurrentData.arenaCollisions[currentRobotIndex] = [];
-
-        // Call the robot's create() method
-        newRobot.create();
 
         // RobotsData.totalRobots++;
         totalRobots++;

@@ -22,13 +22,36 @@ const ProjectileTypes = {
     Shotgun: 'Shotgun_Shells'
 };
 
+const RobotHullTypes = {
+    One: '01',
+    Two: '02',
+    Three: '03',
+    Four: '04',
+    Five: '05',
+    Six: '06',
+    Seven: '07',
+    Eight: '08'
+};
+
+const RobotTurretTypes = {
+    One: '01',
+    Two: '02',
+    Three: '03',
+    Four: '04',
+    Five: '05',
+    Six: '06',
+    Seven: '07',
+    Eight: '08'
+};
+
 const RobotMatterFactory = (function() {
     const createRobot = function({ currentRobotIndex, x, y, scale, robotSetup }) {
         const gameContext = GameContextHolder.gameContext;
 
         const shapes = gameContext.cache.json.get('Hulls_CollisionData');
 
-        robotSetup = robotSetup ?? RobotSetup;
+        const hullType = robotSetup.hullType;
+        const turretType = robotSetup.turretType;
 
         const hullColor = robotSetup.hullColor;
         const turretColor = robotSetup.turretColor;
@@ -36,11 +59,12 @@ const RobotMatterFactory = (function() {
         // ROBOT HULL
         const hullImage = gameContext.matter.add.image(
             x, y,
-            `Hulls_Color_${hullColor}/Hull_01`,
+            // `Hulls_Color_${hullColor}/Hull_01`,
+            `Hulls_Color_${hullColor}/Hull_${hullType}`,
             null,
             {
-                shape: shapes['Hull_01'],
-                // density: 100 // doesnt work
+                // shape: shapes['Hull_01'],
+                shape: shapes[`Hull_${hullType}`],
             });
         hullImage.setScale(scale);
         hullImage.setAngle(0);
@@ -82,7 +106,8 @@ const RobotMatterFactory = (function() {
         const turretImage = GameContextHolder.gameContext.add.image(
             hullImage.x,
             hullImage.y,
-            `Weapon_Color_${turretColor}/Gun_04`);
+            // `Weapon_Color_${turretColor}/Gun_04`);
+            `Weapon_Color_${turretColor}/Gun_${turretType}`);
         
         turretImage.setOrigin(0.5, 0.75); // Set the origin of the turret to the base of the turret
         turretImage.depth = GameObjectDepths.RobotTurret;

@@ -124,15 +124,16 @@ const keyBot = (function() {
 
     return {
         name: 'keyBot',
-        setup: {
-            hullColor: RobotHullColors.Green,
-            turretColor: RobotTurretColors.Green
-        },
-        create: function() {
+        create: function(robotSetup) {
             gameContext = GameContextHolder.gameContext;
-
             cursors = gameContext.input.keyboard.createCursorKeys();
             wasdKeys = gameContext.input.keyboard.addKeys('W,S,A,D');
+
+            robotSetup.hullType = RobotHullTypes.Seven;
+            robotSetup.turretType = RobotTurretTypes.Six;
+
+            robotSetup.hullColor = RobotHullColors.Green;
+            robotSetup.turretColor = RobotTurretColors.Green;
         },
         update: function(api, time, delta) {
 
