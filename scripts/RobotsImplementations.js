@@ -32,7 +32,9 @@ const shredder = (function() {
         }
         //api.move();
 
-        const collisionsThisFrame = api.collisionsThisFrame;
+        const collisions = api.collisions;
+        // const collisionsThisFrame = api.collisionsThisFrame;
+        const collisionsThisFrame = collisions.otherRobots;
         if (collisionsThisFrame.length > 0) {
             Logger.log(`Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
             for (let i = 0; i < collisionsThisFrame.length; i++) {
@@ -90,6 +92,8 @@ const keyBot = (function() {
     let firingKeyPressedLastFrame = false;
 
     var handleInput = function(api) {
+        const turret = api.turret;
+
         if (cursors.left.isDown) {
             api.rotateLeft();
         } else if (cursors.right.isDown) {
@@ -108,11 +112,11 @@ const keyBot = (function() {
         }
 
         if (wasdKeys.A.isDown) {
-            api.rotateTurretLeft();
+            turret.rotateLeft();
         }
 
         if (wasdKeys.D.isDown) {
-            api.rotateTurretRight();
+            turret.rotateRight();
         }
 
         firingKeyPressedLastFrame = firingKeyDown;;
@@ -128,16 +132,30 @@ const keyBot = (function() {
         },
         update: function(api, time, delta) {
 
-            api.turretFollowHull = true;
+            //api.turretFollowHull = true;
 
             handleInput(api);
 
-            const collisionsThisFrame = api.collisionsThisFrame;
-            if (collisionsThisFrame.length > 0) {
-                Logger.log(`KeyBot collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
-                for (let i = 0; i < collisionsThisFrame.length; i++) {
-                    const collisionThisFrame = collisionsThisFrame[i];
+            const collisions = api.collisions;
+            const collisionsWithRobots = collisions.otherRobots;
+            if (collisionsWithRobots.length > 0) {
+                Logger.log(`KeyBot robot collisions: ${collisionsWithRobots.length}: `, collisionsWithRobots);
+                for (let i = 0; i < collisionsWithRobots.length; i++) {
+                    const collisionThisFrame = collisionsWithRobots[i];
                     if (collisionThisFrame.type === CollisionCategories.RobotBody) {
+                        Logger.log('firing!');
+                        // api.fire(ProjectileTypes.Medium);
+                    }
+
+                }
+            }
+
+            const collisionsWithArena = collisions.arena;
+            if (collisionsWithArena.length > 0) {
+                Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
+                for (let i = 0; i < collisionsWithArena.length; i++) {
+                    const collisionWithArena = collisionsWithArena[i];
+                    if (collisionWithArena.type === CollisionCategories.RobotBody) {
                         Logger.log('firing!');
                         // api.fire(ProjectileTypes.Medium);
                     }

@@ -75,8 +75,9 @@ const RobotManager = (function() {
         // Inform the UI information panel about the new robot
         UIRobotInfoPanel.add(currentRobotIndex);
 
-        // Add the entry for the robot in the per-frame robotCollisions array
+        // Add the entry for the robot in the per-frame collisions arrays
         RobotsData_CurrentData.robotCollisions[currentRobotIndex] = [];
+        RobotsData_CurrentData.arenaCollisions[currentRobotIndex] = [];
 
         // Call the robot's create() method
         newRobot.create();
@@ -148,8 +149,9 @@ const RobotManager = (function() {
             api.scannedRobots = scannedRobots;
 
             // Set the robot collisions to the api
-            const collisionsThisFrame = RobotsData_CurrentData.robotCollisions[i];
-            api.collisionsThisFrame = collisionsThisFrame;
+            var api_collisions = api.collisions;
+            api_collisions.otherRobots = RobotsData_CurrentData.robotCollisions[i];
+            api_collisions.arena = RobotsData_CurrentData.arenaCollisions[i];
 
             // Call the robot's update function
             const updateFunction = RobotsData_Instance.updateFunctions[i];

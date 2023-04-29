@@ -18,18 +18,23 @@ const RobotAPIFactory = (function() {
                 rotateRight: function() {
                     RobotManager.rotateHull(robotIndex, 1);
                 },
-                rotateTurretRight: function() {
-                    RobotManager.rotateTurret(robotIndex, 1);
-                },
-                rotateTurretLeft: function() {
-                    RobotManager.rotateTurret(robotIndex, -1);
+                turret: {
+                    rotateRight: function() {
+                        RobotManager.rotateTurret(robotIndex, 1);
+                    },
+                    rotateLeft: function() {
+                        RobotManager.rotateTurret(robotIndex, -1);
+                    },
                 },
                 fire: function(projectileType) {
                     ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
                 },
+                collisions: {
+                    otherRobots: [],
+                    arena: [],
+                },
                 turretFollowHull: false,
                 radarEnabled: true,
-                collisionsThisFrame: [],
                 scannedRobots: []
                 /*
                  * TODO:

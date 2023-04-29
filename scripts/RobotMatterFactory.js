@@ -62,7 +62,7 @@ const RobotMatterFactory = (function() {
         // Make a reference to the current robot index from the matter object id
         const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
         // PhysicsBodies.matterObjectIDToEntityIndex[hullImagePhysicsBodyID] = currentRobotIndex;
-        PhysicsBodies.mapMatterObjectIDToEntityIndex(hullImagePhysicsBodyID, currentRobotIndex);
+        PhysicsBodies.mapMatterObjectIDToRobotIndex(hullImagePhysicsBodyID, currentRobotIndex);
         // Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 
         // ROBOT TURRET

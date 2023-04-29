@@ -19,7 +19,8 @@ const RobotsData_CurrentData = (function() {
         currentTurretAngles: [],
         currentRadarAngles: [],
         robotCollisions: [], // [[{,,}], [{,,}], [{,,}]]
-        totalCollisions: 0,
+        arenaCollisions: [], // [[{,,}], [{,,}], [{,,}]]
+        //totalCollisions: 0,
         getPosition: function(index) {
             return new Phaser.Math.Vector2(obj.positionXs[index], obj.positionYs[index]);
         }

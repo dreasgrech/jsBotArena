@@ -83,10 +83,10 @@ const PhysicsBodies = (function() {
                 // Logger.log("Setting", body.id, "to", collisionCategory);
             }
         },
-        mapMatterObjectIDToEntityIndex: function(matterObjectID, entityIndex) {
+        mapMatterObjectIDToRobotIndex: function(matterObjectID, entityIndex) {
             matterObjectIDToRobotIndex[matterObjectID] = entityIndex;
         },
-        resolveEntityIndexFromMatterObjectID: function(matterObjectID) {
+        resolveRobotIndexFromMatterObjectID: function(matterObjectID) {
             return matterObjectIDToRobotIndex[matterObjectID];
         },
         resolveCollisionCategoryFromMatterObjectID: function(matterObjectID) {

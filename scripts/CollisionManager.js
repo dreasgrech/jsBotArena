@@ -7,7 +7,7 @@ const CollisionManager = (function() {
 
         // Logger.log(`Checking for body id: `, collidingBodyID, `.  Body Type: `, collidingBodyObjectType);
 
-        // const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
+        // const collidingBodyRobotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(collidingBodyID);
         // const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
 
         // Logger.log(collidedWithBody);
@@ -20,7 +20,7 @@ const CollisionManager = (function() {
             return;
         }
 
-        const collidedWithBody_RobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidedWithBody_ID);
+        const collidedWithBody_RobotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(collidedWithBody_ID);
         // Logger.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
 
         // Create the event info object which will be passed to the robots api
@@ -36,11 +36,23 @@ const CollisionManager = (function() {
 
         // Save the collisions in the colliding robot's data
         const collidingBodyID = collidingBody.parent.id;
-        const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
+        const collidingBodyRobotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(collidingBodyID);
         const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
         collidingBodyRobotCollisions.push(eventInfo);
         RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
         // Logger.log(`Saved RobotsData_CurrentData.robotCollisions[${collidingBodyRobotIndex}] = ${collidingBodyRobotCollisions.length}`);
+    };
+
+    const saveCollision_RobotToArena = function(robotBody, arenaBody) {
+        const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(robotBody.parent.id);
+        const eventInfo = {
+            type: CollisionCategories.Arena,
+            data: {
+
+            }
+        };
+
+        RobotsData_CurrentData.arenaCollisions[robotIndex].push(eventInfo);
     };
 
     // Holds the keys that map to the different collisions that can happen
@@ -69,18 +81,21 @@ const CollisionManager = (function() {
         const arenaBody = isBodyA_Arena ? bodyA : bodyB;
 
         Logger.log("robot", robotBody, "arena", arenaBody);
+
+        saveCollision_RobotToArena(robotBody, arenaBody);
     };
     const handleCollision_ProjectileToProjectile = function(projectileA, projectileB) {
         // Mark the projectiles for removal
         ProjectileManager.markProjectileForRemoval(projectileA.parent.gameObject);
         ProjectileManager.markProjectileForRemoval(projectileB.parent.gameObject);
     };
+
     const handleCollision_ProjectileToArena = function(bodyA, bodyB) {
         const isBodyA_Arena = bodyA.collisionFilter.category & CollisionCategories.Arena;
         const projectileBody = isBodyA_Arena ? bodyB : bodyA;
         const arenaBody = isBodyA_Arena ? bodyA : bodyB;
 
-        Logger.log("projectile", projectileBody, "arena", arenaBody);
+        // Logger.log("projectile", projectileBody, "arena", arenaBody);
 
         // Mark the projectile for removal
         ProjectileManager.markProjectileForRemoval(projectileBody.parent.gameObject);
@@ -104,7 +119,7 @@ const CollisionManager = (function() {
             if (eventPairs.length > 0) {
                 //Logger.log(`Total pairs: ${eventPairs.length}`);
                 //Logger.log(eventPairs[0], eventPairs[1]);
-                RobotsData_CurrentData.totalCollisions = eventPairs.length;
+                // RobotsData_CurrentData.totalCollisions = eventPairs.length;
 
                 for (let i = 0; i < eventPairs.length; i++) {
                     const pair = eventPairs[i];
@@ -146,10 +161,10 @@ const CollisionManager = (function() {
             const totalRobots = RobotManager.getTotalRobots();
             for (let i = 0; i < totalRobots; i++) {
                 RobotsData_CurrentData.robotCollisions[i] = [];
-                // Logger.log(`cleared: ${RobotsData_CurrentData.robotCollisions[i].length} `);
+                RobotsData_CurrentData.arenaCollisions[i] = [];
             }
 
-            RobotsData_CurrentData.totalCollisions = 0;
+            // RobotsData_CurrentData.totalCollisions = 0;
         }
     };
 
