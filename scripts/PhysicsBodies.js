@@ -92,6 +92,16 @@ const PhysicsBodies = (function() {
         resolveCollisionCategoryFromMatterObjectID: function(matterObjectID) {
             return matterBodyToCollisionCategory[matterObjectID];
         },
+        enableMatterBody: function(body) {
+            body.setActive(true);
+            body.setVisible(true);
+        },
+        disableMatterBody: function(body) {
+            body.setCollisionCategory(null);
+            body.setVelocity(0, 0);
+            body.setActive(false);
+            body.setVisible(false);
+        },
         isBodyOverlappingWithArenaBodies: isBodyOverlappingWithArenaBodies
     };
 

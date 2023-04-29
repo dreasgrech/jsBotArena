@@ -4,13 +4,24 @@
 const ProjectileManager = (function() {
     let projectilesCollisionData;
     let gameContext;
+    let currentProjectileIndex = 0;
 
     // const projectileGroups = {};
 
     const pools = {};
 
+    const ProjectilesData = (function() {
+        const projectilesData = {
+            projectileType:[],
+            matterBody:[]
+        };
 
-    const obj = {
+        return projectilesData;
+    }());
+
+    const projectileMatterBodyID_to_ProjectileIndex = {};
+
+    const projectileManager = {
         onCreate: function() {
             gameContext = GameContextHolder.gameContext;
 
@@ -24,21 +35,19 @@ const ProjectileManager = (function() {
 
                 const projectileType = ProjectileTypes[projectileTypeField];
 
-                const pool = PoolFactory.createPool({
+                // const pool = PoolFactory.createPool({
+                const pool = MatterBodyPoolFactory.createMatterBodyPool({
                     poolName: `Projectiles (${projectileType})`,
                     createElement: function() {
                         console.log("creating projectile", projectileType);
                         const projectileImage = gameContext.matter.add.sprite(
                             300,
                             300,
-                            projectileType,
-                            null,
-                            {
-                                shape: projectilesCollisionData[projectileType]
-                            });
-                        projectileImage.setCollisionCategory(null);
-                        projectileImage.setActive(false);
-                        projectileImage.setVisible(false);
+                            projectileType//,
+                            //null,
+                            // { shape: projectilesCollisionData[projectileType] }
+                        );
+                        //PhysicsBodies.disableMatterBody(projectileImage);
                         return projectileImage;
                     },
                     //    beforePush: function(){},
@@ -48,17 +57,6 @@ const ProjectileManager = (function() {
                 pool.prePopulate(10);
 
                 pools[projectileType] = pool;
-
-                // const projectileTypeValue = ProjectileTypes[projectileType];
-
-                //    const group = PhaserGroupFactory.createGroup({
-                //        key:projectileTypeValue,
-                //        maxSize: 10,
-                //        onCreate: function(item){console.log('onCreate', item)},
-                //        onRemove: function(){}
-                //    });
-                //    projectileGroups[projectileTypeValue] = group;
-                //    console.log("creating group", projectileTypeValue, group);
             }
         },
         fireRobotProjectile: function(robotIndex, projectileType) {
@@ -81,29 +79,13 @@ const ProjectileManager = (function() {
             const x = robotPositionX;
             const y = robotPositionY;
 
-            // const gameContext = GameContextHolder.gameContext;
-
-            //const opts = {
-            //    //shape: projectilesCollisionData[projectileType]
-            //};
-
-            //const group = projectileGroups[projectileType];
-            //console.log("group", group, projectileType);
-
-            //const bullet = gameContext.matter.add.sprite(
-            //    x,
-            //    y,
-            //    projectileType,
-            //    null,
-            //    opts);
-            // console.log(`group.get(${x}, ${y}, ${projectileType}, ${null}, ${true})`);
-            // const bullet = group.get(x, y, projectileType, null, true);
             const pool = pools[projectileType];
             const bullet = pool.pop();
             // console.log("bullet", bullet);
             bullet.setPosition(x, y);
-            bullet.setActive(true);
-            bullet.setVisible(true);
+            //bullet.setActive(true);
+            //bullet.setVisible(true);
+            PhysicsBodies.enableMatterBody(bullet);
 
             bullet.setBody(projectilesCollisionData[projectileType], null);
             bullet.depth = GameObjectDepths.Projectile;
@@ -112,12 +94,13 @@ const ProjectileManager = (function() {
             bullet.setFrictionAir(0);
             bullet.setBounce(0);
 
+            Logger.log("created projectile", bullet);
+
             const robotID = RobotsData_Instance.ids[robotIndex];
             // Logger.log("Setting group of projectile to", -robotID);
             PhysicsHelperFunctions.setCollisionProperties({
                 physicsObject: bullet.body,
-                // group: 0,
-                group: -robotID,
+                group: -robotID, // -robotID so that it doesn't collide with the robot that fired it
                 category: CollisionCategories.RobotProjectile,
                 collidesWithCategories: CollisionCategories.RobotBody |
                     CollisionCategories.Arena |
@@ -141,8 +124,25 @@ const ProjectileManager = (function() {
             const angleRad = Phaser.Math.DegToRad(angle - 90);
             const force = new Phaser.Math.Vector2(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
             bullet.applyForce(force);
+
+            ProjectilesData.matterBody[currentProjectileIndex] = bullet;
+            ProjectilesData.projectileType[currentProjectileIndex] = projectileType;
+            projectileMatterBodyID_to_ProjectileIndex[bullet.body.id] = currentProjectileIndex;
+            // console.log(bullet);
+            console.log("mapping", bullet.body.id, "to", currentProjectileIndex);
+
+            currentProjectileIndex++;
+        },
+        destroyProjectile: function(projectile) {
+            const projectileIndex = projectileMatterBodyID_to_ProjectileIndex[projectile.body.id];
+            const projectileType = ProjectilesData.projectileType[projectileIndex];
+            const projectilePool = pools[projectileType];
+            Logger.log("destroying projectile", projectile, projectileIndex, projectileType, projectilePool);
+
+            // PhysicsBodies.disableMatterBody(projectile);
+            projectilePool.push(projectile);
         }
     };
 
-    return obj;
+    return projectileManager;
 }());

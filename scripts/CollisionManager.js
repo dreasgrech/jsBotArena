@@ -73,6 +73,8 @@ const CollisionManager = (function() {
         const arenaBody = isBodyA_Arena ? bodyA : bodyB;
 
         console.log("projectile", projectileBody, "arena", arenaBody);
+
+        ProjectileManager.destroyProjectile(projectileBody.parent.gameObject);
     };
 
     const obj = {
