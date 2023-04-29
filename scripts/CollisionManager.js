@@ -9,7 +9,8 @@ const CollisionManager = (function() {
 
         // const collidingBodyRobotIndex = PhysicsBodies.resolveEntityIndexFromMatterObjectID(collidingBodyID);
         // const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
-        Logger.log(collidedWithBody);
+
+        // Logger.log(collidedWithBody);
 
         // Add the information about the other collision for this robot
         const collidedWithBody_ID = collidedWithBody.parent.id;
@@ -57,6 +58,9 @@ const CollisionManager = (function() {
         const projectileBody = isBodyA_Robot ? bodyB : bodyA;
 
         Logger.log("robot", robotBody, "projectile", projectileBody);
+
+        // Mark the projectile for removal
+        ProjectileManager.markProjectileForRemoval(projectileBody.parent.gameObject);
     };
 
     const handleCollision_RobotToArena = function(bodyA, bodyB) {
@@ -66,7 +70,11 @@ const CollisionManager = (function() {
 
         Logger.log("robot", robotBody, "arena", arenaBody);
     };
-    const handleCollision_ProjectileToProjectile = function(bodyA, bodyB) {};
+    const handleCollision_ProjectileToProjectile = function(projectileA, projectileB) {
+        // Mark the projectiles for removal
+        ProjectileManager.markProjectileForRemoval(projectileA.parent.gameObject);
+        ProjectileManager.markProjectileForRemoval(projectileB.parent.gameObject);
+    };
     const handleCollision_ProjectileToArena = function(bodyA, bodyB) {
         const isBodyA_Arena = bodyA.collisionFilter.category & CollisionCategories.Arena;
         const projectileBody = isBodyA_Arena ? bodyB : bodyA;
@@ -74,7 +82,7 @@ const CollisionManager = (function() {
 
         Logger.log("projectile", projectileBody, "arena", arenaBody);
 
-        // ProjectileManager.destroyProjectile(projectileBody.parent.gameObject);
+        // Mark the projectile for removal
         ProjectileManager.markProjectileForRemoval(projectileBody.parent.gameObject);
     };
 
@@ -94,8 +102,8 @@ const CollisionManager = (function() {
             const eventPairs = event.pairs;
 
             if (eventPairs.length > 0) {
-                Logger.log(`Total pairs: ${eventPairs.length}`);
-                Logger.log(eventPairs[0], eventPairs[1]);
+                //Logger.log(`Total pairs: ${eventPairs.length}`);
+                //Logger.log(eventPairs[0], eventPairs[1]);
                 RobotsData_CurrentData.totalCollisions = eventPairs.length;
 
                 for (let i = 0; i < eventPairs.length; i++) {
@@ -129,7 +137,7 @@ const CollisionManager = (function() {
                         Logger.error('Unable to find collision handler for', bodyA_CollisionCategory, 'and', bodyB_CollisionCategory, '. Key:', collisionLookupKey);
                     }
 
-                    Logger.log(bodyA, bodyB);
+                    // Logger.log(bodyA, bodyB);
                 }
             }
         },

@@ -99,6 +99,8 @@ const PhysicsBodies = (function() {
         disableMatterBody: function(body) {
             body.setCollisionCategory(null);
             body.setVelocity(0, 0);
+            body.setAngularVelocity(0, 0);
+            body.setAngle(0);
             body.setActive(false);
             body.setVisible(false);
         },

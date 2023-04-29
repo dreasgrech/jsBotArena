@@ -144,6 +144,7 @@ const ProjectileManager = (function() {
 
             currentProjectileIndex++;
         },
+        // Mark a projectile for removal so that it's removed at the end of frame
         markProjectileForRemoval: function(projectile) {
             // Add the projectile to the queue so that it gets removed later
             queuedProjectilesForRemoval.add(projectile);
@@ -152,9 +153,8 @@ const ProjectileManager = (function() {
             const projectileIndex = projectileMatterBodyID_to_ProjectileIndex[projectile.body.id];
             const projectileType = ProjectilesData.projectileType[projectileIndex];
             const projectilePool = pools[projectileType];
-            Logger.log("destroying projectile", projectile, projectileIndex, projectileType, projectilePool);
+            // Logger.log("destroying projectile", projectile, projectileIndex, projectileType, projectilePool);
 
-            // PhysicsBodies.disableMatterBody(projectile);
             projectilePool.push(projectile);
         }
     };
