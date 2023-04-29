@@ -4,26 +4,24 @@ const RobotManager = (function() {
     let currentRobotIndex = 0;
     let totalRobots = 0;
 
-    //const placeRobotInArena = function(robotBody) {
-    //    const maxAttempts = 10;
-    //    var attempts = 0;
-    //    var x, y;
+    const placeRobotInArena = function(robotBody) {
+        const maxAttempts = 10;
+        let attempts = 0;
 
-    //    while (attempts < maxAttempts && PhysicsBodies.isBodyOverlappingWithArenaBodies(robotBody)) {
-    //        // Generate new random position
-    //        x = Math.random() * (GAME_WIDTH * 0.7);
-    //        y = Math.random() * (GAME_HEIGHT * 0.7);
+        while (attempts++ < maxAttempts && PhysicsBodies.isBodyOverlappingWithArenaBodies(robotBody)) {
+            // Generate new random position
+            //const x = Math.random() * (GAME_WIDTH * 0.7);
+            //const y = Math.random() * (GAME_HEIGHT * 0.7);
+            const x = Math.random() * (GAME_WIDTH);
+            const y = Math.random() * (GAME_HEIGHT);
 
-    //        // Update robotBody position
-    //        robotBody.setPosition(x, y);
+            robotBody.setPosition(x, y);
+        }
 
-    //        attempts++;
-    //    }
-
-    //    if (attempts >= maxAttempts) {
-    //        console.log("Failed to place the robot without overlapping after", maxAttempts, "attempts.");
-    //    }
-    //};
+        if (attempts >= maxAttempts) {
+            Logger.error("Failed to place the robot without overlapping after", maxAttempts, "attempts.");
+        }
+    };
 
     const addRobot = function(newRobot) {
         RobotsData_Instance.ids[currentRobotIndex] = currentRobotIndex + 1;
@@ -45,6 +43,8 @@ const RobotManager = (function() {
             y: y,
             robotHullColor: RobotHullColors.Brown
         });
+
+        placeRobotInArena(RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex]);
 
         // Create the tracks
         // const trackA = 
@@ -149,7 +149,7 @@ const RobotManager = (function() {
             api.scannedRobots = scannedRobots;
 
             // Set the robot collisions to the api
-            var api_collisions = api.collisions;
+            const api_collisions = api.collisions;
             api_collisions.otherRobots = RobotsData_CurrentData.robotCollisions[i];
             api_collisions.arena = RobotsData_CurrentData.arenaCollisions[i];
 

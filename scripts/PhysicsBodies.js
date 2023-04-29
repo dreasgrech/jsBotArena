@@ -24,6 +24,9 @@ const PhysicsBodies = (function() {
     }
 
     const isBodyOverlappingWithArenaBodies = function(body) {
+        const gameContext = GameContextHolder.gameContext;
+        return gameContext.matter.overlap(body, arenaBodies);
+
         //const bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds(body);
         //console.log(bodyBounds);
         //return false;
@@ -35,8 +38,8 @@ const PhysicsBodies = (function() {
         // console.log(bodyBounds.body.vertices);
         // const bodyBounds = body.getCenter();
 
-        // const bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds();
-        const bodyBounds = body.getBounds();
+        //// const bodyBounds = Phaser.GameObjects.Components.GetBounds.getBounds();
+        //const bodyBounds = body.getBounds();
 
 // Phaser.Physics.Matter.Matter.Bounds.overlaps(robotBody.bounds, existingRobotBody.bounds)
         //if (Phaser.Physics.Matter.Matter.Bounds.overlaps(robotBody.bounds, existingRobotBody.bounds))

@@ -45,7 +45,7 @@ const gameManager = (function() {
 
         const floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
         const wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
-        console.log(map, floorTilesetImage);
+        Logger.log(map, floorTilesetImage);
 
         const floorLayer = map.createLayer('Floor Layer', floorTilesetImage);
         const wallsLayer = map.createLayer('Walls Layer', wallTilesetImage);
