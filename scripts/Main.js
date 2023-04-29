@@ -21,10 +21,11 @@ const gameManager = (function() {
     };
 
     const create = function() {
-        // Enable Matter physics
-        this.matter.world.setBounds();
-
         const gameContext = GameContextHolder.gameContext;
+
+        // Enable Matter physics
+        gameContext.matter.world.setBounds();
+
 
         /*
             const floorImage = this.textures.get('arena_floor').getSourceImage();
@@ -40,13 +41,14 @@ const gameManager = (function() {
         */
 
         //this.add.image(0, 0, 'floor');
-        const map = this.make.tilemap({ key: 'arena_json' });
+        const map = gameContext.make.tilemap({ key: 'arena_json' });
 
         const floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
         const wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
+        console.log(map, floorTilesetImage);
 
-        const floorLayer = map.createStaticLayer('Floor Layer', floorTilesetImage);
-        const wallsLayer = map.createStaticLayer('Walls Layer', wallTilesetImage);
+        const floorLayer = map.createLayer('Floor Layer', floorTilesetImage);
+        const wallsLayer = map.createLayer('Walls Layer', wallTilesetImage);
 
         // Set collision on the walls
         // wallsLayer.setCollisionByProperty({ collides: true });
