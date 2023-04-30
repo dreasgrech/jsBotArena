@@ -110,8 +110,8 @@ const RobotManager = (function() {
             RobotsData_CurrentData.currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
-            const turretAngle = turretImage.angle;
-            RobotsData_CurrentData.currentTurretAngles[i] = turretAngle;
+            const turretAngle_degrees = turretImage.angle;
+            RobotsData_CurrentData.currentTurretAngles[i] = turretAngle_degrees;
 
             RobotMatterFactory.updateParts(i);
 
@@ -137,9 +137,15 @@ const RobotManager = (function() {
             const updateFunction = RobotsData_Instance.updateFunctions[i];
             updateFunction(api, time, delta);
 
-            const turretFollowHull = api.turretFollowHull;
+            const turret = api.turret;
+            const turretFollowHull = turret.turretFollowHull;
             if (turretFollowHull) {
-                robotManager.setTurretAngle(i, hullAngle_PhaserDegrees);
+                robotManager.setTurretAngle_degrees(i, hullAngle_PhaserDegrees);
+            }
+
+            const radarFollowTurret = radar.radarFollowTurret;
+            if (radarFollowTurret) {
+                RobotsRadar.setRadarAngle_degrees(i, turretAngle_degrees);
             }
 
             /*************************/
@@ -183,19 +189,19 @@ const RobotManager = (function() {
             robotBody.setAngularVelocity(angularVelocity);
         },
         rotateTurret: function(robotIndex, direction) {
-            RobotManager.incrementTurretAngle(robotIndex, turretRotationPerFrameSpeed * direction);
+            RobotManager.incrementTurretAngle_degrees(robotIndex, turretRotationPerFrameSpeed * direction);
         },
-        setTurretAngle: function(robotIndex, angle) {
+        setTurretAngle_degrees: function(robotIndex, angleDegrees) {
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-            turretImage.angle = angle;
+            turretImage.angle = angleDegrees;
         },
-        incrementTurretAngle: function(robotIndex, angle) {
+        incrementTurretAngle_degrees: function(robotIndex, angleDegrees) {
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-            turretImage.angle += angle;
+            const currentTurretImageAngle_degrees = turretImage.angle;
+            turretImage.angle = AngleOperations.incrementAngle_degrees(currentTurretImageAngle_degrees, angleDegrees);
         }
         // matterBodyToObjectType: {}
     };
 
     return robotManager;
 }());
-

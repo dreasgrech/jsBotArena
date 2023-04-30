@@ -22,6 +22,7 @@ const RobotAPIFactory = (function() {
 
                 },
                 turret: {
+                    turretFollowHull: false,
                     rotateLeft: function() {
                         RobotManager.rotateTurret(robotIndex, -1);
                     },
@@ -30,6 +31,8 @@ const RobotAPIFactory = (function() {
                     }
                 },
                 radar: {
+                    radarEnabled: true,
+                    radarFollowTurret: true,
                     scannedRobots: [],
                     rotateLeft: function() {
                         RobotsRadar.rotateRadar(robotIndex, -1);
@@ -45,8 +48,6 @@ const RobotAPIFactory = (function() {
                     otherRobots: [],
                     arena: [],
                 },
-                turretFollowHull: false,
-                radarEnabled: true,
                 data: { 
                     positionX: 0,
                     positionY: 0,

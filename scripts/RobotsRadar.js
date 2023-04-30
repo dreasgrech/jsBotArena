@@ -5,7 +5,8 @@ const RobotsRadar = (function() {
 
     const isRadarEnabled = function(robotIndex) {
         const api = RobotsData_Instance.robotAPIs[robotIndex];
-        return api.radarEnabled;
+        const radar = api.radar;
+        return radar.radarEnabled;
     };
 
     // TODO: This method currently only detects the the center point of the other bots, not their entire bounds
@@ -94,18 +95,26 @@ const RobotsRadar = (function() {
 
     const robotsRadar = {
         scanForRobots: scanForRobots,
-        createRadar: function(index) {
+        setRadarAngle_degrees: function(robotIndex, angle_degrees) {
+            RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex] = angle_degrees;
+        },
+        rotateRadar: function(robotIndex, direction) {
+            // TODO: this is not framerate independent
+            const currentRadarAngle_degrees = RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex];
+            robotsRadar.setRadarAngle_degrees(robotIndex, AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, radarRotationIncrement * direction));
+        },
+        createRadar: function(robotIndex) {
             const game = GameContextHolder.game;
 
             const radarGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
             radarGraphics.depth = GameObjectDepths.RobotRadarArc;
             game.scene.scenes[0].add.existing(radarGraphics);
 
-            RobotsData_Radar.radarGraphics[index] = radarGraphics;
-            RobotsData_CurrentData.currentRadarAngles_degrees[index] = 0;
-            RobotsData_Radar.radarFOVAngles_degrees[index] = 45;
+            RobotsData_Radar.radarGraphics[robotIndex] = radarGraphics;
+            RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex] = 0;
+            RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 45;
             // RobotsData_Radar.radarMaxScanDistance[index] = 200;
-            RobotsData_Radar.radarMaxScanDistance[index] = 1000;
+            RobotsData_Radar.radarMaxScanDistance[robotIndex] = 1000;
         },
         drawRadarArc: function(robotIndex) {
             const radarGraphics = RobotsData_Radar.radarGraphics[robotIndex];
@@ -119,7 +128,7 @@ const RobotsRadar = (function() {
             
             const radarFOVAngle_degrees = RobotsData_Radar.radarFOVAngles_degrees[robotIndex];
             const radarMaxScanDistance = RobotsData_Radar.radarMaxScanDistance[robotIndex];
-            const radarAngle = RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex];
+            const radarAngle_degrees = RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex];
 
             const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
             const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
@@ -132,17 +141,11 @@ const RobotsRadar = (function() {
             radarGraphics.arc(robotPositionX,
                 robotPositionY,
                 radarMaxScanDistance,
-                Phaser.Math.DegToRad(radarAngle - radarFOVAngle_degrees * 0.5),
-                Phaser.Math.DegToRad(radarAngle + radarFOVAngle_degrees * 0.5));
+                Phaser.Math.DegToRad(radarAngle_degrees - radarFOVAngle_degrees * 0.5),
+                Phaser.Math.DegToRad(radarAngle_degrees + radarFOVAngle_degrees * 0.5));
             radarGraphics.closePath();
             radarGraphics.fillPath();
             radarGraphics.strokePath();
-        },
-        rotateRadar: function(robotIndex, direction) {
-            // TODO: this is not framerate independent
-            const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex];
-            let newRadarAngle = AngleOperations.normalizeAngleDegrees(currentRadarAngle + radarRotationIncrement * direction);
-            RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex] = newRadarAngle;
         }
     };
 
