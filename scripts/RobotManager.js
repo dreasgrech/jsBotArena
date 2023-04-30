@@ -172,7 +172,8 @@ const RobotManager = (function() {
             const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
 
             // const angle = robotBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
-            const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+            // const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+            const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex]; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
             const angleRadians = Phaser.Math.DegToRad(angle);
 
             //console.log(angle);
