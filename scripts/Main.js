@@ -45,9 +45,9 @@ const gameManager = (function() {
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
         RobotManager.addRobot(keyBot);
-        RobotManager.addRobot(shredder);
+        //RobotManager.addRobot(shredder);
         RobotManager.addRobot(doNothingBot);
-        RobotManager.addRobot(doNothingBot);
+        //RobotManager.addRobot(doNothingBot);
         //setTimeout(() => { RobotManager.addRobot(circleBot); }, 1500);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2000);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);

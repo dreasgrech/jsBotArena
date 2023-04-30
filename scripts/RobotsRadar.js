@@ -76,7 +76,10 @@ const RobotsRadar = (function() {
         return scannedRobots;
     };
 
-    const obj = {
+    const radarRotationIncrement = 1;
+
+    const robotsRadar = {
+        scanForRobots: scanForRobots,
         createRadar: function(index) {
             const game = GameContextHolder.game;
 
@@ -89,7 +92,6 @@ const RobotsRadar = (function() {
             RobotsData_Radar.radarFOVAngles[index] = 45;
             RobotsData_Radar.radarMaxScanDistance[index] = 200;
         },
-        scanForRobots: scanForRobots,
         drawRadarArc: function(robotIndex) {
             const radarGraphics = RobotsData_Radar.radarGraphics[robotIndex];
             radarGraphics.clear();
@@ -120,8 +122,13 @@ const RobotsRadar = (function() {
             radarGraphics.closePath();
             radarGraphics.fillPath();
             radarGraphics.strokePath();
+        },
+        rotateRadar: function(robotIndex, direction) {
+            let radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
+            radarAngle += radarRotationIncrement * direction;
+            RobotsData_CurrentData.currentRadarAngles[robotIndex] = radarAngle;
         }
     };
 
-    return obj;
+    return robotsRadar;
 }());

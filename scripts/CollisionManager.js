@@ -29,7 +29,7 @@ const CollisionManager = (function() {
             data: {
                 robotIndex: collidedWithBody_RobotIndex,
                 name: RobotsData_Instance.names[collidedWithBody_RobotIndex],
-                angle: RobotsData_CurrentData.currentRobotAngles[collidedWithBody_RobotIndex],
+                angle: RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[collidedWithBody_RobotIndex],
                 velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBody_RobotIndex]
             }
         };

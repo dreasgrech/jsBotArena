@@ -47,7 +47,8 @@ const shredder = (function() {
             }
         }
 
-        const scannedRobots = api.scannedRobots;
+        const radar = api.radar;
+        const scannedRobots = radar.scannedRobots;
         const totalScannedRobots = scannedRobots.length;
         if (totalScannedRobots > 0) {
             Logger.log(`Shredder scannedRobots: ${totalScannedRobots}: `, scannedRobots);
@@ -88,11 +89,12 @@ const circleBot = (function() {
 
 const keyBot = (function() {
     let gameContext;
-    let cursors, wasdKeys;
+    let cursors, wasdKeys, qeKeys;
     let firingKeyPressedLastFrame = false;
 
     const handleInput = function(api) {
         const turret = api.turret;
+        const radar = api.radar;
 
         if (cursors.left.isDown) {
             api.rotateLeft();
@@ -111,12 +113,22 @@ const keyBot = (function() {
             api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
         }
 
+        // Turret
         if (wasdKeys.A.isDown) {
             turret.rotateLeft();
         }
 
         if (wasdKeys.D.isDown) {
             turret.rotateRight();
+        }
+
+        // Radar
+        if (qeKeys.Q.isDown) {
+            radar.rotateLeft();
+        }
+
+        if (qeKeys.E.isDown) {
+            radar.rotateLeft();
         }
 
         firingKeyPressedLastFrame = firingKeyDown;;
@@ -128,6 +140,7 @@ const keyBot = (function() {
             gameContext = GameContextHolder.gameContext;
             cursors = gameContext.input.keyboard.createCursorKeys();
             wasdKeys = gameContext.input.keyboard.addKeys('W,S,A,D');
+            qeKeys = gameContext.input.keyboard.addKeys('Q,E');
 
             robotSetup.hullType = RobotHullTypes.Seven;
             robotSetup.turretType = RobotTurretTypes.Six;
@@ -168,10 +181,12 @@ const keyBot = (function() {
                 }
             }
 
-            const scannedRobots = api.scannedRobots;
+            const radar = api.radar;
+            //radar.rotateLeft();
+            const scannedRobots = radar.scannedRobots;
             const totalScannedRobots = scannedRobots.length;
             if (totalScannedRobots > 0) {
-                // Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+                Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
             }
         }
     };

@@ -99,7 +99,7 @@ const RobotManager = (function() {
         const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
 
         // const angle = robotBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
-        const angle = RobotsData_CurrentData.currentRobotAngles[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+        const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
         const angleRadians = Phaser.Math.DegToRad(angle);
 
         //console.log(angle);
@@ -132,9 +132,9 @@ const RobotManager = (function() {
 
             const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
             const robotBodyImagePhysicsBody = robotBodyImage.body;
-            const hullAngle = robotBodyImage.angle;
-            RobotsData_CurrentData.currentRobotAngles[i] = hullAngle;
-            // RobotsData_CurrentData.currentRobotAngles[i] = normalizeAngle(robotBodyImage.angle);
+            const hullAngle_PhaserDegrees = robotBodyImage.angle;
+            RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[i] = hullAngle_PhaserDegrees;
+            // RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[i] = normalizeAngle(robotBodyImage.angle);
             RobotsData_CurrentData.currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
@@ -148,8 +148,9 @@ const RobotManager = (function() {
             const api = RobotsData_Instance.robotAPIs[i];
 
             // Set the radar scanned robots to the api
+            const radar = api.radar;
             const scannedRobots = RobotsRadar.scanForRobots(i);
-            api.scannedRobots = scannedRobots;
+            radar.scannedRobots = scannedRobots;
 
             // Set the robot collisions to the api
             const api_collisions = api.collisions;
@@ -162,18 +163,19 @@ const RobotManager = (function() {
 
             const turretFollowHull = api.turretFollowHull;
             if (turretFollowHull) {
-                robotManager.setTurretAngle(i, hullAngle);
+                robotManager.setTurretAngle(i, hullAngle_PhaserDegrees);
             }
 
             /*************************/
             // testing turret rotation
             // turretImage.angle += 1;
-            //turretImage.angle = RobotsData_CurrentData.currentRobotAngles[i];
+            //turretImage.angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[i];
 
             // testing radar rotation
             if (api.radarEnabled) {
                 const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles[i];
-                RobotsData_CurrentData.currentRadarAngles[i] = normalizeAngle(currentRadarAngle + 1);
+                // RobotsData_CurrentData.currentRadarAngles[i] = normalizeAngle(currentRadarAngle + 1);
+                //RobotsData_CurrentData.currentRadarAngles[i] = 0;
             }
             /*************************/
         }
