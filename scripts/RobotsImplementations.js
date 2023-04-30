@@ -157,7 +157,7 @@ const keyBot = (function() {
             const collisions = api.collisions;
             const collisionsWithRobots = collisions.otherRobots;
             if (collisionsWithRobots.length > 0) {
-                Logger.log(`KeyBot robot collisions: ${collisionsWithRobots.length}: `, collisionsWithRobots);
+                // Logger.log(`KeyBot robot collisions: ${collisionsWithRobots.length}: `, collisionsWithRobots);
                 for (let i = 0; i < collisionsWithRobots.length; i++) {
                     const collisionWithRobot = collisionsWithRobots[i].data;
                     Logger.log(collisionWithRobot.positionX, collisionWithRobot.positionY);
@@ -168,7 +168,7 @@ const keyBot = (function() {
 
             const collisionsWithArena = collisions.arena;
             if (collisionsWithArena.length > 0) {
-                Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
+                // Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
                 for (let i = 0; i < collisionsWithArena.length; i++) {
                     const collisionWithArena = collisionsWithArena[i];
                     //Logger.log('firing!');

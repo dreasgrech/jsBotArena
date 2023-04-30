@@ -17,7 +17,7 @@ const RobotsData_CurrentData = (function() {
         currentRobotAngles_PhaserDegrees: [],
         currentRobotVelocities: [],
         currentTurretAngles: [],
-        currentRadarAngles: [],
+        currentRadarAngles_degrees: [],
         robotCollisions: [], // [[{,,}], [{,,}], [{,,}]]
         arenaCollisions: [], // [[{,,}], [{,,}], [{,,}]]
         //totalCollisions: 0,
@@ -44,7 +44,7 @@ const RobotsData_Instance = (function() {
 const RobotsData_Radar = (function() {
     const obj = {
         radarGraphics: [],
-        radarFOVAngles: [],
+        radarFOVAngles_degrees: [],
         radarMaxScanDistance: []
     };
 

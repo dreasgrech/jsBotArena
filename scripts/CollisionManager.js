@@ -79,7 +79,7 @@ const CollisionManager = (function() {
         const robotBody = isBodyA_Arena ? bodyB : bodyA;
         const arenaBody = isBodyA_Arena ? bodyA : bodyB;
 
-        Logger.log("robot", robotBody, "arena", arenaBody);
+        // Logger.log("robot", robotBody, "arena", arenaBody);
 
         saveCollision_RobotToArena(robotBody, arenaBody);
     };

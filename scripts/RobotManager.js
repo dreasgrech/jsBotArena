@@ -149,9 +149,9 @@ const RobotManager = (function() {
 
             //// testing radar rotation
             //if (api.radarEnabled) {
-            //    const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles[i];
-            //    // RobotsData_CurrentData.currentRadarAngles[i] = normalizeAngle(currentRadarAngle + 1);
-            //    //RobotsData_CurrentData.currentRadarAngles[i] = 0;
+            //    const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles_degrees[i];
+            //    // RobotsData_CurrentData.currentRadarAngles_degrees[i] = normalizeAngle(currentRadarAngle + 1);
+            //    //RobotsData_CurrentData.currentRadarAngles_degrees[i] = 0;
             //}
             /*************************/
         }
