@@ -90,10 +90,6 @@ const RobotManager = (function() {
         currentRobotIndex++;
     };
 
-    const normalizeAngle = function (angle) {
-        return ((angle % 360) + 360) % 360;
-    };
-
     const constantAngularVelocityForHullRotation = 0.01;
 
     const turretRotationPerFrameSpeed = 0.6;

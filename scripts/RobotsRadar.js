@@ -7,6 +7,7 @@ const RobotsRadar = (function() {
         return api.radarEnabled;
     };
 
+    // TODO: This method currently only detects the the center point of the other bots, not their entire bounds
     const scanForRobots = function(robotIndex) {
         const radarEnabled = isRadarEnabled(robotIndex);
         if (!radarEnabled) {
@@ -49,9 +50,12 @@ const RobotsRadar = (function() {
             //console.log(`otherRobotPositionY [${i}]:`, otherRobotPositionY);
             //console.log(`distanceBetweenRobots [${i}]:`, distanceBetweenRobots);
 
+            // TODO: Commenting out the distance check
+            /*
             if (distanceBetweenRobots > radarMaxScanDistance) {
                 continue;
             }
+            */
 
             const angleBetween = Phaser.Math.Angle.Between(robotPositionX, robotPositionY, otherRobotPositionX, otherRobotPositionY);
 
@@ -124,11 +128,13 @@ const RobotsRadar = (function() {
             radarGraphics.strokePath();
         },
         rotateRadar: function(robotIndex, direction) {
-            let radarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
-            radarAngle += radarRotationIncrement * direction;
-            RobotsData_CurrentData.currentRadarAngles[robotIndex] = radarAngle;
+            // TODO: this is not framerate independent
+            const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles[robotIndex];
+            let newRadarAngle = AngleOperations.normalizeAngleDegrees(currentRadarAngle + radarRotationIncrement * direction);
+            RobotsData_CurrentData.currentRadarAngles[robotIndex] = newRadarAngle;
         }
     };
 
     return robotsRadar;
 }());
+

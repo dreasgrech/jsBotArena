@@ -17,7 +17,6 @@ const CollisionManager = (function() {
         const collidedWithBody_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(collidedWithBody_ID);
         if (collidedWithBody_CollisionCategory == null) {
             throw "collidedWithBodyObjectType is undefined!!";
-            return;
         }
 
         const collidedWithBody_RobotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(collidedWithBody_ID);
