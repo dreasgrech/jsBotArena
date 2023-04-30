@@ -142,8 +142,8 @@ const keyBot = (function() {
             wasdKeys = gameContext.input.keyboard.addKeys('W,S,A,D');
             qeKeys = gameContext.input.keyboard.addKeys('Q,E');
 
-            robotSetup.hullType = RobotHullTypes.Seven;
-            robotSetup.turretType = RobotTurretTypes.Six;
+            robotSetup.hullType = RobotHullTypes.Two;
+            robotSetup.turretType = RobotTurretTypes.Two;
 
             robotSetup.hullColor = RobotHullColors.Green;
             robotSetup.turretColor = RobotTurretColors.Green;
