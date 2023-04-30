@@ -128,7 +128,7 @@ const keyBot = (function() {
         }
 
         if (qeKeys.E.isDown) {
-            radar.rotateLeft();
+            radar.rotateRight();
         }
 
         firingKeyPressedLastFrame = firingKeyDown;;
@@ -159,11 +159,9 @@ const keyBot = (function() {
             if (collisionsWithRobots.length > 0) {
                 Logger.log(`KeyBot robot collisions: ${collisionsWithRobots.length}: `, collisionsWithRobots);
                 for (let i = 0; i < collisionsWithRobots.length; i++) {
-                    const collisionThisFrame = collisionsWithRobots[i];
-                    if (collisionThisFrame.type === CollisionCategories.RobotBody) {
-                        Logger.log('firing!');
-                        // api.fire(ProjectileTypes.Medium);
-                    }
+                    const collisionWithRobot = collisionsWithRobots[i].data;
+                    Logger.log(collisionWithRobot.positionX, collisionWithRobot.positionY);
+                    // api.fire(ProjectileTypes.Medium);
 
                 }
             }
@@ -173,11 +171,8 @@ const keyBot = (function() {
                 Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
                 for (let i = 0; i < collisionsWithArena.length; i++) {
                     const collisionWithArena = collisionsWithArena[i];
-                    if (collisionWithArena.type === CollisionCategories.RobotBody) {
-                        Logger.log('firing!');
-                        // api.fire(ProjectileTypes.Medium);
-                    }
-
+                    //Logger.log('firing!');
+                    // api.fire(ProjectileTypes.Medium);
                 }
             }
 

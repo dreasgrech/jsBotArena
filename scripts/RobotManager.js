@@ -94,41 +94,17 @@ const RobotManager = (function() {
         return ((angle % 360) + 360) % 360;
     };
 
-    const moveHull = function(robotIndex, direction) {
-        const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
-        const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
-
-        // const angle = robotBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
-        const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
-        const angleRadians = Phaser.Math.DegToRad(angle);
-
-        //console.log(angle);
-        const force = new Phaser.Math.Vector2(Math.cos(angleRadians) * robotSpeed * direction, Math.sin(angleRadians) * robotSpeed * direction);
-        robotBody.applyForce(force);
-        //console.log(robotBody.getCenter());
-        // console.log(robotBody.getBounds());
-        // robotBody.thrust(0.1);
-    };
-
     const constantAngularVelocityForHullRotation = 0.01;
 
-    const rotateHull = function(robotIndex, direction) {
-        const angularVelocity = constantAngularVelocityForHullRotation * direction;
-
-        const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
-        robotBody.setAngularVelocity(angularVelocity);
-    };
-
     const turretRotationPerFrameSpeed = 0.6;
-    const rotateTurret = function(robotIndex, direction) {
-        RobotManager.incrementTurretAngle(robotIndex, turretRotationPerFrameSpeed * direction);
-    };
 
     const update = function(time, delta) {
         for (let i = 0; i < totalRobots; i++) {
             const robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
-            RobotsData_CurrentData.positionXs[i] = robotCenterPosition.x;
-            RobotsData_CurrentData.positionYs[i] = robotCenterPosition.y;
+            const robotPositionX = robotCenterPosition.x;
+            const robotPositionY = robotCenterPosition.y;
+            RobotsData_CurrentData.positionXs[i] = robotPositionX;
+            RobotsData_CurrentData.positionYs[i] = robotPositionY;
 
             const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
             const robotBodyImagePhysicsBody = robotBodyImage.body;
@@ -146,6 +122,10 @@ const RobotManager = (function() {
             RobotsRadar.drawRadarArc(i);
 
             const api = RobotsData_Instance.robotAPIs[i];
+
+            const data = api.data;
+            data.positionX = robotPositionX;
+            data.positionY = robotPositionY;
 
             // Set the radar scanned robots to the api
             const radar = api.radar;
@@ -171,12 +151,12 @@ const RobotManager = (function() {
             // turretImage.angle += 1;
             //turretImage.angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[i];
 
-            // testing radar rotation
-            if (api.radarEnabled) {
-                const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles[i];
-                // RobotsData_CurrentData.currentRadarAngles[i] = normalizeAngle(currentRadarAngle + 1);
-                //RobotsData_CurrentData.currentRadarAngles[i] = 0;
-            }
+            //// testing radar rotation
+            //if (api.radarEnabled) {
+            //    const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles[i];
+            //    // RobotsData_CurrentData.currentRadarAngles[i] = normalizeAngle(currentRadarAngle + 1);
+            //    //RobotsData_CurrentData.currentRadarAngles[i] = 0;
+            //}
             /*************************/
         }
     };
@@ -185,9 +165,30 @@ const RobotManager = (function() {
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update,
-        moveHull: moveHull,
-        rotateHull: rotateHull,
-        rotateTurret: rotateTurret,
+        moveHull: function(robotIndex, direction) {
+            const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
+            const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
+
+            // const angle = robotBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+            const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
+            const angleRadians = Phaser.Math.DegToRad(angle);
+
+            //console.log(angle);
+            const force = new Phaser.Math.Vector2(Math.cos(angleRadians) * robotSpeed * direction, Math.sin(angleRadians) * robotSpeed * direction);
+            robotBody.applyForce(force);
+            //console.log(robotBody.getCenter());
+            // console.log(robotBody.getBounds());
+            // robotBody.thrust(0.1);
+        },
+        rotateHull: function(robotIndex, direction) {
+            const angularVelocity = constantAngularVelocityForHullRotation * direction;
+
+            const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
+            robotBody.setAngularVelocity(angularVelocity);
+        },
+        rotateTurret: function(robotIndex, direction) {
+            RobotManager.incrementTurretAngle(robotIndex, turretRotationPerFrameSpeed * direction);
+        },
         setTurretAngle: function(robotIndex, angle) {
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
             turretImage.angle = angle;

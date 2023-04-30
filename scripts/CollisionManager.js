@@ -30,7 +30,9 @@ const CollisionManager = (function() {
                 robotIndex: collidedWithBody_RobotIndex,
                 name: RobotsData_Instance.names[collidedWithBody_RobotIndex],
                 angle: RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[collidedWithBody_RobotIndex],
-                velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBody_RobotIndex]
+                velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBody_RobotIndex],
+                positionX: RobotsData_CurrentData.positionXs[collidedWithBody_RobotIndex],
+                positionY: RobotsData_CurrentData.positionYs[collidedWithBody_RobotIndex],
             }
         };
 
@@ -47,9 +49,7 @@ const CollisionManager = (function() {
         const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(robotBody.parent.id);
         const eventInfo = {
             type: CollisionCategories.Arena,
-            data: {
-
-            }
+            data: { }
         };
 
         RobotsData_CurrentData.arenaCollisions[robotIndex].push(eventInfo);

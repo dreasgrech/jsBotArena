@@ -18,6 +18,9 @@ const RobotAPIFactory = (function() {
                 rotateRight: function() {
                     RobotManager.rotateHull(robotIndex, 1);
                 },
+                rotateTo: function(angleDegrees) {
+
+                },
                 turret: {
                     rotateLeft: function() {
                         RobotManager.rotateTurret(robotIndex, -1);
@@ -44,10 +47,10 @@ const RobotAPIFactory = (function() {
                 },
                 turretFollowHull: false,
                 radarEnabled: true,
-                /*
-                 * TODO:
-                 *      Add scannedArena:[] contains info about scanned arena walls and obstacles
-                 */
+                data: { 
+                    positionX: 0,
+                    positionY: 0,
+                }
             };
 
             return api;
