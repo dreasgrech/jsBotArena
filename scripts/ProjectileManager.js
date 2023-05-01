@@ -71,7 +71,6 @@ const ProjectileManager = (function() {
         },
         fireRobotProjectile: function(robotIndex, projectileType) {
             const turret = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-            // const angle = turret.angle - 90;
             const angle = turret.angle;
 
             const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
@@ -93,8 +92,6 @@ const ProjectileManager = (function() {
             const bullet = pool.pop();
             // console.log("bullet", bullet);
             bullet.setPosition(x, y);
-            //bullet.setActive(true);
-            //bullet.setVisible(true);
             PhysicsBodies.enableMatterBody(bullet);
 
             bullet.setBody(projectilesCollisionData[projectileType], null);
@@ -131,7 +128,7 @@ const ProjectileManager = (function() {
             bullet.setVelocity(velocity.x, velocity.y);
             */
 
-            const angleRad = Phaser.Math.DegToRad(angle - 90);
+            const angleRad = Phaser.Math.DegToRad(angle);
             const force = new Phaser.Math.Vector2(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
             bullet.applyForce(force);
 

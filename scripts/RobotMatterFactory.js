@@ -143,9 +143,9 @@ const RobotMatterFactory = (function() {
         updateParts: function(robotIndex) {
 
             // Update the position of the turret to remain attached to the robot
-            var robotTurretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-            var robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
-            var robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
+            const robotTurretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
+            const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
             robotTurretImage.setPosition(robotPositionX, robotPositionY);
         }
     };
