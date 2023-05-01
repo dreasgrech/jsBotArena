@@ -5,12 +5,10 @@ const ProjectilesDatabase = (function() {
     const PROJECTILE_DB_FILE_KEY = 'ProjectileDatabase',
         PROJECTILE_DB_FILEPATH = './databases/projectiles.json';
 
-    const
-        names = [],
-        filenames = [],
-        baseDamages = [];
-
     const projectileDatabase = {
+        names : [],
+        filenames : [],
+        baseDamages : [],
         system_preload: function() {
             console.log('proj database', 'preload');
             const gameContext = GameContextHolder.gameContext;
@@ -24,20 +22,17 @@ const ProjectilesDatabase = (function() {
                     Logger.log(projectileDefinition);
 
                     // Save the data from the projectile definition loaded from the file
-                    names[i] = projectileDefinition.Name;
-                    filenames[i] = projectileDefinition.Filename;
-                    baseDamages[i] = projectileDefinition.BaseDamage;
+                    projectileDatabase.names[i] = projectileDefinition.Name;
+                    projectileDatabase.filenames[i] = projectileDefinition.Filename;
+                    projectileDatabase.baseDamages[i] = projectileDefinition.BaseDamage;
 
                     // Construct the ProjectileTypes enum
-                    // TODO: CHANGE THE VALUES OF THE ENUM TO BE A NUMBER SO THAT THEY CAN BE STORED IN AN ARRAY
-                    // TODO: CHANGE IT FROM WHERE IM USING THE STRING VALUES CURRENTLY
                     const enumKey = projectileDefinition.EnumKey;
-                    ProjectileTypes[enumKey] = names[i];
-                    //ProjectileTypes[enumKey] = i;
+                    ProjectileTypes[enumKey] = i;
                 }
 
                 // Load the projectiles images
-                ImageDatabase.loadProjectileImages(filenames);
+                ImageDatabase.loadProjectileImages(projectileDatabase.filenames);
             });
 
             // Start loading the projectiles db json file

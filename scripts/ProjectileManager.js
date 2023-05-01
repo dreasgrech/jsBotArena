@@ -1,14 +1,11 @@
 "use script";
 
-
 const ProjectileManager = (function() {
     let projectilesCollisionData;
     let gameContext;
     let currentProjectileIndex = 0;
 
-    // const projectileGroups = {};
-
-    const pools = {};
+    const pools = [];
 
     const ProjectilesData = (function() {
         const projectilesData = {
@@ -35,29 +32,26 @@ const ProjectileManager = (function() {
                     continue;
                 }
 
-                const projectileType = ProjectileTypes[projectileTypeField];
-
+                const projectileTypeIndex = ProjectileTypes[projectileTypeField];
+                const projectileName = ProjectilesDatabase.names[projectileTypeIndex];
                 const pool = MatterBodyPoolFactory.createMatterBodyPool({
-                    poolName: `Projectiles (${projectileType})`,
+                    poolName: `Projectiles (${projectileName})`,
                     createElement: function() {
-                        // Logger.log("creating projectile", projectileType);
                         const projectileImage = gameContext.matter.add.sprite(
                             0,
                             0,
-                            projectileType//,
-                            //null,
-                            // { shape: projectilesCollisionData[projectileType] }
+                            projectileName
                         );
-                        //PhysicsBodies.disableMatterBody(projectileImage);
                         return projectileImage;
                     },
                     //    beforePush: function(){},
                     //    afterPop: function(){},
                 });
 
+                // Prepopulate the pool
                 pool.prePopulate(10);
 
-                pools[projectileType] = pool;
+                pools[projectileTypeIndex] = pool;
             }
         },
         update: function(time, delta) { },
@@ -94,7 +88,8 @@ const ProjectileManager = (function() {
             bullet.setPosition(x, y);
             PhysicsBodies.enableMatterBody(bullet);
 
-            bullet.setBody(projectilesCollisionData[projectileType], null);
+            const projectileCollisionDataName = ProjectilesDatabase.names[projectileType];
+            bullet.setBody(projectilesCollisionData[projectileCollisionDataName], null);
             bullet.depth = GameObjectDepths.Projectile;
             bullet.setDensity(5);
             bullet.setAngle(angle);
