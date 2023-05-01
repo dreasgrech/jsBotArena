@@ -3,6 +3,9 @@
 const RobotsRadar = (function() {
     const pi = Math.PI;
 
+    const MIN_ALLOWED_RADAR_FOV_ANGLE = 5;
+    const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
+
     const radarRotationIncrement = 1;
 
     const isRadarEnabled = function(robotIndex) {
@@ -11,7 +14,6 @@ const RobotsRadar = (function() {
         return radar.radarEnabled;
     };
 
-    // TODO: This method currently only detects the the center point of the other bots, not their entire bounds
     const scanForRobots = function(robotIndex) {
         const radarEnabled = isRadarEnabled(robotIndex);
         if (!radarEnabled) {
@@ -33,14 +35,12 @@ const RobotsRadar = (function() {
 
         const scannedRobots = [];
 
+        // todo: try a spatial hash
         const totalRobots = RobotManager.getTotalRobots();
         for (let i = 0; i < totalRobots; i++) {
             if (i === robotIndex) {
                 continue;
             }
-
-            // TODO: We need to check for all bounds
-            // TODO: First we need a method which brings us all possible vertices of the other robot to check against
 
             const otherRobotPositionX = RobotsData_CurrentData.positionXs[i];
             const otherRobotPositionY = RobotsData_CurrentData.positionYs[i];
@@ -113,6 +113,8 @@ const RobotsRadar = (function() {
     };
 
     const robotsRadar = {
+        MIN_ALLOWED_RADAR_FOV_ANGLE: MIN_ALLOWED_RADAR_FOV_ANGLE,
+        MAX_ALLOWED_RADAR_FOV_ANGLE: MAX_ALLOWED_RADAR_FOV_ANGLE,
         scanForRobots: scanForRobots,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {
             RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex] = angle_degrees;
@@ -121,6 +123,9 @@ const RobotsRadar = (function() {
             // TODO: this is not framerate independent
             const currentRadarAngle_degrees = RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex];
             robotsRadar.setRadarAngle_degrees(robotIndex, AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, radarRotationIncrement * direction));
+        },
+        setRadarFOVAngle_degrees: function(robotIndex, angle_degrees) {
+
         },
         createRadar: function(robotIndex) {
             const game = GameContextHolder.game;
@@ -131,6 +136,8 @@ const RobotsRadar = (function() {
 
             RobotsData_Radar.radarGraphics[robotIndex] = radarGraphics;
             RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex] = 0;
+            // RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 45;
+            //RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 5;
             RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 45;
             // RobotsData_Radar.radarMaxScanDistance[index] = 200;
             RobotsData_Radar.radarMaxScanDistance[robotIndex] = 1000;
@@ -144,7 +151,7 @@ const RobotsRadar = (function() {
             if (!radarEnabled) {
                 return;
             }
-            
+
             const radarFOVAngle_degrees = RobotsData_Radar.radarFOVAngles_degrees[robotIndex];
             const radarMaxScanDistance = RobotsData_Radar.radarMaxScanDistance[robotIndex];
             const radarAngle_degrees = RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex];

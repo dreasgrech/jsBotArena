@@ -5,10 +5,16 @@ const RobotSetupFactory = (function() {
     const robotSetupFactory = {
         createRobotSetup: function() {
             const robotSetup = {
-                hullType: EnumHelpers.getRandomValue(RobotHullTypes),
-                turretType: EnumHelpers.getRandomValue(RobotTurretTypes),
-                hullColor: EnumHelpers.getRandomValue(RobotHullColors),
-                turretColor: EnumHelpers.getRandomValue(RobotTurretColors)
+                hull: {
+                    hullType: EnumHelpers.getRandomValue(RobotHullTypes),
+                    hullColor: EnumHelpers.getRandomValue(RobotHullColors),
+                },
+                turret: {
+                    turretType: EnumHelpers.getRandomValue(RobotTurretTypes),
+                    turretColor: EnumHelpers.getRandomValue(RobotTurretColors)
+                },
+            //    radar: {
+            //    }
             };
 
             return robotSetup;

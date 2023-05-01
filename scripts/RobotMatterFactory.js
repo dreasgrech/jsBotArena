@@ -50,11 +50,13 @@ const RobotMatterFactory = (function() {
 
         const shapes = gameContext.cache.json.get('Hulls_CollisionData');
 
-        const hullType = robotSetup.hullType;
-        const turretType = robotSetup.turretType;
+        const hullSetup = robotSetup.hull;
+        const turretSetup = robotSetup.turret;
 
-        const hullColor = robotSetup.hullColor;
-        const turretColor = robotSetup.turretColor;
+        const hullType = hullSetup.hullType;
+        const hullColor = hullSetup.hullColor;
+        const turretType = turretSetup.turretType;
+        const turretColor = turretSetup.turretColor;
 
         // ROBOT HULL
         const hullImage = gameContext.matter.add.image(

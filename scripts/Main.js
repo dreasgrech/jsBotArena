@@ -81,6 +81,9 @@ const gameManager = (function() {
             return;
         }
 
+        GameContextHolder.gameTime = time;
+        GameContextHolder.delta = delta;
+
         for (let i = 0; i < totalObjectsWith_update; i++) {
             objectsWith_update[i].update(time, delta);
         }
@@ -119,5 +122,9 @@ GameContextHolder.game = new Phaser.Game({
                 y: 0
             }
         }
-    }
+    },
+//    fps: {
+//        forceSetTimeOut: true,
+//        target: 60
+//    }
 });

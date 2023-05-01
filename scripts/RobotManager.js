@@ -173,17 +173,15 @@ const RobotManager = (function() {
             const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
             const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
 
-            // const angle = robotBody.angle - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
-            // const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex] - 90; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
-            const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex]; // The '- 90' is because of Phaser's coordinate system where angle 0 points to the right
-            const angleRadians = Phaser.Math.DegToRad(angle);
+            const angle_degrees = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex];
+            const angle_radians = Phaser.Math.DegToRad(angle_degrees);
 
-            //console.log(angle);
-            const force = new Phaser.Math.Vector2(Math.cos(angleRadians) * robotSpeed * direction, Math.sin(angleRadians) * robotSpeed * direction);
+            const force = new Phaser.Math.Vector2(Math.cos(angle_radians) * robotSpeed * direction, Math.sin(angle_radians) * robotSpeed * direction);
+            //const dt = GameContextHolder.deltaTime;
+            //const force = new Phaser.Math.Vector2(
+            //    Math.cos(angle_radians) * robotSpeed * direction * dt,
+            //    Math.sin(angle_radians) * robotSpeed * direction * dt);
             robotBody.applyForce(force);
-            //console.log(robotBody.getCenter());
-            // console.log(robotBody.getBounds());
-            // robotBody.thrust(0.1);
         },
         rotateHull: function(robotIndex, direction) {
             const angularVelocity = constantAngularVelocityForHullRotation * direction;

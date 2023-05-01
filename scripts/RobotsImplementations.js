@@ -142,11 +142,15 @@ const keyBot = (function() {
             wasdKeys = gameContext.input.keyboard.addKeys('W,S,A,D');
             qeKeys = gameContext.input.keyboard.addKeys('Q,E');
 
-            robotSetup.hullType = RobotHullTypes.Two;
-            robotSetup.turretType = RobotTurretTypes.Two;
+            const hullSetup = robotSetup.hull;
+            hullSetup.hullType = RobotHullTypes.Two;
+            hullSetup.hullColor = RobotHullColors.Green;
 
-            robotSetup.hullColor = RobotHullColors.Green;
-            robotSetup.turretColor = RobotTurretColors.Green;
+            const turretSetup = robotSetup.turret;
+            turretSetup.turretType = RobotTurretTypes.Two;
+            turretSetup.turretColor = RobotTurretColors.Green;
+
+            // const radarSetup = robotSetup.radar;
         },
         update: function(api, time, delta) {
 
