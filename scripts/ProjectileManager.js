@@ -118,7 +118,8 @@ const ProjectileManager = (function() {
 
             PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
-            const speed = 100;
+            const speed = 50;
+            //const speed = 20;
             /*
             const velocity = {
                 x: Math.cos(Phaser.Math.DegToRad(angle-90)) * 1, // Adjust bullet speed (multiplier) as needed
