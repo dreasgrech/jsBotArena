@@ -76,13 +76,13 @@ const ImageDatabase = (function() {
             loadImage(trackAIdentifier, `${tracksImagesDirectory}/${trackAIdentifier}.png`);
             loadImage(trackBIdentifier, `${tracksImagesDirectory}/${trackBIdentifier}.png`);
         }
-
-        // Load the projectiles images
-        loadImageList(projectileFilenames, projectileImagesDirectory);
     };
 
     return {
-        loadAllImages: loadAllImages
+        system_preload: loadAllImages,
+        loadProjectileImages: function(projectilesImageFilenames) {
+            loadImageList(projectilesImageFilenames, projectileImagesDirectory);
+        }
     };
 }());
 

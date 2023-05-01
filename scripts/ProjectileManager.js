@@ -24,7 +24,7 @@ const ProjectileManager = (function() {
     const queuedProjectilesForRemoval = new Set();
 
     const projectileManager = {
-        onCreate: function() {
+        system_create: function() {
             gameContext = GameContextHolder.gameContext;
 
             projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');

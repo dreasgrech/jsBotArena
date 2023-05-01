@@ -1,49 +1,5 @@
 "use strict";
 
-const RobotHullColors = {
-    Brown: 'A',
-    Green: 'B',
-    Aqua: 'C',
-    Blue: 'D'
-};
-
-const RobotTurretColors = {
-    Brown: 'A',
-    Green: 'B',
-    Aqua: 'C',
-    Blue: 'D'
-};
-
-const ProjectileTypes = {
-    Granade: 'Granade_Shell',
-    Heavy: 'Heavy_Shell',
-    Light: 'Light_Shell',
-    Medium: 'Medium_Shell',
-    Shotgun: 'Shotgun_Shells'
-};
-
-const RobotHullTypes = {
-    One: '01',
-    Two: '02',
-    Three: '03',
-    Four: '04',
-    Five: '05',
-    Six: '06',
-    Seven: '07',
-    Eight: '08'
-};
-
-const RobotTurretTypes = {
-    One: '01',
-    Two: '02',
-    Three: '03',
-    Four: '04',
-    Five: '05',
-    Six: '06',
-    Seven: '07',
-    Eight: '08'
-};
-
 const RobotMatterFactory = (function() {
     const createRobot = function({ currentRobotIndex, x, y, scale, robotSetup }) {
         const gameContext = GameContextHolder.gameContext;

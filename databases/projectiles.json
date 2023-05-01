@@ -1,0 +1,27 @@
+[
+  {
+    "name": "Light_Shell",
+    "filename": "Light_Shell.png",
+    "baseDamage": 10
+  },
+  {
+    "name": "Medium_Shell",
+    "filename": "Medium_Shell.png",
+    "baseDamage": 10
+  },
+  {
+    "name": "Heavy_Shell",
+    "filename": "Heavy_Shell.png",
+    "baseDamage": 10
+  },
+  {
+    "name": "Granade_Shell",
+    "filename": "Granade_Shell.png",
+    "baseDamage": 10
+  },
+  {
+    "name": "Shotgun_Shells",
+    "filename": "Shotgun_Shells.png",
+    "baseDamage": 10
+  }
+]

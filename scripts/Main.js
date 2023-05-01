@@ -4,17 +4,45 @@ var gameRunning = true;
 
 const gameManager = (function() {
 
+    const objectsWith_preload = [
+        ImageDatabase,
+        ProjectilesDatabase
+    ];
+
+    const objectsWith_create = [
+        ProjectilesDatabase,
+        ProjectileManager
+    ];
+
+    const objectsWith_onEndOfFrame = [
+        CollisionManager,
+        ProjectileManager
+    ];
+    const totalObjectsWith_onEndOfFrame = objectsWith_onEndOfFrame.length;
+
+    const objectsWith_update = [
+        RobotManager,
+        UIManager
+    ];
+    const totalObjectsWith_update = objectsWith_update.length;
+
+
     const preload = function() {
         const gameContext = this;
         GameContextHolder.gameContext = gameContext;
 
-        ImageDatabase.loadAllImages();
+        // ImageDatabase.loadAllImages();
 
         gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
 
         gameContext.load.json('Hulls_CollisionData', './CollisionData/Hulls_CollisionData.json');
         gameContext.load.json('Projectiles_CollisionData', './CollisionData/Projectiles_CollisionData.json');
         //ProjectileManager.preload();
+
+        for (let i = 0; i < objectsWith_preload.length; i++) {
+            const toLoad = objectsWith_preload[i];
+            toLoad.system_preload();
+        }
     };
 
     const create = function() {
@@ -57,24 +85,11 @@ const gameManager = (function() {
 
         gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
 
-        var classesToOnCreate = [ProjectileManager];
-        for (let i = 0; i < classesToOnCreate.length; i++) {
-            const toLoad = classesToOnCreate[i];
-            toLoad.onCreate();
+        for (let i = 0; i < objectsWith_create.length; i++) {
+            const toLoad = objectsWith_create[i];
+            toLoad.system_create();
         }
     };
-
-    const objectsWith_onEndOfFrame = [
-        CollisionManager,
-        ProjectileManager
-    ];
-    const totalObjectsWith_onEndOfFrame = objectsWith_onEndOfFrame.length;
-
-    const objectsWith_update = [
-        RobotManager,
-        UIManager
-    ];
-    const totalObjectsWith_update = objectsWith_update.length;
 
     const update = function(time, delta) {
         if (!gameRunning) {

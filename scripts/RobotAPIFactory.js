@@ -66,10 +66,3 @@ const RobotAPIFactory = (function() {
     };
 }());
 
-const ProjectileDatabase = (function() {
-    const projectileDatabase = {
-
-    };
-
-    return projectileDatabase;
-}());
