@@ -6,8 +6,9 @@ const ProjectilesDatabase = (function() {
         PROJECTILE_DB_FILEPATH = './databases/projectiles.json';
 
     const projectileDatabase = {
-        names : [],
+        phaserImageKeys : [],
         filenames : [],
+        physicsEditorSpriteNames : [],
         baseDamages : [],
         system_preload: function() {
             console.log('proj database', 'preload');
@@ -22,17 +23,18 @@ const ProjectilesDatabase = (function() {
                     Logger.log(projectileDefinition);
 
                     // Save the data from the projectile definition loaded from the file
-                    projectileDatabase.names[i] = projectileDefinition.Name;
+                    projectileDatabase.phaserImageKeys[i] = projectileDefinition.PhaserImageKey;
+                    projectileDatabase.physicsEditorSpriteNames[i] = projectileDefinition.PhysicsEditor_SpriteName;
                     projectileDatabase.filenames[i] = projectileDefinition.Filename;
                     projectileDatabase.baseDamages[i] = projectileDefinition.BaseDamage;
 
                     // Construct the ProjectileTypes enum
                     const enumKey = projectileDefinition.EnumKey;
-                    ProjectileTypes[enumKey] = i;
+                    ProjectileTypes[enumKey] = i; // Ex: ProjectileTypes.Heavy = 3
                 }
 
                 // Load the projectiles images
-                ImageDatabase.loadProjectileImages(projectileDatabase.filenames);
+                ImageDatabase.loadProjectileImages(projectileDatabase.filenames, projectileDatabase.phaserImageKeys);
             });
 
             // Start loading the projectiles db json file

@@ -18,11 +18,12 @@ const ImageDatabase = (function() {
     };
 
     // Loads all the filenames in the directory
-    const loadImageList = function(filenames, directory) {
+    const loadImageList = function(filenames, imagesKeys, directory) {
+        console.assert(filenames.length === imagesKeys.length);
         for (let i = 0; i < filenames.length; i++) {
             let filename = filenames[i];
             let fullPath = `${directory}/${filename}`;
-            let imageIdentifier = FilePathHelpers.removeFileExtension(filename);
+            let imageIdentifier = imagesKeys[i];
 
             // Load the image
             loadImage(imageIdentifier, fullPath);
@@ -80,8 +81,8 @@ const ImageDatabase = (function() {
 
     return {
         system_preload: loadAllImages,
-        loadProjectileImages: function(projectilesImageFilenames) {
-            loadImageList(projectilesImageFilenames, projectileImagesDirectory);
+        loadProjectileImages: function(filenames, keys) {
+            loadImageList(filenames, keys, projectileImagesDirectory);
         }
     };
 }());

@@ -33,14 +33,14 @@ const ProjectileManager = (function() {
                 }
 
                 const projectileTypeIndex = ProjectileTypes[projectileTypeField];
-                const projectileName = ProjectilesDatabase.names[projectileTypeIndex];
+                const projectilePhaserImageKey = ProjectilesDatabase.phaserImageKeys[projectileTypeIndex];
                 const pool = MatterBodyPoolFactory.createMatterBodyPool({
-                    poolName: `Projectiles (${projectileName})`,
+                    poolName: `Projectiles (${projectilePhaserImageKey})`,
                     createElement: function() {
                         const projectileImage = gameContext.matter.add.sprite(
                             0,
                             0,
-                            projectileName
+                            projectilePhaserImageKey
                         );
                         return projectileImage;
                     },
@@ -88,7 +88,8 @@ const ProjectileManager = (function() {
             bullet.setPosition(x, y);
             PhysicsBodies.enableMatterBody(bullet);
 
-            const projectileCollisionDataName = ProjectilesDatabase.names[projectileType];
+            //const projectileCollisionDataName = ProjectilesDatabase.names[projectileType];
+            const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileType];
             bullet.setBody(projectilesCollisionData[projectileCollisionDataName], null);
             bullet.depth = GameObjectDepths.Projectile;
             bullet.setDensity(5);
