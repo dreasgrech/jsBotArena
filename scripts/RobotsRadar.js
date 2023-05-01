@@ -3,6 +3,8 @@
 const RobotsRadar = (function() {
     const pi = Math.PI;
 
+    const radarRotationIncrement = 1;
+
     const isRadarEnabled = function(robotIndex) {
         const api = RobotsData_Instance.robotAPIs[robotIndex];
         const radar = api.radar;
@@ -37,6 +39,9 @@ const RobotsRadar = (function() {
                 continue;
             }
 
+            // TODO: We need to check for all bounds
+            // TODO: First we need a method which brings us all possible vertices of the other robot to check against
+
             const otherRobotPositionX = RobotsData_CurrentData.positionXs[i];
             const otherRobotPositionY = RobotsData_CurrentData.positionYs[i];
             const distanceBetweenRobots = Phaser.Math.Distance.Between(robotPositionX, robotPositionY, otherRobotPositionX, otherRobotPositionY);
@@ -45,6 +50,49 @@ const RobotsRadar = (function() {
                 continue;
             }
 
+            let robotFoundInRadar = false;
+
+            const otherRobotBounds = RobotsBoundsHelpers.getBounds(i);
+            const otherRobotBoundsLength = otherRobotBounds.length;
+            for (let j = 0; j < otherRobotBoundsLength; j++) {
+                const otherRobotBoundsPoint = otherRobotBounds[j];
+
+                // Calculate the angle between the robots
+                // const angleBetween_radians = Phaser.Math.Angle.Between(robotPositionX, robotPositionY, otherRobotPositionX, otherRobotPositionY);
+                const angleBetween_radians = Phaser.Math.Angle.Between(robotPositionX, robotPositionY, otherRobotBoundsPoint.x, otherRobotBoundsPoint.y);
+
+                // Adjust the angle to account for Phaser's inverted y-axis
+                const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * pi + angleBetween_radians : angleBetween_radians;
+
+                //if (robotIndex === 0) {
+                //    console.log(`Robot ${robotIndex} -> Robot ${i}: angleBetween=${Phaser.Math.RadToDeg(adjustedAngleBetween_radians)}°,
+                //radarStart=${Phaser.Math.RadToDeg(adjustedRadarStartAngle_radians)}°,
+                //radarEnd=${Phaser.Math.RadToDeg(adjustedRadarEndAngle_radians)}°`);
+                //}
+
+                // Check if the angle between the robots falls within the radar angles.
+                // If radar angles do not cross the 0-crossover point, we use the same condition as before.
+                // If radar angles cross the 0-crossover point, we modify the condition to check
+                // if the adjusted angle between the robots is either greater than the start angle
+                // or less than the end angle.
+                let pointWithinRadarAngles = false;
+
+                // Check if the radar angles cross the 0-crossover point or not
+                if (adjustedRadarStartAngle_radians <= adjustedRadarEndAngle_radians) {
+                    // If they don't cross the 0-crossover point, check if the angle between robots is within the radar range
+                    pointWithinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians && adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
+                } else {
+                    // If they cross the 0-crossover point, check if the angle between robots is within the radar range
+                    pointWithinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians || adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
+                }
+
+                if (pointWithinRadarAngles) {
+                    robotFoundInRadar = true;
+                    break;
+                }
+            }
+
+            /*
             // Calculate the angle between the robots
             const angleBetween_radians = Phaser.Math.Angle.Between(robotPositionX, robotPositionY, otherRobotPositionX, otherRobotPositionY);
 
@@ -62,7 +110,7 @@ const RobotsRadar = (function() {
             // If radar angles cross the 0-crossover point, we modify the condition to check
             // if the adjusted angle between the robots is either greater than the start angle
             // or less than the end angle.
-            let withinRadarAngles = false;
+            //let withinRadarAngles = false;
 
             // Check if the radar angles cross the 0-crossover point or not
             if (adjustedRadarStartAngle_radians <= adjustedRadarEndAngle_radians) {
@@ -72,8 +120,9 @@ const RobotsRadar = (function() {
                 // If they cross the 0-crossover point, check if the angle between robots is within the radar range
                 withinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians || adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
             }
+            */
 
-            if (withinRadarAngles) {
+            if (robotFoundInRadar) {
                 scannedRobots.push({
                     index: i,
                     distanceBetweenRobots: distanceBetweenRobots
@@ -91,8 +140,6 @@ const RobotsRadar = (function() {
 
         return scannedRobots;
     };
-
-    const radarRotationIncrement = 1;
 
     const robotsRadar = {
         scanForRobots: scanForRobots,

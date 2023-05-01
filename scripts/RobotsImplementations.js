@@ -96,39 +96,39 @@ const keyBot = (function() {
         const turret = api.turret;
         const radar = api.radar;
 
-        if (cursors.left.isDown) {
+        if (wasdKeys.A.isDown) {
             api.rotateLeft();
-        } else if (cursors.right.isDown) {
+        } else if (wasdKeys.D.isDown) {
             api.rotateRight();
         }
 
-        if (cursors.up.isDown) {
+        if (wasdKeys.W.isDown) {
             api.move();
-        } else if (cursors.down.isDown) {
+        } else if (wasdKeys.S.isDown) {
             api.reverse();
+        }
+
+        // Turret
+        if (qeKeys.Q.isDown) {
+            turret.rotateLeft();
+        }
+
+        if (qeKeys.E.isDown) {
+            turret.rotateRight();
+        }
+
+        // Radar
+        if (cursors.left.isDown) {
+            radar.rotateLeft();
+        }
+
+        if (cursors.right.isDown) {
+            radar.rotateRight();
         }
 
         const firingKeyDown = cursors.space.isDown;
         if (firingKeyDown && !firingKeyPressedLastFrame) {
             api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
-        }
-
-        // Turret
-        if (wasdKeys.A.isDown) {
-            turret.rotateLeft();
-        }
-
-        if (wasdKeys.D.isDown) {
-            turret.rotateRight();
-        }
-
-        // Radar
-        if (qeKeys.Q.isDown) {
-            radar.rotateLeft();
-        }
-
-        if (qeKeys.E.isDown) {
-            radar.rotateRight();
         }
 
         firingKeyPressedLastFrame = firingKeyDown;;
@@ -176,8 +176,12 @@ const keyBot = (function() {
                 }
             }
 
+            const turret = api.turret;
+            turret.rotateLeft();
+
             const radar = api.radar;
-            //radar.rotateLeft();
+            radar.radarFollowTurret = true;
+            // radar.rotateLeft();
             const scannedRobots = radar.scannedRobots;
             const totalScannedRobots = scannedRobots.length;
             if (totalScannedRobots > 0) {

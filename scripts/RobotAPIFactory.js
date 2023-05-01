@@ -32,7 +32,7 @@ const RobotAPIFactory = (function() {
                 },
                 radar: {
                     radarEnabled: true,
-                    radarFollowTurret: true,
+                    radarFollowTurret: false,
                     scannedRobots: [],
                     rotateLeft: function() {
                         RobotsRadar.rotateRadar(robotIndex, -1);
