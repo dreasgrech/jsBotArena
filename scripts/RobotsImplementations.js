@@ -180,7 +180,7 @@ const keyBot = (function() {
             turret.rotateLeft();
 
             const radar = api.radar;
-            radar.radarFollowTurret = true;
+            //radar.radarFollowTurret = true;
             // radar.rotateLeft();
             const scannedRobots = radar.scannedRobots;
             const totalScannedRobots = scannedRobots.length;
