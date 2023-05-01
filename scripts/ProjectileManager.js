@@ -112,27 +112,17 @@ const ProjectileManager = (function() {
 
             const bulletPhysicsBody = bullet.body;
 
+            // TODO: Projectile body also needs to be removed from here when it's destroyed
             PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
-            const speed = 50;
-            //const speed = 20;
-            /*
-            const velocity = {
-                x: Math.cos(Phaser.Math.DegToRad(angle-90)) * 1, // Adjust bullet speed (multiplier) as needed
-                y: Math.sin(Phaser.Math.DegToRad(angle-90)) * 1, // Adjust bullet speed (multiplier) as needed
-            };
-    
-            bullet.setVelocity(velocity.x, velocity.y);
-            */
-
             const angleRad = Phaser.Math.DegToRad(angle);
-            const force = new Phaser.Math.Vector2(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
-            bullet.applyForce(force);
+            const speed = ProjectilesDatabase.speeds[projectileType];
+            bullet.setVelocity(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
 
             ProjectilesData.matterBody[currentProjectileIndex] = bullet;
             ProjectilesData.projectileType[currentProjectileIndex] = projectileType;
             projectileMatterBodyID_to_ProjectileIndex[bullet.body.id] = currentProjectileIndex;
-            // console.log(bullet);
+
             // Logger.log("mapping", bullet.body.id, "to", currentProjectileIndex);
 
             currentProjectileIndex++;

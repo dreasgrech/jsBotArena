@@ -10,6 +10,7 @@ const ProjectilesDatabase = (function() {
         filenames : [],
         physicsEditorSpriteNames : [],
         baseDamages : [],
+        speeds : [],
         system_preload: function() {
             console.log('proj database', 'preload');
             const gameContext = GameContextHolder.gameContext;
@@ -20,13 +21,14 @@ const ProjectilesDatabase = (function() {
                 // Read the json's array and its projectile definitions
                 for (let i = 0; i < projectileDefinitions.length; i++) {
                     const projectileDefinition = projectileDefinitions[i];
-                    Logger.log(projectileDefinition);
+                    // Logger.log(projectileDefinition);
 
                     // Save the data from the projectile definition loaded from the file
                     projectileDatabase.phaserImageKeys[i] = projectileDefinition.PhaserImageKey;
                     projectileDatabase.physicsEditorSpriteNames[i] = projectileDefinition.PhysicsEditor_SpriteName;
                     projectileDatabase.filenames[i] = projectileDefinition.Filename;
                     projectileDatabase.baseDamages[i] = projectileDefinition.BaseDamage;
+                    projectileDatabase.speeds[i] = projectileDefinition.Speed;
 
                     // Construct the ProjectileTypes enum
                     const enumKey = projectileDefinition.EnumKey;

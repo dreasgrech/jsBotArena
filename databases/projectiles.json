@@ -4,6 +4,7 @@
     "PhysicsEditor_SpriteName": "Light_Shell",
     "EnumKey": "Light",
     "Filename": "Light_Shell.png",
+    "Speed": 10,
     "BaseDamage": 10
   },
   {
@@ -11,6 +12,7 @@
     "PhysicsEditor_SpriteName": "Medium_Shell",
     "EnumKey": "Medium",
     "Filename": "Medium_Shell.png",
+    "Speed": 6,
     "BaseDamage": 20
   },
   {
@@ -18,6 +20,7 @@
     "PhysicsEditor_SpriteName": "Heavy_Shell",
     "EnumKey": "Heavy",
     "Filename": "Heavy_Shell.png",
+    "Speed": 4,
     "BaseDamage": 30
   },
   {
@@ -25,6 +28,7 @@
     "PhysicsEditor_SpriteName": "Granade_Shell",
     "EnumKey": "Granade",
     "Filename": "Granade_Shell.png",
+    "Speed": 3,
     "BaseDamage": 40
   },
   {
@@ -32,6 +36,7 @@
     "PhysicsEditor_SpriteName": "Shotgun_Shells",
     "EnumKey": "Shotgun",
     "Filename": "Shotgun_Shells.png",
+    "Speed": 5,
     "BaseDamage": 10
   }
 ]

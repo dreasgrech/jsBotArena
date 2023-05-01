@@ -45,7 +45,7 @@ const RobotAPIFactory = (function() {
                     },
                 },
                 fire: function(projectileType) {
-                    ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
+                    RobotManager.fire(robotIndex, projectileType);
                 },
                 collisions: {
                     otherRobots: [],

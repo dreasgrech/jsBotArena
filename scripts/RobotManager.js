@@ -200,6 +200,9 @@ const RobotManager = (function() {
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
             const currentTurretImageAngle_degrees = turretImage.angle;
             turretImage.angle = AngleOperations.incrementAngle_degrees(currentTurretImageAngle_degrees, angleDegrees);
+        },
+        fire: function(robotIndex, projectileType) {
+            ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
         }
         // matterBodyToObjectType: {}
     };

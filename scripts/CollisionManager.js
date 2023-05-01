@@ -137,9 +137,6 @@ const CollisionManager = (function() {
                     const bodyB_CollisionCategory = bodyB_parent.collisionFilter.category;
                     // Logger.log(bodyB.parent.collisionFilter.category);
 
-                    // TODO: ALSO PUT THE ENUMS IN THEIR OWN FILES
-                    // TODO: ALSO, CAN THE PHYSICS CATEGORY BE DETERMINED FROM THE BODY ITSELF INSTEAD OF FROM AN ARRAY?
-
                     // Resolve the lookup key based on the physics category
                     const collisionLookupKey = EnumHelpers.createLookupKey(bodyA_CollisionCategory, bodyB_CollisionCategory);
                     const collisionHandler = collisionHandlers[collisionLookupKey];
