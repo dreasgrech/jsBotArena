@@ -64,17 +64,17 @@ const ProjectileManager = (function() {
             queuedProjectilesForRemoval.clear();
         },
         fireRobotProjectile: function(robotIndex, projectileType) {
-            const turret = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-            const angle = turret.angle;
+            const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            const angle = turretImage.angle;
 
             const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
             const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
 
             /*
             const turretTipPosition = new Phaser.Math.Vector2();
-            turret.getTopLeft(turretTipPosition); // Get the turret's top-left position
-            //turretTipPosition.x += turret.width*.2;// * Math.cos(Phaser.Math.DegToRad(angle)); // Calculate the tip's x position
-            // turretTipPosition.y += turret.width * Math.sin(Phaser.Math.DegToRad(angle)); // Calculate the tip's y position
+            turretImage.getTopLeft(turretTipPosition); // Get the turretImage's top-left position
+            //turretTipPosition.x += turretImage.width*.2;// * Math.cos(Phaser.Math.DegToRad(angle)); // Calculate the tip's x position
+            // turretTipPosition.y += turretImage.width * Math.sin(Phaser.Math.DegToRad(angle)); // Calculate the tip's y position
 
             //const x = turretTipPosition.x;
             //const y = turretTipPosition.y;
@@ -84,17 +84,17 @@ const ProjectileManager = (function() {
 
             const pool = pools[projectileType];
             const bullet = pool.pop();
-            // console.log("bullet", bullet);
             bullet.setPosition(x, y);
             PhysicsBodies.enableMatterBody(bullet);
 
             const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileType];
             bullet.setBody(projectilesCollisionData[projectileCollisionDataName], null);
             bullet.depth = GameObjectDepths.Projectile;
-            bullet.setDensity(5);
-            bullet.setAngle(angle);
-            bullet.setFrictionAir(0);
+            bullet.setDensity(5); 
+            // bullet.setFrictionAir(0);
+            bullet.setFrictionAir(0.001);
             bullet.setBounce(0);
+            bullet.setAngle(angle);
 
             // Logger.log("created projectile", bullet);
 

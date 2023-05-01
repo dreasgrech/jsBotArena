@@ -51,6 +51,7 @@ const RobotMatterFactory = (function() {
 
         RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = hullImage;
 
+        // Add the robot's body to the arena bodies collection
         PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
         // Make a reference to the current robot index from the matter object id
@@ -70,28 +71,6 @@ const RobotMatterFactory = (function() {
         turretImage.depth = GameObjectDepths.RobotTurret;
         turretImage.setScale(scale);
         turretImage.setAngle(0);
-        // turretImage.setDensity(.1);
-
-        /*
-        const turretImagePhysicsBody = turretImage.body;
-        PhysicsHelperFunctions.setCollisionProperties({
-            physicsObject: turretImagePhysicsBody,
-            group: 0,
-            category: CollisionCategories.RobotTurret,
-            collidesWithCategories: 0
-        });
-        */
-
-
-        // Create a constraint to attach the turret to the body
-        /*
-        const turretConstraint = gameContext.matter.add.constraint(hullImage, turretImage, 0, 1,
-        // const turretConstraint = gameContext.matter.add.constraint(turretImage, hullImage, 0, 1,
-            {
-                // pointA: {x: 0, y: 8},
-                pointA: {x: 0, y: 5},
-            });
-            */
 
         RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = turretImage;
     };
