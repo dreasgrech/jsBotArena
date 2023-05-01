@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO: Move all of these to JSON files and build them like ProjectilesDatabase
+
 const RobotHullColors = {
     Brown: 'A',
     Green: 'B',
@@ -15,11 +17,11 @@ const RobotTurretColors = {
 };
 
 const ProjectileTypes = {
-    Light: 'Light_Shell',
-    Medium: 'Medium_Shell',
-    Heavy: 'Heavy_Shell',
-    Granade: 'Granade_Shell',
-    Shotgun: 'Shotgun_Shells'
+//    Light: 'Light_Shell',
+//    Medium: 'Medium_Shell',
+//    Heavy: 'Heavy_Shell',
+//    Granade: 'Granade_Shell',
+//    Shotgun: 'Shotgun_Shells'
 };
 
 const RobotHullTypes = {

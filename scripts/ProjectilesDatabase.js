@@ -10,9 +10,6 @@ const ProjectilesDatabase = (function() {
         filenames = [],
         baseDamages = [];
 
-    names[ProjectileTypes.Light] = 'Light_Shell';
-    filenames[ProjectileTypes.Light] = 'Light_Shell';
-
     const projectileDatabase = {
         system_preload: function() {
             console.log('proj database', 'preload');
@@ -26,18 +23,28 @@ const ProjectilesDatabase = (function() {
                     const projectileDefinition = projectileDefinitions[i];
                     Logger.log(projectileDefinition);
 
-                    names[i] = projectileDefinition.name;
-                    filenames[i] = projectileDefinition.filename;
-                    baseDamages[i] = projectileDefinition.baseDamage;
+                    // Save the data from the projectile definition loaded from the file
+                    names[i] = projectileDefinition.Name;
+                    filenames[i] = projectileDefinition.Filename;
+                    baseDamages[i] = projectileDefinition.BaseDamage;
+
+                    // Construct the ProjectileTypes enum
+                    // TODO: CHANGE THE VALUES OF THE ENUM TO BE A NUMBER SO THAT THEY CAN BE STORED IN AN ARRAY
+                    // TODO: CHANGE IT FROM WHERE IM USING THE STRING VALUES CURRENTLY
+                    const enumKey = projectileDefinition.EnumKey;
+                    ProjectileTypes[enumKey] = names[i];
+                    //ProjectileTypes[enumKey] = i;
                 }
 
                 // Load the projectiles images
                 ImageDatabase.loadProjectileImages(filenames);
             });
+
+            // Start loading the projectiles db json file
             gameContext.load.json(PROJECTILE_DB_FILE_KEY, PROJECTILE_DB_FILEPATH);
         },
         system_create: function() {
-            console.log('proj database', 'create');
+            // console.log('proj database', 'create');
         }
     };
 

@@ -1,27 +1,32 @@
 [
   {
-    "name": "Light_Shell",
-    "filename": "Light_Shell.png",
-    "baseDamage": 10
+    "Name": "Light_Shell",
+    "EnumKey": "Light",
+    "Filename": "Light_Shell.png",
+    "BaseDamage": 10
   },
   {
-    "name": "Medium_Shell",
-    "filename": "Medium_Shell.png",
-    "baseDamage": 10
+    "Name": "Medium_Shell",
+    "EnumKey": "Medium",
+    "Filename": "Medium_Shell.png",
+    "BaseDamage": 20
   },
   {
-    "name": "Heavy_Shell",
-    "filename": "Heavy_Shell.png",
-    "baseDamage": 10
+    "Name": "Heavy_Shell",
+    "EnumKey": "Heavy",
+    "Filename": "Heavy_Shell.png",
+    "BaseDamage": 30
   },
   {
-    "name": "Granade_Shell",
-    "filename": "Granade_Shell.png",
-    "baseDamage": 10
+    "Name": "Granade_Shell",
+    "EnumKey": "Granade",
+    "Filename": "Granade_Shell.png",
+    "BaseDamage": 40
   },
   {
-    "name": "Shotgun_Shells",
-    "filename": "Shotgun_Shells.png",
-    "baseDamage": 10
+    "Name": "Shotgun_Shells",
+    "EnumKey": "Shotgun",
+    "Filename": "Shotgun_Shells.png",
+    "BaseDamage": 10
   }
 ]

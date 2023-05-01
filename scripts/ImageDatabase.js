@@ -6,7 +6,7 @@ const ImageDatabase = (function() {
     const projectileImagesDirectory = `${baseImagesDirectory}/Projectiles`;
     const tracksImagesDirectory = `${baseImagesDirectory}/Tracks`;
 
-    const projectileFilenames = ['Granade_Shell.png', 'Heavy_Shell.png', 'Light_Shell.png', 'Medium_Shell.png', 'Shotgun_Shells.png'];
+    // const projectileFilenames = ['Granade_Shell.png', 'Heavy_Shell.png', 'Light_Shell.png', 'Medium_Shell.png', 'Shotgun_Shells.png'];
 
     const totalHullsColors = 4, totalHullsVariations = 8;
     const totalWeaponsColors = 4, totalWeaponsVariations = 8;
