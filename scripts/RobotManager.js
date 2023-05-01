@@ -160,6 +160,8 @@ const RobotManager = (function() {
             //    //RobotsData_CurrentData.currentRadarAngles_degrees[i] = 0;
             //}
             /*************************/
+
+            RobotsBoundsHelpers.drawBounds(i);
         }
     };
 
