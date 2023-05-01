@@ -88,7 +88,6 @@ const ProjectileManager = (function() {
             bullet.setPosition(x, y);
             PhysicsBodies.enableMatterBody(bullet);
 
-            //const projectileCollisionDataName = ProjectilesDatabase.names[projectileType];
             const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileType];
             bullet.setBody(projectilesCollisionData[projectileCollisionDataName], null);
             bullet.depth = GameObjectDepths.Projectile;
@@ -112,7 +111,7 @@ const ProjectileManager = (function() {
 
             const bulletPhysicsBody = bullet.body;
 
-            // TODO: Projectile body also needs to be removed from here when it's destroyed
+            // Add the projectile as part of the arena bodies collection
             PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
             const angleRad = Phaser.Math.DegToRad(angle);
@@ -137,6 +136,9 @@ const ProjectileManager = (function() {
             const projectileType = ProjectilesData.projectileType[projectileIndex];
             const projectilePool = pools[projectileType];
             // Logger.log("destroying projectile", projectile, projectileIndex, projectileType, projectilePool);
+
+            // Remove the projectile from the arena bodies collection
+            PhysicsBodies.removeArenaPhysicsBody(projectile.body);
 
             projectilePool.push(projectile);
         }

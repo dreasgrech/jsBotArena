@@ -12,7 +12,7 @@ const PhysicsBodies = (function() {
     };
 
     const obj = {
-        // TODO: we also need to add removeArenaPhysicsBodies
+        // TODO: also need to make sure not to have duplicates in arenaBodies
         addArenaPhysicsBodies: function(collisionCategory, bodies) {
             const arenaBodiesTotalBeforeAdd = arenaBodies.length;
             arenaBodies = arenaBodies.concat(bodies);
@@ -28,6 +28,23 @@ const PhysicsBodies = (function() {
                 };
 
                 // Logger.log("Setting", body.id, "to", collisionCategory);
+            }
+        },
+        removeArenaPhysicsBody: function(body) {
+            // Filter out the specified body from the arenaBodies array
+            const arenaBodiesTotalBeforeRemoval = arenaBodies.length;
+            arenaBodies = arenaBodies.filter(function(currentBody) {
+                return currentBody !== body;
+            });
+            const arenaBodiesTotalAfterRemoval = arenaBodies.length;
+            console.assert(arenaBodiesTotalAfterRemoval === arenaBodiesTotalBeforeRemoval - 1);
+
+            // Remove the body's mapping from matterBodyToCollisionCategory
+            delete matterBodyToCollisionCategory[body.id];
+
+            // If the body is also associated with a robot, remove its mapping from matterObjectIDToRobotIndex
+            if (matterObjectIDToRobotIndex.hasOwnProperty(body.id)) {
+                delete matterObjectIDToRobotIndex[body.id];
             }
         },
         mapMatterObjectIDToRobotIndex: function(matterObjectID, entityIndex) {
