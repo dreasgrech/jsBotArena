@@ -186,10 +186,47 @@ const keyBot = (function() {
             const radar = api.radar;
             //radar.radarFollowTurret = true;
             // radar.rotateLeft();
+            radar.setFOVAngle_degrees(10);
             const scannedRobots = radar.scannedRobots;
             const totalScannedRobots = scannedRobots.length;
             if (totalScannedRobots > 0) {
                 Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+            }
+        }
+    };
+}());
+
+const sittingBot = (function() {
+    let gameContext;
+
+    return {
+        name: 'Sitting Bot',
+        create: function(robotSetup) {
+            gameContext = GameContextHolder.gameContext;
+
+            const hullSetup = robotSetup.hull;
+            hullSetup.hullType = RobotHullTypes.Six;
+            hullSetup.hullColor = RobotHullColors.Blue;
+
+            const turretSetup = robotSetup.turret;
+            turretSetup.turretType = RobotTurretTypes.Six;
+            turretSetup.turretColor = RobotTurretColors.Brown;
+
+            // const radarSetup = robotSetup.radar;
+        },
+        update: function(api, time, delta) {
+
+            const radar = api.radar;
+            radar.radarFollowTurret = true;
+            radar.setFOVAngle_degrees(10);
+
+            const turret = api.turret;
+            turret.rotateLeft();
+
+            const scannedRobots = radar.scannedRobots;
+            const totalScannedRobots = scannedRobots.length;
+            if (totalScannedRobots > 0) {
+                api.fire(ProjectileTypes.Medium);
             }
         }
     };

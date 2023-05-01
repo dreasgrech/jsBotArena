@@ -34,6 +34,9 @@ const RobotAPIFactory = (function() {
                     radarEnabled: true,
                     radarFollowTurret: false,
                     scannedRobots: [],
+                    setFOVAngle_degrees: function(angleDegrees) {
+                        return RobotsRadar.setRadarFOVAngle_degrees(robotIndex, angleDegrees);
+                    },
                     rotateLeft: function() {
                         RobotsRadar.rotateRadar(robotIndex, -1);
                     },
@@ -61,4 +64,12 @@ const RobotAPIFactory = (function() {
     return {
         createAPI: createAPI
     };
+}());
+
+const ProjectileDatabase = (function() {
+    const projectileDatabase = {
+
+    };
+
+    return projectileDatabase;
 }());

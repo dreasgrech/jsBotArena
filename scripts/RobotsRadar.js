@@ -117,15 +117,15 @@ const RobotsRadar = (function() {
         MAX_ALLOWED_RADAR_FOV_ANGLE: MAX_ALLOWED_RADAR_FOV_ANGLE,
         scanForRobots: scanForRobots,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {
-            RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex] = angle_degrees;
+            return RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex] = AngleOperations.normalizeAngleDegrees(angle_degrees);
         },
         rotateRadar: function(robotIndex, direction) {
             // TODO: this is not framerate independent
             const currentRadarAngle_degrees = RobotsData_CurrentData.currentRadarAngles_degrees[robotIndex];
-            robotsRadar.setRadarAngle_degrees(robotIndex, AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, radarRotationIncrement * direction));
+            return robotsRadar.setRadarAngle_degrees(robotIndex, AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, radarRotationIncrement * direction));
         },
         setRadarFOVAngle_degrees: function(robotIndex, angle_degrees) {
-
+            return RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE);
         },
         createRadar: function(robotIndex) {
             const game = GameContextHolder.game;
