@@ -52,7 +52,7 @@ const RobotsRadar = (function() {
 
             let robotFoundInRadar = false;
 
-            const otherRobotBounds = RobotsBoundsHelpers.getBounds(i);
+            const otherRobotBounds = RobotsBoundsHelpers.getHullBounds(i);
             const otherRobotBoundsLength = otherRobotBounds.length;
             for (let j = 0; j < otherRobotBoundsLength; j++) {
                 const otherRobotBoundsPoint = otherRobotBounds[j];

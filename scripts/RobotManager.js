@@ -96,7 +96,7 @@ const RobotManager = (function() {
 
     const update = function(time, delta) {
         for (let i = 0; i < totalRobots; i++) {
-            const robotCenterPosition = RobotsBoundsHelpers.getCenter(i);
+            const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(i);
             const robotPositionX = robotCenterPosition.x;
             const robotPositionY = robotCenterPosition.y;
             RobotsData_CurrentData.positionXs[i] = robotPositionX;
@@ -161,7 +161,8 @@ const RobotManager = (function() {
             //}
             /*************************/
 
-            RobotsBoundsHelpers.drawBounds(i);
+            RobotsBoundsHelpers.drawHullBounds(i);
+            RobotsBoundsHelpers.drawTurretBounds(i);
         }
     };
 

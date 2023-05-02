@@ -2,18 +2,33 @@
 
 const RobotsBoundsHelpers = (function() {
     const boundsVisualizer_radius = 2, boundsVisualizer_color = 0xff0000;
+    const turretVisualizer_radius = 2, turretVisualizer_color = 0x0000ff;
     const robotsBounds = [];
+    const turretBounds = [];
 
     const mapToVertices = function(item) {
         return { x: item.x, y: item.y };
     };
 
+    const drawPoints = function(graphics, points, color, radius) {
+            graphics.clear();
+            graphics.lineStyle(1, color, 1);
+            graphics.fillStyle(color, 1);
+
+            // Logger.log("total bounds", bounds.length, bounds);
+            const pointsLength = points.length;
+            for (let i = 0; i < pointsLength; i++) {
+                const point = points[i];
+                graphics.fillCircle(point.x, point.y, radius);
+            }
+    }
+
     const robotsBoundsHelpers = {
-        getCenter: function(index) {
+        getHullCenter: function(index) {
             const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
             return robotBodyImage.getCenter();
         },
-        getBounds: function(index) {
+        getHullBounds: function(index) {
             const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
 
             const robotBody_imageMatterBody = robotBodyImage.body;
@@ -32,24 +47,49 @@ const RobotsBoundsHelpers = (function() {
 
             return bounds;
         },
-        drawBounds: function(index) {
+        drawHullBounds: function(index) {
+
             let graphics = robotsBounds[index];
             if (graphics == null) {
+                const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
                 graphics = GameContextHolder.gameContext.add.graphics();
+                graphics.depth = robotBodyImage.depth;
                 robotsBounds[index] = graphics;
             }
 
-            graphics.clear();
-            graphics.lineStyle(1, boundsVisualizer_color, 1);
-            graphics.fillStyle(boundsVisualizer_color, 1);
+            const bounds = robotsBoundsHelpers.getHullBounds(index);
+            drawPoints(graphics, bounds, boundsVisualizer_color, boundsVisualizer_radius);
+        },
+        drawTurretBounds: function(index) {
+            const robotTurretImage = RobotsData_PhysicsBodies.robotTurretImages[index];
 
-            const bounds = robotsBoundsHelpers.getBounds(index);
-            // Logger.log("total bounds", bounds.length, bounds);
-            for (let i = 0; i < bounds.length; i++) {
-                const point = bounds[i];
-                graphics.fillCircle(point.x, point.y, boundsVisualizer_radius);
+            let graphics = turretBounds[index];
+            if (graphics == null) {
+                graphics = GameContextHolder.gameContext.add.graphics();
+                graphics.depth = robotTurretImage.depth;
+                turretBounds[index] = graphics;
             }
-        }
+
+            //const bounds = robotTurretImage.getBounds();
+            const bounds = [
+                    // Corners
+                    robotTurretImage.getTopLeft(),
+                    robotTurretImage.getTopRight(),
+                    robotTurretImage.getBottomLeft(),
+                    robotTurretImage.getBottomRight(),
+
+                    // Length
+                    robotTurretImage.getTopCenter(),
+                    robotTurretImage.getBottomCenter(),
+
+                    // Width
+                    robotTurretImage.getLeftCenter(),
+                    robotTurretImage.getRightCenter(), // Turret tip since images are rotated to the right
+            ];
+
+            drawPoints(graphics, bounds, turretVisualizer_color, turretVisualizer_radius);
+        },
+
     };
 
     return robotsBoundsHelpers;
