@@ -138,8 +138,7 @@ GameContextHolder.game = new Phaser.Game({
             }
         }
     },
-//    fps: {
-//        forceSetTimeOut: true,
-//        target: 60
-//    }
+    fps: {
+        limit: 144
+    }
 });
