@@ -128,7 +128,8 @@ const keyBot = (function() {
 
         const firingKeyDown = cursors.space.isDown;
         if (firingKeyDown && !firingKeyPressedLastFrame) {
-            api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
+            // api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
+            api.fire(ProjectileTypes.Light);
         }
 
         firingKeyPressedLastFrame = firingKeyDown;;
@@ -181,7 +182,7 @@ const keyBot = (function() {
             }
 
             const turret = api.turret;
-            turret.rotateLeft();
+            //turret.rotateLeft();
 
             const radar = api.radar;
             //radar.radarFollowTurret = true;

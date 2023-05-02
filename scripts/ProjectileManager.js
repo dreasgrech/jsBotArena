@@ -67,20 +67,14 @@ const ProjectileManager = (function() {
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
             const angle = turretImage.angle;
 
-            const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
-            const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
+            //const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
+            //const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
+            //const x = robotPositionX;
+            //const y = robotPositionY;
 
-            /*
-            const turretTipPosition = new Phaser.Math.Vector2();
-            turretImage.getTopLeft(turretTipPosition); // Get the turretImage's top-left position
-            //turretTipPosition.x += turretImage.width*.2;// * Math.cos(Phaser.Math.DegToRad(angle)); // Calculate the tip's x position
-            // turretTipPosition.y += turretImage.width * Math.sin(Phaser.Math.DegToRad(angle)); // Calculate the tip's y position
-
-            //const x = turretTipPosition.x;
-            //const y = turretTipPosition.y;
-            */
-            const x = robotPositionX;
-            const y = robotPositionY;
+            const turretTipPosition = RobotsBoundsHelpers.getTurretTipPosition(robotIndex);
+            const x = turretTipPosition.x;
+            const y = turretTipPosition.y;
 
             const pool = pools[projectileType];
             const bullet = pool.pop();
@@ -114,13 +108,14 @@ const ProjectileManager = (function() {
             // Add the projectile as part of the arena bodies collection
             PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
 
-            const angleRad = Phaser.Math.DegToRad(angle);
-            const speed = ProjectilesDatabase.speeds[projectileType];
-            bullet.setVelocity(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
-
             ProjectilesData.matterBody[currentProjectileIndex] = bullet;
             ProjectilesData.projectileType[currentProjectileIndex] = projectileType;
             projectileMatterBodyID_to_ProjectileIndex[bullet.body.id] = currentProjectileIndex;
+
+            // Fire the projectile
+            const angleRad = Phaser.Math.DegToRad(angle);
+            const speed = ProjectilesDatabase.speeds[projectileType];
+            bullet.setVelocity(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
 
             // Logger.log("mapping", bullet.body.id, "to", currentProjectileIndex);
 

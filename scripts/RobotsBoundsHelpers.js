@@ -47,8 +47,12 @@ const RobotsBoundsHelpers = (function() {
 
             return bounds;
         },
+        getTurretTipPosition: function(index) {
+            const robotTurretImage = RobotsData_PhysicsBodies.robotTurretImages[index];
+            const turretTipPosition = robotTurretImage.getRightCenter(); // images are rotated to the right so we need the right-center point 
+            return turretTipPosition;
+        },
         drawHullBounds: function(index) {
-
             let graphics = robotsBounds[index];
             if (graphics == null) {
                 const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
