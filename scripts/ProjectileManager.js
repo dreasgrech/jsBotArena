@@ -1,6 +1,10 @@
 "use script";
 
 const ProjectileManager = (function() {
+
+    // The minimum time between firing projectiles
+    const BASE_PROJECTILE_INTERVAL_DELAY_SECONDS = 1;
+
     let projectilesCollisionData;
     let gameContext;
     let currentProjectileIndex = 0;
@@ -19,6 +23,8 @@ const ProjectileManager = (function() {
     const projectileMatterBodyID_to_ProjectileIndex = {};
 
     const queuedProjectilesForRemoval = new Set();
+
+    const robotsLastFiredTime = [];
 
     const projectileManager = {
         system_create: function() {
@@ -54,7 +60,10 @@ const ProjectileManager = (function() {
                 pools[projectileTypeIndex] = pool;
             }
         },
-        update: function(time, delta) { },
+        update: function() { },
+        onRobotAdded: function(robotIndex) {
+            robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
+        },
         onEndOfFrame: function() {
             for (const projectile of queuedProjectilesForRemoval) {
                 // console.log(projectile);
@@ -63,7 +72,18 @@ const ProjectileManager = (function() {
 
             queuedProjectilesForRemoval.clear();
         },
+        robotAllowedToFireNow: function(robotIndex) {
+            const now = GameContextHolder.gameTime;
+            const robotLastFiredTime = robotsLastFiredTime[robotIndex];
+            const allowedToFireNow = now - robotLastFiredTime > BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
+            return allowedToFireNow;
+        },
         fireRobotProjectile: function(robotIndex, projectileType) {
+            const allowedToFireNow = projectileManager.robotAllowedToFireNow(robotIndex);
+            if (!allowedToFireNow) {
+                return;
+            }
+
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
             const angle = turretImage.angle;
 
@@ -116,8 +136,13 @@ const ProjectileManager = (function() {
             const angleRad = Phaser.Math.DegToRad(angle);
             const speed = ProjectilesDatabase.speeds[projectileType];
             bullet.setVelocity(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
+            //const dt = GameContextHolder.deltaTime;
+            //bullet.setVelocity(Math.cos(angleRad) * speed * dt, Math.sin(angleRad) * speed * dt);
 
             // Logger.log("mapping", bullet.body.id, "to", currentProjectileIndex);
+
+            const now = GameContextHolder.gameTime;
+            robotsLastFiredTime[robotIndex] = now;
 
             currentProjectileIndex++;
         },

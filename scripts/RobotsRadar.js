@@ -3,7 +3,7 @@
 const RobotsRadar = (function() {
     const pi = Math.PI;
 
-    const MIN_ALLOWED_RADAR_FOV_ANGLE = 5;
+    const MIN_ALLOWED_RADAR_FOV_ANGLE = 1;
     const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
 
     const radarRotationIncrement = 60;
@@ -52,6 +52,7 @@ const RobotsRadar = (function() {
 
             let robotFoundInRadar = false;
 
+            // Check each of this other robot's bounds points to see if they're in the radar
             const otherRobotBounds = RobotsBoundsHelpers.getHullBounds(i);
             const otherRobotBoundsLength = otherRobotBounds.length;
             for (let j = 0; j < otherRobotBoundsLength; j++) {
@@ -91,12 +92,14 @@ const RobotsRadar = (function() {
                 }
             }
 
-            // TODO: add more scanned info like the position of scanned point
-
+            // Add the information that will be provided to the scanning robot about the other robot that has been detected
             if (robotFoundInRadar) {
                 scannedRobots.push({
                     index: i,
-                    distanceBetweenRobots: distanceBetweenRobots
+                    distanceBetweenRobots: distanceBetweenRobots,
+                    positionX: otherRobotPositionX,
+                    positionY: otherRobotPositionY,
+                    angle_degrees: RobotsData_CurrentData.currentRobotAngles_degrees[i]
                 });
             }
         }

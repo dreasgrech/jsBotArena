@@ -82,6 +82,9 @@ const RobotManager = (function() {
         // Inform the UI information panel about the new robot
         UIRobotInfoPanel.add(currentRobotIndex);
 
+        // Inform  the other objects that a new robot has been added
+        ProjectileManager.onRobotAdded(currentRobotIndex);
+
         // Add the entry for the robot in the per-frame collisions arrays
         RobotsData_CurrentData.robotCollisions[currentRobotIndex] = [];
         RobotsData_CurrentData.arenaCollisions[currentRobotIndex] = [];
@@ -96,9 +99,8 @@ const RobotManager = (function() {
 
     const turretRotationPerFrameSpeed = 50;
 
-    const deltaTime = GameContextHolder.deltaTime;
 
-    const update = function(time) {
+    const update = function() {
         for (let i = 0; i < totalRobots; i++) {
             const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(i);
             const robotPositionX = robotCenterPosition.x;
@@ -108,9 +110,9 @@ const RobotManager = (function() {
 
             const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
             const robotBodyImagePhysicsBody = robotBodyImage.body;
-            const hullAngle_PhaserDegrees = robotBodyImage.angle;
-            RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[i] = hullAngle_PhaserDegrees;
-            // RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[i] = normalizeAngle(robotBodyImage.angle);
+            const hullAngle_degrees = robotBodyImage.angle;
+            RobotsData_CurrentData.currentRobotAngles_degrees[i] = hullAngle_degrees;
+            // RobotsData_CurrentData.currentRobotAngles_degrees[i] = normalizeAngle(robotBodyImage.angle);
             RobotsData_CurrentData.currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
@@ -126,6 +128,7 @@ const RobotManager = (function() {
             const data = api.data;
             data.positionX = robotPositionX;
             data.positionY = robotPositionY;
+            data.angle_degrees = hullAngle_degrees;
 
             // Set the radar scanned robots to the api
             const radar = api.radar;
@@ -138,13 +141,15 @@ const RobotManager = (function() {
             api_collisions.arena = RobotsData_CurrentData.arenaCollisions[i];
 
             // Call the robot's update function
+            const time = GameContextHolder.gameTime;
+            const deltaTime = GameContextHolder.deltaTime;
             const updateFunction = RobotsData_Instance.updateFunctions[i];
             updateFunction(api, time, deltaTime);
 
             const turret = api.turret;
             const turretFollowHull = turret.turretFollowHull;
             if (turretFollowHull) {
-                robotManager.setTurretAngle_degrees(i, hullAngle_PhaserDegrees);
+                robotManager.setTurretAngle_degrees(i, hullAngle_degrees);
             }
 
             const radarFollowTurret = radar.radarFollowTurret;
@@ -155,7 +160,7 @@ const RobotManager = (function() {
             /*************************/
             // testing turret rotation
             // turretImage.angle += 1;
-            //turretImage.angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[i];
+            //turretImage.angle = RobotsData_CurrentData.currentRobotAngles_degrees[i];
 
             //// testing radar rotation
             //if (api.radarEnabled) {
@@ -178,7 +183,7 @@ const RobotManager = (function() {
             const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
             const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
 
-            const angle_degrees = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex];
+            const angle_degrees = RobotsData_CurrentData.currentRobotAngles_degrees[robotIndex];
             const angle_radians = Phaser.Math.DegToRad(angle_degrees);
 
             //const force = new Phaser.Math.Vector2(Math.cos(angle_radians) * robotSpeed * direction, Math.sin(angle_radians) * robotSpeed * direction);

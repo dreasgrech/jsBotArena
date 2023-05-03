@@ -61,7 +61,7 @@ const UIRobotInfoPanel = (function() {
                 const name = RobotsData_Instance.names[i];
                 const positionX = RobotsData_CurrentData.positionXs[i];
                 const positionY = RobotsData_CurrentData.positionYs[i];
-                const angle = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[i];
+                const angle = RobotsData_CurrentData.currentRobotAngles_degrees[i];
                 const radarAngle = RobotsData_CurrentData.currentRadarAngles_degrees[i];
                 const turretRotation = RobotsData_CurrentData.currentTurretAngles[i];
 

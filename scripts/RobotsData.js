@@ -14,7 +14,7 @@ const RobotsData_CurrentData = (function() {
     const obj = {
         positionXs: [],
         positionYs: [],
-        currentRobotAngles_PhaserDegrees: [],
+        currentRobotAngles_degrees: [],
         currentRobotVelocities: [],
         currentTurretAngles: [],
         currentRadarAngles_degrees: [],

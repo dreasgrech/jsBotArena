@@ -18,6 +18,7 @@ const RobotAPIFactory = (function() {
                 rotateRight: function() {
                     RobotManager.rotateHull(robotIndex, 1);
                 },
+                // TODO: rotateTo
                 rotateTo: function(angleDegrees) {
 
                 },
@@ -54,6 +55,7 @@ const RobotAPIFactory = (function() {
                 data: { 
                     positionX: 0,
                     positionY: 0,
+                    angle_degrees: 0
                 }
             };
 

@@ -28,7 +28,7 @@ const CollisionManager = (function() {
             data: {
                 robotIndex: collidedWithBody_RobotIndex,
                 name: RobotsData_Instance.names[collidedWithBody_RobotIndex],
-                angle: RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[collidedWithBody_RobotIndex],
+                angle: RobotsData_CurrentData.currentRobotAngles_degrees[collidedWithBody_RobotIndex],
                 velocity: RobotsData_CurrentData.currentRobotVelocities[collidedWithBody_RobotIndex],
                 positionX: RobotsData_CurrentData.positionXs[collidedWithBody_RobotIndex],
                 positionY: RobotsData_CurrentData.positionYs[collidedWithBody_RobotIndex],
@@ -68,7 +68,7 @@ const CollisionManager = (function() {
         const robotBody = isBodyA_Robot ? bodyA : bodyB;
         const projectileBody = isBodyA_Robot ? bodyB : bodyA;
 
-        Logger.log("robot", robotBody, "projectile", projectileBody);
+        //Logger.log("robot", robotBody, "projectile", projectileBody);
 
         // Mark the projectile for removal
         ProjectileManager.markProjectileForRemoval(projectileBody.parent.gameObject);

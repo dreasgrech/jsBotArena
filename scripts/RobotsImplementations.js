@@ -1,66 +1,117 @@
 "use strict";
 
 const shredder = (function() {
-
+    //return {
+    //    build: function() {
+    //return (function() {
     let timeElapsed = 0;
-    const interval = 3000; // Move for one second, then stop for two seconds
+    const interval = 3; // Move for one second, then stop for two seconds
 
     let rotateTimer = 0;
-    const rotateInterval = 1000; // Rotate every one second
+    const rotateInterval = 1; // Rotate every one second
+
+    let turretRotatingLeft = true;
+
+    let timeLastHitRobot = 0;
+    let timeLastHitArena = 0;
+
+    let movingForward = true;
+    let rotatingLeft = true;
 
     const update = function(api, time, delta) {
         timeElapsed += delta;
         rotateTimer += delta;
 
-        if (rotateTimer >= rotateInterval)
-        {
+        // ROTATION
+        if (rotateTimer >= rotateInterval) {
+            //console.log("rotating");
             if (Math.random() > 0.5) {
-                api.rotateLeft();
+                rotatingLeft = true;
             } else {
-                api.rotateRight();
+                rotatingLeft = false;
             }
             rotateTimer = 0;
         }
 
-        if (timeElapsed < 1000) { // move
-            api.move();
-        } else if (timeElapsed < interval) { // stop
-            // Do nothing
-            api.reverse();
-        } else { // Move for one second
-            timeElapsed = 0;
+        if (rotatingLeft) {
+            api.rotateLeft();
+        } else {
+            api.rotateRight();
         }
-        //api.move();
+
+        // MOVEMENT
+        /*
+        if (timeElapsed < 1) { // move
+            movingForward = true;
+            movingThisFrame = true;
+        } else if (timeElapsed < interval) { // stop
+            movingForward = false;
+            movingThisFrame = true;
+        } else {
+            timeElapsed = 0;
+            movingThisFrame = false;
+        }
+        */
 
         const collisions = api.collisions;
-        // const collisionsThisFrame = api.collisionsThisFrame;
-        const collisionsThisFrame = collisions.otherRobots;
-        if (collisionsThisFrame.length > 0) {
-            Logger.log(`Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
-            for (let i = 0; i < collisionsThisFrame.length; i++) {
-                const collisionThisFrame = collisionsThisFrame[i];
-                if (collisionThisFrame.type === CollisionCategories.RobotBody) {
-                    Logger.log('firing!');
-                    // api.fire(ProjectileTypes.Medium);
+        const collisionsWithOtherRobots = collisions.otherRobots;
+        if (collisionsWithOtherRobots.length > 0) {
+            //Logger.log(`Shredder collisions: ${collisionsThisFrame.length}: `, collisionsThisFrame);
+            for (let i = 0; i < collisionsWithOtherRobots.length; i++) {
+                const collisionWithOtherRobots = collisionsWithOtherRobots[i];
+                if (collisionWithOtherRobots.type === CollisionCategories.RobotBody) {
+                    //Logger.log('firing!');
+                    api.fire(ProjectileTypes.Heavy);
+                    movingForward = !movingForward;
                 }
 
             }
         }
 
+        const collisionsWithArena = collisions.arena;
+        if (collisionsWithArena.length > 0) {
+            //console.log("shredder hit arena", time, timeLastHitArena, time - timeLastHitArena);
+            if (time - timeLastHitArena > 0.5) {
+                //console.log("changing", movingForward, "to", !movingForward);
+                movingForward = !movingForward;
+                //console.log("movingForward after changer", movingForward);
+                timeLastHitArena = time;
+            }
+        }
+
+        if (movingForward) {
+            api.move();
+        } else {
+            api.reverse();
+        }
+
+        const turret = api.turret;
+        if (turretRotatingLeft) {
+            turret.rotateLeft();
+        } else {
+            turret.rotateRight();
+        }
+
         const radar = api.radar;
+        radar.setFOVAngle_degrees(1);
+        radar.radarFollowTurret = true;
         const scannedRobots = radar.scannedRobots;
         const totalScannedRobots = scannedRobots.length;
         if (totalScannedRobots > 0) {
-            Logger.log(`Shredder scannedRobots: ${totalScannedRobots}: `, scannedRobots);
-            api.fire(ProjectileTypes.Medium);
+            //Logger.log(`Shredder scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+            api.fire(ProjectileTypes.Light);
+            turretRotatingLeft = !turretRotatingLeft;
         }
     };
 
     return {
         name: 'shredder',
-        create: function(){},
+        create: function() {},
         update: update
     };
+    // }());
+//        }
+//    };
 }());
 
 const circleBot = (function() {
@@ -77,6 +128,15 @@ const circleBot = (function() {
         // Constantly rotate with a custom rotation speed
         for (let i = 0; i < rotationSpeed; i++) {
             api.rotateLeft();
+        }
+
+        const turret = api.turret;
+        turret.rotateLeft();
+
+        const radar = api.radar;
+        radar.radarFollowTurret = true;
+        if (radar.scannedRobots.length > 0) {
+            api.fire(ProjectileTypes.Light);
         }
     };
 
@@ -159,13 +219,17 @@ const keyBot = (function() {
 
             handleInput(api);
 
+            const data = api.data;
+            const ourAngle_degrees = data.angle_degrees;
+            //console.log(ourAngle_degrees);
+
             const collisions = api.collisions;
             const collisionsWithRobots = collisions.otherRobots;
             if (collisionsWithRobots.length > 0) {
                 // Logger.log(`KeyBot robot collisions: ${collisionsWithRobots.length}: `, collisionsWithRobots);
                 for (let i = 0; i < collisionsWithRobots.length; i++) {
                     const collisionWithRobot = collisionsWithRobots[i].data;
-                    Logger.log(collisionWithRobot.positionX, collisionWithRobot.positionY);
+                    //Logger.log(collisionWithRobot.positionX, collisionWithRobot.positionY);
                     // api.fire(ProjectileTypes.Medium);
 
                 }
@@ -191,7 +255,7 @@ const keyBot = (function() {
             const scannedRobots = radar.scannedRobots;
             const totalScannedRobots = scannedRobots.length;
             if (totalScannedRobots > 0) {
-                Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+                //Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
             }
         }
     };
@@ -219,7 +283,7 @@ const sittingBot = (function() {
 
             const radar = api.radar;
             radar.radarFollowTurret = true;
-            radar.setFOVAngle_degrees(10);
+            radar.setFOVAngle_degrees(1);
 
             const turret = api.turret;
             turret.rotateLeft();

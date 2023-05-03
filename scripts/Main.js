@@ -73,10 +73,10 @@ const gameManager = (function() {
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
         RobotManager.addRobot(keyBot);
-        //RobotManager.addRobot(shredder);
+        RobotManager.addRobot(shredder);
         RobotManager.addRobot(doNothingBot);
-        //RobotManager.addRobot(doNothingBot);
-        //setTimeout(() => { RobotManager.addRobot(circleBot); }, 1500);
+        RobotManager.addRobot(circleBot);
+        // setTimeout(() => { RobotManager.addRobot(circleBot); }, 1500);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2000);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot); }, 2500);
 
@@ -96,11 +96,11 @@ const gameManager = (function() {
             return;
         }
 
-        GameContextHolder.gameTime = time;
+        GameContextHolder.gameTime = time*0.001;
         GameContextHolder.deltaTime = delta*0.001;
 
         for (let i = 0; i < totalObjectsWith_update; i++) {
-            objectsWith_update[i].update(time, delta);
+            objectsWith_update[i].update();
         }
 
         // Since we're now at the end of frame, clear any per-frame data
