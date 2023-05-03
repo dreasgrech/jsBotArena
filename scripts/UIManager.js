@@ -5,8 +5,8 @@ const UIManager = (function() {
         initialCreate: function() {
             UIRobotInfoPanel.create();
         },
-        update: function(time, delta) {
-            UIRobotInfoPanel.update(time, delta);
+        update: function(time) {
+            UIRobotInfoPanel.update(time);
         }
     };
 

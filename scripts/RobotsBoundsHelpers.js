@@ -30,8 +30,8 @@ const RobotsBoundsHelpers = (function() {
         },
         getHullBounds: function(index) {
             const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
-
             const robotBody_imageMatterBody = robotBodyImage.body;
+
             /*
             const robotBody_imageMatterBody_bounds = robotBody_imageMatterBody.bounds;
             const bounds = [
@@ -41,6 +41,15 @@ const RobotsBoundsHelpers = (function() {
             //        robotBodyImage.getTopRight(),
             //        robotBodyImage.getBottomLeft(),
             //        robotBodyImage.getBottomRight()
+            ];
+            */
+            /*
+            const gameContext = GameContextHolder.gameContext;
+            const bounds = [
+                gameContext.matter.bodyBounds.getTopLeft(robotBody_imageMatterBody),
+                gameContext.matter.bodyBounds.getTopRight(robotBody_imageMatterBody),
+                gameContext.matter.bodyBounds.getBottomRight(robotBody_imageMatterBody),
+                gameContext.matter.bodyBounds.getBottomLeft(robotBody_imageMatterBody),
             ];
             */
             const bounds = robotBody_imageMatterBody.vertices.map(mapToVertices);

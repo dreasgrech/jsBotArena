@@ -97,7 +97,7 @@ const gameManager = (function() {
         }
 
         GameContextHolder.gameTime = time;
-        GameContextHolder.delta = delta;
+        GameContextHolder.deltaTime = delta*0.001;
 
         for (let i = 0; i < totalObjectsWith_update; i++) {
             objectsWith_update[i].update(time, delta);
@@ -140,5 +140,6 @@ GameContextHolder.game = new Phaser.Game({
     },
     fps: {
         limit: 144
+        //limit: 15
     }
 });

@@ -60,7 +60,8 @@ const RobotManager = (function() {
         RobotsData_Instance.robotAPIs[currentRobotIndex] = api;
 
         // Set the speed
-        RobotsData_Instance.robotSpeeds[currentRobotIndex] = 0.05;
+        // RobotsData_Instance.robotSpeeds[currentRobotIndex] = 0.05;
+        RobotsData_Instance.robotSpeeds[currentRobotIndex] = 5;
 
         // Create the radar
         RobotsRadar.createRadar(currentRobotIndex);
@@ -90,11 +91,14 @@ const RobotManager = (function() {
         currentRobotIndex++;
     };
 
-    const constantAngularVelocityForHullRotation = 0.01;
+    // const constantAngularVelocityForHullRotation = 0.05;
+    const constantAngularVelocityForHullRotation = 1;
 
-    const turretRotationPerFrameSpeed = 0.6;
+    const turretRotationPerFrameSpeed = 50;
 
-    const update = function(time, delta) {
+    const deltaTime = GameContextHolder.deltaTime;
+
+    const update = function(time) {
         for (let i = 0; i < totalRobots; i++) {
             const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(i);
             const robotPositionX = robotCenterPosition.x;
@@ -135,7 +139,7 @@ const RobotManager = (function() {
 
             // Call the robot's update function
             const updateFunction = RobotsData_Instance.updateFunctions[i];
-            updateFunction(api, time, delta);
+            updateFunction(api, time, deltaTime);
 
             const turret = api.turret;
             const turretFollowHull = turret.turretFollowHull;
@@ -177,21 +181,23 @@ const RobotManager = (function() {
             const angle_degrees = RobotsData_CurrentData.currentRobotAngles_PhaserDegrees[robotIndex];
             const angle_radians = Phaser.Math.DegToRad(angle_degrees);
 
-            const force = new Phaser.Math.Vector2(Math.cos(angle_radians) * robotSpeed * direction, Math.sin(angle_radians) * robotSpeed * direction);
-            //const dt = GameContextHolder.deltaTime;
-            //const force = new Phaser.Math.Vector2(
-            //    Math.cos(angle_radians) * robotSpeed * direction * dt,
-            //    Math.sin(angle_radians) * robotSpeed * direction * dt);
+            //const force = new Phaser.Math.Vector2(Math.cos(angle_radians) * robotSpeed * direction, Math.sin(angle_radians) * robotSpeed * direction);
+            const multiplier = robotSpeed * direction * GameContextHolder.deltaTime;
+            const force = new Phaser.Math.Vector2(
+                Math.cos(angle_radians) * multiplier,
+                Math.sin(angle_radians) * multiplier);
             robotBody.applyForce(force);
         },
         rotateHull: function(robotIndex, direction) {
-            const angularVelocity = constantAngularVelocityForHullRotation * direction;
+            const angularVelocity = constantAngularVelocityForHullRotation * direction * GameContextHolder.deltaTime;
+            //const angularVelocity = constantAngularVelocityForHullRotation * direction;
 
             const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
             robotBody.setAngularVelocity(angularVelocity);
         },
         rotateTurret: function(robotIndex, direction) {
-            RobotManager.incrementTurretAngle_degrees(robotIndex, turretRotationPerFrameSpeed * direction);
+            const multiplier = turretRotationPerFrameSpeed * direction * GameContextHolder.deltaTime;
+            RobotManager.incrementTurretAngle_degrees(robotIndex, multiplier);
         },
         setTurretAngle_degrees: function(robotIndex, angleDegrees) {
             const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
