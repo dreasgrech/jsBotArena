@@ -27,9 +27,9 @@ const RobotManager = (function() {
     };
 
     const addRobot = function(newRobot) {
-        RobotsData_Instance.ids[currentRobotIndex] = currentRobotIndex + 1;
-        RobotsData_Instance.names[currentRobotIndex] = newRobot.name;
-        RobotsData_Instance.updateFunctions[currentRobotIndex] = newRobot.update;
+        RobotsData_Instance_ids[currentRobotIndex] = currentRobotIndex + 1;
+        RobotsData_Instance_names[currentRobotIndex] = newRobot.name;
+        RobotsData_Instance_updateFunctions[currentRobotIndex] = newRobot.update;
 
         const gameWidth = GameSetup.Width, gameHeight = GameSetup.Height;
         const x = gameWidth * .5, y = gameHeight * .5;
@@ -50,18 +50,18 @@ const RobotManager = (function() {
             robotSetup: robotSetup
         });
 
-        placeRobotInArena(RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex]);
+        placeRobotInArena(RobotsData_PhysicsBodies_robotBodyImages[currentRobotIndex]);
 
         // Create the tracks
         // const trackA = 
 
         // Create the API for the robot
         const api = RobotAPIFactory.createAPI(currentRobotIndex);
-        RobotsData_Instance.robotAPIs[currentRobotIndex] = api;
+        RobotsData_Instance_robotAPIs[currentRobotIndex] = api;
 
         // Set the speed
         // RobotsData_Instance.robotSpeeds[currentRobotIndex] = 0.05;
-        RobotsData_Instance.robotSpeeds[currentRobotIndex] = 5;
+        RobotsData_Instance_robotSpeeds[currentRobotIndex] = 5;
 
         // Create the radar
         RobotsRadar.createRadar(currentRobotIndex);
@@ -86,8 +86,8 @@ const RobotManager = (function() {
         ProjectileManager.onRobotAdded(currentRobotIndex);
 
         // Add the entry for the robot in the per-frame collisions arrays
-        RobotsData_CurrentData.robotCollisions[currentRobotIndex] = [];
-        RobotsData_CurrentData.arenaCollisions[currentRobotIndex] = [];
+        RobotsData_CurrentData_robotCollisions[currentRobotIndex] = [];
+        RobotsData_CurrentData_arenaCollisions[currentRobotIndex] = [];
 
         const onSpawned = newRobot.onSpawned;
         if (onSpawned) {
@@ -112,25 +112,25 @@ const RobotManager = (function() {
             const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(i);
             const robotPositionX = robotCenterPosition.x;
             const robotPositionY = robotCenterPosition.y;
-            RobotsData_CurrentData.positionXs[i] = robotPositionX;
-            RobotsData_CurrentData.positionYs[i] = robotPositionY;
+            RobotsData_CurrentData_positionXs[i] = robotPositionX;
+            RobotsData_CurrentData_positionYs[i] = robotPositionY;
 
-            const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[i];
+            const robotBodyImage = RobotsData_PhysicsBodies_robotBodyImages[i];
             const robotBodyImagePhysicsBody = robotBodyImage.body;
             const hullAngle_degrees = robotBodyImage.angle;
-            RobotsData_CurrentData.currentRobotAngles_degrees[i] = hullAngle_degrees;
+            RobotsData_CurrentData_currentRobotAngles_degrees[i] = hullAngle_degrees;
             // RobotsData_CurrentData.currentRobotAngles_degrees[i] = normalizeAngle(robotBodyImage.angle);
-            RobotsData_CurrentData.currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
+            RobotsData_CurrentData_currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
-            const turretImage = RobotsData_PhysicsBodies.robotTurretImages[i];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[i];
             const turretAngle_degrees = turretImage.angle;
-            RobotsData_CurrentData.currentTurretAngles[i] = turretAngle_degrees;
+            RobotsData_CurrentData_currentTurretAngles[i] = turretAngle_degrees;
 
             RobotMatterFactory.updateParts(i);
 
             RobotsRadar.drawRadarArc(i);
 
-            const api = RobotsData_Instance.robotAPIs[i];
+            const api = RobotsData_Instance_robotAPIs[i];
 
             const data = api.data;
             data.positionX = robotPositionX;
@@ -144,13 +144,13 @@ const RobotManager = (function() {
 
             // Set the robot collisions to the api
             const api_collisions = api.collisions;
-            api_collisions.otherRobots = RobotsData_CurrentData.robotCollisions[i];
-            api_collisions.arena = RobotsData_CurrentData.arenaCollisions[i];
+            api_collisions.otherRobots = RobotsData_CurrentData_robotCollisions[i];
+            api_collisions.arena = RobotsData_CurrentData_arenaCollisions[i];
 
             // Call the robot's update function
             const time = GameContextHolder.gameTime;
             const deltaTime = GameContextHolder.deltaTime;
-            const updateFunction = RobotsData_Instance.updateFunctions[i];
+            const updateFunction = RobotsData_Instance_updateFunctions[i];
             updateFunction(api, time, deltaTime);
 
             const turret = api.turret;
@@ -187,10 +187,10 @@ const RobotManager = (function() {
         addRobot: addRobot,
         update: update,
         moveHull: function(robotIndex, direction) {
-            const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
-            const robotSpeed = RobotsData_Instance.robotSpeeds[robotIndex];
+            const robotBody = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+            const robotSpeed = RobotsData_Instance_robotSpeeds[robotIndex];
 
-            const angle_degrees = RobotsData_CurrentData.currentRobotAngles_degrees[robotIndex];
+            const angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
             const angle_radians = Phaser.Math.DegToRad(angle_degrees);
 
             //const force = new Phaser.Math.Vector2(Math.cos(angle_radians) * robotSpeed * direction, Math.sin(angle_radians) * robotSpeed * direction);
@@ -204,7 +204,7 @@ const RobotManager = (function() {
             const angularVelocity = constantAngularVelocityForHullRotation * direction * GameContextHolder.deltaTime;
             //const angularVelocity = constantAngularVelocityForHullRotation * direction;
 
-            const robotBody = RobotsData_PhysicsBodies.robotBodyImages[robotIndex];
+            const robotBody = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
             robotBody.setAngularVelocity(angularVelocity);
         },
         rotateTurret: function(robotIndex, direction) {
@@ -212,11 +212,11 @@ const RobotManager = (function() {
             RobotManager.incrementTurretAngle_degrees(robotIndex, multiplier);
         },
         setTurretAngle_degrees: function(robotIndex, angleDegrees) {
-            const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
             turretImage.angle = angleDegrees;
         },
         incrementTurretAngle_degrees: function(robotIndex, angleDegrees) {
-            const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
             const currentTurretImageAngle_degrees = turretImage.angle;
             turretImage.angle = AngleOperations.incrementAngle_degrees(currentTurretImageAngle_degrees, angleDegrees);
         },

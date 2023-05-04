@@ -25,11 +25,11 @@ const RobotsBoundsHelpers = (function() {
 
     const robotsBoundsHelpers = {
         getHullCenter: function(index) {
-            const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
+            const robotBodyImage = RobotsData_PhysicsBodies_robotBodyImages[index];
             return robotBodyImage.getCenter();
         },
         getHullBounds: function(index) {
-            const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
+            const robotBodyImage = RobotsData_PhysicsBodies_robotBodyImages[index];
             const robotBody_imageMatterBody = robotBodyImage.body;
 
             /*
@@ -57,14 +57,14 @@ const RobotsBoundsHelpers = (function() {
             return bounds;
         },
         getTurretTipPosition: function(index) {
-            const robotTurretImage = RobotsData_PhysicsBodies.robotTurretImages[index];
+            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[index];
             const turretTipPosition = robotTurretImage.getRightCenter(); // images are rotated to the right so we need the right-center point 
             return turretTipPosition;
         },
         drawHullBounds: function(index) {
             let graphics = robotsBounds[index];
             if (graphics == null) {
-                const robotBodyImage = RobotsData_PhysicsBodies.robotBodyImages[index];
+                const robotBodyImage = RobotsData_PhysicsBodies_robotBodyImages[index];
                 graphics = GameContextHolder.gameContext.add.graphics();
                 graphics.depth = robotBodyImage.depth;
                 robotsBounds[index] = graphics;
@@ -74,7 +74,7 @@ const RobotsBoundsHelpers = (function() {
             drawPoints(graphics, bounds, boundsVisualizer_color, boundsVisualizer_radius);
         },
         drawTurretBounds: function(index) {
-            const robotTurretImage = RobotsData_PhysicsBodies.robotTurretImages[index];
+            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[index];
 
             let graphics = turretBounds[index];
             if (graphics == null) {

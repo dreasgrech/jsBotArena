@@ -57,13 +57,13 @@ const UIRobotInfoPanel = (function() {
             for (let j = 0; j < robotIds.length; j++) {
                 let i = robotIds[j];
 
-                const id = RobotsData_Instance.ids[i];
-                const name = RobotsData_Instance.names[i];
-                const positionX = RobotsData_CurrentData.positionXs[i];
-                const positionY = RobotsData_CurrentData.positionYs[i];
-                const angle = RobotsData_CurrentData.currentRobotAngles_degrees[i];
-                const radarAngle = RobotsData_CurrentData.currentRadarAngles_degrees[i];
-                const turretRotation = RobotsData_CurrentData.currentTurretAngles[i];
+                const id = RobotsData_Instance_ids[i];
+                const name = RobotsData_Instance_names[i];
+                const positionX = RobotsData_CurrentData_positionXs[i];
+                const positionY = RobotsData_CurrentData_positionYs[i];
+                const angle = RobotsData_CurrentData_currentRobotAngles_degrees[i];
+                const radarAngle = RobotsData_CurrentData_currentRadarAngles_degrees[i];
+                const turretRotation = RobotsData_CurrentData_currentTurretAngles[i];
 
                 const infoText = `
 Robot ${id}: ${name}

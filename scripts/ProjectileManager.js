@@ -84,7 +84,7 @@ const ProjectileManager = (function() {
                 return;
             }
 
-            const turretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
             const angle = turretImage.angle;
 
             //const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
@@ -112,7 +112,7 @@ const ProjectileManager = (function() {
 
             // Logger.log("created projectile", bullet);
 
-            const robotID = RobotsData_Instance.ids[robotIndex];
+            const robotID = RobotsData_Instance_ids[robotIndex];
             // Logger.log("Setting group of projectile to", -robotID);
             PhysicsHelperFunctions.setCollisionProperties({
                 physicsObject: bullet.body,

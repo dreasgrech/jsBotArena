@@ -36,7 +36,7 @@ const RobotMatterFactory = (function() {
         hullImage.setDensity(density);
         // Logger.log("area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
 
-        const robotID = RobotsData_Instance.ids[currentRobotIndex];
+        const robotID = RobotsData_Instance_ids[currentRobotIndex];
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: hullImagePhysicsBody,
             // group: 0,
@@ -49,7 +49,7 @@ const RobotMatterFactory = (function() {
         });
         // Logger.log("Setting group of robot to", -robotID);
 
-        RobotsData_PhysicsBodies.robotBodyImages[currentRobotIndex] = hullImage;
+        RobotsData_PhysicsBodies_robotBodyImages[currentRobotIndex] = hullImage;
 
         // Add the robot's body to the arena bodies collection
         PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
@@ -72,7 +72,7 @@ const RobotMatterFactory = (function() {
         turretImage.setScale(scale);
         turretImage.setAngle(0);
 
-        RobotsData_PhysicsBodies.robotTurretImages[currentRobotIndex] = turretImage;
+        RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
     };
 
     const robotMatterFactory = {
@@ -80,9 +80,9 @@ const RobotMatterFactory = (function() {
         updateParts: function(robotIndex) {
 
             // Update the position of the turret to remain attached to the robot
-            const robotTurretImage = RobotsData_PhysicsBodies.robotTurretImages[robotIndex];
-            const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
-            const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
+            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+            const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
+            const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
             robotTurretImage.setPosition(robotPositionX, robotPositionY);
         }
     };
