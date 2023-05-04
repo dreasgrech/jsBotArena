@@ -59,6 +59,7 @@ const CollisionManager = (function() {
 
     // Robot-Robot collision
     const handleCollision_RobotToRobot = function(bodyA, bodyB) {
+        // Save the collision so that the robots have access to it via their api
         saveCollision_RobotToRobot(bodyA, bodyB);
         saveCollision_RobotToRobot(bodyB, bodyA);
     };
@@ -81,6 +82,7 @@ const CollisionManager = (function() {
 
         // Logger.log("robot", robotBody, "arena", arenaBody);
 
+        // Save the collision so that the robots have access to it via their api
         saveCollision_RobotToArena(robotBody, arenaBody);
     };
     const handleCollision_ProjectileToProjectile = function(projectileA, projectileB) {

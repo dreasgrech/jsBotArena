@@ -1,9 +1,6 @@
 "use strict";
 
-const shredder = (function() {
-    //return {
-    //    build: function() {
-    //return (function() {
+const shredder = function() {
     let timeElapsed = 0;
     const interval = 3; // Move for one second, then stop for two seconds
 
@@ -109,12 +106,9 @@ const shredder = (function() {
         create: function() {},
         update: update
     };
-    // }());
-//        }
-//    };
-}());
+};
 
-const circleBot = (function() {
+const circleBot = function() {
 
     const forwardSpeed = 1; // Adjust this value to change the forward speed
     const rotationSpeed = 30; // Adjust this value to change the rotation speed
@@ -142,12 +136,12 @@ const circleBot = (function() {
 
     return {
         name: 'circles',
-        create: function(){},
+        create: function() {},
         update: update
     };
-}());
+};
 
-const keyBot = (function() {
+const keyBot = function() {
     let gameContext;
     let cursors, wasdKeys, qeKeys;
     let firingKeyPressedLastFrame = false;
@@ -259,9 +253,9 @@ const keyBot = (function() {
             }
         }
     };
-}());
+};
 
-const sittingBot = (function() {
+const sittingBot = function() {
     let gameContext;
 
     return {
@@ -279,15 +273,17 @@ const sittingBot = (function() {
 
             // const radarSetup = robotSetup.radar;
         },
-        update: function(api, time, delta) {
-
+        onSpawned: function(api, time) {
             const radar = api.radar;
             radar.radarFollowTurret = true;
             radar.setFOVAngle_degrees(1);
+        },
+        update: function(api, time, delta) {
 
             const turret = api.turret;
             turret.rotateLeft();
 
+            const radar = api.radar;
             const scannedRobots = radar.scannedRobots;
             const totalScannedRobots = scannedRobots.length;
             if (totalScannedRobots > 0) {
@@ -295,12 +291,16 @@ const sittingBot = (function() {
             }
         }
     };
-}());
+};
 
-const doNothingBot = (function() {
+const doNothingBot = function() {
     return {
         name: 'doNothing',
         create: function() {},
-        update: function(api, time, delta) {}
+        onSpawned: function(api, time) {
+            api.radar.radarEnabled = false;
+        },
+        update: function(api, time, delta) {
+        }
     };
-}());
+};

@@ -89,6 +89,13 @@ const RobotManager = (function() {
         RobotsData_CurrentData.robotCollisions[currentRobotIndex] = [];
         RobotsData_CurrentData.arenaCollisions[currentRobotIndex] = [];
 
+        const onSpawned = newRobot.onSpawned;
+        if (onSpawned) {
+            newRobot.onSpawned(api, GameContextHolder.gameTime);
+        } else {
+            Logger.warn(newRobot, "doesn't have onCreate()");
+        }
+
         // RobotsData.totalRobots++;
         totalRobots++;
         currentRobotIndex++;
