@@ -1,5 +1,9 @@
 "use strict";
 
+// TODO: It might be beneficial to even remove the const objects completely and only have arrays, globally.
+// TODO: But then in the end eventually we'll find a way to scope everything together so that they are not accessible
+// TODO: from the outside.
+
 const RobotsData_PhysicsBodies = (function() {
     const obj = {
         robotBodyImages: [],
@@ -20,7 +24,6 @@ const RobotsData_CurrentData = (function() {
         currentRadarAngles_degrees: [],
         robotCollisions: [], // [[{,,}], [{,,}], [{,,}]]
         arenaCollisions: [], // [[{,,}], [{,,}], [{,,}]]
-        //totalCollisions: 0,
         getPosition: function(index) {
             return new Phaser.Math.Vector2(obj.positionXs[index], obj.positionYs[index]);
         }
@@ -29,6 +32,7 @@ const RobotsData_CurrentData = (function() {
     return obj;
 }());
 
+// Robots instance data, doesn't change once created.
 const RobotsData_Instance = (function() {
     const obj = {
         ids: [],
@@ -41,6 +45,7 @@ const RobotsData_Instance = (function() {
     return obj;
 }());
 
+// Radar data
 const RobotsData_Radar = (function() {
     const obj = {
         radarGraphics: [],
