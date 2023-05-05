@@ -65,9 +65,8 @@ const ProjectileManager = (function() {
             robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
         },
         onEndOfFrame: function() {
-            for (const projectile of queuedProjectilesForRemoval) {
-                // console.log(projectile);
-                projectileManager.destroyProjectile(projectile);
+            for (const projectileMatterGameObject of queuedProjectilesForRemoval) {
+                projectileManager.destroyProjectile(projectileMatterGameObject);
             }
 
             queuedProjectilesForRemoval.clear();
@@ -131,6 +130,7 @@ const ProjectileManager = (function() {
             ProjectilesData.matterBody[currentProjectileIndex] = bullet;
             ProjectilesData.projectileType[currentProjectileIndex] = projectileType;
             projectileMatterBodyID_to_ProjectileIndex[bullet.body.id] = currentProjectileIndex;
+            console.log("creating bullet", bullet);
 
             // Fire the projectile
             const angleRad = Phaser.Math.DegToRad(angle);
@@ -147,22 +147,50 @@ const ProjectileManager = (function() {
             currentProjectileIndex++;
         },
         // Mark a projectile for removal so that it's removed at the end of frame
-        markProjectileForRemoval: function(projectile) {
+        markProjectileForRemoval: function(projectileMatterGameObject) {
             // Add the projectile to the queue so that it gets removed later
-            queuedProjectilesForRemoval.add(projectile);
+            queuedProjectilesForRemoval.add(projectileMatterGameObject);
         },
-        destroyProjectile: function(projectile) {
-            const projectileIndex = projectileMatterBodyID_to_ProjectileIndex[projectile.body.id];
-            const projectileType = ProjectilesData.projectileType[projectileIndex];
+        destroyProjectile: function(projectileMatterGameObject) {
+            //const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectile);
+            //const projectileType = ProjectilesData.projectileType[projectileIndex];
+            // const projectileType = projectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject.body);
+            const projectileType = projectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject);
+            Logger.log("Destroying Projectile.  Resolved type:", projectileType, ".  Object type:", JSObjectOperations.getObjectTypeName(projectileMatterGameObject));
             const projectilePool = pools[projectileType];
             // Logger.log("destroying projectile", projectile, projectileIndex, projectileType, projectilePool);
 
             // Remove the projectile from the arena bodies collection
-            PhysicsBodies.removeArenaPhysicsBody(projectile.body);
+            PhysicsBodies.removeArenaPhysicsBody(projectileMatterGameObject.body);
 
-            projectilePool.push(projectile);
+            projectilePool.push(projectileMatterGameObject);
+        },
+        resolveProjectileIndex_from_Projectile: function(projectileMatterGameObject) {
+            const projectileMatterBody = projectileMatterGameObject.body;
+            const projectileMatterBodyID = projectileMatterBody.id;
+            const projectileIndex = projectileMatterBodyID_to_ProjectileIndex[projectileMatterBodyID];
+            Logger.log(projectileMatterGameObject, "'s index is", projectileIndex);
+
+            return projectileIndex;
+        },
+        resolveProjectileType_from_Projectile: function(projectileMatterGameObject) {
+            const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
+            const projectileType = ProjectilesData.projectileType[projectileIndex];
+
+            return projectileType;
         }
     };
 
     return projectileManager;
+}());
+
+const JSObjectOperations = (function() {
+    const jsObjectOperations = {
+        // Only used for debug purposes
+        getObjectTypeName: function(obj) {
+            return obj.constructor.name;
+        }
+    };
+
+    return jsObjectOperations;
 }());

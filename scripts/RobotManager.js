@@ -4,6 +4,12 @@ const RobotManager = (function() {
     let currentRobotIndex = 0;
     let totalRobots = 0;
 
+    const constantAngularVelocityForHullRotation = 1;
+    const turretRotationPerFrameSpeed = 50;
+
+    // TODO: This value will probably eventually be set depending on some preset database values
+    const STARTING_ROBOT_HEALTH = 100;
+
     const placeRobotInArena = function(robotBody) {
         const maxAttempts = 10;
         let attempts = 0;
@@ -34,14 +40,10 @@ const RobotManager = (function() {
         const gameWidth = GameSetup.Width, gameHeight = GameSetup.Height;
         const x = gameWidth * .5, y = gameHeight * .5;
 
-        // const robotSetup = newRobot.setup;
-
         // Call the robot's create() method
         const robotSetup = RobotSetupFactory.createRobotSetup();
-        // newRobot.create({ robotSetup: robotSetup });
         newRobot.create(robotSetup);
 
-        /*****************************/
         RobotMatterFactory.createRobot({
             currentRobotIndex: currentRobotIndex,
             scale: 0.4,
@@ -50,9 +52,17 @@ const RobotManager = (function() {
             robotSetup: robotSetup
         });
 
+        // Find a spot for the robot to spawn in and place it there
         placeRobotInArena(RobotsData_PhysicsBodies_robotBodyImages[currentRobotIndex]);
 
-        // Create the tracks
+        // Set the starting data for the robot
+        RobotsData_CurrentData_health[currentRobotIndex] = STARTING_ROBOT_HEALTH;
+
+        // Add the entry for the robot in the per-frame collisions arrays
+        RobotsData_CurrentData_robotCollisions[currentRobotIndex] = [];
+        RobotsData_CurrentData_arenaCollisions[currentRobotIndex] = [];
+
+        // TODO: Create the tracks
         // const trackA = 
 
         // Create the API for the robot
@@ -60,24 +70,11 @@ const RobotManager = (function() {
         RobotsData_Instance_robotAPIs[currentRobotIndex] = api;
 
         // Set the speed
-        // RobotsData_Instance.robotSpeeds[currentRobotIndex] = 0.05;
+        // TODO: This value will eventually be set depending on some preset database values
         RobotsData_Instance_robotSpeeds[currentRobotIndex] = 5;
 
         // Create the radar
         RobotsRadar.createRadar(currentRobotIndex);
-
-        //// Update the turret rotation based on pointer location
-        /*
-        GameContextHolder.gameContext.input.on('pointermove', (pointer) => {
-        });
-        */
-
-        // Listen for a pointerdown event to apply force to the robot body
-        /*
-        GameContextHolder.gameContext.input.on('pointerdown', () => {
-        });
-        */
-        /*****************************/
 
         // Inform the UI information panel about the new robot
         UIRobotInfoPanel.add(currentRobotIndex);
@@ -85,10 +82,7 @@ const RobotManager = (function() {
         // Inform  the other objects that a new robot has been added
         ProjectileManager.onRobotAdded(currentRobotIndex);
 
-        // Add the entry for the robot in the per-frame collisions arrays
-        RobotsData_CurrentData_robotCollisions[currentRobotIndex] = [];
-        RobotsData_CurrentData_arenaCollisions[currentRobotIndex] = [];
-
+        // Execute the robot's onSpawned callback
         const onSpawned = newRobot.onSpawned;
         if (onSpawned) {
             newRobot.onSpawned(api, GameContextHolder.gameTime);
@@ -100,12 +94,6 @@ const RobotManager = (function() {
         totalRobots++;
         currentRobotIndex++;
     };
-
-    // const constantAngularVelocityForHullRotation = 0.05;
-    const constantAngularVelocityForHullRotation = 1;
-
-    const turretRotationPerFrameSpeed = 50;
-
 
     const update = function() {
         for (let i = 0; i < totalRobots; i++) {

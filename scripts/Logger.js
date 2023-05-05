@@ -38,20 +38,20 @@ const Logger = (function() {
         // Skip the operation arg so that we just have the logging arguments array-like object
         var logArgs = arguments[1];
 
-        // Show the file and line number
-        if (SHOW_FILE_AND_LINE_INFO) {
-            const callerInfo = getCallerInfo();
-            Array.prototype.unshift.call(logArgs, callerInfo);
-        }
+        //// Show the file and line number
+        //if (SHOW_FILE_AND_LINE_INFO) {
+        //    const callerInfo = getCallerInfo();
+        //    Array.prototype.unshift.call(logArgs, callerInfo);
+        //}
 
         Array.prototype.unshift.call(logArgs, getFrameCount());
         Array.prototype.unshift.call(logArgs, getTimestamp());
 
-        //// Show the file and line number
-        //if (SHOW_FILE_AND_LINE_INFO) {
-        //    const callerInfo = getCallerInfo();
-        //    Array.prototype.push.call(logArgs, callerInfo);
-        //}
+        // Show the file and line number
+        if (SHOW_FILE_AND_LINE_INFO) {
+            const callerInfo = getCallerInfo();
+            Array.prototype.push.call(logArgs, callerInfo);
+        }
 
         console[operation].apply(console, logArgs);
     };
