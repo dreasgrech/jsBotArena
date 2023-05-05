@@ -57,30 +57,33 @@ const CollisionManager = (function() {
     // Holds the keys that map to the different collisions that can happen
     const collisionHandlers = {};
 
-    // Robot-Robot collision
+    // Robot to Robot 
     const handleCollision_RobotToRobot = function(matterBodyA, matterBodyB) {
         // Save the collision so that the robots have access to it via their api
         saveCollision_RobotToRobot(matterBodyA, matterBodyB);
         saveCollision_RobotToRobot(matterBodyB, matterBodyA);
     };
 
+    // Robot to Projectile
     const handleCollision_RobotToProjectile = function(matterBodyA, matterBodyB) {
         const isBodyA_Robot = matterBodyA.collisionFilter.category & CollisionCategories.RobotBody;
         const robotBody = isBodyA_Robot ? matterBodyA : matterBodyB;
         const projectileMatterBody = isBodyA_Robot ? matterBodyB : matterBodyA;
 
         const projectileMatterGameObject = projectileMatterBody.parent.gameObject;
-        console.log(projectileMatterBody);
 
         //Logger.log("robot", robotBody, "projectile", projectileMatterBody);
 
-        //const projectileType = ProjectileManager.resolveProjectileType_from_Projectile(projectileMatterBody);
-        //Logger.log(projectileType, projectileMatterBody, robotBody);
+        const projectileType = ProjectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject);
+        const projectileBaseDamage = ProjectilesDatabase.baseDamages[projectileType];
+        // Logger.log(projectileType, projectileMatterBody, robotBody);
+        Logger.log(projectileType, projectileBaseDamage);
 
         // Mark the projectile for removal
         ProjectileManager.markProjectileForRemoval(projectileMatterGameObject);
     };
 
+    // Robot to Arena
     const handleCollision_RobotToArena = function(matterBodyA, matterBodyB) {
         const isBodyA_Arena = matterBodyA.collisionFilter.category & CollisionCategories.Arena;
         const robotMatterBody = isBodyA_Arena ? matterBodyB : matterBodyA;
@@ -91,18 +94,21 @@ const CollisionManager = (function() {
         // Save the collision so that the robots have access to it via their api
         saveCollision_RobotToArena(robotMatterBody, arenaMatterBody);
     };
+
+    // Projectile to Projectile
     const handleCollision_ProjectileToProjectile = function(projectileMatterBodyA, projectileMatterBodyB) {
         // Mark the projectiles for removal
         ProjectileManager.markProjectileForRemoval(projectileMatterBodyA.parent.gameObject);
         ProjectileManager.markProjectileForRemoval(projectileMatterBodyB.parent.gameObject);
     };
 
+    // Projectile to Arena
     const handleCollision_ProjectileToArena = function(matterBodyA, matterBodyB) {
         const isBodyA_Arena = matterBodyA.collisionFilter.category & CollisionCategories.Arena;
         const projectileMatterBody = isBodyA_Arena ? matterBodyB : matterBodyA;
         const arenaBody = isBodyA_Arena ? matterBodyA : matterBodyB;
 
-         Logger.log("projectile", projectileMatterBody, "arena", arenaBody);
+         // Logger.log("projectile", projectileMatterBody, "arena", arenaBody);
 
         // Mark the projectile for removal
         ProjectileManager.markProjectileForRemoval(projectileMatterBody.parent.gameObject);

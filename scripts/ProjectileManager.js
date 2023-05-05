@@ -43,12 +43,12 @@ const ProjectileManager = (function() {
                 const pool = MatterBodyPoolFactory.createMatterBodyPool({
                     poolName: `Projectiles (${projectilePhaserImageKey})`,
                     createElement: function() {
-                        const projectileImage = gameContext.matter.add.sprite(
+                        const projectileMatterGameObject = gameContext.matter.add.sprite(
                             0,
                             0,
                             projectilePhaserImageKey
                         );
-                        return projectileImage;
+                        return projectileMatterGameObject;
                     },
                     //    beforePush: function(){},
                     //    afterPop: function(){},
@@ -84,7 +84,7 @@ const ProjectileManager = (function() {
             }
 
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
-            const angle = turretImage.angle;
+            const turretAngle = turretImage.angle;
 
             //const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
             //const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
@@ -96,25 +96,26 @@ const ProjectileManager = (function() {
             const y = turretTipPosition.y;
 
             const pool = pools[projectileType];
-            const bullet = pool.pop();
-            bullet.setPosition(x, y);
-            PhysicsBodies.enableMatterBody(bullet);
+            const projectileMatterGameObject = pool.pop();
+            projectileMatterGameObject.setPosition(x, y);
+            PhysicsBodies.enableMatterBody(projectileMatterGameObject);
 
             const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileType];
-            bullet.setBody(projectilesCollisionData[projectileCollisionDataName], null);
-            bullet.depth = GameObjectDepths.Projectile;
-            bullet.setDensity(5); 
-            // bullet.setFrictionAir(0);
-            bullet.setFrictionAir(0.001);
-            bullet.setBounce(0);
-            bullet.setAngle(angle);
+            projectileMatterGameObject.setBody(projectilesCollisionData[projectileCollisionDataName], null);
+            projectileMatterGameObject.depth = GameObjectDepths.Projectile;
+            projectileMatterGameObject.setDensity(5); 
+            // projectileMatterGameObject.setFrictionAir(0);
+            projectileMatterGameObject.setFrictionAir(0.001);
+            projectileMatterGameObject.setBounce(0);
+            projectileMatterGameObject.setAngle(turretAngle);
 
-            // Logger.log("created projectile", bullet);
+            // Logger.log("created projectile", projectileMatterGameObject);
+            const projectileMatterBody = projectileMatterGameObject.body;
 
             const robotID = RobotsData_Instance_ids[robotIndex];
             // Logger.log("Setting group of projectile to", -robotID);
             PhysicsHelperFunctions.setCollisionProperties({
-                physicsObject: bullet.body,
+                physicsObject: projectileMatterBody,
                 group: -robotID, // -robotID so that it doesn't collide with the robot that fired it
                 category: CollisionCategories.RobotProjectile,
                 collidesWithCategories: CollisionCategories.RobotBody |
@@ -122,24 +123,23 @@ const ProjectileManager = (function() {
                     CollisionCategories.RobotProjectile
             });
 
-            const bulletPhysicsBody = bullet.body;
-
             // Add the projectile as part of the arena bodies collection
-            PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [bulletPhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
+            PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [projectileMatterBody]); // Add all the bodies from the arena to the arena bodies collection
 
-            ProjectilesData.matterBody[currentProjectileIndex] = bullet;
+            ProjectilesData.matterBody[currentProjectileIndex] = projectileMatterGameObject;
             ProjectilesData.projectileType[currentProjectileIndex] = projectileType;
-            projectileMatterBodyID_to_ProjectileIndex[bullet.body.id] = currentProjectileIndex;
-            console.log("creating bullet", bullet);
+            // projectileMatterBodyID_to_ProjectileIndex[projectileMatterGameObject.body.id] = currentProjectileIndex;
+            projectileMatterBodyID_to_ProjectileIndex[projectileMatterBody.id] = currentProjectileIndex;
+            // console.log("creating bullet", projectileMatterGameObject);
 
             // Fire the projectile
-            const angleRad = Phaser.Math.DegToRad(angle);
+            const angleRad = Phaser.Math.DegToRad(turretAngle);
             const speed = ProjectilesDatabase.speeds[projectileType];
-            bullet.setVelocity(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
+            projectileMatterGameObject.setVelocity(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
             //const dt = GameContextHolder.deltaTime;
-            //bullet.setVelocity(Math.cos(angleRad) * speed * dt, Math.sin(angleRad) * speed * dt);
+            //projectileMatterGameObject.setVelocity(Math.cos(angleRad) * speed * dt, Math.sin(angleRad) * speed * dt);
 
-            // Logger.log("mapping", bullet.body.id, "to", currentProjectileIndex);
+            // Logger.log("mapping", projectileMatterGameObject.body.id, "to", currentProjectileIndex);
 
             const now = GameContextHolder.gameTime;
             robotsLastFiredTime[robotIndex] = now;
@@ -152,13 +152,9 @@ const ProjectileManager = (function() {
             queuedProjectilesForRemoval.add(projectileMatterGameObject);
         },
         destroyProjectile: function(projectileMatterGameObject) {
-            //const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectile);
-            //const projectileType = ProjectilesData.projectileType[projectileIndex];
-            // const projectileType = projectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject.body);
             const projectileType = projectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject);
-            Logger.log("Destroying Projectile.  Resolved type:", projectileType, ".  Object type:", JSObjectOperations.getObjectTypeName(projectileMatterGameObject));
             const projectilePool = pools[projectileType];
-            // Logger.log("destroying projectile", projectile, projectileIndex, projectileType, projectilePool);
+            //Logger.log("Destroying Projectile.  Resolved type:", projectileType, ".  Object type:", JSObjectOperations.getObjectTypeName(projectileMatterGameObject));
 
             // Remove the projectile from the arena bodies collection
             PhysicsBodies.removeArenaPhysicsBody(projectileMatterGameObject.body);
@@ -169,7 +165,7 @@ const ProjectileManager = (function() {
             const projectileMatterBody = projectileMatterGameObject.body;
             const projectileMatterBodyID = projectileMatterBody.id;
             const projectileIndex = projectileMatterBodyID_to_ProjectileIndex[projectileMatterBodyID];
-            Logger.log(projectileMatterGameObject, "'s index is", projectileIndex);
+            // Logger.log(projectileMatterGameObject, "'s index is", projectileIndex);
 
             return projectileIndex;
         },
@@ -182,15 +178,4 @@ const ProjectileManager = (function() {
     };
 
     return projectileManager;
-}());
-
-const JSObjectOperations = (function() {
-    const jsObjectOperations = {
-        // Only used for debug purposes
-        getObjectTypeName: function(obj) {
-            return obj.constructor.name;
-        }
-    };
-
-    return jsObjectOperations;
 }());
