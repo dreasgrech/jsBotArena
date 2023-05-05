@@ -29,3 +29,7 @@ const RobotsData_Instance_robotSpeeds = [];
 const RobotsData_Radar_radarGraphics = [];
 const RobotsData_Radar_radarFOVAngles_degrees = [];
 const RobotsData_Radar_radarMaxScanDistance = [];
+
+// Projectiles data
+const ProjectilesData_projectileType = [];
+const ProjectilesData_matterBody = [];

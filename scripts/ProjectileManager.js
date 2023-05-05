@@ -11,15 +11,6 @@ const ProjectileManager = (function() {
 
     const pools = [];
 
-    const ProjectilesData = (function() {
-        const projectilesData = {
-            projectileType:[],
-            matterBody:[]
-        };
-
-        return projectilesData;
-    }());
-
     const projectileMatterBodyID_to_ProjectileIndex = {};
 
     const queuedProjectilesForRemoval = new Set();
@@ -126,8 +117,8 @@ const ProjectileManager = (function() {
             // Add the projectile as part of the arena bodies collection
             PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [projectileMatterBody]); // Add all the bodies from the arena to the arena bodies collection
 
-            ProjectilesData.matterBody[currentProjectileIndex] = projectileMatterGameObject;
-            ProjectilesData.projectileType[currentProjectileIndex] = projectileType;
+            ProjectilesData_matterBody[currentProjectileIndex] = projectileMatterGameObject;
+            ProjectilesData_projectileType[currentProjectileIndex] = projectileType;
             // projectileMatterBodyID_to_ProjectileIndex[projectileMatterGameObject.body.id] = currentProjectileIndex;
             projectileMatterBodyID_to_ProjectileIndex[projectileMatterBody.id] = currentProjectileIndex;
             // console.log("creating bullet", projectileMatterGameObject);
@@ -171,7 +162,7 @@ const ProjectileManager = (function() {
         },
         resolveProjectileType_from_Projectile: function(projectileMatterGameObject) {
             const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
-            const projectileType = ProjectilesData.projectileType[projectileIndex];
+            const projectileType = ProjectilesData_projectileType[projectileIndex];
 
             return projectileType;
         }

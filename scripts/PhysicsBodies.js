@@ -4,7 +4,7 @@ const PhysicsBodies = (function() {
     let arenaBodies = []; // contains all the physics bodies in the arena
     // const matterBodyToObjectType = {};
     const matterBodyToCollisionCategory = {};
-    const matterObjectIDToRobotIndex = {};
+    const matterBodyIDToRobotIndex = {};
 
     const isBodyOverlappingWithArenaBodies = function(body) {
         const gameContext = GameContextHolder.gameContext;
@@ -43,18 +43,23 @@ const PhysicsBodies = (function() {
             delete matterBodyToCollisionCategory[body.id];
 
             // If the body is also associated with a robot, remove its mapping from matterObjectIDToRobotIndex
-            if (matterObjectIDToRobotIndex.hasOwnProperty(body.id)) {
-                delete matterObjectIDToRobotIndex[body.id];
+            if (matterBodyIDToRobotIndex.hasOwnProperty(body.id)) {
+                delete matterBodyIDToRobotIndex[body.id];
             }
         },
-        mapMatterObjectIDToRobotIndex: function(matterObjectID, entityIndex) {
-            matterObjectIDToRobotIndex[matterObjectID] = entityIndex;
+        mapMatterBodyIDToRobotIndex: function(matterObjectID, entityIndex) {
+            matterBodyIDToRobotIndex[matterObjectID] = entityIndex;
         },
-        resolveRobotIndexFromMatterObjectID: function(matterObjectID) {
-            return matterObjectIDToRobotIndex[matterObjectID];
+        resolveRobotIndexFromMatterBodyID: function(matterObjectID) {
+            console.assert(matterObjectID != null);
+            const robotIndex = matterBodyIDToRobotIndex[matterObjectID];
+            console.assert(robotIndex != null);
+            return robotIndex;
         },
         resolveCollisionCategoryFromMatterObjectID: function(matterObjectID) {
-            return matterBodyToCollisionCategory[matterObjectID];
+            const collisionCategory = matterBodyToCollisionCategory[matterObjectID];
+            console.assert(collisionCategory != null);
+            return collisionCategory;
         },
         enableMatterBody: function(body) {
             body.setActive(true);

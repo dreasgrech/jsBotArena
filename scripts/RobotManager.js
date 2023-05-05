@@ -5,7 +5,8 @@ const RobotManager = (function() {
     let totalRobots = 0;
 
     const constantAngularVelocityForHullRotation = 1;
-    const turretRotationPerFrameSpeed = 50;
+    // const turretRotationPerFrameSpeed = 50;
+    const turretRotationPerFrameSpeed = 130;
 
     // TODO: This value will probably eventually be set depending on some preset database values
     const STARTING_ROBOT_HEALTH = 100;

@@ -64,9 +64,11 @@ const UIRobotInfoPanel = (function() {
                 const angle = RobotsData_CurrentData_currentRobotAngles_degrees[i];
                 const radarAngle = RobotsData_CurrentData_currentRadarAngles_degrees[i];
                 const turretRotation = RobotsData_CurrentData_currentTurretAngles[i];
+                const robotHealth = RobotsData_CurrentData_health[i];
 
                 const infoText = `
 Robot ${id}: ${name}
+Health: ${robotHealth}
 Position: (${positionX.toFixed(2)}, ${positionY.toFixed(2)})
 Angle: ${angle.toFixed(2)}°
 Radar Angle: ${radarAngle.toFixed(2)}°

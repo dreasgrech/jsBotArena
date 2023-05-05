@@ -7,7 +7,7 @@ const CollisionManager = (function() {
 
         // Logger.log(`Checking for body id: `, collidingBodyID, `.  Body Type: `, collidingBodyObjectType);
 
-        // const collidingBodyRobotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(collidingBodyID);
+        // const collidingBodyRobotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(collidingBodyID);
         // const collidingBodyRobotCollisions = RobotsData_CurrentData.robotCollisions[collidingBodyRobotIndex];
 
         // Logger.log(collidedWithBody);
@@ -19,7 +19,7 @@ const CollisionManager = (function() {
             throw "collidedWithBodyObjectType is undefined!!";
         }
 
-        const collidedWithBody_RobotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(collidedWithBody_ID);
+        const collidedWithBody_RobotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(collidedWithBody_ID);
         // Logger.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
 
         // Create the event info object which will be passed to the robots api
@@ -37,7 +37,7 @@ const CollisionManager = (function() {
 
         // Save the collisions in the colliding robot's data
         const collidingBodyID = collidingBody.parent.id;
-        const collidingBodyRobotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(collidingBodyID);
+        const collidingBodyRobotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(collidingBodyID);
         const collidingBodyRobotCollisions = RobotsData_CurrentData_robotCollisions[collidingBodyRobotIndex];
         collidingBodyRobotCollisions.push(eventInfo);
         RobotsData_CurrentData_robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
@@ -45,7 +45,7 @@ const CollisionManager = (function() {
     };
 
     const saveCollision_RobotToArena = function(robotMatterBody, arenaMatterBody) {
-        const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterObjectID(robotMatterBody.parent.id);
+        const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterBody.parent.id);
         const eventInfo = {
             type: CollisionCategories.Arena,
             data: { }
@@ -67,16 +67,22 @@ const CollisionManager = (function() {
     // Robot to Projectile
     const handleCollision_RobotToProjectile = function(matterBodyA, matterBodyB) {
         const isBodyA_Robot = matterBodyA.collisionFilter.category & CollisionCategories.RobotBody;
-        const robotBody = isBodyA_Robot ? matterBodyA : matterBodyB;
+        const robotMatterBody = isBodyA_Robot ? matterBodyA : matterBodyB;
         const projectileMatterBody = isBodyA_Robot ? matterBodyB : matterBodyA;
 
         const projectileMatterGameObject = projectileMatterBody.parent.gameObject;
+        const robotMatterGameObject = robotMatterBody.parent.gameObject;
 
-        //Logger.log("robot", robotBody, "projectile", projectileMatterBody);
+        const projectileIndex = ProjectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
+        const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterGameObject.body.id);
+
+        DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
+
+        //Logger.log("robot", robotMatterBody, "projectile", projectileMatterBody);
 
         const projectileType = ProjectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject);
         const projectileBaseDamage = ProjectilesDatabase.baseDamages[projectileType];
-        // Logger.log(projectileType, projectileMatterBody, robotBody);
+        // Logger.log(projectileType, projectileMatterBody, robotMatterBody);
         Logger.log(projectileType, projectileBaseDamage);
 
         // Mark the projectile for removal
