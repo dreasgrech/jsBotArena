@@ -14,6 +14,7 @@ const RobotsData_CurrentData_currentRadarAngles_degrees = [];
 const RobotsData_CurrentData_robotCollisions = []; // [[{,,}], [{,,}], [{,,}]]
 const RobotsData_CurrentData_arenaCollisions = []; // [[{,,}], [{,,}], [{,,}]]
 const RobotsData_CurrentData_health = [];
+const RobotsData_CurrentData_alive = [];
 //const RobotsData_CurrentData_getPosition = function(index) {
 //    return new Phaser.Math.Vector2(RobotsData_CurrentData_positionXs[index], RobotsData_CurrentData_positionYs[index]);
 //};

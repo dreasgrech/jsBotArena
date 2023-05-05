@@ -4,6 +4,10 @@ const RobotManager = (function() {
     let currentRobotIndex = 0;
     let totalRobots = 0;
 
+    // An array of the indexes of the robots that are currently alive
+    const aliveRobotsIndexes = new Set();
+    let totalAliveRobots = 0;
+
     const ROBOT_SCALE = 0.4;
 
     const constantAngularVelocityForHullRotation = 1;
@@ -12,6 +16,7 @@ const RobotManager = (function() {
 
     // TODO: This value will probably eventually be set depending on some preset database values
     const STARTING_ROBOT_HEALTH = 100;
+
 
     const placeRobotInArena = function(robotBody) {
         const maxAttempts = 10;
@@ -60,6 +65,7 @@ const RobotManager = (function() {
 
         // Set the starting data for the robot
         RobotsData_CurrentData_health[currentRobotIndex] = STARTING_ROBOT_HEALTH;
+        RobotsData_CurrentData_alive[currentRobotIndex] = true;
 
         // Add the entry for the robot in the per-frame collisions arrays
         RobotsData_CurrentData_robotCollisions[currentRobotIndex] = [];
@@ -85,6 +91,12 @@ const RobotManager = (function() {
         // Inform  the other objects that a new robot has been added
         ProjectileManager.onRobotAdded(currentRobotIndex);
 
+        // Add the robot index to the collection of alive robot indexes
+        aliveRobotsIndexes.add(currentRobotIndex);
+        totalAliveRobots++;
+
+        totalRobots++;
+
         // Execute the robot's onSpawned callback
         const onSpawned = newRobot.onSpawned;
         if (onSpawned) {
@@ -93,13 +105,12 @@ const RobotManager = (function() {
             Logger.warn(newRobot, "doesn't have onCreate()");
         }
 
-        // RobotsData.totalRobots++;
-        totalRobots++;
         currentRobotIndex++;
     };
 
     const update = function() {
         for (let i = 0; i < totalRobots; i++) {
+        //for (const i of aliveRobotsIndexes) {
             const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(i);
             const robotPositionX = robotCenterPosition.x;
             const robotPositionY = robotCenterPosition.y;
@@ -110,7 +121,6 @@ const RobotManager = (function() {
             const robotBodyImagePhysicsBody = robotBodyImage.body;
             const hullAngle_degrees = robotBodyImage.angle;
             RobotsData_CurrentData_currentRobotAngles_degrees[i] = hullAngle_degrees;
-            // RobotsData_CurrentData.currentRobotAngles_degrees[i] = normalizeAngle(robotBodyImage.angle);
             RobotsData_CurrentData_currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[i];
@@ -129,6 +139,7 @@ const RobotManager = (function() {
             data.angle_degrees = hullAngle_degrees;
 
             // Set the radar scanned robots to the api
+            // TODO: Add scannedAliveRobots as well
             const radar = api.radar;
             const scannedRobots = RobotsRadar.scanForRobots(i);
             radar.scannedRobots = scannedRobots;
@@ -138,38 +149,29 @@ const RobotManager = (function() {
             api_collisions.otherRobots = RobotsData_CurrentData_robotCollisions[i];
             api_collisions.arena = RobotsData_CurrentData_arenaCollisions[i];
 
-            // Call the robot's update function
-            const time = GameContextHolder.gameTime;
-            const deltaTime = GameContextHolder.deltaTime;
-            const updateFunction = RobotsData_Instance_updateFunctions[i];
-            updateFunction(api, time, deltaTime);
-
             const turret = api.turret;
             const turretFollowHull = turret.turretFollowHull;
             if (turretFollowHull) {
                 robotManager.setTurretAngle_degrees(i, hullAngle_degrees);
             }
-
             const radarFollowTurret = radar.radarFollowTurret;
             if (radarFollowTurret) {
                 RobotsRadar.setRadarAngle_degrees(i, turretAngle_degrees);
             }
 
-            /*************************/
-            // testing turret rotation
-            // turretImage.angle += 1;
-            //turretImage.angle = RobotsData_CurrentData.currentRobotAngles_degrees[i];
-
-            //// testing radar rotation
-            //if (api.radarEnabled) {
-            //    const currentRadarAngle = RobotsData_CurrentData.currentRadarAngles_degrees[i];
-            //    // RobotsData_CurrentData.currentRadarAngles_degrees[i] = normalizeAngle(currentRadarAngle + 1);
-            //    //RobotsData_CurrentData.currentRadarAngles_degrees[i] = 0;
-            //}
-            /*************************/
-
             RobotsBoundsHelpers.drawHullBounds(i);
             RobotsBoundsHelpers.drawTurretBounds(i);
+
+            const robotAlive = RobotsData_CurrentData_alive[i];
+            if (!robotAlive) {
+                continue;
+            }
+
+            // Call the robot's update function
+            const time = GameContextHolder.gameTime;
+            const deltaTime = GameContextHolder.deltaTime;
+            const updateFunction = RobotsData_Instance_updateFunctions[i];
+            updateFunction(api, time, deltaTime);
         }
     };
 
@@ -202,17 +204,24 @@ const RobotManager = (function() {
             const multiplier = turretRotationPerFrameSpeed * direction * GameContextHolder.deltaTime;
             RobotManager.incrementTurretAngle_degrees(robotIndex, multiplier);
         },
-        setTurretAngle_degrees: function(robotIndex, angleDegrees) {
+        setTurretAngle_degrees: function(robotIndex, angle_degrees) {
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
-            turretImage.angle = angleDegrees;
+            turretImage.angle = angle_degrees;
         },
-        incrementTurretAngle_degrees: function(robotIndex, angleDegrees) {
+        incrementTurretAngle_degrees: function(robotIndex, angle_degrees) {
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
             const currentTurretImageAngle_degrees = turretImage.angle;
-            turretImage.angle = AngleOperations.incrementAngle_degrees(currentTurretImageAngle_degrees, angleDegrees);
+            turretImage.angle = AngleOperations.incrementAngle_degrees(currentTurretImageAngle_degrees, angle_degrees);
         },
         fire: function(robotIndex, projectileType) {
             ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
+        },
+        markRobotAsDestroyed: function(robotIndex) {
+            // TODO: needs more work
+
+            RobotsData_CurrentData_alive[robotIndex] = false;
+            aliveRobotsIndexes.delete(robotIndex);
+            totalAliveRobots--;
         }
         // matterBodyToObjectType: {}
     };

@@ -77,7 +77,14 @@ const CollisionManager = (function() {
         const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterGameObject.body.id);
 
         // Apply the damage to the robot from the projectile
-        DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
+        const newRobotHealth = DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
+
+        // Check if the robot's dead.
+        if (newRobotHealth === 0) {
+
+            // Mark the robot as destroyed
+            RobotManager.markRobotAsDestroyed(robotIndex);
+        }
 
         // Mark the projectile for removal
         ProjectileManager.markProjectileForRemoval(projectileMatterGameObject);

@@ -99,7 +99,8 @@ const RobotsRadar = (function() {
                     distanceBetweenRobots: distanceBetweenRobots,
                     positionX: otherRobotPositionX,
                     positionY: otherRobotPositionY,
-                    angle_degrees: RobotsData_CurrentData_currentRobotAngles_degrees[i]
+                    angle_degrees: RobotsData_CurrentData_currentRobotAngles_degrees[i],
+                    alive: RobotsData_CurrentData_alive[i]
                 });
             }
         }
@@ -139,7 +140,6 @@ const RobotsRadar = (function() {
 
             RobotsData_Radar_radarGraphics[robotIndex] = radarGraphics;
             RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = 0;
-            // RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 45;
             //RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 5;
             RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = 45;
             // RobotsData_Radar.radarMaxScanDistance[index] = 200;
@@ -152,6 +152,12 @@ const RobotsRadar = (function() {
             // Don't draw the radar arc is the radar is not enabled
             const radarEnabled = isRadarEnabled(robotIndex);
             if (!radarEnabled) {
+                return;
+            }
+
+            // Make sure the robot's still alive before drawing the radar
+            const robotAlive = RobotsData_CurrentData_alive[robotIndex];
+            if (!robotAlive) {
                 return;
             }
 
