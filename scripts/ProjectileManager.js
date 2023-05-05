@@ -75,7 +75,7 @@ const ProjectileManager = (function() {
             }
 
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
-            const turretAngle = turretImage.angle;
+            const turretAngle_degrees = turretImage.angle;
 
             //const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
             //const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
@@ -98,7 +98,7 @@ const ProjectileManager = (function() {
             // projectileMatterGameObject.setFrictionAir(0);
             projectileMatterGameObject.setFrictionAir(0.001);
             projectileMatterGameObject.setBounce(0);
-            projectileMatterGameObject.setAngle(turretAngle);
+            projectileMatterGameObject.setAngle(turretAngle_degrees);
 
             // Logger.log("created projectile", projectileMatterGameObject);
             const projectileMatterBody = projectileMatterGameObject.body;
@@ -119,16 +119,15 @@ const ProjectileManager = (function() {
 
             ProjectilesData_matterBody[currentProjectileIndex] = projectileMatterGameObject;
             ProjectilesData_projectileType[currentProjectileIndex] = projectileType;
-            // projectileMatterBodyID_to_ProjectileIndex[projectileMatterGameObject.body.id] = currentProjectileIndex;
             projectileMatterBodyID_to_ProjectileIndex[projectileMatterBody.id] = currentProjectileIndex;
             // console.log("creating bullet", projectileMatterGameObject);
 
             // Fire the projectile
-            const angleRad = Phaser.Math.DegToRad(turretAngle);
+            const angle_radians = Phaser.Math.DegToRad(turretAngle_degrees);
             const speed = ProjectilesDatabase.speeds[projectileType];
-            projectileMatterGameObject.setVelocity(Math.cos(angleRad) * speed, Math.sin(angleRad) * speed);
+            projectileMatterGameObject.setVelocity(Math.cos(angle_radians) * speed, Math.sin(angle_radians) * speed);
             //const dt = GameContextHolder.deltaTime;
-            //projectileMatterGameObject.setVelocity(Math.cos(angleRad) * speed * dt, Math.sin(angleRad) * speed * dt);
+            //projectileMatterGameObject.setVelocity(Math.cos(angle_radians) * speed * dt, Math.sin(angle_radians) * speed * dt);
 
             // Logger.log("mapping", projectileMatterGameObject.body.id, "to", currentProjectileIndex);
 

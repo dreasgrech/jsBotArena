@@ -51,13 +51,14 @@ const PhysicsBodies = (function() {
             matterBodyIDToRobotIndex[matterObjectID] = entityIndex;
         },
         resolveRobotIndexFromMatterBodyID: function(matterObjectID) {
-            console.assert(matterObjectID != null);
             const robotIndex = matterBodyIDToRobotIndex[matterObjectID];
+            console.assert(matterObjectID != null);
             console.assert(robotIndex != null);
             return robotIndex;
         },
         resolveCollisionCategoryFromMatterObjectID: function(matterObjectID) {
             const collisionCategory = matterBodyToCollisionCategory[matterObjectID];
+            console.assert(matterObjectID != null);
             console.assert(collisionCategory != null);
             return collisionCategory;
         },

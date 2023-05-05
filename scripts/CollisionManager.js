@@ -76,14 +76,8 @@ const CollisionManager = (function() {
         const projectileIndex = ProjectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
         const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterGameObject.body.id);
 
+        // Apply the damage to the robot from the projectile
         DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
-
-        //Logger.log("robot", robotMatterBody, "projectile", projectileMatterBody);
-
-        const projectileType = ProjectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject);
-        const projectileBaseDamage = ProjectilesDatabase.baseDamages[projectileType];
-        // Logger.log(projectileType, projectileMatterBody, robotMatterBody);
-        Logger.log(projectileType, projectileBaseDamage);
 
         // Mark the projectile for removal
         ProjectileManager.markProjectileForRemoval(projectileMatterGameObject);

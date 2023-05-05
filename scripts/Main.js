@@ -16,7 +16,8 @@ const gameManager = (function() {
 
     const objectsWith_onEndOfFrame = [
         CollisionManager,
-        ProjectileManager
+        ProjectileManager,
+        DamageManager
     ];
     const totalObjectsWith_onEndOfFrame = objectsWith_onEndOfFrame.length;
 

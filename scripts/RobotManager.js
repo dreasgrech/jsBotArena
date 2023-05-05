@@ -4,6 +4,8 @@ const RobotManager = (function() {
     let currentRobotIndex = 0;
     let totalRobots = 0;
 
+    const ROBOT_SCALE = 0.4;
+
     const constantAngularVelocityForHullRotation = 1;
     // const turretRotationPerFrameSpeed = 50;
     const turretRotationPerFrameSpeed = 130;
@@ -47,7 +49,7 @@ const RobotManager = (function() {
 
         RobotMatterFactory.createRobot({
             currentRobotIndex: currentRobotIndex,
-            scale: 0.4,
+            scale: ROBOT_SCALE,
             x: x,
             y: y,
             robotSetup: robotSetup
