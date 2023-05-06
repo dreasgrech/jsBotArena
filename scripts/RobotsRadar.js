@@ -101,12 +101,18 @@ const RobotsRadar = (function() {
 
             // Add the information that will be provided to the scanning robot about the other robot that has been detected
             if (robotFoundInRadar) {
+
+                const bearingRadians = Phaser.Math.Angle.Between(robotPositionX, robotPositionY, otherRobotPositionX, otherRobotPositionY);
+                const bearingDegrees = Phaser.Math.RadToDeg(bearingRadians);
+                const bearing_degrees = AngleOperations.normalizeAngleDegrees(bearingDegrees);
+
                 const robotScannedEventInfo = {
                     index: i,
                     distanceBetweenRobots: distanceBetweenRobots,
                     positionX: otherRobotPositionX,
                     positionY: otherRobotPositionY,
-                    angle_degrees: RobotsData_CurrentData_currentRobotAngles_degrees[i],
+                    angle_degrees: RobotsData_CurrentData_currentRobotAngles_degrees[i], // the angle in degrees of the scanned robot
+                    bearing_degrees:bearing_degrees, // the angle in degrees that the scanning robot needs to rotate to to face the scanned robot
                     alive: RobotsData_CurrentData_alive[i]
                 };
 

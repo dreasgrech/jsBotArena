@@ -237,6 +237,42 @@ const RobotManager = (function() {
             const multiplier = turretRotationPerFrameSpeed * direction * GameContextHolder.deltaTime;
             RobotManager.incrementTurretAngle_degrees(robotIndex, multiplier);
         },
+        rotateTurretTowards: function(robotIndex, angle_degrees) {
+            const currentAngle_degrees = RobotsData_PhysicsBodies_robotTurretImages[robotIndex].angle;
+            const angleDifference_degrees = Phaser.Math.Angle.WrapDegrees(angle_degrees - currentAngle_degrees);
+
+            // Determine the direction of rotation
+            let direction;
+            if (angleDifference_degrees > 0) {
+                direction = 1;
+            } else if (angleDifference_degrees < 0) {
+                direction = -1;
+            } else {
+                direction = 0;
+            }
+
+            // Rotate towards that direction
+            const angleChange_degrees = turretRotationPerFrameSpeed * direction * GameContextHolder.deltaTime;
+            RobotManager.incrementTurretAngle_degrees(robotIndex, angleChange_degrees);
+
+            // Check if the turret has reached the target angle
+            const angleAfterRotation_degrees = Phaser.Math.Angle.WrapDegrees(currentAngle_degrees + angleChange_degrees);
+            const newAngleDifference_degrees = Phaser.Math.Angle.WrapDegrees(angle_degrees - angleAfterRotation_degrees);
+
+            // Add a threshold to account for small fluctuations
+            const threshold = 0.5;
+            const reachedTargetAngle = (direction === 1 && newAngleDifference_degrees <= threshold) ||
+                (direction === -1 && newAngleDifference_degrees >= -threshold) ||
+                (direction === 0);
+
+            if (reachedTargetAngle) {
+                // Set the turret angle directly to the target angle
+                RobotManager.setTurretAngle_degrees(robotIndex, angle_degrees);
+            }
+
+            // return boolean indicating whether we're there
+            return reachedTargetAngle;
+        },
         setTurretAngle_degrees: function(robotIndex, angle_degrees) {
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
             turretImage.angle = angle_degrees;
@@ -256,7 +292,6 @@ const RobotManager = (function() {
             aliveRobotsIndexes.delete(robotIndex);
             totalAliveRobots--;
         }
-        // matterBodyToObjectType: {}
     };
 
     return robotManager;

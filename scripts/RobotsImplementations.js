@@ -151,14 +151,10 @@ const keyBot = function() {
         const radar = api.radar;
 
         // Hull Left/Right
-        //if (wasdKeys.A.isDown) {
-        //    api.rotateLeft();
-        //} else if (wasdKeys.D.isDown) {
-        //    api.rotateRight();
-        //}
-        const atRotation = api.rotateTowards(-450);
-        if (atRotation) {
-            console.log(atRotation);
+        if (wasdKeys.A.isDown) {
+            api.rotateLeft();
+        } else if (wasdKeys.D.isDown) {
+            api.rotateRight();
         }
 
         // Hull Forward/back
@@ -283,6 +279,7 @@ const sittingBot = function() {
         },
         update: function(api, time, delta) {
 
+            /*
             const turret = api.turret;
             turret.rotateLeft();
 
@@ -292,6 +289,15 @@ const sittingBot = function() {
             if (totalScannedAliveRobots > 0) {
                 api.fire(ProjectileTypes.Medium);
             }
+            */
+
+            const atRotation = api.rotateTowards(-148);
+            if (atRotation) {
+                //console.log("At hull rotation");
+            }
+
+            const turret = api.turret;
+            const atTurretRotation = turret.rotateTowards(273);
         }
     };
 };
@@ -304,6 +310,71 @@ const doNothingBot = function() {
             api.radar.radarEnabled = false;
         },
         update: function(api, time, delta) {
+        }
+    };
+};
+
+const followBot = function() {
+    let gameContext;
+
+    let foundFirstBot = false;
+
+    let rotatingTowardsAngle_degrees = 0;
+
+    let turretRotatingLeft = true;
+    let movingForward = true;
+
+    return {
+        name: 'Follow Bot',
+        create: function(robotSetup) {
+            gameContext = GameContextHolder.gameContext;
+
+            const hullSetup = robotSetup.hull;
+            hullSetup.hullType = RobotHullTypes.Four;
+            hullSetup.hullColor = RobotHullColors.Green;
+
+            const turretSetup = robotSetup.turret;
+            turretSetup.turretType = RobotTurretTypes.Four;
+            turretSetup.turretColor = RobotTurretColors.Aqua;
+
+            // const radarSetup = robotSetup.radar;
+        },
+        onSpawned: function(api, time) {
+            const radar = api.radar;
+            radar.radarFollowTurret = true;
+             //radar.setFOVAngle_degrees(45);
+            //radar.setFOVAngle_degrees(1);
+             radar.setFOVAngle_degrees(10);
+        },
+        update: function(api, time, delta) {
+
+            const radar = api.radar;
+            const scannedAliveRobots = radar.scannedAliveRobots;
+            const totalScannedAliveRobots = scannedAliveRobots.length;
+            if (totalScannedAliveRobots > 0) {
+                const closestRobot = scannedAliveRobots[0];
+                // const closestRobotAngle_degrees = closestRobot.angle_degrees;
+                const closestRobotAngle_degrees = closestRobot.bearing_degrees;
+                rotatingTowardsAngle_degrees = closestRobotAngle_degrees;
+                turretRotatingLeft = !turretRotatingLeft;
+                foundFirstBot = true;
+            }
+
+            const turret = api.turret;
+            if (turretRotatingLeft) {
+                turret.rotateLeft();
+            } else {
+                turret.rotateRight();
+            }
+
+            const facingAngle = api.rotateTowards(rotatingTowardsAngle_degrees);
+            if (foundFirstBot && facingAngle) {
+                api.move();
+
+                api.fire(ProjectileTypes.Medium);
+            }
+
+            // TODO: If total alive robots are 0, then don't do anything
         }
     };
 };

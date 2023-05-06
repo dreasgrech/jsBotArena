@@ -28,7 +28,10 @@ const RobotAPIFactory = (function() {
                     },
                     rotateRight: function() {
                         RobotManager.rotateTurret(robotIndex, 1);
-                    }
+                    },
+                    rotateTowards: function(angle_degrees) {
+                        return RobotManager.rotateTurretTowards(robotIndex, angle_degrees);
+                    },
                 },
                 radar: {
                     radarEnabled: true,
