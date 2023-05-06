@@ -141,8 +141,10 @@ const RobotManager = (function() {
             // Set the radar scanned robots to the api
             // TODO: Add scannedAliveRobots as well
             const radar = api.radar;
-            const scannedRobots = RobotsRadar.scanForRobots(i);
+            // const scannedRobots = RobotsRadar.scanForRobots(i);
+            const [scannedRobots, scannedAliveRobots] = RobotsRadar.scanForRobots(i);
             radar.scannedRobots = scannedRobots;
+            radar.scannedAliveRobots = scannedAliveRobots;
 
             // Set the robot collisions to the api
             const api_collisions = api.collisions;
@@ -199,6 +201,37 @@ const RobotManager = (function() {
 
             const robotBody = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
             robotBody.setAngularVelocity(angularVelocity);
+            return angularVelocity;
+        },
+        rotateHullTowards: function(robotIndex, angle_degrees) {
+            const currentAngle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
+            const angleDifference_degrees = Phaser.Math.Angle.WrapDegrees(angle_degrees - currentAngle_degrees);
+
+            // Determine the direction of rotation
+            let direction;
+            if (angleDifference_degrees > 0) {
+                direction = 1;
+            } else if (angleDifference_degrees < 0) {
+                direction = -1;
+            } else {
+                direction = 0;
+            }
+
+            // Rotate towards that direction
+            const angularVelocity = robotManager.rotateHull(robotIndex, direction);
+
+            // Calculate the angle change without including deltaTime
+            const angleChange_degrees = constantAngularVelocityForHullRotation * direction;
+
+            // Check if the robot has reached the target angle
+            const angleAfterRotation_degrees = Phaser.Math.Angle.WrapDegrees(currentAngle_degrees + angleChange_degrees);
+            const newAngleDifference_degrees = Phaser.Math.Angle.WrapDegrees(angle_degrees - angleAfterRotation_degrees);
+            const reachedTargetAngle = (direction === 1 && newAngleDifference_degrees <= 0) ||
+                (direction === -1 && newAngleDifference_degrees >= 0) ||
+                (direction === 0);
+
+            // return boolean indicating whether we're there
+            return reachedTargetAngle;
         },
         rotateTurret: function(robotIndex, direction) {
             const multiplier = turretRotationPerFrameSpeed * direction * GameContextHolder.deltaTime;

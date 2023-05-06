@@ -58,7 +58,7 @@ const shredder = function() {
                 const collisionWithOtherRobots = collisionsWithOtherRobots[i];
                 if (collisionWithOtherRobots.type === CollisionCategories.RobotBody) {
                     //Logger.log('firing!');
-                    api.fire(ProjectileTypes.Heavy);
+                    //api.fire(ProjectileTypes.Heavy);
                     movingForward = !movingForward;
                 }
 
@@ -92,10 +92,10 @@ const shredder = function() {
         const radar = api.radar;
         radar.setFOVAngle_degrees(1);
         radar.radarFollowTurret = true;
-        const scannedRobots = radar.scannedRobots;
-        const totalScannedRobots = scannedRobots.length;
-        if (totalScannedRobots > 0) {
-            //Logger.log(`Shredder scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+        const scannedAliveRobots = radar.scannedAliveRobots;
+        const totalScannedAliveRobots = scannedAliveRobots.length;
+        if (totalScannedAliveRobots > 0) {
+            //Logger.log(`Shredder scannedAliveRobots: ${totalScannedAliveRobots}: `, scannedAliveRobots);
             api.fire(ProjectileTypes.Light);
             turretRotatingLeft = !turretRotatingLeft;
         }
@@ -129,7 +129,7 @@ const circleBot = function() {
 
         const radar = api.radar;
         radar.radarFollowTurret = true;
-        if (radar.scannedRobots.length > 0) {
+        if (radar.scannedAliveRobots.length > 0) {
             api.fire(ProjectileTypes.Light);
         }
     };
@@ -150,36 +150,39 @@ const keyBot = function() {
         const turret = api.turret;
         const radar = api.radar;
 
-        if (wasdKeys.A.isDown) {
-            api.rotateLeft();
-        } else if (wasdKeys.D.isDown) {
-            api.rotateRight();
+        // Hull Left/Right
+        //if (wasdKeys.A.isDown) {
+        //    api.rotateLeft();
+        //} else if (wasdKeys.D.isDown) {
+        //    api.rotateRight();
+        //}
+        const atRotation = api.rotateTowards(-450);
+        if (atRotation) {
+            console.log(atRotation);
         }
 
+        // Hull Forward/back
         if (wasdKeys.W.isDown) {
             api.move();
         } else if (wasdKeys.S.isDown) {
             api.reverse();
         }
 
-        // Turret
+        // Turret Left/Right
         if (qeKeys.Q.isDown) {
             turret.rotateLeft();
-        }
-
-        if (qeKeys.E.isDown) {
+        } else if (qeKeys.E.isDown) {
             turret.rotateRight();
         }
 
-        // Radar
+        // Radar Left/Right
         if (cursors.left.isDown) {
             radar.rotateLeft();
-        }
-
-        if (cursors.right.isDown) {
+        } else if (cursors.right.isDown) {
             radar.rotateRight();
         }
 
+        // Fire
         const firingKeyDown = cursors.space.isDown;
         if (firingKeyDown && !firingKeyPressedLastFrame) {
             // api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
@@ -246,10 +249,10 @@ const keyBot = function() {
             //radar.radarFollowTurret = true;
             // radar.rotateLeft();
             radar.setFOVAngle_degrees(10);
-            const scannedRobots = radar.scannedRobots;
-            const totalScannedRobots = scannedRobots.length;
-            if (totalScannedRobots > 0) {
-                //Logger.log(`KeyBot scannedRobots: ${totalScannedRobots}: `, scannedRobots);
+            const scannedAliveRobots = radar.scannedAliveRobots;
+            const totalScannedAliveRobots = scannedAliveRobots.length;
+            if (totalScannedAliveRobots > 0) {
+                //Logger.log(`KeyBot scannedAliveRobots: ${totalScannedAliveRobots}: `, scannedAliveRobots);
             }
         }
     };
@@ -284,9 +287,9 @@ const sittingBot = function() {
             turret.rotateLeft();
 
             const radar = api.radar;
-            const scannedRobots = radar.scannedRobots;
-            const totalScannedRobots = scannedRobots.length;
-            if (totalScannedRobots > 0) {
+            const scannedAliveRobots = radar.scannedAliveRobots;
+            const totalScannedAliveRobots = scannedAliveRobots.length;
+            if (totalScannedAliveRobots > 0) {
                 api.fire(ProjectileTypes.Medium);
             }
         }

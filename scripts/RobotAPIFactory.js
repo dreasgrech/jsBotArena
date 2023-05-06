@@ -18,9 +18,8 @@ const RobotAPIFactory = (function() {
                 rotateRight: function() {
                     RobotManager.rotateHull(robotIndex, 1);
                 },
-                // TODO: rotateTo
-                rotateTo: function(angleDegrees) {
-
+                rotateTowards: function(angle_degrees) {
+                    return RobotManager.rotateHullTowards(robotIndex, angle_degrees);
                 },
                 turret: {
                     turretFollowHull: false,
@@ -34,7 +33,8 @@ const RobotAPIFactory = (function() {
                 radar: {
                     radarEnabled: true,
                     radarFollowTurret: false,
-                    scannedRobots: [],
+                    scannedRobots: [], // All the robots that are scanned, including destroyed ones
+                    scannedAliveRobots: [], // The scanned robots that are alive
                     setFOVAngle_degrees: function(angleDegrees) {
                         return RobotsRadar.setRadarFOVAngle_degrees(robotIndex, angleDegrees);
                     },

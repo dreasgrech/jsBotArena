@@ -8,16 +8,22 @@ const RobotsRadar = (function() {
 
     const radarRotationIncrement = 60;
 
+    const sortByDistanceFunction = function(a, b) {
+        return a.distanceBetweenRobots - b.distanceBetweenRobots;
+    };
+
     const isRadarEnabled = function(robotIndex) {
         const api = RobotsData_Instance_robotAPIs[robotIndex];
         const radar = api.radar;
         return radar.radarEnabled;
     };
 
+    const scanForRobotsEmptyResult = [[], []];
+
     const scanForRobots = function(robotIndex) {
         const radarEnabled = isRadarEnabled(robotIndex);
         if (!radarEnabled) {
-            return [];
+            return scanForRobotsEmptyResult;
         }
 
         const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
@@ -34,6 +40,7 @@ const RobotsRadar = (function() {
         const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * pi + radarEndAngle_radians : radarEndAngle_radians;
 
         const scannedRobots = [];
+        const scannedAliveRobots = [];
 
         // todo: try a spatial hash
         const totalRobots = RobotManager.getTotalRobots();
@@ -94,26 +101,28 @@ const RobotsRadar = (function() {
 
             // Add the information that will be provided to the scanning robot about the other robot that has been detected
             if (robotFoundInRadar) {
-                scannedRobots.push({
+                const robotScannedEventInfo = {
                     index: i,
                     distanceBetweenRobots: distanceBetweenRobots,
                     positionX: otherRobotPositionX,
                     positionY: otherRobotPositionY,
                     angle_degrees: RobotsData_CurrentData_currentRobotAngles_degrees[i],
                     alive: RobotsData_CurrentData_alive[i]
-                });
+                };
+
+                scannedRobots.push(robotScannedEventInfo);
+                const scannedRobotAlive = RobotsData_CurrentData_alive[i];
+                if (scannedRobotAlive) {
+                    scannedAliveRobots.push(robotScannedEventInfo);
+                }
             }
         }
 
-        scannedRobots.sort(function(a, b) {
-            return a.distanceBetweenRobots - b.distanceBetweenRobots;
-        });
+        scannedRobots.sort(sortByDistanceFunction);
+        scannedAliveRobots.sort(sortByDistanceFunction);
 
-        if (scannedRobots > 0) {
-            Logger.log(`Scanned robots:`, scannedRobots);
-        }
-
-        return scannedRobots;
+        // return scannedRobots;
+        return [scannedRobots, scannedAliveRobots];
     };
 
     const robotsRadar = {
