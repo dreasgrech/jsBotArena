@@ -139,9 +139,7 @@ const RobotManager = (function() {
             data.angle_degrees = hullAngle_degrees;
 
             // Set the radar scanned robots to the api
-            // TODO: Add scannedAliveRobots as well
             const radar = api.radar;
-            // const scannedRobots = RobotsRadar.scanForRobots(i);
             const [scannedRobots, scannedAliveRobots] = RobotsRadar.scanForRobots(i);
             radar.scannedRobots = scannedRobots;
             radar.scannedAliveRobots = scannedAliveRobots;
@@ -161,6 +159,7 @@ const RobotManager = (function() {
                 RobotsRadar.setRadarAngle_degrees(i, turretAngle_degrees);
             }
 
+            // Draw the bounds of the hull and turret
             RobotsBoundsHelpers.drawHullBounds(i);
             RobotsBoundsHelpers.drawTurretBounds(i);
 
