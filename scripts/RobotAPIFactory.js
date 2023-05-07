@@ -21,6 +21,9 @@ const RobotAPIFactory = (function() {
                 rotateTowardsAngle_degrees: function(angle_degrees) {
                     return RobotOperations_Hull.rotateHullTowardsAngle_degrees(robotIndex, angle_degrees);
                 },
+                rotateTowardsPosition: function(positionX, positionY) {
+                    return RobotOperations_Hull.rotateHullTowardsPosition(robotIndex, positionX, positionY);
+                },
                 turret: {
                     turretFollowHull: false,
                     rotateLeft: function() {
@@ -31,6 +34,9 @@ const RobotAPIFactory = (function() {
                     },
                     rotateTowardsAngle_degrees: function(angle_degrees) {
                         return RobotOperations_Turret.rotateTurretTowardsAngle_degrees(robotIndex, angle_degrees);
+                    },
+                    rotateTowardsPosition: function(positionX, positionY) {
+                        return RobotOperations_Turret.rotateTurretTowardsPosition(robotIndex, positionX, positionY);
                     },
                 },
                 radar: {

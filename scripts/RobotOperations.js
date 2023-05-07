@@ -56,6 +56,21 @@ const RobotOperations_Hull = (function() {
             // return boolean indicating whether we're there
             return reachedTargetAngle;
         },
+        rotateHullTowardsPosition: function (robotIndex, positionX, positionY) {
+            const hullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+            const hullPosition = hullImage.getCenter();
+
+            // Calculate the angle between the hull and the target position in degrees
+            const angleToTarget_degrees = Phaser.Math.RadToDeg(
+                Phaser.Math.Angle.Between(
+                    hullPosition.x, hullPosition.y,
+                    positionX, positionY
+                )
+            );
+
+            // Rotate the hull towards the calculated angle
+            return operations.rotateHullTowardsAngle_degrees(robotIndex, angleToTarget_degrees);
+        },
     };
     return operations;
 }());
@@ -68,6 +83,21 @@ const RobotOperations_Turret = (function() {
         rotateTurret: function(robotIndex, direction) {
             const multiplier = turretRotationPerFrameSpeed * direction * GameContextHolder.deltaTime;
             operations.incrementTurretAngle_degrees(robotIndex, multiplier);
+        },
+        rotateTurretTowardsPosition: function (robotIndex, positionX, positionY) {
+            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+            const turretPosition = turretImage.getCenter();
+
+            // Calculate the angle between the turret and the target position in degrees
+            const angleToTarget_degrees = Phaser.Math.RadToDeg(
+                Phaser.Math.Angle.Between(
+                    turretPosition.x, turretPosition.y,
+                    positionX, positionY
+                )
+            );
+
+            // Rotate the turret towards the calculated angle
+            return operations.rotateTurretTowardsAngle_degrees(robotIndex, angleToTarget_degrees);
         },
         rotateTurretTowardsAngle_degrees: function(robotIndex, angle_degrees) {
             const currentAngle_degrees = RobotsData_PhysicsBodies_robotTurretImages[robotIndex].angle;
