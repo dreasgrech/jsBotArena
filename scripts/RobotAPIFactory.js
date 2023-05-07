@@ -1,8 +1,57 @@
 "use strict";
 
+/*
+ * INFORMATION TO WRITE BOTS
+ *
+ * Game Width: 1024
+ * Game Height: 1024
+ *
+ * RobotHullTypes:
+ *  One
+ *  Two
+ *  Three
+ *  Four
+ *  Five
+ *  Six
+ *  Seven
+ *  Eight
+ *
+ * RobotHullColors:
+ *  Brown
+ *  Green
+ *  Aqua
+ *  Blue
+ *
+ * RobotTurretTypes:
+ *  One
+ *  Two
+ *  Three
+ *  Four
+ *  Five
+ *  Six
+ *  Seven
+ *  Eight
+ *
+ * RobotTurretColors:
+ *  Brown
+ *  Green
+ *  Aqua
+ *  Blue
+ *
+ * ProjectileTypes:
+ *  Light
+ *  Medium
+ *  Heavy
+ *  Granade
+ *  Shotgun
+ *
+ * The robots spawn at angle 0 (degrees) facing the right.
+ * (0,0) is the top-left of the screen
+ *
+ */
+
 const RobotAPIFactory = (function() {
     const createAPI = function(robotIndex) {
-        // return (function(robotIndex) {
         return (function() {
 
             const api = {
@@ -55,12 +104,14 @@ const RobotAPIFactory = (function() {
                     },
                 },
                 fire: function(projectileType) {
-                    RobotManager.fire(robotIndex, projectileType);
+                    return ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
                 },
+                // Collisions this frame
                 collisions: {
-                    otherRobots: [],
-                    arena: [],
+                    otherRobots: [], // type: RobotToRobotCollisionInfo[]
+                    arena: [], // type: RobotToArenaCollisionInfo[]
                 },
+                // Own robot's data
                 data: { 
                     positionX: 0,
                     positionY: 0,
@@ -77,3 +128,23 @@ const RobotAPIFactory = (function() {
     };
 }());
 
+const RobotToRobotCollisionInfo = function() {
+    return {
+        type: 0,
+        data: {
+            robotIndex: 0,
+            name: 0,
+            angle: 0,
+            velocity: 0,
+            positionX: 0,
+            positionY: 0,
+        }
+    };
+};
+
+const RobotToArenaCollisionInfo = function() {
+    return {
+        type: 0,
+        data: { }
+    };
+}

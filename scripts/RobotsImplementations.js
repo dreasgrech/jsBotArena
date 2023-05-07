@@ -15,9 +15,9 @@ const shredder = function() {
     let movingForward = true;
     let rotatingLeft = true;
 
-    const update = function(api, time, delta) {
-        timeElapsed += delta;
-        rotateTimer += delta;
+    const update = function(api, time_seconds, delta_seconds) {
+        timeElapsed += delta_seconds;
+        rotateTimer += delta_seconds;
 
         // ROTATION
         if (rotateTimer >= rotateInterval) {
@@ -67,12 +67,12 @@ const shredder = function() {
 
         const collisionsWithArena = collisions.arena;
         if (collisionsWithArena.length > 0) {
-            //console.log("shredder hit arena", time, timeLastHitArena, time - timeLastHitArena);
-            if (time - timeLastHitArena > 0.5) {
+            //console.log("shredder hit arena", time_seconds, timeLastHitArena, time_seconds - timeLastHitArena);
+            if (time_seconds - timeLastHitArena > 0.5) {
                 //console.log("changing", movingForward, "to", !movingForward);
                 movingForward = !movingForward;
                 //console.log("movingForward after changer", movingForward);
-                timeLastHitArena = time;
+                timeLastHitArena = time_seconds;
             }
         }
 
@@ -113,7 +113,7 @@ const circleBot = function() {
     const forwardSpeed = 1; // Adjust this value to change the forward speed
     const rotationSpeed = 30; // Adjust this value to change the rotation speed
 
-    const update = function(api, time, delta) {
+    const update = function(api, time_seconds, delta_seconds) {
         // Constantly move forward with a custom forward speed
         for (let i = 0; i < forwardSpeed; i++) {
             api.move();
@@ -210,7 +210,7 @@ const keyBot = function() {
 
             // const radarSetup = robotSetup.radar;
         },
-        update: function(api, time, delta) {
+        update: function(api, time_seconds, delta_seconds) {
 
             //api.turretFollowHull = true;
 
@@ -276,12 +276,12 @@ const sittingBot = function() {
 
             // const radarSetup = robotSetup.radar;
         },
-        onSpawned: function(api, time) {
+        onSpawned: function(api, time_seconds) {
             const radar = api.radar;
             radar.radarFollowTurret = true;
             radar.setFOVAngle_degrees(1);
         },
-        update: function(api, time, delta) {
+        update: function(api, time_seconds, delta_seconds) {
 
             /*
             const turret = api.turret;
@@ -310,10 +310,10 @@ const doNothingBot = function() {
     return {
         name: 'doNothing',
         create: function() {},
-        onSpawned: function(api, time) {
+        onSpawned: function(api, time_seconds) {
             api.radar.radarEnabled = false;
         },
-        update: function(api, time, delta) {
+        update: function(api, time_seconds, delta_seconds) {
         }
     };
 };
@@ -340,14 +340,14 @@ const followBot_followAngle = function() {
 
             // const radarSetup = robotSetup.radar;
         },
-        onSpawned: function(api, time) {
+        onSpawned: function(api, time_seconds) {
             const radar = api.radar;
             radar.radarFollowTurret = true;
              //radar.setFOVAngle_degrees(45);
             //radar.setFOVAngle_degrees(1);
              radar.setFOVAngle_degrees(10);
         },
-        update: function(api, time, delta) {
+        update: function(api, time_seconds, delta_seconds) {
 
             const radar = api.radar;
             const scannedAliveRobots = radar.scannedAliveRobots;
@@ -402,14 +402,14 @@ const followBot_followPosition = function() {
 
             // const radarSetup = robotSetup.radar;
         },
-        onSpawned: function(api, time) {
+        onSpawned: function(api, time_seconds) {
             const radar = api.radar;
             radar.radarFollowTurret = true;
             //radar.setFOVAngle_degrees(45);
             //radar.setFOVAngle_degrees(1);
             radar.setFOVAngle_degrees(10);
         },
-        update: function(api, time, delta) {
+        update: function(api, time_seconds, delta_seconds) {
 
             const radar = api.radar;
             const scannedAliveRobots = radar.scannedAliveRobots;
@@ -434,7 +434,6 @@ const followBot_followPosition = function() {
 
             if (foundFirstBot) {
                 const facingPosition = api.rotateTowardsPosition(rotatingTowardsPositionX, rotatingTowardsPositionY);
-                // if (foundFirstBot && facingPosition) {
                 if (facingPosition) {
                     api.move();
 
@@ -443,6 +442,147 @@ const followBot_followPosition = function() {
             }
 
             // TODO: If total alive robots are 0, then don't do anything
+        }
+    };
+};
+
+// chat-gpt
+const SniperBot = function () {
+    let gameContext;
+
+    const preferredDistance = 300;
+    const fireDelaySeconds = 1;
+    let lastFiredTimeSeconds = 0;
+    let targetPositionX = 0;
+    let targetPositionY = 0;
+    let hasTarget = false;
+
+    return {
+        name: 'Sniper Bot',
+        create: function (robotSetup) {
+            gameContext = GameContextHolder.gameContext;
+
+            const hullSetup = robotSetup.hull;
+            hullSetup.hullType = RobotHullTypes.Two;
+            hullSetup.hullColor = RobotHullColors.Brown;
+
+            const turretSetup = robotSetup.turret;
+            turretSetup.turretType = RobotTurretTypes.Three;
+            turretSetup.turretColor = RobotTurretColors.Blue;
+        },
+        onSpawned: function (api, time_seconds) {
+            const radar = api.radar;
+            radar.radarFollowTurret = true;
+            radar.setFOVAngle_degrees(15);
+        },
+        update: function (api, time_seconds, delta_seconds) {
+            const radar = api.radar;
+            const scannedAliveRobots = radar.scannedAliveRobots;
+
+            if (scannedAliveRobots.length > 0) {
+                const closestRobot = scannedAliveRobots[0];
+                targetPositionX = closestRobot.positionX;
+                targetPositionY = closestRobot.positionY;
+                hasTarget = true;
+            } else {
+                hasTarget = false;
+            }
+
+            const turret = api.turret;
+            if (hasTarget) {
+                turret.rotateTowardsPosition(targetPositionX, targetPositionY);
+
+                const currentPosition = new Phaser.Math.Vector2(api.data.positionX, api.data.positionY);
+                const targetPosition = new Phaser.Math.Vector2(targetPositionX, targetPositionY);
+                const distanceToTarget = currentPosition.distance(targetPosition);
+
+                if (distanceToTarget > preferredDistance) {
+                    api.move();
+                } else if (distanceToTarget < preferredDistance) {
+                    api.reverse();
+                }
+
+                if (time_seconds - lastFiredTimeSeconds > fireDelaySeconds) {
+                    if (turret.rotateTowardsPosition(targetPositionX, targetPositionY)) {
+                        api.fire(ProjectileTypes.Light);
+                        lastFiredTimeSeconds = time_seconds;
+                    }
+                }
+            } else {
+                api.rotateRight();
+                turret.rotateRight();
+            }
+        }
+    };
+};
+
+
+// chat-gpt
+const CornerGuardBot = function() {
+    let gameContext;
+
+    const cornerOffset = 50;
+    const cornerPosition = { x: cornerOffset, y: cornerOffset }; // Top-left corner
+    const fireDelaySeconds = 0.5;
+    let lastFiredTimeSeconds = 0;
+    let targetPositionX = 0;
+    let targetPositionY = 0;
+    let hasTarget = false;
+
+    function moveToCorner(api) {
+        const isNearCorner = Math.abs(api.data.positionX - cornerPosition.x) < 10 && Math.abs(api.data.positionY - cornerPosition.y) < 10;
+        if (!isNearCorner) {
+            api.rotateTowardsPosition(cornerPosition.x, cornerPosition.y);
+            api.move();
+        }
+    }
+
+    return {
+        name: 'Corner Guard Bot',
+        create: function(robotSetup) {
+            gameContext = GameContextHolder.gameContext;
+
+            const hullSetup = robotSetup.hull;
+            hullSetup.hullType = RobotHullTypes.Four;
+            hullSetup.hullColor = RobotHullColors.Green;
+
+            const turretSetup = robotSetup.turret;
+            turretSetup.turretType = RobotTurretTypes.Six;
+            turretSetup.turretColor = RobotTurretColors.Blue;
+        },
+        onSpawned: function(api, time_seconds) {
+            const radar = api.radar;
+            radar.radarFollowTurret = true;
+            radar.setFOVAngle_degrees(90);
+        },
+        update: function(api, time_seconds, delta_seconds) {
+            moveToCorner(api);
+
+            const radar = api.radar;
+            const scannedAliveRobots = radar.scannedAliveRobots;
+
+            if (scannedAliveRobots.length > 0) {
+                const closestRobot = scannedAliveRobots[0];
+                targetPositionX = closestRobot.positionX;
+                targetPositionY = closestRobot.positionY;
+                hasTarget = true;
+            } else {
+                hasTarget = false;
+            }
+
+            const turret = api.turret;
+            if (hasTarget) {
+                turret.rotateTowardsPosition(targetPositionX, targetPositionY);
+
+                if (time_seconds - lastFiredTimeSeconds > fireDelaySeconds) {
+                    if (turret.rotateTowardsPosition(targetPositionX, targetPositionY)) {
+                        api.fire(ProjectileTypes.Medium);
+                        lastFiredTimeSeconds = time_seconds;
+                    }
+                }
+            } else {
+                turret.rotateLeft();
+            }
         }
     };
 };

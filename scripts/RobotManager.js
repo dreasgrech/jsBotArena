@@ -184,9 +184,6 @@ const RobotManager = (function() {
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update,
-        fire: function(robotIndex, projectileType) {
-            ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
-        },
         markRobotAsDestroyed: function(robotIndex) {
             // TODO: needs more work
 

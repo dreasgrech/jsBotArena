@@ -71,7 +71,7 @@ const ProjectileManager = (function() {
         fireRobotProjectile: function(robotIndex, projectileType) {
             const allowedToFireNow = projectileManager.robotAllowedToFireNow(robotIndex);
             if (!allowedToFireNow) {
-                return;
+                return false;
             }
 
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
@@ -142,6 +142,8 @@ const ProjectileManager = (function() {
             robotsLastFiredTime[robotIndex] = now;
 
             currentProjectileIndex++;
+
+            return true;
         },
         // Mark a projectile for removal so that it's removed at the end of frame
         markProjectileForRemoval: function(projectileMatterGameObject) {

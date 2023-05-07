@@ -22,18 +22,16 @@ const CollisionManager = (function() {
         const collidedWithBody_RobotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(collidedWithBody_ID);
         // Logger.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
 
-        // Create the event info object which will be passed to the robots api
-        const eventInfo = {
-            type: collidedWithBody_CollisionCategory.type,
-            data: {
-                robotIndex: collidedWithBody_RobotIndex,
-                name: RobotsData_Instance_names[collidedWithBody_RobotIndex],
-                angle: RobotsData_CurrentData_currentRobotAngles_degrees[collidedWithBody_RobotIndex],
-                velocity: RobotsData_CurrentData_currentRobotVelocities[collidedWithBody_RobotIndex],
-                positionX: RobotsData_CurrentData_positionXs[collidedWithBody_RobotIndex],
-                positionY: RobotsData_CurrentData_positionYs[collidedWithBody_RobotIndex],
-            }
-        };
+        // Create the collision event info object which will be passed to the robots api
+        const eventInfo = RobotToRobotCollisionInfo();
+        eventInfo.type = collidedWithBody_CollisionCategory.type;
+        const data = eventInfo.data;
+        data.robotIndex = collidedWithBody_RobotIndex;
+        data.name = RobotsData_Instance_names[collidedWithBody_RobotIndex];
+        data.angle = RobotsData_CurrentData_currentRobotAngles_degrees[collidedWithBody_RobotIndex];
+        data.velocity = RobotsData_CurrentData_currentRobotVelocities[collidedWithBody_RobotIndex];
+        data.positionX = RobotsData_CurrentData_positionXs[collidedWithBody_RobotIndex];
+        data.positionY = RobotsData_CurrentData_positionYs[collidedWithBody_RobotIndex];
 
         // Save the collisions in the colliding robot's data
         const collidingBodyID = collidingBody.parent.id;
@@ -46,10 +44,10 @@ const CollisionManager = (function() {
 
     const saveCollision_RobotToArena = function(robotMatterBody, arenaMatterBody) {
         const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterBody.parent.id);
-        const eventInfo = {
-            type: CollisionCategories.Arena,
-            data: { }
-        };
+
+        // Create the collision event info object which will be passed to the robots api
+        const eventInfo = RobotToArenaCollisionInfo();
+        eventInfo.type = CollisionCategories.Arena;
 
         RobotsData_CurrentData_arenaCollisions[robotIndex].push(eventInfo);
     };
