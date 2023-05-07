@@ -141,7 +141,9 @@ const RobotsRadar = (function() {
         rotateRadar: function(robotIndex, direction) {
             const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
             const multiplier = radarRotationIncrement * direction * GameContextHolder.deltaTime;
-            return robotsRadar.setRadarAngle_degrees(robotIndex, AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, multiplier));
+            const newRadarAngle_degrees = AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, multiplier);
+            //const newRadarAngle_degrees = AngleOperations.lerp_incrementAngle_degrees(currentRadarAngle_degrees, multiplier);
+            return robotsRadar.setRadarAngle_degrees(robotIndex, newRadarAngle_degrees);
         },
         setRadarFOVAngle_degrees: function(robotIndex, angle_degrees) {
             return RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE);

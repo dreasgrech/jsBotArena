@@ -3,7 +3,7 @@
 // Physics bodies
 const RobotsData_PhysicsBodies_robotBodyImages = [];
 const RobotsData_PhysicsBodies_robotTurretImages = [];
-const RobotsData_PhysicsBodies_robotProjectileSensor = [];
+const RobotsData_PhysicsBodies_robotProjectileSensorBodies = [];
 
 // Data that is updated per frame or on a frequent basis
 const RobotsData_CurrentData_positionXs = [];

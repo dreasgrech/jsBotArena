@@ -287,8 +287,19 @@ const RobotManager = (function() {
         },
         incrementTurretAngle_degrees: function(robotIndex, angle_degrees) {
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
-            const currentTurretImageAngle_degrees = turretImage.angle;
-            turretImage.angle = AngleOperations.incrementAngle_degrees(currentTurretImageAngle_degrees, angle_degrees);
+            // const currentTurretImageAngle_degrees = turretImage.angle;
+            const currentTurretImageAngle_degrees = AngleOperations.normalizeAngleDegrees(turretImage.angle);
+            const newTurretImageAngle_degrees = AngleOperations.incrementAngle_degrees(currentTurretImageAngle_degrees, angle_degrees);
+            //const newTurretImageAngle_degrees = AngleOperations.lerp_incrementAngle_degrees(currentTurretImageAngle_degrees, angle_degrees);
+            if (robotIndex === 1) {
+                // todo: currently working here
+                // const angleDifference_degrees = Math.abs(newTurretImageAngle_degrees - currentTurretImageAngle_degrees);
+                // TODO: if angle diff is less than 0, then we're turning left, otherwise we're turning right
+                // TODO: maybe with this we can reduce the jitter when the turret keeps going left and right consecutively
+                const angleDifference_degrees = newTurretImageAngle_degrees - currentTurretImageAngle_degrees;
+                //console.log(currentTurretImageAngle_degrees, newTurretImageAngle_degrees, angleDifference_degrees);
+            }
+            turretImage.angle = newTurretImageAngle_degrees;
         },
         fire: function(robotIndex, projectileType) {
             ProjectileManager.fireRobotProjectile(robotIndex, projectileType);

@@ -373,9 +373,9 @@ const followBot = function() {
 
             const facingAngle = api.rotateTowards(rotatingTowardsAngle_degrees);
             if (foundFirstBot && facingAngle) {
-                api.move();
+                //api.move();
 
-                api.fire(ProjectileTypes.Medium);
+                //api.fire(ProjectileTypes.Medium);
             }
 
             // TODO: If total alive robots are 0, then don't do anything
