@@ -80,7 +80,9 @@ const RobotManager = (function() {
 
         // Set the speed
         // TODO: This value will eventually be set depending on some preset database values
-        RobotsData_Instance_robotSpeeds[currentRobotIndex] = 5;
+        // RobotsData_Instance_robotSpeeds[currentRobotIndex] = 5;
+        // RobotsData_Instance_robotSpeeds[currentRobotIndex] = 15;
+        RobotsData_Instance_robotSpeeds[currentRobotIndex] = 600;
 
         // Create the radar
         RobotsRadar.createRadar(currentRobotIndex);
@@ -110,7 +112,6 @@ const RobotManager = (function() {
 
     const update = function() {
         for (let i = 0; i < totalRobots; i++) {
-        //for (const i of aliveRobotsIndexes) {
             const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(i);
             const robotPositionX = robotCenterPosition.x;
             const robotPositionY = robotCenterPosition.y;
@@ -177,6 +178,14 @@ const RobotManager = (function() {
     };
 
     const robotManager = {
+        system_create: function() {
+        //    GameContextHolder.gameContext.matter.world.on('afterupdate',
+        //        function() {
+        //            for (let i = 0; i < totalRobots; i++) {
+        //                RobotMatterFactory.updateParts(i);
+        //            }
+        //        });
+        },
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update,

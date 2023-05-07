@@ -11,7 +11,9 @@ const gameManager = (function() {
 
     const objectsWith_create = [
         ProjectilesDatabase,
-        ProjectileManager
+        ProjectileManager,
+        //RobotMatterFactory,
+        RobotManager
     ];
 
     const objectsWith_onEndOfFrame = [
@@ -31,6 +33,8 @@ const gameManager = (function() {
     const preload = function() {
         const gameContext = this;
         GameContextHolder.gameContext = gameContext;
+
+        //gameContext.matter.set60Hz();
 
         // ImageDatabase.loadAllImages();
 
@@ -145,6 +149,8 @@ GameContextHolder.game = new Phaser.Game({
     },
     fps: {
         limit: 144
+        //limit: 60
+        //limit: 40
         //limit: 15
     }
 });

@@ -181,8 +181,12 @@ const keyBot = function() {
         // Fire
         const firingKeyDown = cursors.space.isDown;
         if (firingKeyDown && !firingKeyPressedLastFrame) {
-            // api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
-            api.fire(ProjectileTypes.Light);
+            api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
+        //    api.fire(ProjectileTypes.Light);
+        //    api.fire(ProjectileTypes.Medium);
+        //    api.fire(ProjectileTypes.Heavy);
+        //    api.fire(ProjectileTypes.Granade);
+        //    api.fire(ProjectileTypes.Shotgun);
         }
 
         firingKeyPressedLastFrame = firingKeyDown;;

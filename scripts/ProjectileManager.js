@@ -94,11 +94,14 @@ const ProjectileManager = (function() {
             const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileType];
             projectileMatterGameObject.setBody(projectilesCollisionData[projectileCollisionDataName], null);
             projectileMatterGameObject.depth = GameObjectDepths.Projectile;
-            projectileMatterGameObject.setDensity(5); 
+            // projectileMatterGameObject.setDensity(5); 
+            projectileMatterGameObject.setDensity(0.1); 
             // projectileMatterGameObject.setFrictionAir(0);
             projectileMatterGameObject.setFrictionAir(0.001);
             projectileMatterGameObject.setBounce(0);
             projectileMatterGameObject.setAngle(turretAngle_degrees);
+
+            //Logger.log("Projectile area", projectileMatterGameObject.body.area, "density", projectileMatterGameObject.body.density, "mass", projectileMatterGameObject.body.mass);
 
             // Logger.log("created projectile", projectileMatterGameObject);
             const projectileMatterBody = projectileMatterGameObject.body;
@@ -109,7 +112,8 @@ const ProjectileManager = (function() {
                 physicsObject: projectileMatterBody,
                 group: -robotID, // -robotID so that it doesn't collide with the robot that fired it
                 category: CollisionCategories.RobotProjectile,
-                collidesWithCategories: CollisionCategories.RobotBody |
+                // collidesWithCategories: CollisionCategories.RobotBody |
+                collidesWithCategories: CollisionCategories.RobotProjectileSensor |
                     CollisionCategories.Arena |
                     CollisionCategories.RobotProjectile
             });
@@ -126,6 +130,9 @@ const ProjectileManager = (function() {
             const angle_radians = Phaser.Math.DegToRad(turretAngle_degrees);
             const speed = ProjectilesDatabase.speeds[projectileType];
             projectileMatterGameObject.setVelocity(Math.cos(angle_radians) * speed, Math.sin(angle_radians) * speed);
+            //const force = new Phaser.Math.Vector2(Math.cos(angle_radians) * speed, Math.sin(angle_radians) * speed);
+            //projectileMatterGameObject.applyForce(force);
+
             //const dt = GameContextHolder.deltaTime;
             //projectileMatterGameObject.setVelocity(Math.cos(angle_radians) * speed * dt, Math.sin(angle_radians) * speed * dt);
 

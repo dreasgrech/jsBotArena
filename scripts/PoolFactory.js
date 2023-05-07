@@ -46,7 +46,7 @@ const PoolFactory = (function() {
 
                 const pool = {
                     prePopulate: function(total) {
-                        // log('Prepopulating:', total);
+                        //log('Prepopulating:', total);
                         currentlyPrePopulating = true;
                         for (let i = 0; i < total; i++) {
                             const element = createElement();

@@ -6,6 +6,8 @@ const PhysicsBodies = (function() {
     const matterBodyToCollisionCategory = {};
     const matterBodyIDToRobotIndex = {};
 
+    const projectileSensorBodyIDToRobotIndex = {};
+
     const isBodyOverlappingWithArenaBodies = function(body) {
         const gameContext = GameContextHolder.gameContext;
         return gameContext.matter.overlap(body, arenaBodies);
@@ -47,12 +49,21 @@ const PhysicsBodies = (function() {
                 delete matterBodyIDToRobotIndex[body.id];
             }
         },
-        mapMatterBodyIDToRobotIndex: function(matterObjectID, entityIndex) {
-            matterBodyIDToRobotIndex[matterObjectID] = entityIndex;
+        mapHullImageBodyIDToRobotIndex: function(matterObjectID, robotIndex) {
+            matterBodyIDToRobotIndex[matterObjectID] = robotIndex;
+        },
+        mapProjectileSensorBodyIDToRobotIndex: function(projectileSensorBodyID, robotIndex) {
+            projectileSensorBodyIDToRobotIndex[projectileSensorBodyID] = robotIndex;
         },
         resolveRobotIndexFromMatterBodyID: function(matterObjectID) {
             const robotIndex = matterBodyIDToRobotIndex[matterObjectID];
             console.assert(matterObjectID != null);
+            console.assert(robotIndex != null);
+            return robotIndex;
+        },
+        resolveRobotIndexFromProjectileBodyID: function(projectileObjectID) {
+            const robotIndex = projectileSensorBodyIDToRobotIndex[projectileObjectID];
+            console.assert(projectileObjectID != null);
             console.assert(robotIndex != null);
             return robotIndex;
         },

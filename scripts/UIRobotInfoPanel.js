@@ -2,7 +2,7 @@
 
 const UIRobotInfoPanel = (function() {
     const panelWidth = 300; // Width of the panel
-    const panelHeight = 600; // Height of the panel
+    const panelHeight = 900; // Height of the panel
 
     const panelY = 0; // Y position of the panel
 
@@ -44,7 +44,7 @@ const UIRobotInfoPanel = (function() {
             const panelX = gameContext.cameras.main.width - panelWidth; // X position of the panel
 
             const infoText = gameContext.add.text(panelX + 10,
-                panelY + 50 + robotIndex * 100,
+                panelY + 50 + robotIndex * 120,
                 '',
                 {
                     fontSize: '16px',
@@ -62,6 +62,8 @@ const UIRobotInfoPanel = (function() {
                 const positionX = RobotsData_CurrentData_positionXs[i];
                 const positionY = RobotsData_CurrentData_positionYs[i];
                 const angle = RobotsData_CurrentData_currentRobotAngles_degrees[i];
+                const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensor[i];
+                const projectileSensorAngle = Phaser.Math.RadToDeg(projectileSensor.angle);
                 const radarAngle = RobotsData_CurrentData_currentRadarAngles_degrees[i];
                 const turretRotation = RobotsData_CurrentData_currentTurretAngles[i];
                 const robotHealth = RobotsData_CurrentData_health[i];
@@ -71,6 +73,7 @@ Robot ${id}: ${name}
 Health: ${robotHealth}
 Position: (${positionX.toFixed(2)}, ${positionY.toFixed(2)})
 Angle: ${angle.toFixed(2)}°
+Sensor Angle: ${projectileSensorAngle.toFixed(2)}°
 Radar Angle: ${radarAngle.toFixed(2)}°
 Turret Rotation: ${turretRotation.toFixed(2)}°
 `;

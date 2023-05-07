@@ -66,15 +66,21 @@ const CollisionManager = (function() {
 
     // Robot to Projectile
     const handleCollision_RobotToProjectile = function(matterBodyA, matterBodyB) {
-        const isBodyA_Robot = matterBodyA.collisionFilter.category & CollisionCategories.RobotBody;
-        const robotMatterBody = isBodyA_Robot ? matterBodyA : matterBodyB;
-        const projectileMatterBody = isBodyA_Robot ? matterBodyB : matterBodyA;
+        // const isBodyA_Robot = matterBodyA.collisionFilter.category & CollisionCategories.RobotBody;
+        const isBodyA_RobotProjectileSensor = matterBodyA.collisionFilter.category & CollisionCategories.RobotProjectileSensor;
+        const robotProjectileSensorMatterBody = isBodyA_RobotProjectileSensor ? matterBodyA : matterBodyB;
+        const projectileMatterBody = isBodyA_RobotProjectileSensor ? matterBodyB : matterBodyA;
+
+        //console.log(matterBodyA, matterBodyB);
+        //console.log(robotProjectileSensorMatterBody, projectileMatterBody);
 
         const projectileMatterGameObject = projectileMatterBody.parent.gameObject;
-        const robotMatterGameObject = robotMatterBody.parent.gameObject;
+        //const robotMatterGameObject = robotMatterBody.parent.gameObject;
 
         const projectileIndex = ProjectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
-        const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterGameObject.body.id);
+        //const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterGameObject.body.id);
+        //const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotProjectileSensorMatterBody.id);
+        const robotIndex = PhysicsBodies.resolveRobotIndexFromProjectileBodyID(robotProjectileSensorMatterBody.id);
 
         // Apply the damage to the robot from the projectile
         const newRobotHealth = DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
@@ -126,7 +132,8 @@ const CollisionManager = (function() {
 
             // Set up all the collision handlers lookups.  This is the matrix which allows for the collision handler resolution
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.RobotBody)] = handleCollision_RobotToRobot;
-            collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
+            // collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
+            collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectileSensor, CollisionCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.Arena)] = handleCollision_RobotToArena;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectile, CollisionCategories.RobotProjectile)] = handleCollision_ProjectileToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectile, CollisionCategories.Arena)] = handleCollision_ProjectileToArena;

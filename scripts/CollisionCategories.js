@@ -5,7 +5,8 @@ const CollisionCategories = (function() {
         RobotBody: 0,
         RobotTurret: 0,
         Arena: 0,
-        RobotProjectile: 0
+        RobotProjectile: 0,
+        RobotProjectileSensor: 0
     };
 
     // Assign the correct 2^n value to each category
