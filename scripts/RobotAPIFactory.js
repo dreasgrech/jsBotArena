@@ -46,7 +46,9 @@
  *  Shotgun
  *
  * The robots spawn at angle 0 (degrees) facing the right.
- * (0,0) is the top-left of the screen
+ * (0,0) is the top-left of the screen.
+ * Increasing position x goes right.
+ * Increasing position y goes down.
  *
  */
 
@@ -93,8 +95,8 @@ const RobotAPIFactory = (function() {
                     radarFollowTurret: false,
                     scannedRobots: [], // All the robots that are scanned, including destroyed ones
                     scannedAliveRobots: [], // The scanned robots that are alive
-                    setFOVAngle_degrees: function(angleDegrees) {
-                        return RobotsRadar.setRadarFOVAngle_degrees(robotIndex, angleDegrees);
+                    setFOVAngle_degrees: function(angle_degrees) {
+                        return RobotsRadar.setRadarFOVAngle_degrees(robotIndex, angle_degrees);
                     },
                     rotateLeft: function() {
                         RobotsRadar.rotateRadar(robotIndex, -1);
