@@ -7,30 +7,30 @@ const RobotAPIFactory = (function() {
 
             const api = {
                 move: function() {
-                    RobotManager.moveHull(robotIndex, 1);
+                    RobotOperations_Hull.moveHull(robotIndex, 1);
                 },
                 reverse: function() {
-                    RobotManager.moveHull(robotIndex, -1);
+                    RobotOperations_Hull.moveHull(robotIndex, -1);
                 },
                 rotateLeft: function() {
-                    RobotManager.rotateHull(robotIndex, -1);
+                    RobotOperations_Hull.rotateHull(robotIndex, -1);
                 },
                 rotateRight: function() {
-                    RobotManager.rotateHull(robotIndex, 1);
+                    RobotOperations_Hull.rotateHull(robotIndex, 1);
                 },
-                rotateTowards: function(angle_degrees) {
-                    return RobotManager.rotateHullTowards(robotIndex, angle_degrees);
+                rotateTowardsAngle_degrees: function(angle_degrees) {
+                    return RobotOperations_Hull.rotateHullTowardsAngle_degrees(robotIndex, angle_degrees);
                 },
                 turret: {
                     turretFollowHull: false,
                     rotateLeft: function() {
-                        RobotManager.rotateTurret(robotIndex, -1);
+                        RobotOperations_Turret.rotateTurret(robotIndex, -1);
                     },
                     rotateRight: function() {
-                        RobotManager.rotateTurret(robotIndex, 1);
+                        RobotOperations_Turret.rotateTurret(robotIndex, 1);
                     },
-                    rotateTowards: function(angle_degrees) {
-                        return RobotManager.rotateTurretTowards(robotIndex, angle_degrees);
+                    rotateTowardsAngle_degrees: function(angle_degrees) {
+                        return RobotOperations_Turret.rotateTurretTowardsAngle_degrees(robotIndex, angle_degrees);
                     },
                 },
                 radar: {

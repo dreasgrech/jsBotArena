@@ -295,13 +295,13 @@ const sittingBot = function() {
             }
             */
 
-            const atRotation = api.rotateTowards(-148);
+            const atRotation = api.rotateTowardsAngle_degrees(-148);
             if (atRotation) {
                 //console.log("At hull rotation");
             }
 
             const turret = api.turret;
-            const atTurretRotation = turret.rotateTowards(273);
+            const atTurretRotation = turret.rotateTowardsAngle_degrees(273);
         }
     };
 };
@@ -371,7 +371,7 @@ const followBot = function() {
                 turret.rotateRight();
             }
 
-            const facingAngle = api.rotateTowards(rotatingTowardsAngle_degrees);
+            const facingAngle = api.rotateTowardsAngle_degrees(rotatingTowardsAngle_degrees);
             if (foundFirstBot && facingAngle) {
                 //api.move();
 
