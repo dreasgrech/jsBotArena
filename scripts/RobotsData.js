@@ -21,7 +21,7 @@ const RobotsData_CurrentData_alive = [];
 //    return new Phaser.Math.Vector2(RobotsData_CurrentData_positionXs[index], RobotsData_CurrentData_positionYs[index]);
 //};
 
-// Robots instance data, doesn't change once created.
+// Robots instance data, doesn't change once created or changes infrequently
 const RobotsData_Instance_ids = [];
 const RobotsData_Instance_names = [];
 const RobotsData_Instance_updateFunctions = [];

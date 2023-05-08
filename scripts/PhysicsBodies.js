@@ -10,13 +10,8 @@ const PhysicsBodies = (function() {
 
     const projectileSensorBodyIDToRobotIndex = {};
 
-    const isBodyOverlappingWithArenaBodies = function(body) {
-        const gameContext = GameContextHolder.gameContext;
-        return gameContext.matter.overlap(body, allBodies);
-    };
-
     // contains all the bodies except the body of the specific robot index
-    const allOtherBodiesExceptThisRobot = []; // [[],[],[]]
+    //const allOtherBodiesExceptThisRobot = []; // [[],[],[]]
 
     const obj = {
         getArenaBodies: function() {
@@ -47,8 +42,12 @@ const PhysicsBodies = (function() {
             }
 
             RaycastManager.mapGameObjects(bodies, dynamic);
+
+            Logger.log("Added arena bodies:", ...bodies);
+
         },
         removeArenaPhysicsBody: function(body) {
+            Logger.log("Starting removal of arena body:", body, allBodies);
             // Filter out the specified body from the arenaBodies array
             const arenaBodiesTotalBeforeRemoval = allBodies.length;
             allBodies = allBodies.filter(function(currentBody) {
@@ -67,6 +66,8 @@ const PhysicsBodies = (function() {
 
             // console.log(body);
             RaycastManager.removeMappedGameObjects(body);
+
+            Logger.log("Finished removing arena body:", body, allBodies);
         },
         mapHullImageBodyIDToRobotIndex: function(matterObjectID, robotIndex) {
             matterBodyIDToRobotIndex[matterObjectID] = robotIndex;
@@ -96,19 +97,22 @@ const PhysicsBodies = (function() {
             console.assert(collisionCategory != null);
             return collisionCategory;
         },
-        enableMatterBody: function(body) {
-            body.setActive(true);
-            body.setVisible(true);
+        enableMatterBody: function(matterObject) {
+            matterObject.setActive(true);
+            matterObject.setVisible(true);
         },
-        disableMatterBody: function(body) {
-            body.setCollisionCategory(null);
-            body.setVelocity(0, 0);
-            body.setAngularVelocity(0, 0);
-            body.setAngle(0);
-            body.setActive(false);
-            body.setVisible(false);
+        disableMatterBody: function(matterObject) {
+            matterObject.setCollisionCategory(null);
+            matterObject.setVelocity(0, 0);
+            matterObject.setAngularVelocity(0, 0);
+            matterObject.setAngle(0);
+            matterObject.setActive(false);
+            matterObject.setVisible(false);
         },
-        isBodyOverlappingWithArenaBodies: isBodyOverlappingWithArenaBodies
+        isBodyOverlappingWithArenaBodies: function(body) {
+            const gameContext = GameContextHolder.gameContext;
+            return gameContext.matter.overlap(body, allBodies);
+        }
     };
 
     return obj;

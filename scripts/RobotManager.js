@@ -1,5 +1,12 @@
 "use strict";
 
+const QueuedRobotForRemoval = function() {
+    return {
+        //robotIndex: 0,
+        destroyedTime_seconds: 0
+    };
+};
+
 const RobotManager = (function() {
     let currentRobotIndex = 0;
     let totalRobots = 0;
@@ -12,6 +19,9 @@ const RobotManager = (function() {
 
     // TODO: This value will probably eventually be set depending on some preset database values
     const STARTING_ROBOT_HEALTH = 100;
+
+    const queuedRobotsForRemoval = {};
+    //let totalQueuedRobotsForRemovals = {};
 
     const placeRobotInArena = function(robotBody) {
         const maxAttempts = 10;
@@ -161,6 +171,19 @@ const RobotManager = (function() {
             RobotsBoundsHelpers.drawHullBounds(i);
             RobotsBoundsHelpers.drawTurretBounds(i);
 
+            const queuedRobotForRemoval = queuedRobotsForRemoval[i];
+            if (queuedRobotForRemoval) {
+                const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
+                const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
+                //Logger.log("checking if we should remove now", i, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
+                if (timeSinceDestroyed_seconds > 1) {
+                    Logger.log("removing robot", i);
+                    removeAndHideRobot(i);
+                    delete queuedRobotsForRemoval[i];
+                    continue;
+                }
+            }
+
             const robotAlive = RobotsData_CurrentData_alive[i];
             if (!robotAlive) {
                 continue;
@@ -179,6 +202,21 @@ const RobotManager = (function() {
         }
     };
 
+    const removeAndHideRobot = function(robotIndex) {
+        const hullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+
+        // Remove the hull's body from the arena
+        PhysicsBodies.removeArenaPhysicsBody(hullImage.body);
+
+        // Disable and hide the hull image and its collider
+        PhysicsBodies.disableMatterBody(hullImage);
+
+        // Hide the turret image
+        const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+        turretImage.setActive(false);
+        turretImage.setVisible(false);
+    };
+
     const robotManager = {
         system_create: function() {
         //    GameContextHolder.gameContext.matter.world.on('afterupdate',
@@ -191,12 +229,26 @@ const RobotManager = (function() {
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update,
+        // TODO: move the logic for destroyed to delayed
         markRobotAsDestroyed: function(robotIndex) {
             // TODO: needs more work
 
+            // TODO: pool this
+            const queuedRobotForRemoval = QueuedRobotForRemoval();
+            // queuedRobotForRemoval.robotIndex = robotIndex;
+            queuedRobotForRemoval.destroyedTime_seconds = GameContextHolder.gameTime;
+            // queuedRobotsForRemoval.push(queuedRobotForRemoval);
+            queuedRobotsForRemoval[robotIndex] = queuedRobotForRemoval;
+
+            // Make the robot as destroyed
             RobotsData_CurrentData_alive[robotIndex] = false;
+
+            // Remove the robot's index from the collection of aliveRobots
             aliveRobotsIndexes.delete(robotIndex);
+
             totalAliveRobots--;
+
+            Logger.log("marking bot for removal", robotIndex);
         }
     };
 
