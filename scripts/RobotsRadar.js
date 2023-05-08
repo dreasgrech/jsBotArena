@@ -158,7 +158,6 @@ const RobotsRadar = (function() {
         scannedRobots.sort(sortByDistanceFunction);
         scannedAliveRobots.sort(sortByDistanceFunction);
 
-        // return scannedRobots;
         return [scannedRobots, scannedAliveRobots];
     };
 

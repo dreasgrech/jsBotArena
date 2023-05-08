@@ -174,6 +174,8 @@ const RobotManager = (function() {
 
             // Clear the per-frame operation flags since this robot has now executed its turn
             RobotsDataAPI_FrameOperations_Hull[i] = 0;
+            RobotsDataAPI_FrameOperations_Turret[i] = 0;
+            RobotsDataAPI_FrameOperations_Radar[i] = 0;
         }
     };
 

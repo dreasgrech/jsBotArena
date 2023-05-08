@@ -68,10 +68,38 @@ const RobotHull_ActionType = BitmaskableObjectOperations.populateBitmaskableObje
     RotateLeft: 0,
     RotateRight: 0,
     RotateTowardsAngle_degrees: 0,
-    rotateTowardsPosition: 0,
+    rotateTowardsPosition: 0
+});
+
+/**
+ * @type {{
+    RotateLeft: number,
+    RotateRight: number,
+    RotateTowardsAngle_degrees: number,
+    rotateTowardsPosition: number,
+}}
+ */
+const RobotTurret_ActionType = BitmaskableObjectOperations.populateBitmaskableObject({
+    RotateLeft: 0,
+    RotateRight: 0,
+    RotateTowardsAngle_degrees: 0,
+    rotateTowardsPosition: 0
+});
+
+/**
+ * @type {{
+    RotateLeft: number,
+    RotateRight: number,
+}}
+ */
+const RobotRadar_ActionType = BitmaskableObjectOperations.populateBitmaskableObject({
+    RotateLeft: 0,
+    RotateRight: 0
 });
 
 const RobotsDataAPI_FrameOperations_Hull = [];
+const RobotsDataAPI_FrameOperations_Turret = [];
+const RobotsDataAPI_FrameOperations_Radar = [];
 
 const RobotAPIFactory = (function() {
     const createAPI = function(robotIndex) {
@@ -154,25 +182,61 @@ const RobotAPIFactory = (function() {
                 turret: {
                     turretFollowHull: false,
                     rotateLeft: function() {
+                        const operationType = RobotTurret_ActionType.RotateLeft;
+                        const operationsState = RobotsDataAPI_FrameOperations_Turret[robotIndex];
+                        if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                            Logger.warn("Already called rotateLeft() this frame");
+                            return;
+                        }
+
                         RobotOperations_Turret.rotateTurret(robotIndex, -1);
+
+                        RobotsDataAPI_FrameOperations_Turret[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     },
                     rotateRight: function() {
+                        const operationType = RobotTurret_ActionType.RotateRight;
+                        const operationsState = RobotsDataAPI_FrameOperations_Turret[robotIndex];
+                        if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                            Logger.warn("Already called rotateRight() this frame");
+                            return;
+                        }
+
                         RobotOperations_Turret.rotateTurret(robotIndex, 1);
+
+                        RobotsDataAPI_FrameOperations_Turret[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     },
                     // returns true if we're at the requested angle
                     rotateTowardsAngle_degrees: function(angle_degrees) {
+                        const operationType = RobotTurret_ActionType.RotateTowardsAngle_degrees;
+                        const operationsState = RobotsDataAPI_FrameOperations_Turret[robotIndex];
+                        if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                            Logger.warn("Already called rotateTowardsAngle_degrees() this frame");
+                            return null; // TODO: Should we store a cache of return values returned this frame so we return that instead of null?
+                        }
+
+                        RobotsDataAPI_FrameOperations_Turret[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
+
                         return RobotOperations_Turret.rotateTurretTowardsAngle_degrees(robotIndex, angle_degrees);
                     },
                     // returns true if we're at the requested angle
                     rotateTowardsPosition: function(positionX, positionY) {
+                        const operationType = RobotTurret_ActionType.rotateTowardsPosition;
+                        const operationsState = RobotsDataAPI_FrameOperations_Turret[robotIndex];
+                        if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                            Logger.warn("Already called rotateTowardsPosition() this frame");
+                            return null; // TODO: Should we store a cache of return values returned this frame so we return that instead of null?
+                        }
+
+                        RobotsDataAPI_FrameOperations_Turret[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
+
                         return RobotOperations_Turret.rotateTurretTowardsPosition(robotIndex, positionX, positionY);
                     }
                 },
                 radar: {
                     // If set to false, then radar scanning is disabled
-                    radarEnabled: true, 
+                    radarEnabled: true,
                     // If set to true, the radar will be locked to the turret and will rotate with it.
-                    radarFollowTurret: false, 
+                    radarFollowTurret: false,
                     // All the robots that are scanned, including destroyed ones
                     scannedRobots: [], // type: RobotScannedInfo[]
                     // The scanned robots that are alive
@@ -182,10 +246,28 @@ const RobotAPIFactory = (function() {
                         return RobotsRadar.setRadarFOVAngle_degrees(robotIndex, angle_degrees);
                     },
                     rotateLeft: function() {
+                        const operationType = RobotRadar_ActionType.RotateLeft;
+                        const operationsState = RobotsDataAPI_FrameOperations_Radar[robotIndex];
+                        if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                            Logger.warn("Already called rotateTowardsPosition() this frame");
+                            return;
+                        }
+
                         RobotsRadar.rotateRadar(robotIndex, -1);
+
+                        RobotsDataAPI_FrameOperations_Radar[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     },
                     rotateRight: function() {
+                        const operationType = RobotRadar_ActionType.RotateRight;
+                        const operationsState = RobotsDataAPI_FrameOperations_Radar[robotIndex];
+                        if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                            Logger.warn("Already called rotateTowardsPosition() this frame");
+                            return;
+                        }
+
                         RobotsRadar.rotateRadar(robotIndex, 1);
+
+                        RobotsDataAPI_FrameOperations_Radar[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     }
                 },
                 // returns true if the projectile was fired
@@ -198,7 +280,7 @@ const RobotAPIFactory = (function() {
                     arena: [] // type: RobotToArenaCollisionInfo[]
                 },
                 // Own robot's data
-                data: { 
+                data: {
                     positionX: 0,
                     positionY: 0,
                     angle_degrees: 0
