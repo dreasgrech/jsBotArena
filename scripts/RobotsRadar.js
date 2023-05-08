@@ -141,19 +141,11 @@ const RobotsRadar = (function() {
                 robotScannedEventInfo.distanceBetweenRobots = distanceBetweenRobots;
                 robotScannedEventInfo.positionX = otherRobotPositionX;
                 robotScannedEventInfo.positionY = otherRobotPositionY;
-                robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[i]; // the angle in degrees of the scanned robo;
-                robotScannedEventInfo.bearing_degrees = bearing_degrees; // the angle in degrees that the scanning robot needs to rotate to to face the scanned robo;
+                robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[i]; 
+                robotScannedEventInfo.bearing_degrees = bearing_degrees; 
+                robotScannedEventInfo.turret_angle = RobotsData_CurrentData_currentTurretAngles[i]; 
+                robotScannedEventInfo.radar_angle = RobotsData_CurrentData_currentRadarAngles_degrees[i];
                 robotScannedEventInfo.alive = RobotsData_CurrentData_alive[i];
-
-                //const robotScannedEventInfo = {
-                //    index: i,
-                //    distanceBetweenRobots: distanceBetweenRobots,
-                //    positionX: otherRobotPositionX,
-                //    positionY: otherRobotPositionY,
-                //    angle_degrees: RobotsData_CurrentData_currentRobotAngles_degrees[i], // the angle in degrees of the scanned robot
-                //    bearing_degrees:bearing_degrees, // the angle in degrees that the scanning robot needs to rotate to to face the scanned robot
-                //    alive: RobotsData_CurrentData_alive[i]
-                //};
 
                 scannedRobots.push(robotScannedEventInfo);
                 const scannedRobotAlive = RobotsData_CurrentData_alive[i];

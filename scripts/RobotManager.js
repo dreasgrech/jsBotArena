@@ -73,6 +73,8 @@ const RobotManager = (function() {
         const api = RobotAPIFactory.createAPI(currentRobotIndex);
         RobotsData_Instance_robotAPIs[currentRobotIndex] = api;
 
+        RobotsDataAPI_FrameOperations_Hull[currentRobotIndex] = 0;
+
         // Set the speed
         // TODO: This value will eventually be set depending on some preset database values
         // RobotsData_Instance_robotSpeeds[currentRobotIndex] = 5;
@@ -169,6 +171,9 @@ const RobotManager = (function() {
             const deltaTime = GameContextHolder.deltaTime;
             const updateFunction = RobotsData_Instance_updateFunctions[i];
             updateFunction(api, time, deltaTime);
+
+            // Clear the per-frame operation flags since this robot has now executed its turn
+            RobotsDataAPI_FrameOperations_Hull[i] = 0;
         }
     };
 

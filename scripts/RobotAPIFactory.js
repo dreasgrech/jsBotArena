@@ -52,7 +52,26 @@
  *
  */
 
-// TODO: Implement a way to only allow certain actions once
+/**
+ * @type {{
+    Move: number,
+    Reverse: number,
+    RotateLeft: number,
+    RotateRight: number,
+    RotateTowardsAngle_degrees: number,
+    rotateTowardsPosition: number,
+}}
+ */
+const RobotHull_ActionType = BitmaskableObjectOperations.populateBitmaskableObject({
+    Move: 0,
+    Reverse: 0,
+    RotateLeft: 0,
+    RotateRight: 0,
+    RotateTowardsAngle_degrees: 0,
+    rotateTowardsPosition: 0,
+});
+
+const RobotsDataAPI_FrameOperations_Hull = [];
 
 const RobotAPIFactory = (function() {
     const createAPI = function(robotIndex) {
@@ -60,23 +79,76 @@ const RobotAPIFactory = (function() {
 
             const api = {
                 move: function() {
+                    const operationType = RobotHull_ActionType.Move;
+                    const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
+                    if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                        Logger.warn("Already called move() this frame");
+                        return;
+                    }
+
                     RobotOperations_Hull.moveHull(robotIndex, 1);
+
+                    RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                 },
                 reverse: function() {
+                    const operationType = RobotHull_ActionType.Reverse;
+                    const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
+                    if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                        Logger.warn("Already called reverse() this frame");
+                        return;
+                    }
+
                     RobotOperations_Hull.moveHull(robotIndex, -1);
+
+                    RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                 },
                 rotateLeft: function() {
+                    const operationType = RobotHull_ActionType.RotateLeft;
+                    const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
+                    if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                        Logger.warn("Already called rotateLeft() this frame");
+                        return;
+                    }
+
                     RobotOperations_Hull.rotateHull(robotIndex, -1);
+
+                    RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                 },
                 rotateRight: function() {
+                    const operationType = RobotHull_ActionType.RotateRight;
+                    const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
+                    if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                        Logger.warn("Already called rotateRight() this frame");
+                        return;
+                    }
+
                     RobotOperations_Hull.rotateHull(robotIndex, 1);
+
+                    RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                 },
                 // returns true if we're at the requested angle
                 rotateTowardsAngle_degrees: function(angle_degrees) {
+                    const operationType = RobotHull_ActionType.RotateTowardsAngle_degrees;
+                    const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
+                    if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                        Logger.warn("Already called rotateTowardsAngle_degrees() this frame");
+                        return null; // TODO: Should we store a cache of return values returned this frame so we return that instead of null?
+                    }
+
+                    RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
+
                     return RobotOperations_Hull.rotateHullTowardsAngle_degrees(robotIndex, angle_degrees);
                 },
                 // returns true if we're at the requested angle
                 rotateTowardsPosition: function(positionX, positionY) {
+                    const operationType = RobotHull_ActionType.rotateTowardsPosition;
+                    const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
+                    if (BitmaskableObjectOperations.has(operationsState, operationType)) {
+                        Logger.warn("Already called rotateTowardsPosition() this frame");
+                        return null; // TODO: Should we store a cache of return values returned this frame so we return that instead of null?
+                    }
+
+                    RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     return RobotOperations_Hull.rotateHullTowardsPosition(robotIndex, positionX, positionY);
                 },
                 turret: {
@@ -165,12 +237,14 @@ const RobotToArenaCollisionInfo = function() {
 
 const RobotScannedInfo = function() {
     return {
-        index: 0,
-        distanceBetweenRobots: 0,
-        positionX: 0,
-        positionY: 0,
+        index: 0, // the scanned robot's index
+        distanceBetweenRobots: 0, // the distance between the scanning robot and the scanned robot
+        positionX: 0, // the x-position of the scanned robot
+        positionY: 0, // the y-position of the scanned robot
         angle_degrees: 0, // the angle in degrees of the scanned robot
         bearing_degrees: 0, // the angle in degrees that the scanning robot needs to rotate to to face the scanned robot
-        alive: 0
+        turret_angle: 0, // the angle in degrees of the scanned robot's turret
+        radar_angle: 0, // the angle in degrees of the scanned robot's radar
+        alive: false // true if the scanned robot is not destroyed
     }
 };

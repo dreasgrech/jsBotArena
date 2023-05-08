@@ -120,9 +120,9 @@ const circleBot = function() {
         }
 
         // Constantly rotate with a custom rotation speed
-        for (let i = 0; i < rotationSpeed; i++) {
+        //for (let i = 0; i < rotationSpeed; i++) {
             api.rotateLeft();
-        }
+        //}
 
         const turret = api.turret;
         turret.rotateLeft();
