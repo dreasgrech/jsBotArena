@@ -79,13 +79,15 @@ const RobotMatterFactory = (function() {
                     //| CollisionCategories.RobotProjectile
         });
 
+        const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
+
         RobotsData_PhysicsBodies_robotBodyImages[currentRobotIndex] = hullImage;
+        RobotsData_PhysicsBodies_robotHullBodyIDs[currentRobotIndex] = hullImagePhysicsBodyID;
 
         // Add the robot's body to the arena bodies collection
-        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody]); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody], true); // Add all the bodies from the arena to the arena bodies collection
 
         // Make a reference to the current robot index from the matter object id
-        const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
         PhysicsBodies.mapHullImageBodyIDToRobotIndex(hullImagePhysicsBodyID, currentRobotIndex);
         // Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 

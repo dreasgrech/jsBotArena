@@ -119,7 +119,7 @@ const ProjectileManager = (function() {
             });
 
             // Add the projectile as part of the arena bodies collection
-            PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [projectileMatterBody]); // Add all the bodies from the arena to the arena bodies collection
+            PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [projectileMatterBody], true); // Add all the bodies from the arena to the arena bodies collection
 
             ProjectilesData_matterBody[currentProjectileIndex] = projectileMatterGameObject;
             ProjectilesData_projectileType[currentProjectileIndex] = projectileType;
@@ -157,6 +157,7 @@ const ProjectileManager = (function() {
 
             // Remove the projectile from the arena bodies collection
             PhysicsBodies.removeArenaPhysicsBody(projectileMatterGameObject.body);
+            //RaycastManager.removeMappedGameObjects(projectileMatterGameObject);
 
             projectilePool.push(projectileMatterGameObject);
         },

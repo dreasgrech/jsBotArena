@@ -2,6 +2,7 @@
 
 // Physics bodies
 const RobotsData_PhysicsBodies_robotBodyImages = [];
+const RobotsData_PhysicsBodies_robotHullBodyIDs = [];
 const RobotsData_PhysicsBodies_robotTurretImages = [];
 const RobotsData_PhysicsBodies_robotProjectileSensorBodies = [];
 

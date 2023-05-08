@@ -8,6 +8,8 @@ const RobotsRadar = (function() {
 
     const radarRotationIncrement = 60;
 
+    let ray;
+
     const sortByDistanceFunction = function(a, b) {
         return a.distanceBetweenRobots - b.distanceBetweenRobots;
     };
@@ -25,7 +27,9 @@ const RobotsRadar = (function() {
         if (!radarEnabled) {
             return scanForRobotsEmptyResult;
         }
-
+        const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+        const robotHullBody = robotHullImage.body;
+        const robotHullBodyID = robotHullBody.id;
         const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
         const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
         const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
@@ -42,7 +46,14 @@ const RobotsRadar = (function() {
         const scannedRobots = [];
         const scannedAliveRobots = [];
 
+        // Construct an array of the bodies for the ray to intersect with
+        const bodiesToIntersectWith = [
+            robotHullBody,
+            ...PhysicsBodies.getArenaBodies() // the ... operator expands the array into arguments for the function
+        ];
+
         // todo: try a spatial hash
+        // Check all the robots
         const totalRobots = RobotManager.getTotalRobots();
         for (let i = 0; i < totalRobots; i++) {
             if (i === robotIndex) {
@@ -63,6 +74,7 @@ const RobotsRadar = (function() {
             const otherRobotBounds = RobotsBoundsHelpers.getHullBounds(i);
             const otherRobotBoundsLength = otherRobotBounds.length;
             for (let j = 0; j < otherRobotBoundsLength; j++) {
+
                 const otherRobotBoundsPoint = otherRobotBounds[j];
 
                 // Calculate the angle between the robots
@@ -94,8 +106,26 @@ const RobotsRadar = (function() {
                 }
 
                 if (pointWithinRadarAngles) {
-                    robotFoundInRadar = true;
-                    break;
+                    const rayOriginX = otherRobotBoundsPoint.x, rayOriginY = otherRobotBoundsPoint.y;
+                    ray.setOrigin(rayOriginX, rayOriginY);
+                    const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints(otherRobotBoundsPoint, { x: robotPositionX, y: robotPositionY });
+                    ray.setAngle(angleBetweenPoints_radians); // radians
+
+                    // Cast the ray from the scanned robot's bounds point to the scanning robot
+                    const intersection = ray.cast({ objects: bodiesToIntersectWith });
+                    if (intersection) {
+                        const rayHitBody = intersection.object;
+                        const rayHitBodyID = rayHitBody.id;
+                        const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
+                        //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
+                        robotFoundInRadar = isHitBodyTheScanningRobot;
+                        if (robotFoundInRadar) {
+                            break;
+                        }
+                    }
+
+                    //robotFoundInRadar = true;
+                    //break;
                 }
             }
 
@@ -134,6 +164,10 @@ const RobotsRadar = (function() {
     const robotsRadar = {
         MIN_ALLOWED_RADAR_FOV_ANGLE: MIN_ALLOWED_RADAR_FOV_ANGLE,
         MAX_ALLOWED_RADAR_FOV_ANGLE: MAX_ALLOWED_RADAR_FOV_ANGLE,
+        system_create: function() {
+            ray = RaycastManager.createRay();
+            console.log(ray);
+        },
         scanForRobots: scanForRobots,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {
             return RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = AngleOperations.normalizeAngleDegrees(angle_degrees);

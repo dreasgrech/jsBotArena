@@ -210,6 +210,13 @@ const keyBot = function() {
 
             // const radarSetup = robotSetup.radar;
         },
+        onSpawned: function(api, time_seconds) {
+            const radar = api.radar;
+            //radar.radarFollowTurret = true;
+            // radar.rotateLeft();
+            radar.setFOVAngle_degrees(10);
+            radar.setFOVAngle_degrees(45);
+        },
         update: function(api, time_seconds, delta_seconds) {
 
             //api.turretFollowHull = true;
@@ -246,9 +253,6 @@ const keyBot = function() {
             //turret.rotateLeft();
 
             const radar = api.radar;
-            //radar.radarFollowTurret = true;
-            // radar.rotateLeft();
-            radar.setFOVAngle_degrees(10);
             const scannedAliveRobots = radar.scannedAliveRobots;
             const totalScannedAliveRobots = scannedAliveRobots.length;
             if (totalScannedAliveRobots > 0) {
@@ -314,6 +318,7 @@ const doNothingBot = function() {
             api.radar.radarEnabled = false;
         },
         update: function(api, time_seconds, delta_seconds) {
+            api.rotateTowardsAngle_degrees(45);
         }
     };
 };

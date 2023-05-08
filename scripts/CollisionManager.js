@@ -78,7 +78,7 @@ const CollisionManager = (function() {
         const projectileIndex = ProjectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
         //const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterGameObject.body.id);
         //const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotProjectileSensorMatterBody.id);
-        const robotIndex = PhysicsBodies.resolveRobotIndexFromProjectileBodyID(robotProjectileSensorMatterBody.id);
+        const robotIndex = PhysicsBodies.resolveRobotIndexFromProjectileSensorBodyID(robotProjectileSensorMatterBody.id);
 
         // Apply the damage to the robot from the projectile
         const newRobotHealth = DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
@@ -126,7 +126,7 @@ const CollisionManager = (function() {
     };
 
     const obj = {
-        initialCreate: function() {
+        system_create: function() {
 
             // Set up all the collision handlers lookups.  This is the matrix which allows for the collision handler resolution
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.RobotBody)] = handleCollision_RobotToRobot;

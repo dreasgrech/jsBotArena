@@ -11,7 +11,7 @@ const AngleOperations = (function() {
         },
         lerp_incrementAngle_degrees: function(angle_degrees, increment_degrees) {
             const normalizedAngle_degrees = angleOperations.normalizeAngleDegrees(
-                lerp(angle_degrees, angle_degrees + increment_degrees, GameContextHolder.deltaTime * 10));
+                NumberOperations.lerp(angle_degrees, angle_degrees + increment_degrees, GameContextHolder.deltaTime * 10));
             return normalizedAngle_degrees;
         },
         // Normalizes an angle such that it's always between 0 and 360
@@ -23,4 +23,13 @@ const AngleOperations = (function() {
     return angleOperations;
 }());
 
-// todo: try lerping the angle of radar outside not here
+const NumberOperations = (function() {
+
+    const numberOperations = {
+        lerp: function(a, b, t) {
+            return (1 - t) * a + t * b;
+        }
+    };
+
+    return numberOperations;
+}());

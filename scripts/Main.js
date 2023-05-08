@@ -1,10 +1,11 @@
 "use strict";
 
-var gameRunning = true;
+let gameRunning = true;
 
 const gameManager = (function() {
 
     const objectsWith_preload = [
+        RaycastManager,
         ImageDatabase,
         ProjectilesDatabase
     ];
@@ -13,7 +14,10 @@ const gameManager = (function() {
         ProjectilesDatabase,
         ProjectileManager,
         //RobotMatterFactory,
-        RobotManager
+        RobotManager,
+        CollisionManager,
+        UIManager,
+        RobotsRadar
     ];
 
     const objectsWith_onEndOfFrame = [
@@ -73,7 +77,7 @@ const gameManager = (function() {
             collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
         });
 
-        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.Arena, matterBodies); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.Arena, matterBodies, false); // Add all the bodies from the arena to the arena bodies collection
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
@@ -84,14 +88,11 @@ const gameManager = (function() {
         //RobotManager.addRobot(circleBot());
         //RobotManager.addRobot(sittingBot());
         //RobotManager.addRobot(followBot_followAngle());
-        RobotManager.addRobot(followBot_followPosition());
+        //RobotManager.addRobot(followBot_followPosition());
 
         // setTimeout(() => { RobotManager.addRobot(circleBot()); }, 1500);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2000);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2500);
-
-        UIManager.initialCreate();
-        CollisionManager.initialCreate();
 
         gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
 
@@ -147,6 +148,15 @@ GameContextHolder.game = new Phaser.Game({
                 y: 0
             }
         }
+    },
+    plugins: {
+        scene: [
+            {
+                key: 'PhaserRaycaster',
+                plugin: PhaserRaycaster,
+                mapping: 'raycasterPlugin'
+            }
+        ]
     },
     fps: {
         limit: 144
