@@ -534,8 +534,6 @@ const CornerGuardBot = function() {
         { x: 1024 - cornerOffset, y: 1024 - cornerOffset } // Bottom-right corner
     ];
     const cornerPosition = corners[Math.floor(Math.random() * corners.length)];
-    const fireDelaySeconds = 0.5;
-    let lastFiredTimeSeconds = 0;
     let targetPositionX = 0;
     let targetPositionY = 0;
     let hasTarget = false;
@@ -576,6 +574,25 @@ const CornerGuardBot = function() {
         }
     }
 
+function sweepRadar(api) {
+    const radar = api.radar;
+    const turret = api.turret;
+
+    if (radar.radarFollowTurret) {
+
+        // Calculate the angle for the turret to rotate
+        const minAngle = Math.atan2(cornerPosition.y - api.data.positionY, cornerPosition.x - api.data.positionX);
+        const maxAngle = Math.atan2(1024 - cornerPosition.y - api.data.positionY, 1024 - cornerPosition.x - api.data.positionX);
+        const currentTurretAngle = turret.angle_degrees * (Math.PI / 180);
+
+        if (currentTurretAngle >= minAngle && currentTurretAngle <= maxAngle) {
+            turret.rotateRight();
+        } else {
+            turret.rotateLeft();
+        }
+    }
+}
+
     return {
         name: 'Corner Guard Bot',
         create: function(robotSetup) {
@@ -592,16 +609,17 @@ const CornerGuardBot = function() {
         onSpawned: function(api, time_seconds) {
             const radar = api.radar;
             radar.radarFollowTurret = true;
-            radar.setFOVAngle_degrees(90);
+            radar.setFOVAngle_degrees(45);
         },
         update: function(api, time_seconds, delta_seconds) {
             checkIfStuck(api, time_seconds);
-
             if (isStuck) {
                 getUnstuck(api, time_seconds);
             } else {
                 moveToCorner(api);
             }
+
+            sweepRadar(api);
 
             const radar = api.radar;
             const scannedAliveRobots = radar.scannedAliveRobots;
@@ -618,15 +636,11 @@ const CornerGuardBot = function() {
             const turret = api.turret;
             if (hasTarget) {
                 turret.rotateTowardsPosition(targetPositionX, targetPositionY);
-
-                if (time_seconds - lastFiredTimeSeconds > fireDelaySeconds) {
-                    if (turret.rotateTowardsPosition(targetPositionX, targetPositionY)) {
-                        api.fire(ProjectileTypes.Medium);
-                        lastFiredTimeSeconds = time_seconds;
-                    }
+                if (turret.rotateTowardsPosition(targetPositionX, targetPositionY)) {
+                    api.fire(ProjectileTypes.Medium);
                 }
             } else {
-                turret.rotateLeft();
+                //turret.rotateLeft();
             }
         }
     };

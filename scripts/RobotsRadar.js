@@ -136,15 +136,24 @@ const RobotsRadar = (function() {
                 const bearingDegrees = Phaser.Math.RadToDeg(bearingRadians);
                 const bearing_degrees = AngleOperations.normalizeAngleDegrees(bearingDegrees);
 
-                const robotScannedEventInfo = {
-                    index: i,
-                    distanceBetweenRobots: distanceBetweenRobots,
-                    positionX: otherRobotPositionX,
-                    positionY: otherRobotPositionY,
-                    angle_degrees: RobotsData_CurrentData_currentRobotAngles_degrees[i], // the angle in degrees of the scanned robot
-                    bearing_degrees:bearing_degrees, // the angle in degrees that the scanning robot needs to rotate to to face the scanned robot
-                    alive: RobotsData_CurrentData_alive[i]
-                };
+                const robotScannedEventInfo = RobotScannedInfo();
+                robotScannedEventInfo.index = i;
+                robotScannedEventInfo.distanceBetweenRobots = distanceBetweenRobots;
+                robotScannedEventInfo.positionX = otherRobotPositionX;
+                robotScannedEventInfo.positionY = otherRobotPositionY;
+                robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[i]; // the angle in degrees of the scanned robo;
+                robotScannedEventInfo.bearing_degrees = bearing_degrees; // the angle in degrees that the scanning robot needs to rotate to to face the scanned robo;
+                robotScannedEventInfo.alive = RobotsData_CurrentData_alive[i];
+
+                //const robotScannedEventInfo = {
+                //    index: i,
+                //    distanceBetweenRobots: distanceBetweenRobots,
+                //    positionX: otherRobotPositionX,
+                //    positionY: otherRobotPositionY,
+                //    angle_degrees: RobotsData_CurrentData_currentRobotAngles_degrees[i], // the angle in degrees of the scanned robot
+                //    bearing_degrees:bearing_degrees, // the angle in degrees that the scanning robot needs to rotate to to face the scanned robot
+                //    alive: RobotsData_CurrentData_alive[i]
+                //};
 
                 scannedRobots.push(robotScannedEventInfo);
                 const scannedRobotAlive = RobotsData_CurrentData_alive[i];
