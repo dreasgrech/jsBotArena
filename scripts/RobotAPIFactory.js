@@ -1,8 +1,6 @@
 "use strict";
 
 /*
- * INFORMATION TO WRITE BOTS
- *
  * Game Width: 1024
  * Game Height: 1024
  *
@@ -51,55 +49,6 @@
  * Increasing position y goes down.
  *
  */
-
-/**
- * @type {{
-    Move: number,
-    Reverse: number,
-    RotateLeft: number,
-    RotateRight: number,
-    RotateTowardsAngle_degrees: number,
-    rotateTowardsPosition: number,
-}}
- */
-const RobotHull_ActionType = BitmaskableObjectOperations.populateBitmaskableObject({
-    Move: 0,
-    Reverse: 0,
-    RotateLeft: 0,
-    RotateRight: 0,
-    RotateTowardsAngle_degrees: 0,
-    rotateTowardsPosition: 0
-});
-
-/**
- * @type {{
-    RotateLeft: number,
-    RotateRight: number,
-    RotateTowardsAngle_degrees: number,
-    rotateTowardsPosition: number,
-}}
- */
-const RobotTurret_ActionType = BitmaskableObjectOperations.populateBitmaskableObject({
-    RotateLeft: 0,
-    RotateRight: 0,
-    RotateTowardsAngle_degrees: 0,
-    rotateTowardsPosition: 0
-});
-
-/**
- * @type {{
-    RotateLeft: number,
-    RotateRight: number,
-}}
- */
-const RobotRadar_ActionType = BitmaskableObjectOperations.populateBitmaskableObject({
-    RotateLeft: 0,
-    RotateRight: 0
-});
-
-const RobotsDataAPI_FrameOperations_Hull = [];
-const RobotsDataAPI_FrameOperations_Turret = [];
-const RobotsDataAPI_FrameOperations_Radar = [];
 
 const RobotAPIFactory = (function() {
     const createAPI = function(robotIndex) {
@@ -313,9 +262,9 @@ const RobotToRobotCollisionInfo = function() {
 const RobotToArenaCollisionInfo = function() {
     return {
         type: 0,
-        data: { }
+        data: {}
     };
-}
+};
 
 const RobotScannedInfo = function() {
     return {

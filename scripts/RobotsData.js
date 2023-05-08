@@ -36,3 +36,8 @@ const RobotsData_Radar_radarMaxScanDistance = [];
 // Projectiles data
 const ProjectilesData_projectileType = [];
 const ProjectilesData_matterBody = [];
+
+// API-specific data
+const RobotsDataAPI_FrameOperations_Hull = [];
+const RobotsDataAPI_FrameOperations_Turret = [];
+const RobotsDataAPI_FrameOperations_Radar = [];
