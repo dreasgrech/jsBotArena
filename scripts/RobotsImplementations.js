@@ -349,8 +349,8 @@ const followBot_followAngle = function() {
             const radar = api.radar;
             radar.radarFollowTurret = true;
              //radar.setFOVAngle_degrees(45);
-            //radar.setFOVAngle_degrees(1);
-             radar.setFOVAngle_degrees(10);
+            radar.setFOVAngle_degrees(1);
+             //radar.setFOVAngle_degrees(10);
         },
         update: function(api, time_seconds, delta_seconds) {
 
@@ -549,11 +549,25 @@ const CornerGuardBot = function() {
     function moveToCorner(api) {
         const isNearCorner = Math.abs(api.data.positionX - cornerPosition.x) < 10 && Math.abs(api.data.positionY - cornerPosition.y) < 10;
         if (!isNearCorner) {
-            api.rotateTowardsPosition(cornerPosition.x, cornerPosition.y);
-            api.move();
-        }
-    }
+            // Calculate angle between bot and corner position
+            let targetAngle = Math.atan2(cornerPosition.y - api.data.positionY, cornerPosition.x - api.data.positionX) * (180 / Math.PI);
+            if (targetAngle < 0) targetAngle += 360; // Normalizing to 0-360
 
+            // Calculate the difference between current and target angle
+            let currentAngle = api.data.angle_degrees;
+            let angleDiff = targetAngle - currentAngle;
+            if (angleDiff < 0) angleDiff += 360; // Normalizing to 0-360
+
+            // Rotate bot towards the corner based on the difference
+            if (angleDiff < 180) {
+                api.rotateRight();
+            } else {
+                api.rotateLeft();
+            }
+
+            api.move();
+        } 
+    }
     function checkIfStuck(api, time_seconds) {
         if (time_seconds - lastStuckCheckTimeSeconds > stuckCheckIntervalSeconds) {
             const distanceMoved = Math.sqrt(Math.pow(api.data.positionX - lastPositionX, 2) + Math.pow(api.data.positionY - lastPositionY, 2));
@@ -581,11 +595,14 @@ function sweepRadar(api) {
     if (radar.radarFollowTurret) {
 
         // Calculate the angle for the turret to rotate
-        const minAngle = Math.atan2(cornerPosition.y - api.data.positionY, cornerPosition.x - api.data.positionX);
-        const maxAngle = Math.atan2(1024 - cornerPosition.y - api.data.positionY, 1024 - cornerPosition.x - api.data.positionX);
-        const currentTurretAngle = turret.angle_degrees * (Math.PI / 180);
+        let minAngle = Math.atan2(cornerPosition.y - api.data.positionY, cornerPosition.x - api.data.positionX) * (180 / Math.PI);
+        minAngle = (minAngle + 90) % 360;
+        const maxAngle = (minAngle + 90) % 360; // The turret should rotate within a 90 degree angle
+        const currentTurretAngle = turret.angle_degrees;
 
-        if (currentTurretAngle >= minAngle && currentTurretAngle <= maxAngle) {
+        // Make sure the turret rotation stays within the 90 degree angle
+        if ((minAngle <= maxAngle && currentTurretAngle >= minAngle && currentTurretAngle <= maxAngle) || 
+            (minAngle > maxAngle && (currentTurretAngle >= minAngle || currentTurretAngle <= maxAngle))) {
             turret.rotateRight();
         } else {
             turret.rotateLeft();
@@ -609,7 +626,8 @@ function sweepRadar(api) {
         onSpawned: function(api, time_seconds) {
             const radar = api.radar;
             radar.radarFollowTurret = true;
-            radar.setFOVAngle_degrees(45);
+            // radar.setFOVAngle_degrees(45);
+            radar.setFOVAngle_degrees(5);
         },
         update: function(api, time_seconds, delta_seconds) {
             checkIfStuck(api, time_seconds);
@@ -635,7 +653,6 @@ function sweepRadar(api) {
 
             const turret = api.turret;
             if (hasTarget) {
-                turret.rotateTowardsPosition(targetPositionX, targetPositionY);
                 if (turret.rotateTowardsPosition(targetPositionX, targetPositionY)) {
                     api.fire(ProjectileTypes.Medium);
                 }
