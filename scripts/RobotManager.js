@@ -15,8 +15,8 @@ const RobotManager = (function() {
     const aliveRobotsIndexes = new Set();
     let totalAliveRobots = 0;
 
-    // const ROBOT_SCALE = 0.4;
-    const ROBOT_SCALE = 0.7;
+    const ROBOT_SCALE = 0.4;
+    //const ROBOT_SCALE = 0.7;
 
     // TODO: This value will probably eventually be set depending on some preset database values
     const STARTING_ROBOT_HEALTH = 100;

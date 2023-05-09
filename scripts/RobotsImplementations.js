@@ -103,7 +103,15 @@ const shredder = function() {
 
     return {
         name: 'shredder',
-        create: function() {},
+        create: function(robotSetup) {
+            const hullSetup = robotSetup.hull;
+            const hullColors = hullSetup.colors;
+            hullColors.topLeft = 0xff0000;
+            hullColors.topRight = 0xff0000;
+            hullColors.bottomLeft = 0xff0000;
+            hullColors.bottomRight = 0xff0000;
+
+        },
         update: update
     };
 };
@@ -207,6 +215,13 @@ const keyBot = function() {
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Two;
             turretSetup.turretColor = RobotTurretColors.Green;
+
+            const hullColors = hullSetup.colors;
+            hullColors.topLeft = 0x00ff00;
+            hullColors.topRight = 0x00ff00;
+            hullColors.bottomLeft = 0x00ff00;
+            hullColors.bottomRight = 0x00ff00;
+
 
             // const radarSetup = robotSetup.radar;
         },
