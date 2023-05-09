@@ -79,6 +79,10 @@ Turret Rotation: ${turretRotation.toFixed(2)}°
 `;
 //Turret Rotation: ${Phaser.Math.RadToDeg(turretRotation).toFixed(2)}°
                 robotInfoTexts[i].setText(infoText);
+                if (robotHealth === 0) {
+                    robotInfoTexts[i].setColor('#ff0000');
+                }
+                //Logger.log(robotInfoTexts[i]);
 
             }
         }
