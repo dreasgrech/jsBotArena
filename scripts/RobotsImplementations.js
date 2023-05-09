@@ -331,7 +331,7 @@ const followBot_followAngle = function() {
     let turretRotatingLeft = true;
 
     return {
-        name: 'Follow Bot',
+        name: 'Follow Bot (Angle)',
         create: function(robotSetup) {
             gameContext = GameContextHolder.gameContext;
 
@@ -393,7 +393,7 @@ const followBot_followPosition = function() {
     let turretRotatingLeft = true;
 
     return {
-        name: 'Follow Bot',
+        name: 'Follow Bot (Position)',
         create: function(robotSetup) {
             gameContext = GameContextHolder.gameContext;
 

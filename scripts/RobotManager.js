@@ -153,8 +153,9 @@ const RobotManager = (function() {
 
             // Set the radar scanned robots to the api
             const radar = api.radar;
-            const [scannedRobots, scannedAliveRobots] = RobotsRadar.scanForRobots(i);
-            radar.scannedRobots = scannedRobots;
+            // const [scannedRobots, scannedAliveRobots] = RobotsRadar.scanForRobots(i);
+            const scannedAliveRobots = RobotsRadar.scanForRobots(i);
+            // radar.scannedRobots = scannedRobots;
             radar.scannedAliveRobots = scannedAliveRobots;
 
             // Set the robot collisions to the api
@@ -232,17 +233,24 @@ const RobotManager = (function() {
         PhysicsBodies.removeArenaPhysicsBody(hullImage.body);
 
         // Disable and hide the hull image and its collider
-        PhysicsBodies.disableMatterGameObject(hullImage);
-        // RobotsData_PhysicsBodies_robotProjectileSensorBodies
-        // Logger.log(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
+        //PhysicsBodies.disableMatterGameObject(hullImage);
+        hullImage.destroy();
+
+        const gameContext = GameContextHolder.gameContext;
 
         // Remove the projectile sensor
-        GameContextHolder.gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
+        gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
+        // Remove the projectile sensor constraint that ties it with the hull body
+        gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex]);
 
         // Hide the turret image
         const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
-        turretImage.setActive(false);
-        turretImage.setVisible(false);
+        //turretImage.setActive(false);
+        //turretImage.setVisible(false);
+        turretImage.destroy();
+
+        RobotsRadar.removeRadarArc(robotIndex);
+        RobotsBoundsHelpers.removeRobotBoundsGraphics(robotIndex);
 
         //Logger.log("finished removing", robotIndex);
     };

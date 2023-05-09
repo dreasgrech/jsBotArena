@@ -187,7 +187,7 @@ const RobotAPIFactory = (function() {
                     // If set to true, the radar will be locked to the turret and will rotate with it.
                     radarFollowTurret: false,
                     // All the robots that are scanned, including destroyed ones
-                    scannedRobots: [], // type: RobotScannedInfo[]
+                    // scannedRobots: [], // type: RobotScannedInfo[]
                     // The scanned robots that are alive
                     scannedAliveRobots: [], // RobotScannedInfo[]
                     // The FOV angle can be between 1 and 45

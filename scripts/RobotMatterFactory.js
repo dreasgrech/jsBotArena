@@ -14,7 +14,8 @@ const RobotMatterFactory = (function() {
         });
 
         // Add a constraint between the hull body and the sensor body so that the sensor moves with the hull
-        gameContext.matter.add.constraint(RobotsData_PhysicsBodies_robotBodyImages[robotIndex].body, sensorBody, 0, 1);
+        const constraint = gameContext.matter.add.constraint(RobotsData_PhysicsBodies_robotBodyImages[robotIndex].body, sensorBody, 0, 1);
+        RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex] = constraint;
 
         const robotID = RobotsData_Instance_ids[robotIndex];
         PhysicsHelperFunctions.setCollisionProperties({

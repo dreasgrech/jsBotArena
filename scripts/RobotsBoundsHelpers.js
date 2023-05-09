@@ -102,6 +102,17 @@ const RobotsBoundsHelpers = (function() {
 
             drawPoints(graphics, bounds, turretVisualizer_color, turretVisualizer_radius);
         },
+        removeRobotBoundsGraphics: function(index) {
+            const hullBoundsGraphics = robotsBounds[index];
+            if (hullBoundsGraphics != null) {
+                hullBoundsGraphics.destroy();
+            }
+
+            const turretBoundsGraphics = turretBounds[index];
+            if (turretBoundsGraphics != null) {
+                turretBoundsGraphics.destroy();
+            }
+        }
 
     };
 

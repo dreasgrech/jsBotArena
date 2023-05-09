@@ -5,6 +5,7 @@ const RobotsData_PhysicsBodies_robotBodyImages = [];
 const RobotsData_PhysicsBodies_robotHullBodyIDs = [];
 const RobotsData_PhysicsBodies_robotTurretImages = [];
 const RobotsData_PhysicsBodies_robotProjectileSensorBodies = [];
+const RobotsData_PhysicsBodies_robotProjectileSensorConstraints = [];
 
 // Data that is updated per frame or on a frequent basis
 const RobotsData_CurrentData_positionXs = [];

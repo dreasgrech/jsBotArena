@@ -45,8 +45,7 @@ const RobotsRadar = (function() {
         const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * pi + radarStartAngle_radians : radarStartAngle_radians;
         const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * pi + radarEndAngle_radians : radarEndAngle_radians;
 
-        const scannedRobots = [];
-        const scannedAliveRobots = [];
+         const scannedRobots = [];
 
         // Construct an array of the bodies for the ray to intersect with
         const bodiesToIntersectWith = [
@@ -63,6 +62,12 @@ const RobotsRadar = (function() {
         const totalRobots = RobotManager.getTotalRobots();
         for (let i = 0; i < totalRobots; i++) {
             if (i === robotIndex) {
+                continue;
+            }
+
+            // Skip destroyed robots
+            const otherRobotAlive = RobotsData_CurrentData_alive[i];
+            if (!otherRobotAlive) {
                 continue;
             }
 
@@ -154,19 +159,12 @@ const RobotsRadar = (function() {
                 robotScannedEventInfo.alive = RobotsData_CurrentData_alive[i];
 
                 scannedRobots.push(robotScannedEventInfo);
-                const scannedRobotAlive = RobotsData_CurrentData_alive[i];
-                if (scannedRobotAlive) {
-                    scannedAliveRobots.push(robotScannedEventInfo);
-                }
             }
         }
 
-        //RaycastManager.destroyRay(ray);
-
         scannedRobots.sort(sortByDistanceFunction);
-        scannedAliveRobots.sort(sortByDistanceFunction);
 
-        return [scannedRobots, scannedAliveRobots];
+        return scannedRobots;
     };
 
     const robotsRadar = {
@@ -203,6 +201,11 @@ const RobotsRadar = (function() {
             RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = 45;
             // RobotsData_Radar.radarMaxScanDistance[index] = 200;
             RobotsData_Radar_radarMaxScanDistance[robotIndex] = 1000;
+        },
+        removeRadarArc: function(robotIndex) {
+            const radarGraphics = RobotsData_Radar_radarGraphics[robotIndex];
+            // radarGraphics.clear();
+            radarGraphics.destroy();
         },
         drawRadarArc: function(robotIndex) {
             const radarGraphics = RobotsData_Radar_radarGraphics[robotIndex];
