@@ -89,6 +89,7 @@ const PoolFactory = (function() {
     return poolFactory;
 }());
 
+// TODO: Rename this to MatterGameObjectPoolFactory
 var MatterBodyPoolFactory = (function() {
 
     const poolPositionX = 200,
@@ -100,7 +101,7 @@ var MatterBodyPoolFactory = (function() {
                 var createMatterBody = function() {
                     var matterBody = createElement();
                     matterBody.setPosition(poolPositionX, poolPositionY);
-                    PhysicsBodies.disableMatterBody(matterBody);
+                    PhysicsBodies.disableMatterGameObject(matterBody);
                     return matterBody;
                 };
 
@@ -109,7 +110,7 @@ var MatterBodyPoolFactory = (function() {
                     prePopulate: pool.prePopulate,
                     push: function(matterBody) {
                         pool.push(matterBody);
-                        PhysicsBodies.disableMatterBody(matterBody);
+                        PhysicsBodies.disableMatterGameObject(matterBody);
                         matterBody.setPosition(poolPositionX, poolPositionY);
                     },
                     pop: function() {

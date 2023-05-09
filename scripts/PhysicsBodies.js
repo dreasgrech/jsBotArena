@@ -43,11 +43,11 @@ const PhysicsBodies = (function() {
 
             RaycastManager.mapGameObjects(bodies, dynamic);
 
-            Logger.log("Added arena bodies:", ...bodies);
+            //Logger.log("Added arena bodies:", ...bodies);
 
         },
         removeArenaPhysicsBody: function(body) {
-            Logger.log("Starting removal of arena body:", body, allBodies);
+            // Logger.log("Starting removal of arena body:", body, allBodies);
             // Filter out the specified body from the arenaBodies array
             const arenaBodiesTotalBeforeRemoval = allBodies.length;
             allBodies = allBodies.filter(function(currentBody) {
@@ -67,7 +67,7 @@ const PhysicsBodies = (function() {
             // console.log(body);
             RaycastManager.removeMappedGameObjects(body);
 
-            Logger.log("Finished removing arena body:", body, allBodies);
+            // Logger.log("Finished removing arena body:", body, allBodies);
         },
         mapHullImageBodyIDToRobotIndex: function(matterObjectID, robotIndex) {
             matterBodyIDToRobotIndex[matterObjectID] = robotIndex;
@@ -101,13 +101,16 @@ const PhysicsBodies = (function() {
             matterObject.setActive(true);
             matterObject.setVisible(true);
         },
-        disableMatterBody: function(matterObject) {
-            matterObject.setCollisionCategory(null);
-            matterObject.setVelocity(0, 0);
-            matterObject.setAngularVelocity(0, 0);
-            matterObject.setAngle(0);
-            matterObject.setActive(false);
-            matterObject.setVisible(false);
+        //disableMatterGameObject: function(matterObject) {
+        //    obj.disableMatterGameObject(disableMatterGameObject)
+        //},
+        disableMatterGameObject: function(matterGameObject) {
+            matterGameObject.setCollisionCategory(null);
+            matterGameObject.setVelocity(0, 0);
+            matterGameObject.setAngularVelocity(0, 0);
+            matterGameObject.setAngle(0);
+            matterGameObject.setActive(false);
+            matterGameObject.setVisible(false);
         },
         isBodyOverlappingWithArenaBodies: function(body) {
             const gameContext = GameContextHolder.gameContext;

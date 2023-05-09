@@ -21,7 +21,7 @@ const RobotManager = (function() {
     const STARTING_ROBOT_HEALTH = 100;
 
     const queuedRobotsForRemoval = {};
-    //let totalQueuedRobotsForRemovals = {};
+    let totalQueuedRobotsForRemovals = 0;
 
     const placeRobotInArena = function(robotBody) {
         const maxAttempts = 10;
@@ -119,6 +119,11 @@ const RobotManager = (function() {
 
     const update = function() {
         for (let i = 0; i < totalRobots; i++) {
+            const robotAlive = RobotsData_CurrentData_alive[i];
+            if (!robotAlive) {
+                continue;
+            }
+
             const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(i);
             const robotPositionX = robotCenterPosition.x;
             const robotPositionY = robotCenterPosition.y;
@@ -171,23 +176,18 @@ const RobotManager = (function() {
             RobotsBoundsHelpers.drawHullBounds(i);
             RobotsBoundsHelpers.drawTurretBounds(i);
 
-            const queuedRobotForRemoval = queuedRobotsForRemoval[i];
-            if (queuedRobotForRemoval) {
-                const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
-                const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
-                //Logger.log("checking if we should remove now", i, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
-                if (timeSinceDestroyed_seconds > 1) {
-                    Logger.log("removing robot", i);
-                    removeAndHideRobot(i);
-                    delete queuedRobotsForRemoval[i];
-                    continue;
-                }
-            }
-
-            const robotAlive = RobotsData_CurrentData_alive[i];
-            if (!robotAlive) {
-                continue;
-            }
+            //const queuedRobotForRemoval = queuedRobotsForRemoval[i];
+            //if (queuedRobotForRemoval) {
+            //    const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
+            //    const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
+            //    //Logger.log("checking if we should remove now", i, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
+            //    if (timeSinceDestroyed_seconds > 1) {
+            //        Logger.log("removing robot", i);
+            //        removeAndHideRobot(i);
+            //        delete queuedRobotsForRemoval[i];
+            //        continue;
+            //    }
+            //}
 
             // Call the robot's update function
             const time = GameContextHolder.gameTime;
@@ -200,6 +200,29 @@ const RobotManager = (function() {
             RobotsDataAPI_FrameOperations_Turret[i] = 0;
             RobotsDataAPI_FrameOperations_Radar[i] = 0;
         }
+
+        // Check if there are any robots queued for removal
+        if (totalQueuedRobotsForRemovals > 0) {
+            // console.log("checking if there are removals", totalQueuedRobotsForRemovals, queuedRobotsForRemoval);
+            for (let queuedForRemovalRobotIndex in queuedRobotsForRemoval) {
+                // todo: continue here
+                if (!queuedRobotsForRemoval.hasOwnProperty(queuedForRemovalRobotIndex)) {
+                    continue;
+                }
+
+                const queuedRobotForRemoval = queuedRobotsForRemoval[queuedForRemovalRobotIndex];
+                const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
+                const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
+                // Logger.log("checking if we should remove now", queuedForRemovalRobotIndex, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
+                if (timeSinceDestroyed_seconds > 1) {
+                    //Logger.log("removing robot", queuedForRemovalRobotIndex);
+                    removeAndHideRobot(queuedForRemovalRobotIndex);
+                    delete queuedRobotsForRemoval[queuedForRemovalRobotIndex];
+                    totalQueuedRobotsForRemovals--;
+                    continue;
+                }
+            }
+        }
     };
 
     const removeAndHideRobot = function(robotIndex) {
@@ -209,12 +232,19 @@ const RobotManager = (function() {
         PhysicsBodies.removeArenaPhysicsBody(hullImage.body);
 
         // Disable and hide the hull image and its collider
-        PhysicsBodies.disableMatterBody(hullImage);
+        PhysicsBodies.disableMatterGameObject(hullImage);
+        // RobotsData_PhysicsBodies_robotProjectileSensorBodies
+        // Logger.log(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
+
+        // Remove the projectile sensor
+        GameContextHolder.gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
 
         // Hide the turret image
         const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
         turretImage.setActive(false);
         turretImage.setVisible(false);
+
+        //Logger.log("finished removing", robotIndex);
     };
 
     const robotManager = {
@@ -239,6 +269,7 @@ const RobotManager = (function() {
             queuedRobotForRemoval.destroyedTime_seconds = GameContextHolder.gameTime;
             // queuedRobotsForRemoval.push(queuedRobotForRemoval);
             queuedRobotsForRemoval[robotIndex] = queuedRobotForRemoval;
+            totalQueuedRobotsForRemovals++;
 
             // Make the robot as destroyed
             RobotsData_CurrentData_alive[robotIndex] = false;
@@ -248,7 +279,7 @@ const RobotManager = (function() {
 
             totalAliveRobots--;
 
-            Logger.log("marking bot for removal", robotIndex);
+            //Logger.log("marking bot for removal", robotIndex);
         }
     };
 

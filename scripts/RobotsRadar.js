@@ -27,6 +27,8 @@ const RobotsRadar = (function() {
         if (!radarEnabled) {
             return scanForRobotsEmptyResult;
         }
+
+
         const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
         const robotHullBody = robotHullImage.body;
         const robotHullBodyID = robotHullBody.id;
@@ -51,6 +53,10 @@ const RobotsRadar = (function() {
             robotHullBody,
             ...PhysicsBodies.getArenaBodies() // the ... operator expands the array into arguments for the function
         ];
+
+        //Logger.log("Scanning for robots", robotIndex, bodiesToIntersectWith);
+
+        // const ray = RaycastManager.createRay();
 
         // todo: try a spatial hash
         // Check all the robots
@@ -154,6 +160,8 @@ const RobotsRadar = (function() {
                 }
             }
         }
+
+        //RaycastManager.destroyRay(ray);
 
         scannedRobots.sort(sortByDistanceFunction);
         scannedAliveRobots.sort(sortByDistanceFunction);

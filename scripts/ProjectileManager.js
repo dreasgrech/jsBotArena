@@ -46,7 +46,8 @@ const ProjectileManager = (function() {
                 });
 
                 // Prepopulate the pool
-                pool.prePopulate(10);
+                //pool.prePopulate(10);
+                pool.prePopulate(1);
 
                 pools[projectileTypeIndex] = pool;
             }

@@ -80,14 +80,17 @@ const CollisionManager = (function() {
         //const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotProjectileSensorMatterBody.id);
         const robotIndex = PhysicsBodies.resolveRobotIndexFromProjectileSensorBodyID(robotProjectileSensorMatterBody.id);
 
-        // Apply the damage to the robot from the projectile
-        const newRobotHealth = DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
+        // If the colliding robot is alive, then we need to apply damage to it
+        if (RobotsData_CurrentData_alive[robotIndex]) {
+            // Apply the damage to the robot from the projectile
+            const newRobotHealth = DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
 
-        // Check if the robot's dead.
-        if (newRobotHealth === 0) {
+            // Check if the robot's dead.
+            if (newRobotHealth === 0) {
 
-            // Mark the robot as destroyed
-            RobotManager.markRobotAsDestroyed(robotIndex);
+                // Mark the robot as destroyed
+                RobotManager.markRobotAsDestroyed(robotIndex);
+            }
         }
 
         // Mark the projectile for removal
