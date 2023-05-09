@@ -88,6 +88,7 @@ const gameManager = (function() {
         RobotManager.addRobot(followBot_followAngle());
         RobotManager.addRobot(followBot_followPosition());
         RobotManager.addRobot(doNothingBot());
+        RobotManager.addRobot(CornerGuardBot());
 
         // setTimeout(() => { RobotManager.addRobot(circleBot()); }, 1500);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2000);
