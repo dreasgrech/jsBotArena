@@ -1,0 +1,50 @@
+[
+  {
+    "PhaserImageKey": "Hull_01",
+    "PhysicsEditor_SpriteName": "Hull_01",
+    "EnumKey": "One",
+    "Filename": "Hull_01.png"
+  },
+  {
+    "PhaserImageKey": "Hull_02",
+    "PhysicsEditor_SpriteName": "Hull_02",
+    "EnumKey": "Two",
+    "Filename": "Hull_02.png"
+  },
+  {
+    "PhaserImageKey": "Hull_03",
+    "PhysicsEditor_SpriteName": "Hull_03",
+    "EnumKey": "Three",
+    "Filename": "Hull_03.png"
+  },
+  {
+    "PhaserImageKey": "Hull_04",
+    "PhysicsEditor_SpriteName": "Hull_04",
+    "EnumKey": "Four",
+    "Filename": "Hull_04.png"
+  },
+  {
+    "PhaserImageKey": "Hull_05",
+    "PhysicsEditor_SpriteName": "Hull_05",
+    "EnumKey": "Five",
+    "Filename": "Hull_05.png"
+  },
+  {
+    "PhaserImageKey": "Hull_06",
+    "PhysicsEditor_SpriteName": "Hull_06",
+    "EnumKey": "Six",
+    "Filename": "Hull_06.png"
+  },
+  {
+    "PhaserImageKey": "Hull_07",
+    "PhysicsEditor_SpriteName": "Hull_07",
+    "EnumKey": "Seven",
+    "Filename": "Hull_07.png"
+  },
+  {
+    "PhaserImageKey": "Hull_08",
+    "PhysicsEditor_SpriteName": "Hull_08",
+    "EnumKey": "Eight",
+    "Filename": "Hull_08.png"
+  }
+]

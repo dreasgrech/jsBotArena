@@ -6,6 +6,8 @@ const ImageDatabase = (function() {
     const projectileImagesDirectory = `${baseImagesDirectory}/Projectiles`;
     const tracksImagesDirectory = `${baseImagesDirectory}/Tracks`;
 
+    const hullsImagesDirectory = `${robotImagesDirectory}/Hulls`;
+
     // const projectileFilenames = ['Granade_Shell.png', 'Heavy_Shell.png', 'Light_Shell.png', 'Medium_Shell.png', 'Shotgun_Shells.png'];
 
     const totalHullsColors = 4, totalHullsVariations = 8;
@@ -83,6 +85,9 @@ const ImageDatabase = (function() {
         system_preload: loadAllImages,
         loadProjectileImages: function(filenames, keys) {
             loadImageList(filenames, keys, projectileImagesDirectory);
+        },
+        loadHullImages: function(filenames, keys) {
+            loadImageList(filenames, keys, hullsImagesDirectory);
         }
     };
 }());

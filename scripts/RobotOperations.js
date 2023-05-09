@@ -77,7 +77,7 @@ const RobotOperations_Hull = (function() {
 
 const RobotOperations_Turret = (function() {
     // const turretRotationPerFrameSpeed = 50;
-    const turretRotationPerFrameSpeed = 130;
+    const turretRotationPerFrameSpeed = 90;
 
     const operations = {
         rotateTurret: function(robotIndex, direction) {

@@ -6,7 +6,7 @@ const RobotsRadar = (function() {
     const MIN_ALLOWED_RADAR_FOV_ANGLE = 1;
     const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
 
-    const radarRotationIncrement = 60;
+    const radarRotationIncrement = 120;
 
     let ray;
 
