@@ -59,7 +59,8 @@ const RobotMatterFactory = (function() {
         hullImage.setBody(shapes[`Hull_${hullType}`], null);
         hullImage.setScale(scale);
         hullImage.setAngle(0);
-        hullImage.setFrictionAir(0.2);
+        // hullImage.setFrictionAir(0.2);
+        hullImage.setFrictionAir(0.15);
         hullImage.depth = GameObjectDepths.RobotBody;
 
         const hullImagePhysicsBody = hullImage.body;
