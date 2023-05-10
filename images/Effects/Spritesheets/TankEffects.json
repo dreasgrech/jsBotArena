@@ -1,0 +1,1175 @@
+{
+	"textures": [
+		{
+			"image": "TankEffects.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1056,
+				"h": 501
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Sprite_Effects_Explosion_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 1,
+						"w": 248,
+						"h": 253
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 248,
+						"h": 253
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 1,
+						"w": 248,
+						"h": 253
+					},
+					"frame": {
+						"x": 251,
+						"y": 1,
+						"w": 248,
+						"h": 253
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 12,
+						"w": 239,
+						"h": 232
+					},
+					"frame": {
+						"x": 1,
+						"y": 256,
+						"w": 239,
+						"h": 232
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 31,
+						"y": 29,
+						"w": 194,
+						"h": 198
+					},
+					"frame": {
+						"x": 501,
+						"y": 1,
+						"w": 194,
+						"h": 198
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 94,
+						"y": 6,
+						"w": 70,
+						"h": 244
+					},
+					"frame": {
+						"x": 242,
+						"y": 256,
+						"w": 70,
+						"h": 244
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 94,
+						"y": 6,
+						"w": 70,
+						"h": 244
+					},
+					"frame": {
+						"x": 314,
+						"y": 256,
+						"w": 70,
+						"h": 244
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 42,
+						"y": 35,
+						"w": 164,
+						"h": 186
+					},
+					"frame": {
+						"x": 697,
+						"y": 1,
+						"w": 164,
+						"h": 186
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 55,
+						"y": 52,
+						"w": 146,
+						"h": 152
+					},
+					"frame": {
+						"x": 863,
+						"y": 1,
+						"w": 146,
+						"h": 152
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 101,
+						"y": 8,
+						"w": 54,
+						"h": 242
+					},
+					"frame": {
+						"x": 386,
+						"y": 256,
+						"w": 54,
+						"h": 242
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 101,
+						"y": 13,
+						"w": 47,
+						"h": 231
+					},
+					"frame": {
+						"x": 442,
+						"y": 256,
+						"w": 47,
+						"h": 231
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Shot_A_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 69,
+						"y": 59,
+						"w": 118,
+						"h": 98
+					},
+					"frame": {
+						"x": 501,
+						"y": 201,
+						"w": 118,
+						"h": 98
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 74,
+						"y": 66,
+						"w": 108,
+						"h": 124
+					},
+					"frame": {
+						"x": 491,
+						"y": 301,
+						"w": 108,
+						"h": 124
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Shot_A_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 79,
+						"y": 63,
+						"w": 98,
+						"h": 98
+					},
+					"frame": {
+						"x": 621,
+						"y": 201,
+						"w": 98,
+						"h": 98
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Shot_B_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 69,
+						"y": 60,
+						"w": 118,
+						"h": 96
+					},
+					"frame": {
+						"x": 601,
+						"y": 301,
+						"w": 118,
+						"h": 96
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 100,
+						"y": 6,
+						"w": 53,
+						"h": 245
+					},
+					"frame": {
+						"x": 721,
+						"y": 189,
+						"w": 53,
+						"h": 245
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 101,
+						"y": 13,
+						"w": 61,
+						"h": 130
+					},
+					"frame": {
+						"x": 776,
+						"y": 189,
+						"w": 61,
+						"h": 130
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 103,
+						"y": 63,
+						"w": 56,
+						"h": 130
+					},
+					"frame": {
+						"x": 776,
+						"y": 321,
+						"w": 56,
+						"h": 130
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Shot_B_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 79,
+						"y": 64,
+						"w": 98,
+						"h": 96
+					},
+					"frame": {
+						"x": 863,
+						"y": 155,
+						"w": 98,
+						"h": 96
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 100,
+						"y": 149,
+						"w": 56,
+						"h": 104
+					},
+					"frame": {
+						"x": 963,
+						"y": 155,
+						"w": 56,
+						"h": 104
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 87,
+						"y": 85,
+						"w": 82,
+						"h": 86
+					},
+					"frame": {
+						"x": 839,
+						"y": 253,
+						"w": 82,
+						"h": 86
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Impact_B_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 100,
+						"y": 50,
+						"w": 56,
+						"h": 103
+					},
+					"frame": {
+						"x": 834,
+						"y": 341,
+						"w": 56,
+						"h": 103
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Impact_A_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 100,
+						"y": 50,
+						"w": 56,
+						"h": 97
+					},
+					"frame": {
+						"x": 892,
+						"y": 341,
+						"w": 56,
+						"h": 97
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Impact_A_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 94,
+						"y": 30,
+						"w": 68,
+						"h": 56
+					},
+					"frame": {
+						"x": 491,
+						"y": 427,
+						"w": 68,
+						"h": 56
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Impact_B_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 75,
+						"w": 46,
+						"h": 78
+					},
+					"frame": {
+						"x": 923,
+						"y": 261,
+						"w": 46,
+						"h": 78
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Shot_A_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 93,
+						"y": 76,
+						"w": 70,
+						"h": 84
+					},
+					"frame": {
+						"x": 971,
+						"y": 261,
+						"w": 70,
+						"h": 84
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Shot_B_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 93,
+						"y": 76,
+						"w": 70,
+						"h": 84
+					},
+					"frame": {
+						"x": 950,
+						"y": 347,
+						"w": 70,
+						"h": 84
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Shot_A_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 104,
+						"y": 101,
+						"w": 48,
+						"h": 54
+					},
+					"frame": {
+						"x": 834,
+						"y": 446,
+						"w": 48,
+						"h": 54
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Shot_B_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 104,
+						"y": 101,
+						"w": 48,
+						"h": 54
+					},
+					"frame": {
+						"x": 884,
+						"y": 446,
+						"w": 48,
+						"h": 54
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 90,
+						"y": 146,
+						"w": 76,
+						"h": 24
+					},
+					"frame": {
+						"x": 601,
+						"y": 399,
+						"w": 76,
+						"h": 24
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Impact_A_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 105,
+						"y": 75,
+						"w": 46,
+						"h": 72
+					},
+					"frame": {
+						"x": 561,
+						"y": 427,
+						"w": 46,
+						"h": 72
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Impact_B_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 94,
+						"y": 30,
+						"w": 68,
+						"h": 56
+					},
+					"frame": {
+						"x": 609,
+						"y": 425,
+						"w": 68,
+						"h": 56
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 195,
+						"w": 18,
+						"h": 60
+					},
+					"frame": {
+						"x": 934,
+						"y": 440,
+						"w": 18,
+						"h": 60
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 112,
+						"y": 136,
+						"w": 30,
+						"h": 52
+					},
+					"frame": {
+						"x": 1011,
+						"y": 1,
+						"w": 30,
+						"h": 52
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 117,
+						"y": 135,
+						"w": 21,
+						"h": 58
+					},
+					"frame": {
+						"x": 839,
+						"y": 189,
+						"w": 21,
+						"h": 58
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 135,
+						"w": 18,
+						"h": 58
+					},
+					"frame": {
+						"x": 1022,
+						"y": 347,
+						"w": 18,
+						"h": 58
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 135,
+						"w": 18,
+						"h": 58
+					},
+					"frame": {
+						"x": 679,
+						"y": 399,
+						"w": 18,
+						"h": 58
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 108,
+						"w": 42,
+						"h": 40
+					},
+					"frame": {
+						"x": 954,
+						"y": 433,
+						"w": 42,
+						"h": 40
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 117,
+						"y": 152,
+						"w": 21,
+						"h": 52
+					},
+					"frame": {
+						"x": 1011,
+						"y": 55,
+						"w": 21,
+						"h": 52
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 117,
+						"y": 135,
+						"w": 21,
+						"h": 46
+					},
+					"frame": {
+						"x": 1034,
+						"y": 55,
+						"w": 21,
+						"h": 46
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Flame_009.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 116,
+						"y": 36,
+						"w": 24,
+						"h": 44
+					},
+					"frame": {
+						"x": 1011,
+						"y": 109,
+						"w": 24,
+						"h": 44
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 138,
+						"w": 18,
+						"h": 52
+					},
+					"frame": {
+						"x": 1037,
+						"y": 103,
+						"w": 18,
+						"h": 52
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 111,
+						"y": 133,
+						"w": 34,
+						"h": 31
+					},
+					"frame": {
+						"x": 1021,
+						"y": 157,
+						"w": 34,
+						"h": 31
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 121,
+						"y": 138,
+						"w": 14,
+						"h": 52
+					},
+					"frame": {
+						"x": 699,
+						"y": 399,
+						"w": 14,
+						"h": 52
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 121,
+						"y": 136,
+						"w": 14,
+						"h": 52
+					},
+					"frame": {
+						"x": 1021,
+						"y": 190,
+						"w": 14,
+						"h": 52
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 135,
+						"w": 18,
+						"h": 47
+					},
+					"frame": {
+						"x": 1037,
+						"y": 190,
+						"w": 18,
+						"h": 47
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Impact_B_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 113,
+						"w": 18,
+						"h": 41
+					},
+					"frame": {
+						"x": 679,
+						"y": 459,
+						"w": 18,
+						"h": 41
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 135,
+						"w": 18,
+						"h": 47
+					},
+					"frame": {
+						"x": 699,
+						"y": 453,
+						"w": 18,
+						"h": 47
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 135,
+						"w": 18,
+						"h": 47
+					},
+					"frame": {
+						"x": 719,
+						"y": 453,
+						"w": 18,
+						"h": 47
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 119,
+						"y": 135,
+						"w": 18,
+						"h": 47
+					},
+					"frame": {
+						"x": 739,
+						"y": 453,
+						"w": 18,
+						"h": 47
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 121,
+						"y": 135,
+						"w": 14,
+						"h": 47
+					},
+					"frame": {
+						"x": 759,
+						"y": 453,
+						"w": 14,
+						"h": 47
+					}
+				},
+				{
+					"filename": "Sprite_Fire_Shots_Impact_A_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 112,
+						"y": 117,
+						"w": 32,
+						"h": 32
+					},
+					"frame": {
+						"x": 775,
+						"y": 453,
+						"w": 32,
+						"h": 32
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_009.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 117,
+						"y": 186,
+						"w": 21,
+						"h": 38
+					},
+					"frame": {
+						"x": 998,
+						"y": 433,
+						"w": 21,
+						"h": 38
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_01_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 115,
+						"y": 113,
+						"w": 26,
+						"h": 30
+					},
+					"frame": {
+						"x": 1022,
+						"y": 407,
+						"w": 26,
+						"h": 30
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 121,
+						"y": 138,
+						"w": 14,
+						"h": 52
+					},
+					"frame": {
+						"x": 1021,
+						"y": 439,
+						"w": 14,
+						"h": 52
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Exhaust_02_009.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 121,
+						"y": 138,
+						"w": 14,
+						"h": 52
+					},
+					"frame": {
+						"x": 1037,
+						"y": 439,
+						"w": 14,
+						"h": 52
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:ead71b70352f8ac8ceea4401332b1ae3:af4a9fd69db71e407a5337ffba9c1a3b:9cb28c12b53fca67af279307b627232b$"
+	}
+}
