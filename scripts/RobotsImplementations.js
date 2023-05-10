@@ -209,18 +209,18 @@ const keyBot = function() {
             qeKeys = gameContext.input.keyboard.addKeys('Q,E');
 
             const hullSetup = robotSetup.hull;
-            hullSetup.hullType = RobotHullTypes.Two;
+            hullSetup.hullType = RobotHullTypes.Six;
             hullSetup.hullColor = RobotHullColors.Brown;
 
             const turretSetup = robotSetup.turret;
-            turretSetup.turretType = RobotTurretTypes.Two;
+            turretSetup.turretType = RobotTurretTypes.Three;
             turretSetup.turretColor = RobotTurretColors.Green;
 
             const hullColors = hullSetup.colors;
-            hullColors.topLeft = 0x00ff00;
-            hullColors.topRight = 0x00ff00;
-            hullColors.bottomLeft = 0x00ff00;
-            hullColors.bottomRight = 0x00ff00;
+            hullColors.topLeft = 0xb83dba;
+            hullColors.topRight = 0xb83dba;
+            hullColors.bottomLeft = 0xb83dba;
+            hullColors.bottomRight = 0xb83dba;
 
 
             // const radarSetup = robotSetup.radar;
