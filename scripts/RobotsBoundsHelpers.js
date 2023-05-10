@@ -3,6 +3,8 @@
 const RobotsBoundsHelpers = (function() {
     const boundsVisualizer_radius = 2, boundsVisualizer_color = 0xff0000;
     const turretVisualizer_radius = 2, turretVisualizer_color = 0x0000ff;
+    const hullOriginVisualizer_radius = 3, hullOriginVisualizer_color = 0x00ff00;
+    const turretOriginVisualizer_radius = 3, turretOriginVisualizer_color = 0x00ff00;
     const robotsBounds = [];
     const turretBounds = [];
 
@@ -10,8 +12,15 @@ const RobotsBoundsHelpers = (function() {
         return { x: item.x, y: item.y };
     };
 
-    const drawPoint = function(graphics, points, color, radius) {
+    const drawPoint = function(graphics, pointX, pointY, radius) {
+        graphics.fillCircle(pointX, pointY, radius);
+    };
 
+    const drawPointWithNewColor = function(graphics, pointX, pointY, color, radius) {
+        graphics.lineStyle(1, color, 1);
+        graphics.fillStyle(color, 1);
+
+        graphics.fillCircle(pointX, pointY, radius);
     };
 
     const drawPoints = function(graphics, points, color, radius) {
@@ -23,7 +32,8 @@ const RobotsBoundsHelpers = (function() {
             const pointsLength = points.length;
             for (let i = 0; i < pointsLength; i++) {
                 const point = points[i];
-                graphics.fillCircle(point.x, point.y, radius);
+                // graphics.fillCircle(point.x, point.y, radius);
+                drawPoint(graphics, point.x, point.y, radius);
             }
     }
 
@@ -76,6 +86,10 @@ const RobotsBoundsHelpers = (function() {
 
             const bounds = robotsBoundsHelpers.getHullBounds(index);
             drawPoints(graphics, bounds, boundsVisualizer_color, boundsVisualizer_radius);
+
+            // Draw the origin
+            const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[index];
+            drawPointWithNewColor(graphics, robotHullImage.x, robotHullImage.y, hullOriginVisualizer_color, hullOriginVisualizer_radius);
         },
         drawTurretBounds: function(index) {
             const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[index];
@@ -87,29 +101,32 @@ const RobotsBoundsHelpers = (function() {
                 turretBounds[index] = graphics;
             }
 
-            const originX = robotTurretImage.x;
-            const originY = robotTurretImage.y;
-
             //const bounds = robotTurretImage.getBounds();
-            const bounds = [
-                    // Corners
-                    robotTurretImage.getTopLeft(),
-                    robotTurretImage.getTopRight(),
-                    robotTurretImage.getBottomLeft(),
-                    robotTurretImage.getBottomRight(),
+            const
+            bounds = [
+                // Corners
+                robotTurretImage.getTopLeft(),
+                robotTurretImage.getTopRight(),
+                robotTurretImage.getBottomLeft(),
+                robotTurretImage.getBottomRight(),
 
-                    // Length
-                    robotTurretImage.getTopCenter(),
-                    robotTurretImage.getBottomCenter(),
+                // Length
+                robotTurretImage.getTopCenter(),
+                robotTurretImage.getBottomCenter(),
 
-                    // Width
-                    robotTurretImage.getLeftCenter(),
-                    robotTurretImage.getRightCenter(), // Turret tip since images are rotated to the right
+                // Width
+                robotTurretImage.getLeftCenter(),
+                robotTurretImage.getRightCenter(), // Turret tip since images are rotated to the right
 
-                    {x: originX, y: originY}
+                // Origin
+                //{ x: robotTurretImage.x, y: robotTurretImage.y }
             ];
 
+            // Draw the bounds
             drawPoints(graphics, bounds, turretVisualizer_color, turretVisualizer_radius);
+
+            // Draw the origin
+            drawPointWithNewColor(graphics, robotTurretImage.x, robotTurretImage.y, turretOriginVisualizer_color, turretOriginVisualizer_radius);
         },
         removeRobotBoundsGraphics: function(index) {
             const hullBoundsGraphics = robotsBounds[index];

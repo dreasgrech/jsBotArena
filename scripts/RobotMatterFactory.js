@@ -68,7 +68,6 @@ const RobotMatterFactory = (function() {
         //hullImage.setTint(hullColors.topLeft, hullColors.topRight, hullColors.bottomLeft, hullColors.bottomRight);
         //hullImage.setTint(hullColors.topRight, hullColors.bottomRight, hullColors.topLeft, hullColors.bottomLeft);
         hullImage.setTint(hullColors.bottomLeft, hullColors.topLeft, hullColors.bottomRight, hullColors.topRight);
-        console.log(hullImage, hullColors);
         hullImage.setAngle(0);
         // hullImage.setFrictionAir(0.2);
         hullImage.setFrictionAir(0.15);
