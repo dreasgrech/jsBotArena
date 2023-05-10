@@ -4,7 +4,7 @@
     "PhysicsEditor_SpriteName": "Hull_01",
     "EnumKey": "One",
     "Filename": "Hull_01.png",
-    "TurretHoleOffsetX": 0, 
+    "TurretHoleOffsetX": -18, 
     "TurretHoleOffsetY": 0 
   },
   {
@@ -12,7 +12,7 @@
     "PhysicsEditor_SpriteName": "Hull_02",
     "EnumKey": "Two",
     "Filename": "Hull_02.png",
-    "TurretHoleOffsetX": -20, 
+    "TurretHoleOffsetX": -25, 
     "TurretHoleOffsetY": 0 
   },
   {
@@ -20,7 +20,7 @@
     "PhysicsEditor_SpriteName": "Hull_03",
     "EnumKey": "Three",
     "Filename": "Hull_03.png",
-    "TurretHoleOffsetX": 0, 
+    "TurretHoleOffsetX": -23, 
     "TurretHoleOffsetY": 0 
   },
   {
@@ -28,7 +28,7 @@
     "PhysicsEditor_SpriteName": "Hull_04",
     "EnumKey": "Four",
     "Filename": "Hull_04.png",
-    "TurretHoleOffsetX": 0, 
+    "TurretHoleOffsetX": -30, 
     "TurretHoleOffsetY": 0 
   },
   {
@@ -36,7 +36,7 @@
     "PhysicsEditor_SpriteName": "Hull_05",
     "EnumKey": "Five",
     "Filename": "Hull_05.png",
-    "TurretHoleOffsetX": 0, 
+    "TurretHoleOffsetX": -23, 
     "TurretHoleOffsetY": 0 
   },
   {
@@ -44,7 +44,7 @@
     "PhysicsEditor_SpriteName": "Hull_06",
     "EnumKey": "Six",
     "Filename": "Hull_06.png",
-    "TurretHoleOffsetX": 0, 
+    "TurretHoleOffsetX": -17, 
     "TurretHoleOffsetY": 0 
   },
   {
@@ -52,7 +52,7 @@
     "PhysicsEditor_SpriteName": "Hull_07",
     "EnumKey": "Seven",
     "Filename": "Hull_07.png",
-    "TurretHoleOffsetX": 0, 
+    "TurretHoleOffsetX": -18, 
     "TurretHoleOffsetY": 0 
   },
   {
@@ -60,7 +60,7 @@
     "PhysicsEditor_SpriteName": "Hull_08",
     "EnumKey": "Eight",
     "Filename": "Hull_08.png",
-    "TurretHoleOffsetX": 0, 
+    "TurretHoleOffsetX": -17, 
     "TurretHoleOffsetY": 0 
   }
 ]
