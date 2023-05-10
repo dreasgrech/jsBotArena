@@ -210,7 +210,7 @@ const keyBot = function() {
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Six;
-            hullSetup.hullColor = RobotHullColors.Brown;
+            //hullSetup.hullColor = RobotHullColors.Brown;
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Eight;
@@ -287,7 +287,7 @@ const sittingBot = function() {
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Six;
-            hullSetup.hullColor = RobotHullColors.Blue;
+            //hullSetup.hullColor = RobotHullColors.Blue;
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Six;
@@ -352,7 +352,7 @@ const followBot_followAngle = function() {
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Four;
-            hullSetup.hullColor = RobotHullColors.Green;
+            //hullSetup.hullColor = RobotHullColors.Green;
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Four;
@@ -414,7 +414,7 @@ const followBot_followPosition = function() {
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Four;
-            hullSetup.hullColor = RobotHullColors.Green;
+            //hullSetup.hullColor = RobotHullColors.Green;
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Four;
@@ -484,7 +484,7 @@ const SniperBot = function () {
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Two;
-            hullSetup.hullColor = RobotHullColors.Brown;
+            //hullSetup.hullColor = RobotHullColors.Brown;
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Three;
@@ -632,7 +632,7 @@ function sweepRadar(api) {
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Four;
-            hullSetup.hullColor = RobotHullColors.Green;
+            //hullSetup.hullColor = RobotHullColors.Green;
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Six;
@@ -762,7 +762,7 @@ const StealthBot = function() {
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Two;
-            hullSetup.hullColor = RobotHullColors.Green;
+            //hullSetup.hullColor = RobotHullColors.Green;
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Four;

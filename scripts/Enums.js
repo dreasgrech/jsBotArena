@@ -2,12 +2,12 @@
 
 // TODO: Move all of these to JSON files and build them like ProjectilesDatabase
 
-const RobotHullColors = {
-    Brown: 'A',
-    Green: 'B',
-    Aqua: 'C',
-    Blue: 'D'
-};
+//const RobotHullColors = {
+//    Brown: 'A',
+//    Green: 'B',
+//    Aqua: 'C',
+//    Blue: 'D'
+//};
 
 const RobotTurretColors = {
     Brown: 'A',
@@ -16,6 +16,15 @@ const RobotTurretColors = {
     Blue: 'D'
 };
 
+/**
+ * @type {{
+    Light: number,
+    Medium: number,
+    Heavy: number,
+    Granade: number,
+    Shotgun: number,
+}}
+ */
 const ProjectileTypes = {
 //    Light: 'Light_Shell',
 //    Medium: 'Medium_Shell',
@@ -24,24 +33,30 @@ const ProjectileTypes = {
 //    Shotgun: 'Shotgun_Shells'
 };
 
-const RobotHullTypes = {
-    One: '01',
-    Two: '02',
-    Three: '03',
-    Four: '04',
-    Five: '05',
-    Six: '06',
-    Seven: '07',
-    Eight: '08'
-};
+/**
+ * @type {{
+    One: number,
+    Two: number,
+    Three: number,
+    Four: number,
+    Five: number,
+    Six: number,
+    Seven: number,
+    Eight: number
+}}
+ */
+const RobotHullTypes = { };
 
-const RobotTurretTypes = {
-    One: '01',
-    Two: '02',
-    Three: '03',
-    Four: '04',
-    Five: '05',
-    Six: '06',
-    Seven: '07',
-    Eight: '08'
-};
+/**
+ * @type {{
+    One: number,
+    Two: number,
+    Three: number,
+    Four: number,
+    Five: number,
+    Six: number,
+    Seven: number,
+    Eight: number
+}}
+ */
+const RobotTurretTypes = { };
