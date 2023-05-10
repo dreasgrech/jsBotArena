@@ -7,6 +7,10 @@ const QueuedRobotForRemoval = function() {
     };
 };
 
+//const ROBOT_SCALE = 0.4;
+// const ROBOT_SCALE = 0.9;
+const ROBOT_SCALE = 1;
+
 const RobotManager = (function() {
     let currentRobotIndex = 0;
     let totalRobots = 0;
@@ -15,8 +19,6 @@ const RobotManager = (function() {
     const aliveRobotsIndexes = new Set();
     let totalAliveRobots = 0;
 
-    const ROBOT_SCALE = 0.4;
-    //const ROBOT_SCALE = 0.7;
 
     // TODO: This value will probably eventually be set depending on some preset database values
     const STARTING_ROBOT_HEALTH = 100;
@@ -135,7 +137,7 @@ const RobotManager = (function() {
             const robotBodyImagePhysicsBody = robotBodyImage.body;
             const hullAngle_degrees = robotBodyImage.angle;
             RobotsData_CurrentData_currentRobotAngles_degrees[i] = hullAngle_degrees;
-            const hullAngle_radians = robotBodyImage.rotation;
+            const hullAngle_radians = Phaser.Math.Angle.Wrap(robotBodyImage.rotation); // It's important to wrap the angle because by default it doesn't seem to be
             RobotsData_CurrentData_currentRobotAngles_radians[i] = hullAngle_radians;
             RobotsData_CurrentData_currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
@@ -218,7 +220,7 @@ const RobotManager = (function() {
                 const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
                 const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
                 // Logger.log("checking if we should remove now", queuedForRemovalRobotIndex, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
-                if (timeSinceDestroyed_seconds > 1) {
+                if (timeSinceDestroyed_seconds > 0.1) {
                     //Logger.log("removing robot", queuedForRemovalRobotIndex);
                     removeAndHideRobot(queuedForRemovalRobotIndex);
                     delete queuedRobotsForRemoval[queuedForRemovalRobotIndex];

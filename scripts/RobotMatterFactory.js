@@ -122,7 +122,7 @@ const RobotMatterFactory = (function() {
         turretImage.setScale(scale);
         turretImage.setAngle(0);
 
-        //turretImage.alpha = 0.5;// TODO: setting this while calibrating hull turret hole offset
+        turretImage.alpha = 0.5;// TODO: setting this while calibrating hull turret hole offset
 
         RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
     };
@@ -148,8 +148,8 @@ const RobotMatterFactory = (function() {
             const offsetY = RobotsData_Instance_hullTurretHoleOffsetY[robotIndex];
 
             // Apply the rotation transformation to the offset
-            const rotatedOffsetX = offsetX * Math.cos(hullAngle_radians) - offsetY * Math.sin(hullAngle_radians);
-            const rotatedOffsetY = offsetX * Math.sin(hullAngle_radians) + offsetY * Math.cos(hullAngle_radians);
+            const rotatedOffsetX = ROBOT_SCALE * offsetX * Math.cos(hullAngle_radians) - offsetY * Math.sin(hullAngle_radians);
+            const rotatedOffsetY = ROBOT_SCALE * offsetX * Math.sin(hullAngle_radians) + offsetY * Math.cos(hullAngle_radians);
 
             // Add the rotated offset to the robot's position
             const turretPositionX = robotPositionX + rotatedOffsetX;
