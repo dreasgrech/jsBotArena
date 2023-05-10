@@ -1,0 +1,209 @@
+{
+	"textures": [
+		{
+			"image": "Spritesheet_Explosion.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 1361,
+				"h": 255
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Sprite_Effects_Explosion_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 1,
+						"w": 248,
+						"h": 253
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 248,
+						"h": 253
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 4,
+						"y": 1,
+						"w": 248,
+						"h": 253
+					},
+					"frame": {
+						"x": 251,
+						"y": 1,
+						"w": 248,
+						"h": 253
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 12,
+						"w": 239,
+						"h": 232
+					},
+					"frame": {
+						"x": 501,
+						"y": 1,
+						"w": 239,
+						"h": 232
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 31,
+						"y": 29,
+						"w": 194,
+						"h": 198
+					},
+					"frame": {
+						"x": 742,
+						"y": 1,
+						"w": 194,
+						"h": 198
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 108,
+						"w": 42,
+						"h": 40
+					},
+					"frame": {
+						"x": 742,
+						"y": 201,
+						"w": 42,
+						"h": 40
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 42,
+						"y": 35,
+						"w": 164,
+						"h": 186
+					},
+					"frame": {
+						"x": 938,
+						"y": 1,
+						"w": 164,
+						"h": 186
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 55,
+						"y": 52,
+						"w": 146,
+						"h": 152
+					},
+					"frame": {
+						"x": 1104,
+						"y": 1,
+						"w": 146,
+						"h": 152
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 87,
+						"y": 85,
+						"w": 82,
+						"h": 86
+					},
+					"frame": {
+						"x": 1104,
+						"y": 155,
+						"w": 82,
+						"h": 86
+					}
+				},
+				{
+					"filename": "Sprite_Effects_Explosion_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 74,
+						"y": 66,
+						"w": 108,
+						"h": 124
+					},
+					"frame": {
+						"x": 1252,
+						"y": 1,
+						"w": 108,
+						"h": 124
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:a00480b63d2c25368a25c4d2594c7a53:ac95074e6b5a41c7487d4a06f3705752:a7f511d89eb5a5b0697478d8a1c31934$"
+	}
+}
