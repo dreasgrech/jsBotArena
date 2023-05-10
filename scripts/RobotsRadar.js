@@ -32,8 +32,10 @@ const RobotsRadar = (function() {
         const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
         const robotHullBody = robotHullImage.body;
         const robotHullBodyID = robotHullBody.id;
-        const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
-        const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
+        //const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
+        //const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
+        const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
+        const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
         const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
 
         const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
@@ -73,7 +75,7 @@ const RobotsRadar = (function() {
 
             const otherRobotPositionX = RobotsData_CurrentData_positionXs[i];
             const otherRobotPositionY = RobotsData_CurrentData_positionYs[i];
-            const distanceBetweenRobots = Phaser.Math.Distance.Between(robotPositionX, robotPositionY, otherRobotPositionX, otherRobotPositionY);
+            const distanceBetweenRobots = Phaser.Math.Distance.Between(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY);
 
             if (distanceBetweenRobots > radarMaxScanDistance) {
                 continue;
@@ -89,7 +91,7 @@ const RobotsRadar = (function() {
                 const otherRobotBoundsPoint = otherRobotBounds[j];
 
                 // Calculate the angle between the robots
-                const angleBetween_radians = Phaser.Math.Angle.Between(robotPositionX, robotPositionY, otherRobotBoundsPoint.x, otherRobotBoundsPoint.y);
+                const angleBetween_radians = Phaser.Math.Angle.Between(turretPositionX, turretPositionY, otherRobotBoundsPoint.x, otherRobotBoundsPoint.y);
 
                 // Adjust the angle to account for Phaser's inverted y-axis
                 const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * pi + angleBetween_radians : angleBetween_radians;
@@ -119,7 +121,7 @@ const RobotsRadar = (function() {
                 if (pointWithinRadarAngles) {
                     const rayOriginX = otherRobotBoundsPoint.x, rayOriginY = otherRobotBoundsPoint.y;
                     ray.setOrigin(rayOriginX, rayOriginY);
-                    const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints(otherRobotBoundsPoint, { x: robotPositionX, y: robotPositionY });
+                    const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints(otherRobotBoundsPoint, { x: turretPositionX, y: turretPositionY });
                     ray.setAngle(angleBetweenPoints_radians); // radians
 
                     // Cast the ray from the scanned robot's bounds point to the scanning robot
@@ -147,7 +149,7 @@ const RobotsRadar = (function() {
                 //const bearingDegrees = Phaser.Math.RadToDeg(bearingRadians);
                 //const bearing_degrees = AngleOperations.normalizeAngleDegrees(bearingDegrees);
 
-                const bearing_degrees = AngleOperations.getBearing_degrees(robotPositionX, robotPositionY, otherRobotPositionX, otherRobotPositionY);
+                const bearing_degrees = AngleOperations.getBearing_degrees(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY);
 
                 const robotScannedEventInfo = RobotScannedInfo();
                 robotScannedEventInfo.index = i;
@@ -229,16 +231,18 @@ const RobotsRadar = (function() {
             const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
             const radarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
 
-            const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
-            const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
+            //const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
+            //const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
+            const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
+            const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
 
             radarGraphics.lineStyle(1, 0x00ff00, 0.5);
             radarGraphics.fillStyle(0x00ff00, 0.2);
 
             radarGraphics.beginPath();
-            radarGraphics.moveTo(robotPositionX, robotPositionY);
-            radarGraphics.arc(robotPositionX,
-                robotPositionY,
+            radarGraphics.moveTo(turretPositionX, turretPositionY);
+            radarGraphics.arc(turretPositionX,
+                turretPositionY,
                 radarMaxScanDistance,
                 Phaser.Math.DegToRad(radarAngle_degrees - radarFOVAngle_degrees * 0.5),
                 Phaser.Math.DegToRad(radarAngle_degrees + radarFOVAngle_degrees * 0.5));
