@@ -127,6 +127,9 @@ const RobotMatterFactory = (function() {
         turretImage.setScale(scale);
         turretImage.setAngle(0);
 
+        const turretColors = turretSetup.colors;
+        turretImage.setTint(turretColors.bottomLeft, turretColors.topLeft, turretColors.bottomRight, turretColors.topRight);
+
         //hullImage.alpha = 0.1;// TODO: setting this while calibrating hull turret hole offset
         //turretImage.alpha = 1;// TODO: setting this while calibrating hull turret hole offset
 

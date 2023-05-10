@@ -214,7 +214,7 @@ const keyBot = function() {
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Eight;
-            turretSetup.turretColor = RobotTurretColors.Green;
+            // turretSetup.turretColor = RobotTurretColors.Green;
 
             const hullColors = hullSetup.colors;
             hullColors.topLeft = 0xb83dba;
@@ -291,7 +291,7 @@ const sittingBot = function() {
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Six;
-            turretSetup.turretColor = RobotTurretColors.Brown;
+            // turretSetup.turretColor = RobotTurretColors.Brown;
 
             // const radarSetup = robotSetup.radar;
         },
@@ -356,7 +356,7 @@ const followBot_followAngle = function() {
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Four;
-            turretSetup.turretColor = RobotTurretColors.Aqua;
+            // turretSetup.turretColor = RobotTurretColors.Aqua;
 
             // const radarSetup = robotSetup.radar;
         },
@@ -418,7 +418,7 @@ const followBot_followPosition = function() {
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Four;
-            turretSetup.turretColor = RobotTurretColors.Aqua;
+            // turretSetup.turretColor = RobotTurretColors.Aqua;
 
             // const radarSetup = robotSetup.radar;
         },
@@ -488,7 +488,7 @@ const SniperBot = function () {
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Three;
-            turretSetup.turretColor = RobotTurretColors.Blue;
+            // turretSetup.turretColor = RobotTurretColors.Blue;
         },
         onSpawned: function (api, time_seconds) {
             const radar = api.radar;
@@ -636,7 +636,7 @@ function sweepRadar(api) {
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Six;
-            turretSetup.turretColor = RobotTurretColors.Blue;
+            // turretSetup.turretColor = RobotTurretColors.Blue;
         },
         onSpawned: function(api, time_seconds) {
             const radar = api.radar;
@@ -766,7 +766,7 @@ const StealthBot = function() {
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.Four;
-            turretSetup.turretColor = RobotTurretColors.Blue;
+            // turretSetup.turretColor = RobotTurretColors.Blue;
         },
         onSpawned: function(api, time_seconds) {
             const radar = api.radar;

@@ -7,17 +7,29 @@ const RobotSetupFactory = (function() {
             const robotSetup = {
                 hull: {
                     hullType: EnumHelpers.getRandomValue(RobotHullTypes),
-                    //hullColor: EnumHelpers.getRandomValue(RobotHullColors),
                     colors: {
-                        topLeft: 0xff0000, // [red] bottom left
-                        topRight: 0x00ff00, // [green] top left
-                        bottomLeft: 0x0000ff, // [blue] bottom right
-                        bottomRight: 0xffffff // [white] top right
+                        //topLeft: 0xff0000, 
+                        //topRight: 0x00ff00, 
+                        //bottomLeft: 0x0000ff, 
+                        //bottomRight: 0xffffff 
+                        topLeft: Phaser.Display.Color.RandomRGB().color, 
+                        topRight: Phaser.Display.Color.RandomRGB().color, 
+                        bottomLeft: Phaser.Display.Color.RandomRGB().color, 
+                        bottomRight: Phaser.Display.Color.RandomRGB().color 
                     }
                 },
                 turret: {
                     turretType: EnumHelpers.getRandomValue(RobotTurretTypes),
-                    turretColor: EnumHelpers.getRandomValue(RobotTurretColors)
+                    colors: {
+                        //topLeft: 0xff0000, 
+                        //topRight: 0x00ff00, 
+                        //bottomLeft: 0x0000ff, 
+                        //bottomRight: 0xffffff 
+                        topLeft: Phaser.Display.Color.RandomRGB().color, 
+                        topRight: Phaser.Display.Color.RandomRGB().color, 
+                        bottomLeft: Phaser.Display.Color.RandomRGB().color, 
+                        bottomRight: Phaser.Display.Color.RandomRGB().color 
+                    }
                 },
                 //    radar: {
                 //    }
