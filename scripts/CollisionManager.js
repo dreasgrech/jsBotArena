@@ -82,6 +82,9 @@ const CollisionManager = (function() {
 
         // If the colliding robot is alive, then we need to apply damage to it
         if (RobotsData_CurrentData_alive[robotIndex]) {
+
+            const robotHealthBeforeDamage = RobotsData_CurrentData_health[robotIndex];
+
             // Apply the damage to the robot from the projectile
             const newRobotHealth = DamageManager.applyProjectileToRobotDamage(projectileIndex, robotIndex);
 
@@ -91,6 +94,30 @@ const CollisionManager = (function() {
                 // Mark the robot as destroyed
                 RobotManager.markRobotAsDestroyed(robotIndex);
             }
+
+            const damageApplied = robotHealthBeforeDamage - newRobotHealth;
+
+            // TODO: save projectile info for the api
+            // TODO: pool this
+
+            const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+            const robotX = robotHullImage.x;
+            const robotY = robotHullImage.y;
+
+            const projectileX = projectileMatterGameObject.x;
+            const projectileY = projectileMatterGameObject.y;
+
+            const bearing_degrees = AngleOperations.getBearing_degrees(robotX, robotY, projectileX, projectileY);
+
+            const robotToProjectileCollisionInfo = RobotToProjectileCollisionInfo();
+            robotToProjectileCollisionInfo.positionX = projectileX;
+            robotToProjectileCollisionInfo.positionY = projectileY;
+            robotToProjectileCollisionInfo.angle_degrees = projectileMatterGameObject.angle;
+            robotToProjectileCollisionInfo.bearing_degrees = bearing_degrees;
+            robotToProjectileCollisionInfo.damageApplied = damageApplied;
+
+            // save the event info so that the robot receives it in the api
+            RobotsData_CurrentData_projectileCollisions[robotIndex].push(robotToProjectileCollisionInfo);
         }
 
         // Mark the projectile for removal
@@ -194,6 +221,7 @@ const CollisionManager = (function() {
             for (let i = 0; i < totalRobots; i++) {
                 RobotsData_CurrentData_robotCollisions[i] = [];
                 RobotsData_CurrentData_arenaCollisions[i] = [];
+                RobotsData_CurrentData_projectileCollisions[i] = [];
             }
 
             // RobotsData_CurrentData.totalCollisions = 0;

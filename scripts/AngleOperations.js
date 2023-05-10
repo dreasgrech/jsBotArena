@@ -1,10 +1,6 @@
 "use strict";
 
 const AngleOperations = (function() {
-    function lerp(a, b, t) {
-        return (1 - t) * a + t * b;
-    }
-
     const angleOperations = {
         incrementAngle_degrees: function(angle_degrees, increment_degrees) {
             return angleOperations.normalizeAngleDegrees(angle_degrees + increment_degrees);
@@ -17,19 +13,14 @@ const AngleOperations = (function() {
         // Normalizes an angle such that it's always between 0 and 360
         normalizeAngleDegrees: function(angleDegrees) {
             return ((angleDegrees % 360) + 360) % 360;
+        },
+        getBearing_degrees: function(position1X, position1Y, position2X, position2Y) {
+            const bearingRadians = Phaser.Math.Angle.Between(position1X, position1Y, position2X, position2Y);
+            const bearingDegrees = Phaser.Math.RadToDeg(bearingRadians);
+            const bearing_degrees = AngleOperations.normalizeAngleDegrees(bearingDegrees);
+            return bearing_degrees;
         }
     };
 
     return angleOperations;
-}());
-
-const NumberOperations = (function() {
-
-    const numberOperations = {
-        lerp: function(a, b, t) {
-            return (1 - t) * a + t * b;
-        }
-    };
-
-    return numberOperations;
 }());

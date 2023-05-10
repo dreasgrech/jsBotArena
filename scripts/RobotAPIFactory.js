@@ -186,8 +186,6 @@ const RobotAPIFactory = (function() {
                     radarEnabled: true,
                     // If set to true, the radar will be locked to the turret and will rotate with it.
                     radarFollowTurret: false,
-                    // All the robots that are scanned, including destroyed ones
-                    // scannedRobots: [], // type: RobotScannedInfo[]
                     // The scanned robots that are alive
                     scannedAliveRobots: [], // RobotScannedInfo[]
                     // The FOV angle can be between 1 and 45
@@ -226,7 +224,8 @@ const RobotAPIFactory = (function() {
                 // Collisions this frame
                 collisions: {
                     otherRobots: [], // type: RobotToRobotCollisionInfo[]
-                    arena: [] // type: RobotToArenaCollisionInfo[]
+                    arena: [], // type: RobotToArenaCollisionInfo[]
+                    projectiles: [] // type: RobotToProjectileCollisionInfo[]
                 },
                 // Own robot's data
                 data: {
@@ -262,7 +261,16 @@ const RobotToRobotCollisionInfo = function() {
 const RobotToArenaCollisionInfo = function() {
     return {
         type: 0,
-        data: {}
+    };
+};
+
+const RobotToProjectileCollisionInfo = function() {
+    return {
+        positionX: 0, // the x-position of the projectile
+        positionY: 0, // the y-position of the projectile
+        angle_degrees: 0, // the angle in degrees of the projectile
+        bearing_degrees: 0, // the angle in degrees that the robot needs to rotate to to face the projectile
+        damageApplied: 0 // the total damage applied
     };
 };
 

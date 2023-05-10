@@ -78,6 +78,7 @@ const RobotManager = (function() {
         // Add the entry for the robot in the per-frame collisions arrays
         RobotsData_CurrentData_robotCollisions[currentRobotIndex] = [];
         RobotsData_CurrentData_arenaCollisions[currentRobotIndex] = [];
+        RobotsData_CurrentData_projectileCollisions[currentRobotIndex] = [];
 
         // TODO: Create the tracks
         // const trackA = 
@@ -167,6 +168,7 @@ const RobotManager = (function() {
             const api_collisions = api.collisions;
             api_collisions.otherRobots = RobotsData_CurrentData_robotCollisions[i];
             api_collisions.arena = RobotsData_CurrentData_arenaCollisions[i];
+            api_collisions.projectiles = RobotsData_CurrentData_projectileCollisions[i];
 
             const turret = api.turret;
             const turretFollowHull = turret.turretFollowHull;

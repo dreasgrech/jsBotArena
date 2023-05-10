@@ -263,6 +263,15 @@ const keyBot = function() {
                     // api.fire(ProjectileTypes.Medium);
                 }
             }
+            const collisionsWithProjectiles = collisions.projectiles;
+            if (collisionsWithProjectiles.length > 0) {
+                for (let i = 0; i < collisionsWithProjectiles.length; i++) {
+                    const collisionWithProjectile = collisionsWithProjectiles[i];
+                    Logger.log("We've been hit by a projectile!", collisionWithProjectile);
+                    // api.fire(ProjectileTypes.Medium);
+                }
+
+            }
 
             const turret = api.turret;
             //turret.rotateLeft();

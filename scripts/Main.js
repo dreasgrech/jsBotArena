@@ -82,13 +82,14 @@ const gameManager = (function() {
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
         RobotManager.addRobot(keyBot());
-        RobotManager.addRobot(shredder());
-        RobotManager.addRobot(circleBot());
-        RobotManager.addRobot(sittingBot());
-        RobotManager.addRobot(followBot_followAngle());
-        RobotManager.addRobot(followBot_followPosition());
-        RobotManager.addRobot(doNothingBot());
-        RobotManager.addRobot(CornerGuardBot());
+        RobotManager.addRobot(keyBot());
+        //RobotManager.addRobot(doNothingBot());
+        //RobotManager.addRobot(shredder());
+        //RobotManager.addRobot(circleBot());
+        //RobotManager.addRobot(sittingBot());
+        //RobotManager.addRobot(followBot_followAngle());
+        //RobotManager.addRobot(followBot_followPosition());
+        //RobotManager.addRobot(CornerGuardBot());
 
         // setTimeout(() => { RobotManager.addRobot(circleBot()); }, 1500);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2000);
