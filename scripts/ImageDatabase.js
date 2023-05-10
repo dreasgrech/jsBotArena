@@ -39,20 +39,20 @@ const ImageDatabase = (function() {
         loadImage('wall_image', 'images/Wall - Brick 2 64x64.png');
 
         // Iterate Hulls colors
-        for (let i = 0; i < totalHullsColors; i++) {
-            let characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
-            let directoryName = `Hulls_Color_${String.fromCharCode(characterCode)}`;
-            // Iterate Hulls variations
-            for (let j = 0; j < totalHullsVariations; j++) {
-                let fileName = `Hull_0${j + 1}`;
-                let fullPath = `${robotImagesDirectory}/${directoryName}/${fileName}.png`;
+        //for (let i = 0; i < totalHullsColors; i++) {
+        //    let characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
+        //    let directoryName = `Hulls_Color_${String.fromCharCode(characterCode)}`;
+        //    // Iterate Hulls variations
+        //    for (let j = 0; j < totalHullsVariations; j++) {
+        //        let fileName = `Hull_0${j + 1}`;
+        //        let fullPath = `${robotImagesDirectory}/${directoryName}/${fileName}.png`;
 
-                let imageIdentifier = `${directoryName}/${fileName}`;
+        //        let imageIdentifier = `${directoryName}/${fileName}`;
 
-                // load the hull image
-                loadImage(imageIdentifier, fullPath);
-            }
-        }
+        //        // load the hull image
+        //        loadImage(imageIdentifier, fullPath);
+        //    }
+        //}
 
         // Iterate weapons colors
         for (let i = 0; i < totalWeaponsColors; i++) {
