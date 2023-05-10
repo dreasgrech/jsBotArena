@@ -8,8 +8,7 @@ const RobotOperations_Hull = (function() {
             const robotBody = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
             const robotSpeed = RobotsData_Instance_robotSpeeds[robotIndex];
 
-            const angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
-            const angle_radians = Phaser.Math.DegToRad(angle_degrees);
+            const angle_radians = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
 
             //const force = new Phaser.Math.Vector2(Math.cos(angle_radians) * robotSpeed * direction, Math.sin(angle_radians) * robotSpeed * direction);
             const multiplier = robotSpeed * direction * GameContextHolder.deltaTime;

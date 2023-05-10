@@ -11,6 +11,7 @@ const RobotsData_PhysicsBodies_robotProjectileSensorConstraints = [];
 const RobotsData_CurrentData_positionXs = [];
 const RobotsData_CurrentData_positionYs = [];
 const RobotsData_CurrentData_currentRobotAngles_degrees = [];
+const RobotsData_CurrentData_currentRobotAngles_radians = [];
 const RobotsData_CurrentData_currentRobotVelocities = [];
 const RobotsData_CurrentData_currentTurretAngles = [];
 const RobotsData_CurrentData_currentRadarAngles_degrees = [];
@@ -28,6 +29,8 @@ const RobotsData_Instance_names = [];
 const RobotsData_Instance_updateFunctions = [];
 const RobotsData_Instance_robotAPIs = [];
 const RobotsData_Instance_robotSpeeds = [];
+const RobotsData_Instance_hullTurretHoleOffsetX = [];
+const RobotsData_Instance_hullTurretHoleOffsetY = [];
 
 // Radar data
 const RobotsData_Radar_radarGraphics = [];

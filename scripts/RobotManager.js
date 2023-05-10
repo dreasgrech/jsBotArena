@@ -135,6 +135,8 @@ const RobotManager = (function() {
             const robotBodyImagePhysicsBody = robotBodyImage.body;
             const hullAngle_degrees = robotBodyImage.angle;
             RobotsData_CurrentData_currentRobotAngles_degrees[i] = hullAngle_degrees;
+            const hullAngle_radians = robotBodyImage.rotation;
+            RobotsData_CurrentData_currentRobotAngles_radians[i] = hullAngle_radians;
             RobotsData_CurrentData_currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
 
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[i];

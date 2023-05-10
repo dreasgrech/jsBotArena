@@ -97,6 +97,9 @@ const RobotMatterFactory = (function() {
         RobotsData_PhysicsBodies_robotBodyImages[currentRobotIndex] = hullImage;
         RobotsData_PhysicsBodies_robotHullBodyIDs[currentRobotIndex] = hullImagePhysicsBodyID;
 
+        RobotsData_Instance_hullTurretHoleOffsetX[currentRobotIndex] = hullsDB.TurretHoleOffsetsX[hullType];
+        RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex] = hullsDB.TurretHoleOffsetsY[hullType];
+
         // Add the robot's body to the arena bodies collection
         PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody], true); // Add all the bodies from the arena to the arena bodies collection
 
@@ -119,6 +122,8 @@ const RobotMatterFactory = (function() {
         turretImage.setScale(scale);
         turretImage.setAngle(0);
 
+        //turretImage.alpha = 0.5;// TODO: setting this while calibrating hull turret hole offset
+
         RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
     };
 
@@ -131,15 +136,29 @@ const RobotMatterFactory = (function() {
         createRobot: createRobot,
         updateParts: function(robotIndex) {
 
-            // Update the position of the turret to remain attached to the robot
+            // Update the position of the turret to remain attached to the robot based on the hull's rotation
             const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
             const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
             const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
-            robotTurretImage.setPosition(robotPositionX, robotPositionY);
+
+            // Get the hull's rotation
+            const hullAngle_radians = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
+
+            const offsetX = RobotsData_Instance_hullTurretHoleOffsetX[robotIndex];
+            const offsetY = RobotsData_Instance_hullTurretHoleOffsetY[robotIndex];
+
+            // Apply the rotation transformation to the offset
+            const rotatedOffsetX = offsetX * Math.cos(hullAngle_radians) - offsetY * Math.sin(hullAngle_radians);
+            const rotatedOffsetY = offsetX * Math.sin(hullAngle_radians) + offsetY * Math.cos(hullAngle_radians);
+
+            // Add the rotated offset to the robot's position
+            const turretPositionX = robotPositionX + rotatedOffsetX;
+            const turretPositionY = robotPositionY + rotatedOffsetY;
+            robotTurretImage.setPosition(turretPositionX, turretPositionY);
 
             // Match the projectile sensor's angle to the robot hull's angle
             const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
-            projectileSensor.angle = Phaser.Math.DegToRad(RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex]);
+            projectileSensor.angle = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
         }
     };
 
