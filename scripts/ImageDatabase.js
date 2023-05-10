@@ -7,6 +7,7 @@ const ImageDatabase = (function() {
     const tracksImagesDirectory = `${baseImagesDirectory}/Tracks`;
 
     const hullsImagesDirectory = `${robotImagesDirectory}/Hulls`;
+    const turretsImagesDirectory = `${robotImagesDirectory}/Turrets`;
 
     // const projectileFilenames = ['Granade_Shell.png', 'Heavy_Shell.png', 'Light_Shell.png', 'Medium_Shell.png', 'Shotgun_Shells.png'];
 
@@ -54,21 +55,21 @@ const ImageDatabase = (function() {
         //    }
         //}
 
-        // Iterate weapons colors
-        for (let i = 0; i < totalWeaponsColors; i++) {
-            let characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
-            let directoryName = `Weapon_Color_${String.fromCharCode(characterCode)}`;
-            // Iterate weapons variations
-            for (let j = 0; j < totalWeaponsVariations; j++) {
-                let fileName = `Gun_0${j + 1}`;
-                let fullPath = `${robotImagesDirectory}/${directoryName}/${fileName}.png`;
+        //// Iterate weapons colors
+        //for (let i = 0; i < totalWeaponsColors; i++) {
+        //    let characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
+        //    let directoryName = `Weapon_Color_${String.fromCharCode(characterCode)}`;
+        //    // Iterate weapons variations
+        //    for (let j = 0; j < totalWeaponsVariations; j++) {
+        //        let fileName = `Gun_0${j + 1}`;
+        //        let fullPath = `${robotImagesDirectory}/${directoryName}/${fileName}.png`;
 
-                let imageIdentifier = `${directoryName}/${fileName}`;
+        //        let imageIdentifier = `${directoryName}/${fileName}`;
 
-                // load the weapon image
-                loadImage(imageIdentifier, fullPath);
-            }
-        }
+        //        // load the weapon image
+        //        loadImage(imageIdentifier, fullPath);
+        //    }
+        //}
 
         // Load the tracks images
         for (let i = 0; i < totalTracks; i++) {
@@ -88,6 +89,9 @@ const ImageDatabase = (function() {
         },
         loadHullImages: function(filenames, keys) {
             loadImageList(filenames, keys, hullsImagesDirectory);
+        },
+        loadTurretImages: function(filenames, keys) {
+            loadImageList(filenames, keys, turretsImagesDirectory);
         }
     };
 }());

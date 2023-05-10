@@ -42,9 +42,9 @@ const RobotMatterFactory = (function() {
         const turretSetup = robotSetup.turret;
 
         const hullType = hullSetup.hullType;
-        const hullColor = hullSetup.hullColor;
+        // const hullColor = hullSetup.hullColor;
         const turretType = turretSetup.turretType;
-        const turretColor = turretSetup.turretColor;
+        // const turretColor = turretSetup.turretColor;
 
         const hullsDB = RobotPartsDatabase.hulls;
         const hullPhaserImageKey = hullsDB.phaserImageKeys[hullType];
@@ -110,12 +110,16 @@ const RobotMatterFactory = (function() {
         // Create the Projectile Sensor for the robot which detects which projectiles hit this robot
         createProjectileSensor(currentRobotIndex);
 
+        const turretsDB = RobotPartsDatabase.turrets;
+        const turretPhaserImageKey = turretsDB.phaserImageKeys[turretType];
+
         // ROBOT TURRET
         const turretImage = GameContextHolder.gameContext.add.image(
             hullImage.x,
             hullImage.y,
-            // `Weapon_Color_${turretColor}/Gun_04`);
-            `Weapon_Color_${turretColor}/Gun_${turretType}`);
+            // `Weapon_Color_${turretColor}/Gun_${turretType}`
+            turretPhaserImageKey
+        );
 
         turretImage.setOrigin(0.3, 0.5); // Set the origin of the turret to the base of the turret
         turretImage.depth = GameObjectDepths.RobotTurret;

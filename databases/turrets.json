@@ -1,0 +1,58 @@
+[
+  {
+    "PhaserImageKey": "Gun_01",
+    "EnumKey": "One",
+    "Filename": "Gun_01.png",
+    "TurretHoleOffsetX": -18, 
+    "TurretHoleOffsetY": 0 
+  },
+  {
+    "PhaserImageKey": "Gun_02",
+    "EnumKey": "Two",
+    "Filename": "Gun_02.png",
+    "TurretHoleOffsetX": -25, 
+    "TurretHoleOffsetY": 0 
+  },
+  {
+    "PhaserImageKey": "Gun_03",
+    "EnumKey": "Three",
+    "Filename": "Gun_03.png",
+    "TurretHoleOffsetX": -23, 
+    "TurretHoleOffsetY": 0 
+  },
+  {
+    "PhaserImageKey": "Gun_04",
+    "EnumKey": "Four",
+    "Filename": "Gun_04.png",
+    "TurretHoleOffsetX": -30, 
+    "TurretHoleOffsetY": 0 
+  },
+  {
+    "PhaserImageKey": "Gun_05",
+    "EnumKey": "Five",
+    "Filename": "Gun_05.png",
+    "TurretHoleOffsetX": -23, 
+    "TurretHoleOffsetY": 0 
+  },
+  {
+    "PhaserImageKey": "Gun_06",
+    "EnumKey": "Six",
+    "Filename": "Gun_06.png",
+    "TurretHoleOffsetX": -17, 
+    "TurretHoleOffsetY": 0 
+  },
+  {
+    "PhaserImageKey": "Gun_07",
+    "EnumKey": "Seven",
+    "Filename": "Gun_07.png",
+    "TurretHoleOffsetX": -18, 
+    "TurretHoleOffsetY": 0 
+  },
+  {
+    "PhaserImageKey": "Gun_08",
+    "EnumKey": "Eight",
+    "Filename": "Gun_08.png",
+    "TurretHoleOffsetX": -17, 
+    "TurretHoleOffsetY": 0 
+  }
+]
