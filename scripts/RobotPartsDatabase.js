@@ -21,8 +21,8 @@ const RobotPartsDatabase = (function() {
     const turrets = {
         phaserImageKeys: [],
         filenames: [],
-        TurretHoleOffsetsX: [],
-        TurretHoleOffsetsY: [],
+        originsX: [],
+        originsY: [],
     };
 
     const loadHullsDatabase = function() {
@@ -62,8 +62,8 @@ const RobotPartsDatabase = (function() {
                     // Save the data from the definition loaded from the file
                     turrets.phaserImageKeys[i] = definition.PhaserImageKey;
                     turrets.filenames[i] = definition.Filename;
-                    turrets.TurretHoleOffsetsX[i] = definition.TurretHoleOffsetX;
-                    turrets.TurretHoleOffsetsY[i] = definition.TurretHoleOffsetY;
+                    turrets.originsX[i] = definition.originX;
+                    turrets.originsY[i] = definition.originY;
 
                     // Construct the enum
                     const enumKey = definition.EnumKey;

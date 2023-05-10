@@ -23,7 +23,7 @@ const UIRobotInfoPanel = (function() {
             // Create a Graphics object for the panel background
             const panelGraphics = gameContext.add.graphics();
             panelGraphics.depth = panelDepth;
-            panelGraphics.fillStyle(0x333333, 0.8); // Set panel background color and alpha
+            panelGraphics.fillStyle(0x333333, 0.3); // Set panel background color and alpha
             panelGraphics.fillRect(panelX, panelY, panelWidth, panelHeight); // Draw the panel background
 
             // Create a Text object for the panel title

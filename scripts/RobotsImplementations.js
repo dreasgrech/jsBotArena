@@ -213,7 +213,7 @@ const keyBot = function() {
             hullSetup.hullColor = RobotHullColors.Brown;
 
             const turretSetup = robotSetup.turret;
-            turretSetup.turretType = RobotTurretTypes.Three;
+            turretSetup.turretType = RobotTurretTypes.Eight;
             turretSetup.turretColor = RobotTurretColors.Green;
 
             const hullColors = hullSetup.colors;

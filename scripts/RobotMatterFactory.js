@@ -121,12 +121,15 @@ const RobotMatterFactory = (function() {
             turretPhaserImageKey
         );
 
-        turretImage.setOrigin(0.3, 0.5); // Set the origin of the turret to the base of the turret
+        // turretImage.setOrigin(0.3, 0.5); // Set the origin of the turret to the base of the turret
+        //turretImage.setOrigin(0.2, 0.5); // Set the origin of the turret to the base of the turret
+        turretImage.setOrigin(turretsDB.originsX[turretType], turretsDB.originsY[turretType]); // Set the origin of the turret to the base of the turret
         turretImage.depth = GameObjectDepths.RobotTurret;
         turretImage.setScale(scale);
         turretImage.setAngle(0);
 
-        turretImage.alpha = 0.5;// TODO: setting this while calibrating hull turret hole offset
+        //hullImage.alpha = 0.1;// TODO: setting this while calibrating hull turret hole offset
+        //turretImage.alpha = 1;// TODO: setting this while calibrating hull turret hole offset
 
         RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
     };

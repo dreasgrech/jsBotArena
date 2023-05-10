@@ -10,6 +10,10 @@ const RobotsBoundsHelpers = (function() {
         return { x: item.x, y: item.y };
     };
 
+    const drawPoint = function(graphics, points, color, radius) {
+
+    };
+
     const drawPoints = function(graphics, points, color, radius) {
             graphics.clear();
             graphics.lineStyle(1, color, 1);
@@ -83,6 +87,9 @@ const RobotsBoundsHelpers = (function() {
                 turretBounds[index] = graphics;
             }
 
+            const originX = robotTurretImage.x;
+            const originY = robotTurretImage.y;
+
             //const bounds = robotTurretImage.getBounds();
             const bounds = [
                     // Corners
@@ -98,6 +105,8 @@ const RobotsBoundsHelpers = (function() {
                     // Width
                     robotTurretImage.getLeftCenter(),
                     robotTurretImage.getRightCenter(), // Turret tip since images are rotated to the right
+
+                    {x: originX, y: originY}
             ];
 
             drawPoints(graphics, bounds, turretVisualizer_color, turretVisualizer_radius);
