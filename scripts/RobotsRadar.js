@@ -176,7 +176,7 @@ const RobotsRadar = (function() {
         MAX_ALLOWED_RADAR_FOV_ANGLE: MAX_ALLOWED_RADAR_FOV_ANGLE,
         system_create: function() {
             ray = RaycastManager.createRay();
-            console.log(ray);
+            //console.log(ray);
         },
         scanForRobots: scanForRobots,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {

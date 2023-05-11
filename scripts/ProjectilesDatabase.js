@@ -12,8 +12,6 @@ const ProjectilesDatabase = (function() {
         baseDamages : [],
         speeds : [],
         system_preload: function() {
-            console.log('proj database', 'preload');
-
             JSONDatabaseReader.loadDatabase(PROJECTILE_DB_FILE_KEY, PROJECTILE_DB_FILEPATH,
                 function(projectileDefinitions) {
 

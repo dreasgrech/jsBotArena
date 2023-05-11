@@ -1,6 +1,13 @@
 "use strict";
 
 const AnimationManager = (function() {
+    /*
+     * animationcomplete parameters:https://newdocs.phaser.io/docs/3.52.0/Phaser.Animations.Events.ANIMATION_COMPLETE
+     *
+     */
+
+    let lastSpriteIDCreated = -1;
+
     const SPRITESHEETS_KEY = 'tankeffects';
     const SPRITESHEETS_DIRECTORY = "./images/Effects/Spritesheets";
     const animationManager = {
@@ -11,7 +18,7 @@ const AnimationManager = (function() {
         system_create: function() {
             const gameContext = GameContextHolder.gameContext;
 
-            gameContext.anims.create({
+            const animation = gameContext.anims.create({
                 key: 'explosion',
                 frames: gameContext.anims.generateFrameNames(SPRITESHEETS_KEY,
                     {
@@ -25,7 +32,14 @@ const AnimationManager = (function() {
                 repeat: 0
             });
 
-            const explosionSprite = gameContext.add.sprite(200, 200, SPRITESHEETS_KEY, 'Sprite_Effects_Explosion_000.png');
+            console.log(animation);
+
+            const explosionSprite = gameContext.add.sprite(200, 200, SPRITESHEETS_KEY);//, 'Sprite_Effects_Explosion_000.png');
+            explosionSprite.setName(42);
+            explosionSprite.on('animationcomplete',
+                function(animationThatCompleted, currentFrame, gameObject, frameKey) {
+                    console.log('anim complete!', animationThatCompleted, currentFrame, gameObject, frameKey);
+                });
             explosionSprite.anims.play('explosion');
         }
     };

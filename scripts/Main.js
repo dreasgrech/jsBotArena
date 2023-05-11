@@ -97,6 +97,9 @@ const gameManager = (function() {
         //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2500);
 
         gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
+        //gameContext.anims.on('stop', function() { // doesnt work
+        //    console.log('anim complete!');
+        //});
 
         for (let i = 0; i < objectsWith_create.length; i++) {
             const toLoad = objectsWith_create[i];

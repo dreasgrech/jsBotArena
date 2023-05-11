@@ -1,5 +1,9 @@
 "use strict";
 
+// TODO: Refactor this so that instead of createPool returning a pool, it instead
+// TODO: returns a poolIndex.  Then the PoolFactory (which will be renamed) have the functions
+// TODO: on it.  That way we eliminate the pool objects completely.
+
 const PoolFactory = (function() {
     // const pools = {};
 
