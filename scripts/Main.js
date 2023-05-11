@@ -8,7 +8,8 @@ const gameManager = (function() {
         RaycastManager,
         ImageDatabase,
         ProjectilesDatabase,
-        RobotPartsDatabase
+        RobotPartsDatabase,
+        AnimationManager
     ];
 
     const objectsWith_create = [
@@ -17,7 +18,8 @@ const gameManager = (function() {
         RobotManager,
         CollisionManager,
         UIManager,
-        RobotsRadar
+        RobotsRadar,
+        AnimationManager
     ];
 
     const objectsWith_onEndOfFrame = [
@@ -82,13 +84,13 @@ const gameManager = (function() {
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
         RobotManager.addRobot(keyBot());
-        RobotManager.addRobot(doNothingBot());
-        RobotManager.addRobot(shredder());
-        RobotManager.addRobot(circleBot());
-        RobotManager.addRobot(sittingBot());
-        RobotManager.addRobot(followBot_followAngle());
-        RobotManager.addRobot(followBot_followPosition());
-        RobotManager.addRobot(CornerGuardBot());
+        //RobotManager.addRobot(doNothingBot());
+        //RobotManager.addRobot(shredder());
+        //RobotManager.addRobot(circleBot());
+        //RobotManager.addRobot(sittingBot());
+        //RobotManager.addRobot(followBot_followAngle());
+        //RobotManager.addRobot(followBot_followPosition());
+        //RobotManager.addRobot(CornerGuardBot());
 
         // setTimeout(() => { RobotManager.addRobot(circleBot()); }, 1500);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2000);
