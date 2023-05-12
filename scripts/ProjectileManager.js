@@ -31,7 +31,7 @@ const ProjectileManager = (function() {
 
                 const projectileTypeIndex = ProjectileTypes[projectileTypeField];
                 const projectilePhaserImageKey = ProjectilesDatabase.phaserImageKeys[projectileTypeIndex];
-                const poolIndex = MatterBodyPoolManager.createMatterBodyPool({
+                const poolIndex = MatterGameObjectPoolManager.createMatterGameObjectPool({
                     poolName: `Projectiles (${projectilePhaserImageKey})`,
                     createElement: function() {
                         const projectileMatterGameObject = gameContext.matter.add.sprite(
@@ -47,7 +47,7 @@ const ProjectileManager = (function() {
 
                 // Prepopulate the pool
                 // TODO: Increase the prepopulate number when everything is stable
-                MatterBodyPoolManager.prePopulate(poolIndex, 1);
+                MatterGameObjectPoolManager.prePopulateMatterGameObjectsPool(poolIndex, 1);
 
                 pools[projectileTypeIndex] = poolIndex;
             }
@@ -88,7 +88,7 @@ const ProjectileManager = (function() {
             const y = turretTipPosition.y;
 
             const poolIndex = pools[projectileType];
-            const projectileMatterGameObject = MatterBodyPoolManager.pop(poolIndex);
+            const projectileMatterGameObject = MatterGameObjectPoolManager.fetchMatterGameObjectFromPool(poolIndex);
             projectileMatterGameObject.setPosition(x, y);
             PhysicsBodies.enableMatterBody(projectileMatterGameObject);
 
@@ -161,7 +161,7 @@ const ProjectileManager = (function() {
             //RaycastManager.removeMappedGameObjects(projectileMatterGameObject);
 
             // projectilePool.push(projectileMatterGameObject);
-            MatterBodyPoolManager.push(projectilePoolIndex, projectileMatterGameObject);
+            MatterGameObjectPoolManager.returnMatterGameObjectToPool(projectilePoolIndex, projectileMatterGameObject);
         },
         resolveProjectileIndex_from_Projectile: function(projectileMatterGameObject) {
             const projectileMatterBody = projectileMatterGameObject.body;

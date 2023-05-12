@@ -1,20 +1,29 @@
 "use strict";
 
-const PoolManager = (function() {
+const PoolType = BitmaskableObjectOperations.populateBitmaskableObject({
+    Generic: 0,
+    GameObject: 0,
+    MatterGameObject: 0
+});
+
+const PoolsManager = (function() {
+    const POOL_TYPE = PoolType.Generic;
+
     let nextPoolIndex = 0;
 
     const pool_elements = [];
-    const pool_elementsTotals = [];
+    // const pool_elementsTotals = [];
     const pool_names = [];
     const pool_createElementHooks = [];
     const pool_beforePushHooks = [];
     const pool_afterPopHooks = [];
     const pool_currentlyPrePopulating = [];
 
-    const handlePop = function(poolIndex, element) {
-        pool_elementsTotals[poolIndex]--;
+    const handleAfterPop = function(poolIndex, element) {
+        // pool_elementsTotals[poolIndex]--;
         pool_afterPopHooks[poolIndex](element);
         element.outOfPool = true;
+        element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
         return element;
     };
 
@@ -29,8 +38,19 @@ const PoolManager = (function() {
             Logger.warn.apply(null, arguments);
         };
 
+    const createNewElement = function(poolIndex) {
+        // Execute the pool's createElement hook
+        const element = pool_createElementHooks[poolIndex]();
+
+        // Set some pool-specific data that help us debug issues
+        element.outOfPool = true;
+        element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
+
+        return element;
+    }
+
     const poolManager = {
-        createPool: function({ poolName, createElement, beforePush, afterPop }) {
+        createElementsPool: function({ poolName, createElement, beforePush, afterPop }) {
             const formattedPoolName = `[${poolName} Pool]`;
 
             if (createElement == null) {
@@ -49,12 +69,12 @@ const PoolManager = (function() {
             const poolIndex = nextPoolIndex;
 
             pool_elements[poolIndex] = [];
-            pool_elementsTotals[poolIndex] = 0;
+            // pool_elementsTotals[poolIndex] = 0;
             pool_names[poolIndex] = formattedPoolName;
             pool_createElementHooks[poolIndex] = createElement;
             pool_beforePushHooks[poolIndex] = beforePush;
             pool_afterPopHooks[poolIndex] = afterPop;
-            pool_currentlyPrePopulating[poolIndex] = false;
+            //pool_currentlyPrePopulating[poolIndex] = false;
 
             // log(poolIndex, "creating pool", pool_createElementHooks);
 
@@ -62,91 +82,148 @@ const PoolManager = (function() {
 
             return poolIndex;
         },
-        prePopulate: function(poolIndex, total) {
+        prePopulateElementsPool: function(poolIndex, total) {
             // log(poolIndex, "prepopulating", poolIndex, total);
-            pool_currentlyPrePopulating[poolIndex] = true;
-            const createElement = pool_createElementHooks[poolIndex];
-            const pool = pool_elements[poolIndex];
+            //pool_currentlyPrePopulating[poolIndex] = true;
+            // const createElement = pool_createElementHooks[poolIndex];
             for (let i = 0; i < total; i++) {
-                const element = createElement();
-                poolManager.push(poolIndex, element);
+                // const element = createElement();
+                const element = createNewElement(poolIndex);
+                //element.outOfPool = false;
+                //element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
+                // poolManager.push(poolIndex, element);
+                poolManager.returnElementToPool(poolIndex, element);
             }
-            pool_currentlyPrePopulating[poolIndex] = false;
+            //pool_currentlyPrePopulating[poolIndex] = false;
         },
-        push: function(poolIndex, element) {
+        returnElementToPool: function(poolIndex, element) {
             /* DEBUG */
+            if (!BitmaskableObjectOperations.has(element.pool, POOL_TYPE)) {
+                Logger.error("Returning the element to the wrong pool", element, element.pool);
+                return;
+            }
+
             if (!element.outOfPool) {
-                if (!pool_currentlyPrePopulating[poolIndex]) {
-                    throw "Trying to return the wrong element to the pool: " + element;
-                }
+                Logger.error("Returning the element which wasn't marked as out-of-pool", element, element.pool);
+                return;
             }
             /********/
 
+            element.outOfPool = false;
+            element.pool = 0;
+
             pool_beforePushHooks[poolIndex](element);
             pool_elements[poolIndex].push(element);
-            pool_elementsTotals[poolIndex]++;
+            // pool_elementsTotals[poolIndex]++;
         },
-        pop: function(poolIndex) {
-            if (pool_elementsTotals[poolIndex] <= 0) {
+        fetchElementFromPool: function(poolIndex) {
+            // if (pool_elementsTotals[poolIndex] <= 0) {
+            if (pool_elements[poolIndex].length <= 0) {
                 warn(poolIndex, "No more elements in pool so creating a new one");
-                const element = pool_createElementHooks[poolIndex]();
-                pool_elementsTotals[poolIndex]++;
+                const element = createNewElement(poolIndex);
+                //pool_elementsTotals[poolIndex]++;
 
-                return handlePop(poolIndex, element);
+                return handleAfterPop(poolIndex, element);
             }
 
             const element = pool_elements[poolIndex].pop();
-            return handlePop(poolIndex, element);
+            return handleAfterPop(poolIndex, element);
         }
     };
     return poolManager;
 }());
 
-const MatterBodyPoolManager = (function() {
-    const poolPositionX = 200,
-        poolPositionY = 200;
+const GameObjectPoolManager = (function() {
+    const POOL_TYPE = PoolType.GameObject;
 
-    const pool_createElementHooks = [];
+    const poolPositionX = 200, poolPositionY = 200;
 
-    const createMatterBody = function(poolIndex) {
-        // Create the body
-        const matterBody = pool_createElementHooks[poolIndex]();
-
-        // Disable it and move it out of view
-        matterBody.setPosition(poolPositionX, poolPositionY);
-        PhysicsBodies.disableMatterGameObject(matterBody);
-
-        return matterBody;
-    };
-
-    const matterBodyPoolManager = {
-        createMatterBodyPool: function({ poolName, createElement, beforePush, afterPop }) {
-            const poolIndex = PoolManager.createPool(
+    const gameObjectPoolManager = {
+        createGameObjectPool: function({ poolName, createElement, beforePush, afterPop }) {
+            // Create the pool
+            const poolIndex = PoolsManager.createElementsPool(
                 {
                     poolName: poolName,
                     createElement: function() {
-                        return createMatterBody(poolIndex);
+                        // Create the body
+                        const gameObject = createElement();
+
+                        // move it out of view
+                        gameObject.setPosition(poolPositionX, poolPositionY);
+
+                        return gameObject;
                     },
                     beforePush: beforePush,
                     afterPop: afterPop
                 });
 
-            pool_createElementHooks[poolIndex] = createElement;
-
             return poolIndex;
         },
-        prePopulate: function(poolIndex, total) {
-            PoolManager.prePopulate(poolIndex, total);
+        prePopulateGameObjectsPool: PoolsManager.prePopulateElementsPool,
+        returnGameObjectToPool: function(poolIndex, gameObject) {
+            if (!BitmaskableObjectOperations.has(gameObject.pool, POOL_TYPE)) {
+                Logger.error("Returning the element to the wrong pool", gameObject);
+                return;
+            }
+
+            PoolsManager.returnElementToPool(poolIndex, gameObject);
+
+            // move it out of view
+            gameObject.setPosition(poolPositionX, poolPositionY);
         },
-        push: function(poolIndex, matterBody) {
-            PoolManager.push(poolIndex, matterBody);
-            PhysicsBodies.disableMatterGameObject(matterBody);
-            matterBody.setPosition(poolPositionX, poolPositionY);
-        },
-        pop: function(poolIndex) {
-            return PoolManager.pop(poolIndex);
+        fetchGameObjectFromPool: function(poolIndex) {
+            const element = PoolsManager.fetchElementFromPool(poolIndex);
+            element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
+            return element;
         }
     };
 
-    return matterBodyPoolManager;
+    return gameObjectPoolManager;
 }());
+
+const MatterGameObjectPoolManager = (function() {
+    const POOL_TYPE = PoolType.MatterGameObject;
+
+    const matterGameObjectPoolManager = {
+        createMatterGameObjectPool: function({ poolName, createElement, beforePush, afterPop }) {
+            // Create the pool
+            const poolIndex = GameObjectPoolManager.createGameObjectPool(
+                {
+                    poolName: poolName,
+                    createElement: function() {
+                        // Create the body
+                        const matterGameObject = createElement();
+
+                        // Disable the physics
+                        PhysicsBodies.disableMatterGameObject(matterGameObject);
+
+                        return matterGameObject;
+                    },
+                    beforePush: beforePush,
+                    afterPop: afterPop
+                });
+
+            return poolIndex;
+        },
+        prePopulateMatterGameObjectsPool: GameObjectPoolManager.prePopulateGameObjectsPool,
+        returnMatterGameObjectToPool: function(poolIndex, matterGameObject) {
+            if (!BitmaskableObjectOperations.has(matterGameObject.pool, POOL_TYPE)) {
+                Logger.error("Returning the element to the wrong pool", matterGameObject);
+                return;
+            }
+
+            // Disable and hide the gameObject
+            PhysicsBodies.disableMatterGameObject(matterGameObject);
+
+            GameObjectPoolManager.returnGameObjectToPool(poolIndex, matterGameObject);
+        },
+        fetchMatterGameObjectFromPool: function(poolIndex) {
+            const element = GameObjectPoolManager.fetchGameObjectFromPool(poolIndex);
+            element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
+            return element;
+        }
+    };
+
+    return matterGameObjectPoolManager;
+}());
+
