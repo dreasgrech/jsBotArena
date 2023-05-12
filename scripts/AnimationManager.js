@@ -3,8 +3,10 @@
 const AnimationManager = (function() {
     /*
      * animationcomplete parameters:https://newdocs.phaser.io/docs/3.52.0/Phaser.Animations.Events.ANIMATION_COMPLETE
-     *
      */
+
+    // TODO: Create a pool for the sprites
+    // TODO: Create a json database for the animations
 
     let lastSpriteIDCreated = -1;
 
@@ -19,7 +21,8 @@ const AnimationManager = (function() {
             const gameContext = GameContextHolder.gameContext;
 
             const animation = gameContext.anims.create({
-                key: 'explosion',
+                // key: 'explosion',
+                key: 5,
                 frames: gameContext.anims.generateFrameNames(SPRITESHEETS_KEY,
                     {
                         start: 0,
@@ -39,8 +42,12 @@ const AnimationManager = (function() {
             explosionSprite.on('animationcomplete',
                 function(animationThatCompleted, currentFrame, gameObject, frameKey) {
                     console.log('anim complete!', animationThatCompleted, currentFrame, gameObject, frameKey);
+                     // explosionSprite.anims.play('5');
+                     explosionSprite.setVisible(false);
                 });
-            explosionSprite.anims.play('explosion');
+             // explosionSprite.anims.play('explosion');
+             explosionSprite.anims.play('5');
+            //explosionSprite.anims.play(animation);
         }
     };
     return animationManager;
