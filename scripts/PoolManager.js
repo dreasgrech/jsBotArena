@@ -12,7 +12,6 @@ const PoolsManager = (function() {
     let nextPoolIndex = 0;
 
     const pool_elements = [];
-    // const pool_elementsTotals = [];
     const pool_names = [];
     const pool_createElementHooks = [];
     const pool_beforePushHooks = [];
@@ -20,7 +19,6 @@ const PoolsManager = (function() {
     const pool_currentlyPrePopulating = [];
 
     const handleAfterPop = function(poolIndex, element) {
-        // pool_elementsTotals[poolIndex]--;
         pool_afterPopHooks[poolIndex](element);
         element.outOfPool = true;
         element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
@@ -69,12 +67,10 @@ const PoolsManager = (function() {
             const poolIndex = nextPoolIndex;
 
             pool_elements[poolIndex] = [];
-            // pool_elementsTotals[poolIndex] = 0;
             pool_names[poolIndex] = formattedPoolName;
             pool_createElementHooks[poolIndex] = createElement;
             pool_beforePushHooks[poolIndex] = beforePush;
             pool_afterPopHooks[poolIndex] = afterPop;
-            //pool_currentlyPrePopulating[poolIndex] = false;
 
             // log(poolIndex, "creating pool", pool_createElementHooks);
 
@@ -83,18 +79,10 @@ const PoolsManager = (function() {
             return poolIndex;
         },
         prePopulateElementsPool: function(poolIndex, total) {
-            // log(poolIndex, "prepopulating", poolIndex, total);
-            //pool_currentlyPrePopulating[poolIndex] = true;
-            // const createElement = pool_createElementHooks[poolIndex];
             for (let i = 0; i < total; i++) {
-                // const element = createElement();
                 const element = createNewElement(poolIndex);
-                //element.outOfPool = false;
-                //element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
-                // poolManager.push(poolIndex, element);
                 poolManager.returnElementToPool(poolIndex, element);
             }
-            //pool_currentlyPrePopulating[poolIndex] = false;
         },
         returnElementToPool: function(poolIndex, element) {
             /* DEBUG */
@@ -110,18 +98,14 @@ const PoolsManager = (function() {
             /********/
 
             element.outOfPool = false;
-            element.pool = 0;
 
             pool_beforePushHooks[poolIndex](element);
             pool_elements[poolIndex].push(element);
-            // pool_elementsTotals[poolIndex]++;
         },
         fetchElementFromPool: function(poolIndex) {
-            // if (pool_elementsTotals[poolIndex] <= 0) {
             if (pool_elements[poolIndex].length <= 0) {
                 warn(poolIndex, "No more elements in pool so creating a new one");
                 const element = createNewElement(poolIndex);
-                //pool_elementsTotals[poolIndex]++;
 
                 return handleAfterPop(poolIndex, element);
             }
@@ -147,6 +131,7 @@ const GameObjectPoolManager = (function() {
                     createElement: function() {
                         // Create the body
                         const gameObject = createElement();
+                        gameObject.pool = BitmaskableObjectOperations.add(gameObject.pool, POOL_TYPE);
 
                         // move it out of view
                         gameObject.setPosition(poolPositionX, poolPositionY);
@@ -160,21 +145,17 @@ const GameObjectPoolManager = (function() {
             return poolIndex;
         },
         prePopulateGameObjectsPool: PoolsManager.prePopulateElementsPool,
+        fetchGameObjectFromPool: PoolsManager.fetchElementFromPool,
         returnGameObjectToPool: function(poolIndex, gameObject) {
             if (!BitmaskableObjectOperations.has(gameObject.pool, POOL_TYPE)) {
                 Logger.error("Returning the element to the wrong pool", gameObject);
                 return;
             }
 
-            PoolsManager.returnElementToPool(poolIndex, gameObject);
-
             // move it out of view
             gameObject.setPosition(poolPositionX, poolPositionY);
-        },
-        fetchGameObjectFromPool: function(poolIndex) {
-            const element = PoolsManager.fetchElementFromPool(poolIndex);
-            element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
-            return element;
+
+            PoolsManager.returnElementToPool(poolIndex, gameObject);
         }
     };
 
@@ -186,13 +167,13 @@ const MatterGameObjectPoolManager = (function() {
 
     const matterGameObjectPoolManager = {
         createMatterGameObjectPool: function({ poolName, createElement, beforePush, afterPop }) {
-            // Create the pool
             const poolIndex = GameObjectPoolManager.createGameObjectPool(
                 {
                     poolName: poolName,
                     createElement: function() {
                         // Create the body
                         const matterGameObject = createElement();
+                        matterGameObject.pool = BitmaskableObjectOperations.add(matterGameObject.pool, POOL_TYPE);
 
                         // Disable the physics
                         PhysicsBodies.disableMatterGameObject(matterGameObject);
@@ -206,6 +187,7 @@ const MatterGameObjectPoolManager = (function() {
             return poolIndex;
         },
         prePopulateMatterGameObjectsPool: GameObjectPoolManager.prePopulateGameObjectsPool,
+        fetchMatterGameObjectFromPool: GameObjectPoolManager.fetchGameObjectFromPool,
         returnMatterGameObjectToPool: function(poolIndex, matterGameObject) {
             if (!BitmaskableObjectOperations.has(matterGameObject.pool, POOL_TYPE)) {
                 Logger.error("Returning the element to the wrong pool", matterGameObject);
@@ -216,11 +198,6 @@ const MatterGameObjectPoolManager = (function() {
             PhysicsBodies.disableMatterGameObject(matterGameObject);
 
             GameObjectPoolManager.returnGameObjectToPool(poolIndex, matterGameObject);
-        },
-        fetchMatterGameObjectFromPool: function(poolIndex) {
-            const element = GameObjectPoolManager.fetchGameObjectFromPool(poolIndex);
-            element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
-            return element;
         }
     };
 
