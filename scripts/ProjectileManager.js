@@ -31,7 +31,7 @@ const ProjectileManager = (function() {
 
                 const projectileTypeIndex = ProjectileTypes[projectileTypeField];
                 const projectilePhaserImageKey = ProjectilesDatabase.phaserImageKeys[projectileTypeIndex];
-                const pool = MatterBodyPoolFactory.createMatterBodyPool({
+                const poolIndex = MatterBodyPoolManager.createMatterBodyPool({
                     poolName: `Projectiles (${projectilePhaserImageKey})`,
                     createElement: function() {
                         const projectileMatterGameObject = gameContext.matter.add.sprite(
@@ -46,10 +46,10 @@ const ProjectileManager = (function() {
                 });
 
                 // Prepopulate the pool
-                //pool.prePopulate(10);
-                pool.prePopulate(1);
+                // TODO: Increase the prepopulate number when everything is stable
+                MatterBodyPoolManager.prePopulate(poolIndex, 1);
 
-                pools[projectileTypeIndex] = pool;
+                pools[projectileTypeIndex] = poolIndex;
             }
         },
         update: function() { },
@@ -87,8 +87,8 @@ const ProjectileManager = (function() {
             const x = turretTipPosition.x;
             const y = turretTipPosition.y;
 
-            const pool = pools[projectileType];
-            const projectileMatterGameObject = pool.pop();
+            const poolIndex = pools[projectileType];
+            const projectileMatterGameObject = MatterBodyPoolManager.pop(poolIndex);
             projectileMatterGameObject.setPosition(x, y);
             PhysicsBodies.enableMatterBody(projectileMatterGameObject);
 
@@ -153,14 +153,15 @@ const ProjectileManager = (function() {
         },
         destroyProjectile: function(projectileMatterGameObject) {
             const projectileType = projectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject);
-            const projectilePool = pools[projectileType];
+            const projectilePoolIndex = pools[projectileType];
             //Logger.log("Destroying Projectile.  Resolved type:", projectileType, ".  Object type:", JSObjectOperations.getObjectTypeName(projectileMatterGameObject));
 
             // Remove the projectile from the arena bodies collection
             PhysicsBodies.removeArenaPhysicsBody(projectileMatterGameObject.body);
             //RaycastManager.removeMappedGameObjects(projectileMatterGameObject);
 
-            projectilePool.push(projectileMatterGameObject);
+            // projectilePool.push(projectileMatterGameObject);
+            MatterBodyPoolManager.push(projectilePoolIndex, projectileMatterGameObject);
         },
         resolveProjectileIndex_from_Projectile: function(projectileMatterGameObject) {
             const projectileMatterBody = projectileMatterGameObject.body;

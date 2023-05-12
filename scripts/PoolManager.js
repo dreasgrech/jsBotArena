@@ -1,13 +1,7 @@
 "use strict";
 
 const PoolManager = (function() {
-    const MAX_POSITIONS_TO_RESERVE_PER_POOL = 100; // The maximum allowed per pool
-
     let nextPoolIndex = 0;
-
-    // The array that contains all the elements of all the pools
-    // 
-    //const poolsAllocatedTotals = []; // TODO: wasn't sure if I should have a separate array for the pools allocated totals, or just use spaces in the main pools array like having the total as the first number before the elements, but then I'm thinking if I have the totals in their own array, then they'll be next to each other in memory
 
     const pool_elements = [];
     const pool_elementsTotals = [];
@@ -62,11 +56,14 @@ const PoolManager = (function() {
             pool_afterPopHooks[poolIndex] = afterPop;
             pool_currentlyPrePopulating[poolIndex] = false;
 
+            // log(poolIndex, "creating pool", pool_createElementHooks);
+
             nextPoolIndex++;
 
             return poolIndex;
         },
         prePopulate: function(poolIndex, total) {
+            // log(poolIndex, "prepopulating", poolIndex, total);
             pool_currentlyPrePopulating[poolIndex] = true;
             const createElement = pool_createElementHooks[poolIndex];
             const pool = pool_elements[poolIndex];
@@ -124,11 +121,12 @@ const MatterBodyPoolManager = (function() {
 
     const matterBodyPoolManager = {
         createMatterBodyPool: function({ poolName, createElement, beforePush, afterPop }) {
-            //const poolIndex = PoolManager.createPool(...arguments); // TODO: <-- Try this
             const poolIndex = PoolManager.createPool(
                 {
                     poolName: poolName,
-                    createElement: createMatterBody,
+                    createElement: function() {
+                        return createMatterBody(poolIndex);
+                    },
                     beforePush: beforePush,
                     afterPop: afterPop
                 });
@@ -138,7 +136,7 @@ const MatterBodyPoolManager = (function() {
             return poolIndex;
         },
         prePopulate: function(poolIndex, total) {
-            return PoolManager.prePopulate(poolIndex, total);
+            PoolManager.prePopulate(poolIndex, total);
         },
         push: function(poolIndex, matterBody) {
             PoolManager.push(poolIndex, matterBody);
