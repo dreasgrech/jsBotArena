@@ -128,7 +128,7 @@ const PoolsManager = (function() {
 /*
  * Pools that serves Phaser GameObjects
  */
-const GameObjectPoolManager = (function() {
+const GameObjectPoolsManager = (function() {
     const POOL_TYPE = PoolType.GameObject;
 
     const poolPositionX = 200, poolPositionY = 200;
@@ -181,7 +181,7 @@ const MatterGameObjectPoolManager = (function() {
 
     const matterGameObjectPoolManager = {
         createMatterGameObjectPool: function({ poolName, createElement, beforePush, afterPop }) {
-            const poolIndex = GameObjectPoolManager.createGameObjectPool(
+            const poolIndex = GameObjectPoolsManager.createGameObjectPool(
                 {
                     poolName: poolName,
                     createElement: function() {
@@ -200,8 +200,8 @@ const MatterGameObjectPoolManager = (function() {
 
             return poolIndex;
         },
-        prePopulateMatterGameObjectsPool: GameObjectPoolManager.prePopulateGameObjectsPool,
-        fetchMatterGameObjectFromPool: GameObjectPoolManager.fetchGameObjectFromPool,
+        prePopulateMatterGameObjectsPool: GameObjectPoolsManager.prePopulateGameObjectsPool,
+        fetchMatterGameObjectFromPool: GameObjectPoolsManager.fetchGameObjectFromPool,
         returnMatterGameObjectToPool: function(poolIndex, matterGameObject) {
             if (!BitmaskableObjectOperations.has(matterGameObject.pool, POOL_TYPE)) {
                 PoolsManager.error("Returning the element to the wrong pool", matterGameObject);
@@ -211,7 +211,7 @@ const MatterGameObjectPoolManager = (function() {
             // Disable and hide the gameObject
             PhysicsBodies.disableMatterGameObject(matterGameObject);
 
-            GameObjectPoolManager.returnGameObjectToPool(poolIndex, matterGameObject);
+            GameObjectPoolsManager.returnGameObjectToPool(poolIndex, matterGameObject);
         }
     };
 

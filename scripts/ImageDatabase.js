@@ -9,10 +9,6 @@ const ImageDatabase = (function() {
     const hullsImagesDirectory = `${robotImagesDirectory}/Hulls`;
     const turretsImagesDirectory = `${robotImagesDirectory}/Turrets`;
 
-    // const projectileFilenames = ['Granade_Shell.png', 'Heavy_Shell.png', 'Light_Shell.png', 'Medium_Shell.png', 'Shotgun_Shells.png'];
-
-    const totalHullsColors = 4, totalHullsVariations = 8;
-    const totalWeaponsColors = 4, totalWeaponsVariations = 8;
     const totalTracks = 4;
 
     const loadImage = function(identifier, filePath) {
@@ -36,40 +32,8 @@ const ImageDatabase = (function() {
     const loadAllImages = function() {
 
         // Load arena images
-        loadImage('floor_image', 'images/Floor - Dirt 2 64x64.png');
-        loadImage('wall_image', 'images/Wall - Brick 2 64x64.png');
-
-        // Iterate Hulls colors
-        //for (let i = 0; i < totalHullsColors; i++) {
-        //    let characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
-        //    let directoryName = `Hulls_Color_${String.fromCharCode(characterCode)}`;
-        //    // Iterate Hulls variations
-        //    for (let j = 0; j < totalHullsVariations; j++) {
-        //        let fileName = `Hull_0${j + 1}`;
-        //        let fullPath = `${robotImagesDirectory}/${directoryName}/${fileName}.png`;
-
-        //        let imageIdentifier = `${directoryName}/${fileName}`;
-
-        //        // load the hull image
-        //        loadImage(imageIdentifier, fullPath);
-        //    }
-        //}
-
-        //// Iterate weapons colors
-        //for (let i = 0; i < totalWeaponsColors; i++) {
-        //    let characterCode = 65 + i; // 'A' = 65, 'B' = 66, etc.
-        //    let directoryName = `Weapon_Color_${String.fromCharCode(characterCode)}`;
-        //    // Iterate weapons variations
-        //    for (let j = 0; j < totalWeaponsVariations; j++) {
-        //        let fileName = `Gun_0${j + 1}`;
-        //        let fullPath = `${robotImagesDirectory}/${directoryName}/${fileName}.png`;
-
-        //        let imageIdentifier = `${directoryName}/${fileName}`;
-
-        //        // load the weapon image
-        //        loadImage(imageIdentifier, fullPath);
-        //    }
-        //}
+        loadImage('floor_image', 'images/Arena/Floor - Dirt 2 64x64.png');
+        loadImage('wall_image', 'images/Arena/Wall - Brick 2 64x64.png');
 
         // Load the tracks images
         for (let i = 0; i < totalTracks; i++) {

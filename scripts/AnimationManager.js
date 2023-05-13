@@ -10,20 +10,27 @@ const AnimationManager = (function() {
 
     let lastSpriteIDCreated = -1;
 
-    const SPRITESHEETS_KEY = 'tankeffects';
-    const SPRITESHEETS_DIRECTORY = "./images/Effects/Spritesheets";
+    let spritesPoolIndex;
+
+    const TANKEFFECTS_SPRITESHEETS_KEY = 'tankeffects';
+    const TANKEFFECTS_SPRITESHEETS_DIRECTORY = "./images/Effects/Spritesheets";
     const animationManager = {
         system_preload: function() {
             const gameContext = GameContextHolder.gameContext;
-            gameContext.load.multiatlas(SPRITESHEETS_KEY, `${SPRITESHEETS_DIRECTORY}/TankEffects.json`, `${SPRITESHEETS_DIRECTORY}`);
+            gameContext.load.multiatlas(
+                TANKEFFECTS_SPRITESHEETS_KEY,
+                `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}/TankEffects.json`,
+                `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}`);
         },
         system_create: function() {
             const gameContext = GameContextHolder.gameContext;
 
+            // GameObjectPoolsManager.createGameObjectPool({poolName:''})
+
             const animation = gameContext.anims.create({
                 // key: 'explosion',
                 key: 5,
-                frames: gameContext.anims.generateFrameNames(SPRITESHEETS_KEY,
+                frames: gameContext.anims.generateFrameNames(TANKEFFECTS_SPRITESHEETS_KEY,
                     {
                         start: 0,
                         end: 8,
@@ -37,7 +44,7 @@ const AnimationManager = (function() {
 
             console.log(animation);
 
-            const explosionSprite = gameContext.add.sprite(200, 200, SPRITESHEETS_KEY);//, 'Sprite_Effects_Explosion_000.png');
+            const explosionSprite = gameContext.add.sprite(200, 200, TANKEFFECTS_SPRITESHEETS_KEY);//, 'Sprite_Effects_Explosion_000.png');
             explosionSprite.setName(42);
             explosionSprite.on('animationcomplete',
                 function(animationThatCompleted, currentFrame, gameObject, frameKey) {
