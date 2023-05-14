@@ -26,6 +26,9 @@ const RobotManager = (function() {
     const queuedRobotsForRemoval = {};
     let totalQueuedRobotsForRemovals = 0;
 
+    // We wait some time before hiding the robot after it gets destroyed so that it gets hidden during the explosion animation
+    const SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED = 0.5;
+
     const placeRobotInArena = function(robotBody) {
         const maxAttempts = 10;
         let attempts = 0;
@@ -188,19 +191,6 @@ const RobotManager = (function() {
             RobotsBoundsHelpers.drawHullBounds(i);
             RobotsBoundsHelpers.drawTurretBounds(i);
 
-            //const queuedRobotForRemoval = queuedRobotsForRemoval[i];
-            //if (queuedRobotForRemoval) {
-            //    const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
-            //    const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
-            //    //Logger.log("checking if we should remove now", i, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
-            //    if (timeSinceDestroyed_seconds > 1) {
-            //        Logger.log("removing robot", i);
-            //        removeAndHideRobot(i);
-            //        delete queuedRobotsForRemoval[i];
-            //        continue;
-            //    }
-            //}
-
             // Call the robot's update function
             const time = GameContextHolder.gameTime;
             const deltaTime = GameContextHolder.deltaTime;
@@ -217,7 +207,6 @@ const RobotManager = (function() {
         if (totalQueuedRobotsForRemovals > 0) {
             // console.log("checking if there are removals", totalQueuedRobotsForRemovals, queuedRobotsForRemoval);
             for (let queuedForRemovalRobotIndex in queuedRobotsForRemoval) {
-                // todo: continue here
                 if (!queuedRobotsForRemoval.hasOwnProperty(queuedForRemovalRobotIndex)) {
                     continue;
                 }
@@ -226,7 +215,7 @@ const RobotManager = (function() {
                 const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
                 const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
                 // Logger.log("checking if we should remove now", queuedForRemovalRobotIndex, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
-                if (timeSinceDestroyed_seconds > 0.1) {
+                if (timeSinceDestroyed_seconds > SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED) {
                     //Logger.log("removing robot", queuedForRemovalRobotIndex);
                     removeAndHideRobot(queuedForRemovalRobotIndex);
                     delete queuedRobotsForRemoval[queuedForRemovalRobotIndex];
