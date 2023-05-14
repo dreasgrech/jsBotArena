@@ -42,7 +42,7 @@ const AnimationManager = (function() {
             const loadedDatabasesFromJSON = AnimationSpritesDatabase.loadedDatabasesFromJSON;
             for (let i = 0; i < loadedDatabasesFromJSON.length; i++) {
                 const spriteDefinition = loadedDatabasesFromJSON[i];
-                Logger.log(spriteDefinition);
+                // Logger.log(spriteDefinition);
 
                 const spritesheetTextureKey = spriteDefinition.Key;
                 const spritesheetTextureFilename = spriteDefinition.SpritesheetTextureFilename;
@@ -52,12 +52,16 @@ const AnimationManager = (function() {
                 const spritesheetSpritesPoolIndex = GameObjectPoolsManager.createGameObjectPool({
                     poolName: spritesheetTextureKey,
                     createElement: () => {
-                        const sprite = gameContext.add.sprite(200, 200, spritesheetTextureKey);
+                        const sprite = gameContext.add.sprite(0, 0, spritesheetTextureKey);
+                        sprite.on('animationcomplete', function(animationThatCompleted, currentFrame, gameObject, frameKey) {
+                                console.log('anim complete!', animationThatCompleted, currentFrame, gameObject, frameKey);
+                                GameObjectPoolsManager.returnGameObjectToPool(spritesheetSpritesPoolIndex, sprite);
+                        });
                         return sprite;
                     }
                 });
                 GameObjectPoolsManager.prePopulateGameObjectsPool(spritesheetSpritesPoolIndex, 10);
-                Logger.log("spritesheetSpritesPoolIndex", spritesheetSpritesPoolIndex);
+                // Logger.log("spritesheetSpritesPoolIndex", spritesheetSpritesPoolIndex);
 
                 const animationsDefinitions = spriteDefinition.Animations;
                 for (let j = 0; j < animationsDefinitions.length; j++) {
@@ -81,7 +85,7 @@ const AnimationManager = (function() {
 
                     // Create the animation
                     const animation = gameContext.anims.create(animationOptions);
-                    Logger.log(animation);
+                    // Logger.log(animation);
 
                     const animationIndex = ++lastAnimationIndexCreated;
 
@@ -143,6 +147,12 @@ const AnimationManager = (function() {
             const animation = animations[animationType];
             const animationKey = animation.key;
             const spritesheetPoolIndex = animationKeyToSpritePoolIndex[animationKey];
+
+            const sprite = GameObjectPoolsManager.fetchGameObjectFromPool(spritesheetPoolIndex);
+            sprite.x = x;
+            sprite.y = y;
+
+            sprite.anims.play(animation);
             console.log(animation, spritesheetPoolIndex);
 
             // TODO: continue here, spawn the sprite
