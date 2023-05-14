@@ -120,6 +120,10 @@ const AnimationManager = (function() {
             const spriteIndex = animationManager.sprites.length;
             animationManager.sprites[spriteIndex] = sprite;
             return spriteIndex;
+        },
+        anchorAnimationTo: (spriteIndex, gameObjectAnchor) => {
+            // TODO: implement this function so that animations like firing can be attached to objects like the turret tip
+
         }
     };
 
