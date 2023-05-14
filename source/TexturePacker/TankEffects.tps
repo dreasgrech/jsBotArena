@@ -124,7 +124,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../images/Effects/Spritesheets/TankEffects.json</filename>
+                <filename>../../images/robots/Spritesheets/TankEffects.json</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,61 +173,61 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_000.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_001.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_002.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_003.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_004.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_005.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_006.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_007.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_008.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_01/Sprite_Effects_Exhaust_01_009.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_000.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_001.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_002.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_003.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_004.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_005.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_006.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_007.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_008.png</key>
-            <key type="filename">../../images/Effects/Sprites/Exhaust_02/Sprite_Effects_Exhaust_02_009.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_000.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_001.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_002.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_003.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_004.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_005.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_006.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_007.png</key>
-            <key type="filename">../../images/Effects/Sprites/Explosion/Sprite_Effects_Explosion_008.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_000.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_001.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_002.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_003.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_004.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_005.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_006.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_007.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_008.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_009.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_000.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_001.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_002.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_003.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_000.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_001.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_002.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_003.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_000.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_001.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_002.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_003.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_000.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_001.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_002.png</key>
-            <key type="filename">../../images/Effects/Sprites/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_003.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_000.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_001.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_002.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_003.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_004.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_005.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_006.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_007.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_008.png</key>
+            <key type="filename">TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_009.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_000.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_001.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_002.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_003.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_004.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_005.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_006.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_007.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_008.png</key>
+            <key type="filename">TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_009.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_000.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_001.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_002.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_003.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_004.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_005.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_006.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_007.png</key>
+            <key type="filename">TankEffects/Explosion/Sprite_Effects_Explosion_008.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_000.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_001.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_002.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_003.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_004.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_005.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_006.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_007.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_008.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_009.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_000.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_001.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_002.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_003.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_000.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_001.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_002.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_003.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_000.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_001.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_002.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_003.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_000.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_001.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_002.png</key>
+            <key type="filename">TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_003.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>
@@ -249,14 +249,14 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>../../images/Effects/Sprites/Exhaust_01</filename>
-                    <filename>../../images/Effects/Sprites/Exhaust_02</filename>
-                    <filename>../../images/Effects/Sprites/Explosion</filename>
-                    <filename>../../images/Effects/Sprites/Fire_Shots_Flame</filename>
-                    <filename>../../images/Effects/Sprites/Fire_Shots_Impact_A</filename>
-                    <filename>../../images/Effects/Sprites/Fire_Shots_Impact_B</filename>
-                    <filename>../../images/Effects/Sprites/Fire_Shots_Shot_A</filename>
-                    <filename>../../images/Effects/Sprites/Fire_Shots_Shot_B</filename>
+                    <filename>TankEffects/Exhaust_01</filename>
+                    <filename>TankEffects/Exhaust_02</filename>
+                    <filename>TankEffects/Explosion</filename>
+                    <filename>TankEffects/Fire_Shots_Flame</filename>
+                    <filename>TankEffects/Fire_Shots_Impact_A</filename>
+                    <filename>TankEffects/Fire_Shots_Impact_B</filename>
+                    <filename>TankEffects/Fire_Shots_Shot_A</filename>
+                    <filename>TankEffects/Fire_Shots_Shot_B</filename>
                 </array>
             </struct>
         </map>

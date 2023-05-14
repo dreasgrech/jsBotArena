@@ -35,15 +35,15 @@ const ImageDatabase = (function() {
         loadImage('floor_image', 'images/Arena/Floor - Dirt 2 64x64.png');
         loadImage('wall_image', 'images/Arena/Wall - Brick 2 64x64.png');
 
-        // Load the tracks images
-        for (let i = 0; i < totalTracks; i++) {
-            let track = `Track_${i + 1}`;
-            let trackAIdentifier = `${track}_A`;
-            let trackBIdentifier = `${track}_B`;
+    //    // Load the tracks images
+    //    for (let i = 0; i < totalTracks; i++) {
+    //        let track = `Track_${i + 1}`;
+    //        let trackAIdentifier = `${track}_A`;
+    //        let trackBIdentifier = `${track}_B`;
 
-            loadImage(trackAIdentifier, `${tracksImagesDirectory}/${trackAIdentifier}.png`);
-            loadImage(trackBIdentifier, `${tracksImagesDirectory}/${trackBIdentifier}.png`);
-        }
+    //        loadImage(trackAIdentifier, `${tracksImagesDirectory}/${trackAIdentifier}.png`);
+    //        loadImage(trackBIdentifier, `${tracksImagesDirectory}/${trackBIdentifier}.png`);
+    //    }
     };
 
     return {
