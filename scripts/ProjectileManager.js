@@ -84,12 +84,12 @@ const ProjectileManager = (function() {
             //const y = robotPositionY;
 
             const turretTipPosition = RobotsBoundsHelpers.getTurretTipPosition(robotIndex);
-            const x = turretTipPosition.x;
-            const y = turretTipPosition.y;
+            const turretTipPositionX = turretTipPosition.x;
+            const turretTipPositionY = turretTipPosition.y;
 
             const poolIndex = pools[projectileType];
             const projectileMatterGameObject = MatterGameObjectPoolManager.fetchMatterGameObjectFromPool(poolIndex);
-            projectileMatterGameObject.setPosition(x, y);
+            projectileMatterGameObject.setPosition(turretTipPositionX, turretTipPositionY);
             PhysicsBodies.enableMatterBody(projectileMatterGameObject);
 
             const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileType];
@@ -138,6 +138,16 @@ const ProjectileManager = (function() {
             //projectileMatterGameObject.setVelocity(Math.cos(angle_radians) * speed * dt, Math.sin(angle_radians) * speed * dt);
 
             // Logger.log("mapping", projectileMatterGameObject.body.id, "to", currentProjectileIndex);
+
+            const fireShotAnimationIndex = AnimationManager.playAnimation(
+                AnimationEffects.TankAnimationEffects.Fire_Shots_A,
+                turretTipPositionX,
+                turretTipPositionY,
+                turretAngle_degrees,
+                GameObjectDepths.ImpactAnimation,
+                ROBOT_SCALE);
+
+            //AnimationManager.sprites[fireShotAnimationIndex].setScale(ROBOT_SCALE);
 
             const now = GameContextHolder.gameTime;
             robotsLastFiredTime[robotIndex] = now;

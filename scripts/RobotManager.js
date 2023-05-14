@@ -303,7 +303,8 @@ const RobotManager = (function() {
                 RobotsData_CurrentData_positionXs[robotIndex],
                 RobotsData_CurrentData_positionYs[robotIndex],
                 -90,
-                GameObjectDepths.ImpactAnimation);
+                GameObjectDepths.ImpactAnimation,
+                1);
 
             //Logger.log("marking bot for removal", robotIndex);
         }

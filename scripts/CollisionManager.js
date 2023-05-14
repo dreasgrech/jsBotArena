@@ -163,7 +163,8 @@ const CollisionManager = (function() {
             projectileGameObject.x,
             projectileGameObject.y,
             oppositeProjectileAngle_degrees,
-            GameObjectDepths.ImpactAnimation);
+            GameObjectDepths.ImpactAnimation,
+            ROBOT_SCALE);
     };
 
     const obj = {
