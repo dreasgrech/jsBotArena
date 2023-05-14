@@ -1,12 +1,13 @@
 [
   {
     "Key":  "tankeffects",
+    "EnumType": "TankAnimationEffects",
     "SpritesheetTextureFilename": "TankEffects.png",
     "SpritesheetTextureDirectory": "/images/Effects/Spritesheets/",
-    "SpritesheetDefinitionFilepath": "/images/Effects/Spritesheets/TankEffects.json",
+    "SpritesheetAtlasFilepath": "/images/Effects/Spritesheets/TankEffects.json",
     "Animations": [
       {
-        "Key": "explosion",
+        "Key": "Explosion",
         "FramePrefix": "Sprite_Effects_Explosion_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 8,
@@ -16,7 +17,7 @@
         "Repeat": 0
       },
       {
-        "Key": "exhaust_01",
+        "Key": "Exhaust_01",
         "FramePrefix": "Sprite_Effects_Exhaust_01_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 9,

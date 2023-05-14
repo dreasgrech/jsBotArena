@@ -20,12 +20,12 @@ const AnimationSpritesDatabase = (function() {
                         const spritesheetTextureKey = spriteDefinition.Key;
                         //const spritesheetTextureFilename = spriteDefinition.SpritesheetTextureFilename;
                         const spritesheetTextureDirectory = spriteDefinition.SpritesheetTextureDirectory;
-                        const spritesheetDefinitionFilepath = spriteDefinition.SpritesheetDefinitionFilepath;
+                        const spritesheetAtlasFilepath = spriteDefinition.SpritesheetAtlasFilepath;
 
                         // Load the spritesheet
                         gameContext.load.multiatlas(
                             spritesheetTextureKey,
-                            spritesheetDefinitionFilepath,
+                            spritesheetAtlasFilepath,
                             spritesheetTextureDirectory);
 
 

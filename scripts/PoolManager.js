@@ -147,6 +147,9 @@ const GameObjectPoolsManager = (function() {
                         // move it out of view
                         gameObject.setPosition(poolPositionX, poolPositionY);
 
+                        gameObject.setActive(false);
+                        gameObject.setVisible(false);
+
                         return gameObject;
                     },
                     beforePush: beforePush,

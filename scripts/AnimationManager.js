@@ -1,5 +1,17 @@
 "use strict";
 
+//var TankAnimationEffects = {
+//    Explosion: 0,
+//    Exhaust_01: 0
+//};
+
+const AnimationEffects = {
+    TankAnimationEffects: {
+        Explosion: 0,
+        Exhaust_01: 0
+    }
+};
+
 const AnimationManager = (function() {
     /*
      * animationcomplete parameters:https://newdocs.phaser.io/docs/3.52.0/Phaser.Animations.Events.ANIMATION_COMPLETE
@@ -8,19 +20,21 @@ const AnimationManager = (function() {
     // TODO: Create a pool for the sprites
     // TODO: Create a json database for the animations
 
-    let lastSpriteIDCreated = -1;
+    let lastAnimationIndexCreated = -1;
 
-    let spritesPoolIndex;
+    const animationKeyToSpritePoolIndex = {};
+
+    const animations = [];
 
     //const TANKEFFECTS_SPRITESHEETS_KEY = 'tankeffects';
     //const TANKEFFECTS_SPRITESHEETS_DIRECTORY = "./images/Effects/Spritesheets";
     const animationManager = {
         system_preload: function() {
             const gameContext = GameContextHolder.gameContext;
-        //    gameContext.load.multiatlas(
-        //        TANKEFFECTS_SPRITESHEETS_KEY,
-        //        `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}/TankEffects.json`,
-        //        `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}`);
+            //    gameContext.load.multiatlas(
+            //        TANKEFFECTS_SPRITESHEETS_KEY,
+            //        `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}/TankEffects.json`,
+            //        `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}`);
         },
         system_create: function() {
             const gameContext = GameContextHolder.gameContext;
@@ -32,10 +46,24 @@ const AnimationManager = (function() {
 
                 const spritesheetTextureKey = spriteDefinition.Key;
                 const spritesheetTextureFilename = spriteDefinition.SpritesheetTextureFilename;
+                const spritesheetEnumType = spriteDefinition.EnumType;
+
+                // Create the pool of the sprites that will use this spritesheet
+                const spritesheetSpritesPoolIndex = GameObjectPoolsManager.createGameObjectPool({
+                    poolName: spritesheetTextureKey,
+                    createElement: () => {
+                        const sprite = gameContext.add.sprite(200, 200, spritesheetTextureKey);
+                        return sprite;
+                    }
+                });
+                GameObjectPoolsManager.prePopulateGameObjectsPool(spritesheetSpritesPoolIndex, 10);
+                Logger.log("spritesheetSpritesPoolIndex", spritesheetSpritesPoolIndex);
 
                 const animationsDefinitions = spriteDefinition.Animations;
                 for (let j = 0; j < animationsDefinitions.length; j++) {
                     const animationDefinition = animationsDefinitions[j];
+
+                    const animationKey = animationDefinition.Key;
 
                     const animationOptions = {
                         key: animationDefinition.Key,
@@ -51,8 +79,21 @@ const AnimationManager = (function() {
                         repeat: animationDefinition.Repeat
                     };
 
+                    // Create the animation
                     const animation = gameContext.anims.create(animationOptions);
                     Logger.log(animation);
+
+                    const animationIndex = ++lastAnimationIndexCreated;
+
+                    animations[animationIndex] = animation;
+
+                    // animationManager.animationEffects[spritesheetEnumType][animationKey] = animation;
+                    // animationManager.animationEffects[spritesheetEnumType][animationKey] = animationIndex;
+                    AnimationEffects[spritesheetEnumType][animationKey] = animationIndex;
+
+                    // Map the animation key to the spritesheet pool index that can play it
+                    // so that later we can resolve the pool index from the animation key
+                    animationKeyToSpritePoolIndex[animationKey] = spritesheetSpritesPoolIndex;
                 }
 
                 //    // Construct the ProjectileTypes enum
@@ -60,10 +101,8 @@ const AnimationManager = (function() {
                 //    ProjectileTypes[enumKey] = i; // Ex: ProjectileTypes.Heavy = 3
             }
 
-            // Clear the loaded databases array so that the contents get released
+            // Clear the loaded databases array so that the contents get released because we don't need them anymore
             AnimationSpritesDatabase.clearDatabases();
-
-            // GameObjectPoolsManager.createGameObjectPool({poolName:''})
 
             /*
             const animation = gameContext.anims.create({
@@ -93,6 +132,20 @@ const AnimationManager = (function() {
              // explosionSprite.anims.play('explosion');
             explosionSprite.anims.play(animation);
             */
+        },
+        //animationEffects: {
+        //    TankAnimationEffects: {
+        //        Explosion: 0,
+        //        Exhaust_01: 0
+        //    }
+        //},
+        playAnimation: function(animationType, x, y) {
+            const animation = animations[animationType];
+            const animationKey = animation.key;
+            const spritesheetPoolIndex = animationKeyToSpritePoolIndex[animationKey];
+            console.log(animation, spritesheetPoolIndex);
+
+            // TODO: continue here, spawn the sprite
         }
     };
 
