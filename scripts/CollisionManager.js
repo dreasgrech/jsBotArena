@@ -150,8 +150,19 @@ const CollisionManager = (function() {
 
          // Logger.log("projectile", projectileMatterBody, "arena", arenaBody);
 
+         const projectileGameObject = projectileMatterBody.parent.gameObject;
         // Mark the projectile for removal
-        ProjectileManager.markProjectileForRemoval(projectileMatterBody.parent.gameObject);
+        ProjectileManager.markProjectileForRemoval(projectileGameObject);
+
+        // Get the opposite angle of the projectile so we show the impact animation
+        const oppositeProjectileAngle_degrees = AngleOperations.getOppositeAngle_degrees(projectileGameObject.angle);
+
+        // Show the impact animation
+        AnimationManager.playAnimation(
+            AnimationEffects.TankAnimationEffects.Fire_Shots_Impact_A,
+            projectileGameObject.x,
+            projectileGameObject.y,
+            oppositeProjectileAngle_degrees);
     };
 
     const obj = {

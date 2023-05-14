@@ -107,6 +107,9 @@ const AnimationManager = (function() {
             sprite.x = x;
             sprite.y = y;
 
+            console.log("angle", angle_degrees);
+            sprite.angle = angle_degrees;
+
             // Play the animation on the sprite
             sprite.anims.play(animation);
 

@@ -19,6 +19,9 @@ const AngleOperations = (function() {
             const bearingDegrees = Phaser.Math.RadToDeg(bearingRadians);
             const bearing_degrees = AngleOperations.normalizeAngleDegrees(bearingDegrees);
             return bearing_degrees;
+        },
+        getOppositeAngle_degrees: angle_degrees => {
+            return (angle_degrees + 180) % 360;
         }
     };
 
