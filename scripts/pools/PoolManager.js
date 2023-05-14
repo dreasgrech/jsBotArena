@@ -1,5 +1,6 @@
 "use strict";
 
+// This enum is used when verifying that an item belongs to the correct pool it was spawned from
 const PoolType = BitmaskableObjectOperations.populateBitmaskableObject({
     Generic: 0,
     GameObject: 0,
@@ -19,7 +20,6 @@ const PoolsManager = (function() {
     const pool_createElementHooks = [];
     const pool_beforePushHooks = [];
     const pool_afterPopHooks = [];
-    const pool_currentlyPrePopulating = [];
 
     const handleAfterPop = function(poolIndex, element) {
         pool_afterPopHooks[poolIndex](element);
@@ -27,7 +27,6 @@ const PoolsManager = (function() {
         element.pool = BitmaskableObjectOperations.add(element.pool, POOL_TYPE);
         return element;
     };
-
 
     const poolManager = {
         createElementsPool: function({ poolName, createElement, beforePush, afterPop }) {
