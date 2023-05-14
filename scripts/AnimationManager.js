@@ -97,7 +97,7 @@ const AnimationManager = (function() {
             // Clear the loaded databases array so that the contents get released because we don't need them anymore
             AnimationSpritesDatabase.clearDatabases();
         },
-        playAnimation: function(animationType, x, y, angle_degrees = 0) {
+        playAnimation: function(animationType, x, y, angle_degrees, gameObjectDepth) {
             const animation = animations[animationType];
             const animationKey = animation.key;
             const spritesheetPoolIndex = animationKeyToSpritePoolIndex[animationKey];
@@ -109,6 +109,8 @@ const AnimationManager = (function() {
 
             console.log("angle", angle_degrees);
             sprite.angle = angle_degrees;
+
+            sprite.depth = gameObjectDepth;
 
             // Play the animation on the sprite
             sprite.anims.play(animation);

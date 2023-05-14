@@ -8,7 +8,10 @@ const GameObjectDepths = (function() {
         Projectile: 4,
         RobotBody: 5,
         RobotTurret: 6,
-        RobotRadarArc: 7,
+
+        ImpactAnimation: 10,
+
+        RobotRadarArc: 30,
 
         UI_RobotInformationPanel: baseUILayer + 1
     };

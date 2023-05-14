@@ -298,7 +298,12 @@ const RobotManager = (function() {
 
             totalAliveRobots--;
 
-            AnimationManager.playAnimation(AnimationEffects.TankAnimationEffects.Explosion, RobotsData_CurrentData_positionXs[robotIndex], RobotsData_CurrentData_positionYs[robotIndex]);
+            AnimationManager.playAnimation(
+                AnimationEffects.TankAnimationEffects.Explosion,
+                RobotsData_CurrentData_positionXs[robotIndex],
+                RobotsData_CurrentData_positionYs[robotIndex],
+                -90,
+                GameObjectDepths.ImpactAnimation);
 
             //Logger.log("marking bot for removal", robotIndex);
         }

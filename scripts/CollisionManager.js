@@ -162,7 +162,8 @@ const CollisionManager = (function() {
             AnimationEffects.TankAnimationEffects.Fire_Shots_Impact_A,
             projectileGameObject.x,
             projectileGameObject.y,
-            oppositeProjectileAngle_degrees);
+            oppositeProjectileAngle_degrees,
+            GameObjectDepths.ImpactAnimation);
     };
 
     const obj = {
