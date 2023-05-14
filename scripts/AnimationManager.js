@@ -54,7 +54,7 @@ const AnimationManager = (function() {
                     createElement: () => {
                         const sprite = gameContext.add.sprite(0, 0, spritesheetTextureKey);
                         sprite.on('animationcomplete', function(animationThatCompleted, currentFrame, gameObject, frameKey) {
-                                console.log('anim complete!', animationThatCompleted, currentFrame, gameObject, frameKey);
+                                //console.log('anim complete!', animationThatCompleted, currentFrame, gameObject, frameKey);
                                 GameObjectPoolsManager.returnGameObjectToPool(spritesheetSpritesPoolIndex, sprite);
                         });
                         return sprite;

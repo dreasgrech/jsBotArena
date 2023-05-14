@@ -298,6 +298,8 @@ const RobotManager = (function() {
 
             totalAliveRobots--;
 
+            AnimationManager.playAnimation(AnimationEffects.TankAnimationEffects.Explosion, RobotsData_CurrentData_positionXs[robotIndex], RobotsData_CurrentData_positionYs[robotIndex]);
+
             //Logger.log("marking bot for removal", robotIndex);
         }
     };
