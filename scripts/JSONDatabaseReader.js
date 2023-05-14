@@ -6,8 +6,8 @@ const JSONDatabaseReader = (function() {
         loadDatabase: function(fileKey, filePath, onFileLoadedCallback) {
             const gameContext = GameContextHolder.gameContext;
 
-            gameContext.load.on(`filecomplete-json-${fileKey}`, function (key, type, projectileDefinitions) {
-                onFileLoadedCallback(projectileDefinitions);
+            gameContext.load.on(`filecomplete-json-${fileKey}`, function (key, type, data) {
+                onFileLoadedCallback(data);
             });
 
             // Start loading the db json file

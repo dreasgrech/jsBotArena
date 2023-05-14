@@ -97,9 +97,6 @@ const CollisionManager = (function() {
 
             const damageApplied = robotHealthBeforeDamage - newRobotHealth;
 
-            // TODO: save projectile info for the api
-            // TODO: pool this
-
             const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
             const robotX = robotHullImage.x;
             const robotY = robotHullImage.y;
@@ -109,6 +106,8 @@ const CollisionManager = (function() {
 
             const bearing_degrees = AngleOperations.getBearing_degrees(robotX, robotY, projectileX, projectileY);
 
+            // save projectile info for the api
+            // TODO: pool this
             const robotToProjectileCollisionInfo = RobotToProjectileCollisionInfo();
             robotToProjectileCollisionInfo.positionX = projectileX;
             robotToProjectileCollisionInfo.positionY = projectileY;

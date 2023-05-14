@@ -41,4 +41,3 @@ const ProjectilesDatabase = (function() {
 
     return projectileDatabase;
 }());
-

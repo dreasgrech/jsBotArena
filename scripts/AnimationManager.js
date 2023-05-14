@@ -12,24 +12,62 @@ const AnimationManager = (function() {
 
     let spritesPoolIndex;
 
-    const TANKEFFECTS_SPRITESHEETS_KEY = 'tankeffects';
-    const TANKEFFECTS_SPRITESHEETS_DIRECTORY = "./images/Effects/Spritesheets";
+    //const TANKEFFECTS_SPRITESHEETS_KEY = 'tankeffects';
+    //const TANKEFFECTS_SPRITESHEETS_DIRECTORY = "./images/Effects/Spritesheets";
     const animationManager = {
         system_preload: function() {
             const gameContext = GameContextHolder.gameContext;
-            gameContext.load.multiatlas(
-                TANKEFFECTS_SPRITESHEETS_KEY,
-                `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}/TankEffects.json`,
-                `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}`);
+        //    gameContext.load.multiatlas(
+        //        TANKEFFECTS_SPRITESHEETS_KEY,
+        //        `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}/TankEffects.json`,
+        //        `${TANKEFFECTS_SPRITESHEETS_DIRECTORY}`);
         },
         system_create: function() {
             const gameContext = GameContextHolder.gameContext;
 
+            const loadedDatabasesFromJSON = AnimationSpritesDatabase.loadedDatabasesFromJSON;
+            for (let i = 0; i < loadedDatabasesFromJSON.length; i++) {
+                const spriteDefinition = loadedDatabasesFromJSON[i];
+                Logger.log(spriteDefinition);
+
+                const spritesheetTextureKey = spriteDefinition.Key;
+                const spritesheetTextureFilename = spriteDefinition.SpritesheetTextureFilename;
+
+                const animationsDefinitions = spriteDefinition.Animations;
+                for (let j = 0; j < animationsDefinitions.length; j++) {
+                    const animationDefinition = animationsDefinitions[j];
+
+                    const animationOptions = {
+                        key: animationDefinition.Key,
+                        frames: gameContext.anims.generateFrameNames(spritesheetTextureKey,
+                            {
+                                start: animationDefinition.StartFrameNumber,
+                                end: animationDefinition.EndFrameNumber,
+                                zeroPad: animationDefinition.FrameZeroPadding,
+                                prefix: animationDefinition.FramePrefix,
+                                suffix: animationDefinition.FrameSuffix
+                            }),
+                        frameRate: animationDefinition.FrameRate,
+                        repeat: animationDefinition.Repeat
+                    };
+
+                    const animation = gameContext.anims.create(animationOptions);
+                    Logger.log(animation);
+                }
+
+                //    // Construct the ProjectileTypes enum
+                //    const enumKey = projectileDefinition.EnumKey;
+                //    ProjectileTypes[enumKey] = i; // Ex: ProjectileTypes.Heavy = 3
+            }
+
+            // Clear the loaded databases array so that the contents get released
+            AnimationSpritesDatabase.clearDatabases();
+
             // GameObjectPoolsManager.createGameObjectPool({poolName:''})
 
+            /*
             const animation = gameContext.anims.create({
-                // key: 'explosion',
-                key: 5,
+                key: 'explosion',
                 frames: gameContext.anims.generateFrameNames(TANKEFFECTS_SPRITESHEETS_KEY,
                     {
                         start: 0,
@@ -53,9 +91,10 @@ const AnimationManager = (function() {
                      explosionSprite.setVisible(false);
                 });
              // explosionSprite.anims.play('explosion');
-             explosionSprite.anims.play('5');
-            //explosionSprite.anims.play(animation);
+            explosionSprite.anims.play(animation);
+            */
         }
     };
+
     return animationManager;
 }());
