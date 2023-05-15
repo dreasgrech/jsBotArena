@@ -135,10 +135,13 @@ const RobotMatterFactory = (function() {
 
         RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
 
-        const exhaustAnimationSprite = AnimationManager.fetchSpriteForAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
+        const exhaustAnimationSpriteIndex = AnimationManager.fetchSpriteForAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
+        // TODO: continue here
+        // TODO: continue here
+        // TODO: continue here
         // TODO: continue here
         //AnimationManager.playAnimationOnSprite()
-        Logger.log(exhaustAnimationSprite);
+        //Logger.log("exhaustAnimationSpriteIndex", exhaustAnimationSpriteIndex);
         //console.log("creating robot");
     };
 

@@ -102,8 +102,14 @@ const AnimationManager = (function() {
         },
         sprites: [],
         fetchSpriteFromPool: function(poolIndex) {
+            // Fetch a sprite from the pool
             const sprite = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
-            return sprite;
+
+            // Save the sprite in our collection so that other functions can use it
+            const spriteIndex = ++lastSpriteIndexCreated;
+            animationManager.sprites[spriteIndex] = sprite;
+
+            return spriteIndex;
         },
         fetchSpriteForAnimation: function(animationType) {
             //console.log(animationType, animations);
@@ -112,7 +118,8 @@ const AnimationManager = (function() {
             const spritesheetPoolIndex = animationKeyToSpritePoolIndex[animationKey];
 
             // Fetch a sprite from the pool
-            return animationManager.fetchSpriteFromPool(spritesheetPoolIndex);
+            const spriteIndex = animationManager.fetchSpriteFromPool(spritesheetPoolIndex);
+            return spriteIndex;
         },
         playAnimationOnSprite: function(spriteIndex, animationType, x, y, angle_degrees, gameObjectDepth, scale = 1) {
             const animation = animations[animationType];
@@ -128,11 +135,8 @@ const AnimationManager = (function() {
             sprite.anims.play(animation);
         },
         playAnimation: function(animationType, x, y, angle_degrees, gameObjectDepth, scale = 1) {
-            // Fetch a sprite from the pool
-            const sprite = animationManager.fetchSpriteForAnimation(animationType);
-
-            const spriteIndex = ++lastSpriteIndexCreated;
-            animationManager.sprites[spriteIndex] = sprite;
+            // Fetch a sprite for the animation from the pool
+            const spriteIndex = animationManager.fetchSpriteForAnimation(animationType);
 
             // Play the animation on the sprite
             animationManager.playAnimationOnSprite(spriteIndex, animationType, x, y, angle_degrees, gameObjectDepth, scale);
