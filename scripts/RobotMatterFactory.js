@@ -134,6 +134,12 @@ const RobotMatterFactory = (function() {
         //turretImage.alpha = 1;// TODO: setting this while calibrating hull turret hole offset
 
         RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
+
+        const exhaustAnimationSprite = AnimationManager.fetchSpriteForAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
+        // TODO: continue here
+        //AnimationManager.playAnimationOnSprite()
+        Logger.log(exhaustAnimationSprite);
+        //console.log("creating robot");
     };
 
     const robotMatterFactory = {

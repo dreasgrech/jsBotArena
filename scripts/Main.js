@@ -16,12 +16,12 @@ const gameManager = (function() {
     const objectsWith_create = [
         AnimationSpritesDatabase,
         ProjectileManager,
+        AnimationManager,
         //RobotMatterFactory,
-        RobotManager,
         CollisionManager,
         UIManager,
         RobotsRadar,
-        AnimationManager
+        RobotManager
     ];
 
     const objectsWith_onEndOfFrame = [
@@ -85,14 +85,14 @@ const gameManager = (function() {
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
-        RobotManager.addRobot(keyBot());
-        RobotManager.addRobot(doNothingBot());
-        RobotManager.addRobot(shredder());
-        RobotManager.addRobot(circleBot());
-        RobotManager.addRobot(sittingBot());
-        RobotManager.addRobot(followBot_followAngle());
-        RobotManager.addRobot(followBot_followPosition());
-        RobotManager.addRobot(CornerGuardBot());
+        //RobotManager.addRobot(keyBot());
+        //RobotManager.addRobot(doNothingBot());
+        //RobotManager.addRobot(shredder());
+        //RobotManager.addRobot(circleBot());
+        //RobotManager.addRobot(sittingBot());
+        //RobotManager.addRobot(followBot_followAngle());
+        //RobotManager.addRobot(followBot_followPosition());
+        //RobotManager.addRobot(CornerGuardBot());
 
         // setTimeout(() => { RobotManager.addRobot(circleBot()); }, 1500);
         //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2000);
@@ -107,6 +107,15 @@ const gameManager = (function() {
             const toLoad = objectsWith_create[i];
             toLoad.system_create();
         }
+
+        RobotManager.addRobot(keyBot());
+        RobotManager.addRobot(doNothingBot());
+        RobotManager.addRobot(shredder());
+        RobotManager.addRobot(circleBot());
+        RobotManager.addRobot(sittingBot());
+        RobotManager.addRobot(followBot_followAngle());
+        RobotManager.addRobot(followBot_followPosition());
+        RobotManager.addRobot(CornerGuardBot());
     };
 
     const update = function(time, delta) {

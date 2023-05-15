@@ -5,7 +5,9 @@
     "EnumKey": "One",
     "Filename": "Hull_01.png",
     "TurretHoleOffsetX": -18, 
-    "TurretHoleOffsetY": 0 
+    "TurretHoleOffsetY": 0,
+    "ExhaustOffsetX": 10, 
+    "ExhaustOffsetY": 10
   },
   {
     "PhaserImageKey": "Hull_02",

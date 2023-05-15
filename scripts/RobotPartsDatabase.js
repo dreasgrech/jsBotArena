@@ -16,6 +16,8 @@ const RobotPartsDatabase = (function() {
         filenames: [],
         TurretHoleOffsetsX: [],
         TurretHoleOffsetsY: [],
+        ExhaustOffsetX: [],
+        ExhaustOffsetY: [],
     };
 
     const turrets = {
@@ -39,6 +41,8 @@ const RobotPartsDatabase = (function() {
                     hulls.filenames[i] = definition.Filename;
                     hulls.TurretHoleOffsetsX[i] = definition.TurretHoleOffsetX;
                     hulls.TurretHoleOffsetsY[i] = definition.TurretHoleOffsetY;
+                    hulls.ExhaustOffsetX[i] = definition.ExhaustOffsetX;
+                    hulls.ExhaustOffsetY[i] = definition.ExhaustOffsetY;
 
                     // Logger.log(i, definition, hulls.TurretHoleOffsetsX, hulls.TurretHoleOffsetsY);
 
