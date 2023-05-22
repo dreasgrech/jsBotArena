@@ -1,0 +1,1847 @@
+{
+	"textures": [
+		{
+			"image": "GameSpritesheet.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 492,
+				"h": 2029
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "Robots/Hulls/Hull_06.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 52,
+						"w": 256,
+						"h": 152
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 256,
+						"h": 152
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 13,
+						"w": 232,
+						"h": 239
+					},
+					"frame": {
+						"x": 259,
+						"y": 1,
+						"w": 232,
+						"h": 239
+					}
+				},
+				{
+					"filename": "Robots/Hulls/Hull_07.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 64,
+						"w": 254,
+						"h": 128
+					},
+					"frame": {
+						"x": 1,
+						"y": 155,
+						"w": 254,
+						"h": 128
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 101,
+						"w": 231,
+						"h": 47
+					},
+					"frame": {
+						"x": 257,
+						"y": 242,
+						"w": 231,
+						"h": 47
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 4,
+						"w": 253,
+						"h": 248
+					},
+					"frame": {
+						"x": 1,
+						"y": 285,
+						"w": 253,
+						"h": 248
+					}
+				},
+				{
+					"filename": "Robots/Hulls/Hull_05.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 64,
+						"w": 229,
+						"h": 128
+					},
+					"frame": {
+						"x": 256,
+						"y": 291,
+						"w": 229,
+						"h": 128
+					}
+				},
+				{
+					"filename": "Robots/Turrets/Gun_02.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 224,
+						"h": 92
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 224,
+						"h": 92
+					},
+					"frame": {
+						"x": 256,
+						"y": 421,
+						"w": 224,
+						"h": 92
+					}
+				},
+				{
+					"filename": "Robots/Turrets/Gun_07.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 207,
+						"h": 86
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 207,
+						"h": 86
+					},
+					"frame": {
+						"x": 256,
+						"y": 515,
+						"w": 207,
+						"h": 86
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 4,
+						"w": 253,
+						"h": 248
+					},
+					"frame": {
+						"x": 1,
+						"y": 535,
+						"w": 253,
+						"h": 248
+					}
+				},
+				{
+					"filename": "Projectiles/Light_Shell.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 51,
+						"y": 58,
+						"w": 26,
+						"h": 12
+					},
+					"frame": {
+						"x": 465,
+						"y": 515,
+						"w": 26,
+						"h": 12
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 86,
+						"y": 90,
+						"w": 24,
+						"h": 76
+					},
+					"frame": {
+						"x": 465,
+						"y": 529,
+						"w": 24,
+						"h": 76
+					}
+				},
+				{
+					"filename": "Robots/Hulls/Hull_08.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 26,
+						"y": 68,
+						"w": 204,
+						"h": 120
+					},
+					"frame": {
+						"x": 256,
+						"y": 603,
+						"w": 204,
+						"h": 120
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 29,
+						"y": 31,
+						"w": 198,
+						"h": 194
+					},
+					"frame": {
+						"x": 256,
+						"y": 725,
+						"w": 198,
+						"h": 194
+					}
+				},
+				{
+					"filename": "Projectiles/Shotgun_Shells.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 47,
+						"y": 36,
+						"w": 34,
+						"h": 56
+					},
+					"frame": {
+						"x": 456,
+						"y": 725,
+						"w": 34,
+						"h": 56
+					}
+				},
+				{
+					"filename": "Robots/Hulls/Hull_01.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 2,
+						"y": 45,
+						"w": 250,
+						"h": 166
+					},
+					"frame": {
+						"x": 1,
+						"y": 785,
+						"w": 250,
+						"h": 166
+					}
+				},
+				{
+					"filename": "Robots/Hulls/Hull_02.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 8,
+						"y": 53,
+						"w": 237,
+						"h": 150
+					},
+					"frame": {
+						"x": 253,
+						"y": 921,
+						"w": 237,
+						"h": 150
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 107,
+						"y": 112,
+						"w": 32,
+						"h": 32
+					},
+					"frame": {
+						"x": 456,
+						"y": 783,
+						"w": 32,
+						"h": 32
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 92,
+						"y": 111,
+						"w": 31,
+						"h": 34
+					},
+					"frame": {
+						"x": 456,
+						"y": 817,
+						"w": 31,
+						"h": 34
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 113,
+						"y": 115,
+						"w": 30,
+						"h": 26
+					},
+					"frame": {
+						"x": 456,
+						"y": 853,
+						"w": 30,
+						"h": 26
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 5,
+						"y": 100,
+						"w": 245,
+						"h": 53
+					},
+					"frame": {
+						"x": 1,
+						"y": 953,
+						"w": 245,
+						"h": 53
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 94,
+						"w": 244,
+						"h": 70
+					},
+					"frame": {
+						"x": 1,
+						"y": 1008,
+						"w": 244,
+						"h": 70
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 94,
+						"w": 244,
+						"h": 70
+					},
+					"frame": {
+						"x": 1,
+						"y": 1008,
+						"w": 244,
+						"h": 70
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 6,
+						"y": 101,
+						"w": 242,
+						"h": 54
+					},
+					"frame": {
+						"x": 247,
+						"y": 1073,
+						"w": 242,
+						"h": 54
+					}
+				},
+				{
+					"filename": "Robots/Hulls/Hull_03.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 10,
+						"y": 64,
+						"w": 236,
+						"h": 128
+					},
+					"frame": {
+						"x": 1,
+						"y": 1080,
+						"w": 236,
+						"h": 128
+					}
+				},
+				{
+					"filename": "Robots/Hulls/Hull_04.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 70,
+						"w": 194,
+						"h": 116
+					},
+					"frame": {
+						"x": 239,
+						"y": 1129,
+						"w": 194,
+						"h": 116
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 170,
+						"y": 94,
+						"w": 56,
+						"h": 68
+					},
+					"frame": {
+						"x": 435,
+						"y": 1129,
+						"w": 56,
+						"h": 68
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 170,
+						"y": 94,
+						"w": 56,
+						"h": 68
+					},
+					"frame": {
+						"x": 435,
+						"y": 1199,
+						"w": 56,
+						"h": 68
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 35,
+						"y": 42,
+						"w": 186,
+						"h": 164
+					},
+					"frame": {
+						"x": 1,
+						"y": 1210,
+						"w": 186,
+						"h": 164
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 74,
+						"y": 119,
+						"w": 47,
+						"h": 18
+					},
+					"frame": {
+						"x": 189,
+						"y": 1210,
+						"w": 47,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 74,
+						"y": 119,
+						"w": 47,
+						"h": 18
+					},
+					"frame": {
+						"x": 189,
+						"y": 1210,
+						"w": 47,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 74,
+						"y": 119,
+						"w": 47,
+						"h": 18
+					},
+					"frame": {
+						"x": 189,
+						"y": 1210,
+						"w": 47,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 74,
+						"y": 119,
+						"w": 47,
+						"h": 18
+					},
+					"frame": {
+						"x": 189,
+						"y": 1210,
+						"w": 47,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_005.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 74,
+						"y": 121,
+						"w": 47,
+						"h": 14
+					},
+					"frame": {
+						"x": 189,
+						"y": 1230,
+						"w": 47,
+						"h": 14
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_004.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 75,
+						"y": 117,
+						"w": 46,
+						"h": 21
+					},
+					"frame": {
+						"x": 189,
+						"y": 1246,
+						"w": 46,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Robots/Turrets/Gun_01.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 185,
+						"h": 76
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 185,
+						"h": 76
+					},
+					"frame": {
+						"x": 237,
+						"y": 1247,
+						"w": 185,
+						"h": 76
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_009.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 176,
+						"y": 116,
+						"w": 44,
+						"h": 24
+					},
+					"frame": {
+						"x": 189,
+						"y": 1269,
+						"w": 44,
+						"h": 24
+					}
+				},
+				{
+					"filename": "Projectiles/Heavy_Shell.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 32,
+						"y": 53,
+						"w": 64,
+						"h": 22
+					},
+					"frame": {
+						"x": 424,
+						"y": 1269,
+						"w": 64,
+						"h": 22
+					}
+				},
+				{
+					"filename": "Robots/Tracks/Track 1/Track_1_A.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 246
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 246
+					},
+					"frame": {
+						"x": 189,
+						"y": 1295,
+						"w": 42,
+						"h": 246
+					}
+				},
+				{
+					"filename": "Robots/Turrets/Gun_05.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 184,
+						"h": 74
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 184,
+						"h": 74
+					},
+					"frame": {
+						"x": 1,
+						"y": 1376,
+						"w": 184,
+						"h": 74
+					}
+				},
+				{
+					"filename": "Robots/Turrets/Gun_04.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 183,
+						"h": 79
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 183,
+						"h": 79
+					},
+					"frame": {
+						"x": 1,
+						"y": 1452,
+						"w": 183,
+						"h": 79
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 1,
+						"y": 119,
+						"w": 60,
+						"h": 18
+					},
+					"frame": {
+						"x": 424,
+						"y": 1293,
+						"w": 60,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 63,
+						"y": 117,
+						"w": 58,
+						"h": 21
+					},
+					"frame": {
+						"x": 424,
+						"y": 1313,
+						"w": 58,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Robots/Turrets/Gun_03.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 174,
+						"h": 70
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 174,
+						"h": 70
+					},
+					"frame": {
+						"x": 1,
+						"y": 1533,
+						"w": 174,
+						"h": 70
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 52,
+						"y": 55,
+						"w": 152,
+						"h": 146
+					},
+					"frame": {
+						"x": 233,
+						"y": 1325,
+						"w": 152,
+						"h": 146
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 100,
+						"w": 104,
+						"h": 56
+					},
+					"frame": {
+						"x": 387,
+						"y": 1336,
+						"w": 104,
+						"h": 56
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 103,
+						"y": 100,
+						"w": 103,
+						"h": 56
+					},
+					"frame": {
+						"x": 387,
+						"y": 1394,
+						"w": 103,
+						"h": 56
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 99,
+						"y": 69,
+						"w": 98,
+						"h": 118
+					},
+					"frame": {
+						"x": 387,
+						"y": 1452,
+						"w": 98,
+						"h": 118
+					}
+				},
+				{
+					"filename": "Robots/Turrets/Gun_08.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 146,
+						"h": 65
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 146,
+						"h": 65
+					},
+					"frame": {
+						"x": 233,
+						"y": 1473,
+						"w": 146,
+						"h": 65
+					}
+				},
+				{
+					"filename": "Robots/Turrets/Gun_06.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 143,
+						"h": 86
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 143,
+						"h": 86
+					},
+					"frame": {
+						"x": 233,
+						"y": 1540,
+						"w": 143,
+						"h": 86
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 101,
+						"y": 104,
+						"w": 54,
+						"h": 48
+					},
+					"frame": {
+						"x": 177,
+						"y": 1543,
+						"w": 54,
+						"h": 48
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 101,
+						"y": 104,
+						"w": 54,
+						"h": 48
+					},
+					"frame": {
+						"x": 177,
+						"y": 1593,
+						"w": 54,
+						"h": 48
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 95,
+						"y": 79,
+						"w": 98,
+						"h": 98
+					},
+					"frame": {
+						"x": 378,
+						"y": 1572,
+						"w": 98,
+						"h": 98
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 113,
+						"y": 101,
+						"w": 130,
+						"h": 61
+					},
+					"frame": {
+						"x": 233,
+						"y": 1628,
+						"w": 130,
+						"h": 61
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 66,
+						"y": 74,
+						"w": 124,
+						"h": 108
+					},
+					"frame": {
+						"x": 365,
+						"y": 1672,
+						"w": 124,
+						"h": 108
+					}
+				},
+				{
+					"filename": "Robots/Tracks/Track 1/Track_1_B.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 246
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 246
+					},
+					"frame": {
+						"x": 1,
+						"y": 1782,
+						"w": 42,
+						"h": 246
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 63,
+						"y": 103,
+						"w": 130,
+						"h": 56
+					},
+					"frame": {
+						"x": 45,
+						"y": 1605,
+						"w": 130,
+						"h": 56
+					}
+				},
+				{
+					"filename": "Projectiles/Granade_Shell.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 43,
+						"y": 53,
+						"w": 42,
+						"h": 22
+					},
+					"frame": {
+						"x": 1,
+						"y": 1605,
+						"w": 42,
+						"h": 22
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 102,
+						"y": 119,
+						"w": 41,
+						"h": 18
+					},
+					"frame": {
+						"x": 1,
+						"y": 1629,
+						"w": 41,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 108,
+						"y": 107,
+						"w": 40,
+						"h": 42
+					},
+					"frame": {
+						"x": 1,
+						"y": 1649,
+						"w": 40,
+						"h": 42
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 68,
+						"y": 112,
+						"w": 52,
+						"h": 30
+					},
+					"frame": {
+						"x": 177,
+						"y": 1643,
+						"w": 52,
+						"h": 30
+					}
+				},
+				{
+					"filename": "Robots/Tracks/Track 2/Track_2_A.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 246
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 246
+					},
+					"frame": {
+						"x": 45,
+						"y": 1782,
+						"w": 42,
+						"h": 246
+					}
+				},
+				{
+					"filename": "TankEffects/Explosion/Sprite_Effects_Explosion_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 85,
+						"y": 87,
+						"w": 86,
+						"h": 82
+					},
+					"frame": {
+						"x": 89,
+						"y": 1663,
+						"w": 86,
+						"h": 82
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 96,
+						"y": 93,
+						"w": 84,
+						"h": 70
+					},
+					"frame": {
+						"x": 1,
+						"y": 1693,
+						"w": 84,
+						"h": 70
+					}
+				},
+				{
+					"filename": "Projectiles/Laser.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 25,
+						"y": 57,
+						"w": 78,
+						"h": 14
+					},
+					"frame": {
+						"x": 1,
+						"y": 1765,
+						"w": 78,
+						"h": 14
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 66,
+						"y": 121,
+						"w": 52,
+						"h": 14
+					},
+					"frame": {
+						"x": 81,
+						"y": 1765,
+						"w": 52,
+						"h": 14
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 68,
+						"y": 121,
+						"w": 52,
+						"h": 14
+					},
+					"frame": {
+						"x": 81,
+						"y": 1765,
+						"w": 52,
+						"h": 14
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 66,
+						"y": 121,
+						"w": 52,
+						"h": 14
+					},
+					"frame": {
+						"x": 81,
+						"y": 1765,
+						"w": 52,
+						"h": 14
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_009.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 66,
+						"y": 121,
+						"w": 52,
+						"h": 14
+					},
+					"frame": {
+						"x": 81,
+						"y": 1765,
+						"w": 52,
+						"h": 14
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_008.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 52,
+						"y": 117,
+						"w": 52,
+						"h": 21
+					},
+					"frame": {
+						"x": 177,
+						"y": 1675,
+						"w": 52,
+						"h": 21
+					}
+				},
+				{
+					"filename": "Projectiles/Sniper_Shell.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 38,
+						"y": 57,
+						"w": 52,
+						"h": 13
+					},
+					"frame": {
+						"x": 87,
+						"y": 1747,
+						"w": 52,
+						"h": 13
+					}
+				},
+				{
+					"filename": "Robots/Tracks/Track 2/Track_2_B.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 246
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 246
+					},
+					"frame": {
+						"x": 89,
+						"y": 1782,
+						"w": 42,
+						"h": 246
+					}
+				},
+				{
+					"filename": "Robots/Tracks/Track 3/Track_3_A.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 246
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 246
+					},
+					"frame": {
+						"x": 133,
+						"y": 1782,
+						"w": 42,
+						"h": 246
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_000.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 63,
+						"y": 119,
+						"w": 58,
+						"h": 18
+					},
+					"frame": {
+						"x": 135,
+						"y": 1762,
+						"w": 58,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_006.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 63,
+						"y": 119,
+						"w": 58,
+						"h": 18
+					},
+					"frame": {
+						"x": 135,
+						"y": 1762,
+						"w": 58,
+						"h": 18
+					}
+				},
+				{
+					"filename": "Robots/Tracks/Track 3/Track_3_B.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 246
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 246
+					},
+					"frame": {
+						"x": 177,
+						"y": 1782,
+						"w": 42,
+						"h": 246
+					}
+				},
+				{
+					"filename": "Robots/Tracks/Track 4/Track_4_A.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 246
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 246
+					},
+					"frame": {
+						"x": 221,
+						"y": 1782,
+						"w": 42,
+						"h": 246
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 109,
+						"y": 100,
+						"w": 97,
+						"h": 56
+					},
+					"frame": {
+						"x": 265,
+						"y": 1691,
+						"w": 97,
+						"h": 56
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_003.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 100,
+						"y": 69,
+						"w": 96,
+						"h": 118
+					},
+					"frame": {
+						"x": 265,
+						"y": 1749,
+						"w": 96,
+						"h": 118
+					}
+				},
+				{
+					"filename": "Robots/Tracks/Track 4/Track_4_B.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 42,
+						"h": 246
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 42,
+						"h": 246
+					},
+					"frame": {
+						"x": 363,
+						"y": 1782,
+						"w": 42,
+						"h": 246
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_002.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 96,
+						"y": 79,
+						"w": 96,
+						"h": 98
+					},
+					"frame": {
+						"x": 265,
+						"y": 1869,
+						"w": 96,
+						"h": 98
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 96,
+						"y": 93,
+						"w": 84,
+						"h": 70
+					},
+					"frame": {
+						"x": 407,
+						"y": 1782,
+						"w": 84,
+						"h": 70
+					}
+				},
+				{
+					"filename": "Projectiles/Medium_Shell.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 44,
+						"y": 55,
+						"w": 40,
+						"h": 18
+					},
+					"frame": {
+						"x": 43,
+						"y": 1663,
+						"w": 40,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 103,
+						"y": 105,
+						"w": 78,
+						"h": 46
+					},
+					"frame": {
+						"x": 407,
+						"y": 1854,
+						"w": 78,
+						"h": 46
+					}
+				},
+				{
+					"filename": "Projectiles/Plasma.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 128,
+						"h": 128
+					},
+					"spriteSourceSize": {
+						"x": 26,
+						"y": 54,
+						"w": 76,
+						"h": 19
+					},
+					"frame": {
+						"x": 407,
+						"y": 1902,
+						"w": 76,
+						"h": 19
+					}
+				},
+				{
+					"filename": "TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_001.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 109,
+						"y": 105,
+						"w": 72,
+						"h": 46
+					},
+					"frame": {
+						"x": 407,
+						"y": 1923,
+						"w": 72,
+						"h": 46
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_007.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 66,
+						"y": 119,
+						"w": 52,
+						"h": 18
+					},
+					"frame": {
+						"x": 195,
+						"y": 1698,
+						"w": 52,
+						"h": 18
+					}
+				},
+				{
+					"filename": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_009.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 256,
+						"h": 256
+					},
+					"spriteSourceSize": {
+						"x": 32,
+						"y": 117,
+						"w": 38,
+						"h": 21
+					},
+					"frame": {
+						"x": 177,
+						"y": 1718,
+						"w": 38,
+						"h": 21
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:8aac92745ee123df70b7780342cde136:d91ef28a87a3db6fbd09d3009eaf5067:b4e1c8fb1ffb9e21024ba93f35d4574f$"
+	}
+}

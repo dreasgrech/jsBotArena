@@ -124,7 +124,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../images/robots/Spritesheets/TankEffects.json</filename>
+                <filename>../../images/robots/Spritesheets/GameSpritesheet.json</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -141,7 +141,7 @@
             <string></string>
         </struct>
         <key>autoAliasEnabled</key>
-        <false/>
+        <true/>
         <key>trimSpriteNames</key>
         <false/>
         <key>prependSmartFolderName</key>
@@ -173,6 +173,36 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">images/Projectiles/Granade_Shell.png</key>
+            <key type="filename">images/Projectiles/Heavy_Shell.png</key>
+            <key type="filename">images/Projectiles/Laser.png</key>
+            <key type="filename">images/Projectiles/Light_Shell.png</key>
+            <key type="filename">images/Projectiles/Medium_Shell.png</key>
+            <key type="filename">images/Projectiles/Plasma.png</key>
+            <key type="filename">images/Projectiles/Shotgun_Shells.png</key>
+            <key type="filename">images/Projectiles/Sniper_Shell.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9Paddings</key>
+                <rect>32,32,64,64</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Hulls/Hull_01.png</key>
+            <key type="filename">images/Robots/Hulls/Hull_02.png</key>
+            <key type="filename">images/Robots/Hulls/Hull_03.png</key>
+            <key type="filename">images/Robots/Hulls/Hull_04.png</key>
+            <key type="filename">images/Robots/Hulls/Hull_05.png</key>
+            <key type="filename">images/Robots/Hulls/Hull_06.png</key>
+            <key type="filename">images/Robots/Hulls/Hull_07.png</key>
+            <key type="filename">images/Robots/Hulls/Hull_08.png</key>
             <key type="filename">images/TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_000.png</key>
             <key type="filename">images/TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_001.png</key>
             <key type="filename">images/TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_002.png</key>
@@ -242,6 +272,148 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">images/Robots/Tracks/Track 1/Track_1_A.png</key>
+            <key type="filename">images/Robots/Tracks/Track 1/Track_1_B.png</key>
+            <key type="filename">images/Robots/Tracks/Track 2/Track_2_A.png</key>
+            <key type="filename">images/Robots/Tracks/Track 2/Track_2_B.png</key>
+            <key type="filename">images/Robots/Tracks/Track 3/Track_3_A.png</key>
+            <key type="filename">images/Robots/Tracks/Track 3/Track_3_B.png</key>
+            <key type="filename">images/Robots/Tracks/Track 4/Track_4_A.png</key>
+            <key type="filename">images/Robots/Tracks/Track 4/Track_4_B.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>11,62,21,123</rect>
+                <key>scale9Paddings</key>
+                <rect>11,62,21,123</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/Gun_01.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>46,19,93,38</rect>
+                <key>scale9Paddings</key>
+                <rect>46,19,93,38</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/Gun_02.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>56,23,112,46</rect>
+                <key>scale9Paddings</key>
+                <rect>56,23,112,46</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/Gun_03.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>44,18,87,35</rect>
+                <key>scale9Paddings</key>
+                <rect>44,18,87,35</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/Gun_04.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>46,20,91,39</rect>
+                <key>scale9Paddings</key>
+                <rect>46,20,91,39</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/Gun_05.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>46,19,92,37</rect>
+                <key>scale9Paddings</key>
+                <rect>46,19,92,37</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/Gun_06.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>36,22,71,43</rect>
+                <key>scale9Paddings</key>
+                <rect>36,22,71,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/Gun_07.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>52,22,103,43</rect>
+                <key>scale9Paddings</key>
+                <rect>52,22,103,43</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/Gun_08.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>37,16,73,33</rect>
+                <key>scale9Paddings</key>
+                <rect>37,16,73,33</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileLists</key>
         <map type="SpriteSheetMap">
@@ -249,14 +421,7 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>images/TankEffects/Exhaust_01</filename>
-                    <filename>images/TankEffects/Exhaust_02</filename>
-                    <filename>images/TankEffects/Explosion</filename>
-                    <filename>images/TankEffects/Fire_Shots_Flame</filename>
-                    <filename>images/TankEffects/Fire_Shots_Impact_A</filename>
-                    <filename>images/TankEffects/Fire_Shots_Impact_B</filename>
-                    <filename>images/TankEffects/Fire_Shots_Shot_A</filename>
-                    <filename>images/TankEffects/Fire_Shots_Shot_B</filename>
+                    <filename>images</filename>
                 </array>
             </struct>
         </map>
