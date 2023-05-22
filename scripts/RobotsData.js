@@ -34,6 +34,7 @@ const RobotsData_Instance_robotAPIs = [];
 const RobotsData_Instance_robotSpeeds = [];
 const RobotsData_Instance_hullTurretHoleOffsetX = [];
 const RobotsData_Instance_hullTurretHoleOffsetY = [];
+const RobotsData_Instance_hullTurretAnchorageIndex = [];
 
 // Radar data
 const RobotsData_Radar_radarGraphics = [];

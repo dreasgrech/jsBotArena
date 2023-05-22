@@ -135,7 +135,8 @@ const RobotMatterFactory = (function() {
 
         RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
 
-        const exhaustAnimationSpriteIndex = AnimationManager.fetchSpriteForAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
+        // const exhaustAnimationSpriteIndex = AnimationManager.fetchSpriteForAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
+        //const exhaustAnimationSpriteIndex = AnimationManager.playAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
         // TODO: continue here
         // TODO: continue here
         // TODO: continue here
@@ -143,6 +144,15 @@ const RobotMatterFactory = (function() {
         //AnimationManager.playAnimationOnSprite()
         //Logger.log("exhaustAnimationSpriteIndex", exhaustAnimationSpriteIndex);
         //console.log("creating robot");
+
+        // Anchor the turret image to the robot so that it moves and rotates with it
+        const anchorageIndex = ObjectAnchorManager.anchorToGameObject(
+            turretImage,
+            hullImage,
+            RobotsData_Instance_hullTurretHoleOffsetX[currentRobotIndex],
+            RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex]);
+        RobotsData_Instance_hullTurretAnchorageIndex[currentRobotIndex] = anchorageIndex;
+        Logger.log(anchorageIndex);
     };
 
     const robotMatterFactory = {
@@ -154,6 +164,7 @@ const RobotMatterFactory = (function() {
         createRobot: createRobot,
         updateParts: function(robotIndex) {
 
+            /*
             // Update the position of the turret to remain attached to the robot based on the hull's rotation
             const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
             const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
@@ -173,10 +184,37 @@ const RobotMatterFactory = (function() {
             const turretPositionX = robotPositionX + rotatedOffsetX;
             const turretPositionY = robotPositionY + rotatedOffsetY;
             robotTurretImage.setPosition(turretPositionX, turretPositionY);
+            */
 
             // Match the projectile sensor's angle to the robot hull's angle
             const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
             projectileSensor.angle = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
+        },
+        destroyRobot: function(robotIndex) {
+            const hullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+
+            // Remove the hull's body from the arena
+            PhysicsBodies.removeArenaPhysicsBody(hullImage.body);
+
+            // Disable and hide the hull image and its collider
+            //PhysicsBodies.disableMatterGameObject(hullImage);
+            hullImage.destroy();
+
+            const gameContext = GameContextHolder.gameContext;
+
+            // Remove the projectile sensor
+            gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
+            // Remove the projectile sensor constraint that ties it with the hull body
+            gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex]);
+
+            // Hide the turret image
+            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+            //turretImage.setActive(false);
+            //turretImage.setVisible(false);
+            turretImage.destroy();
+
+            // Remove the anchor between the turret and the hull
+            ObjectAnchorManager.removeAnchor(RobotsData_Instance_hullTurretAnchorageIndex[robotIndex]);
         }
     };
 

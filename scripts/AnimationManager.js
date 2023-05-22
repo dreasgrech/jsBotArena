@@ -1,10 +1,5 @@
 "use strict";
 
-//var TankAnimationEffects = {
-//    Explosion: 0,
-//    Exhaust_01: 0
-//};
-
 const AnimationEffects = {
     TankAnimationEffects: {
         Exhaust_01: 0,
@@ -18,6 +13,7 @@ const AnimationEffects = {
     }
 };
 
+
 const AnimationManager = (function() {
     /*
      * animationcomplete parameters:https://newdocs.phaser.io/docs/3.52.0/Phaser.Animations.Events.ANIMATION_COMPLETE
@@ -30,7 +26,19 @@ const AnimationManager = (function() {
 
     const animations = [];
 
+    const fetchSpriteFromPool = function(poolIndex) {
+        // Fetch a sprite from the pool
+        const sprite = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
+
+        // Save the sprite in our collection so that other functions can use it
+        const spriteIndex = ++lastSpriteIndexCreated;
+        animationManager.sprites[spriteIndex] = sprite;
+
+        return spriteIndex;
+    };
+
     const animationManager = {
+        sprites: [],
         system_preload: function() {},
         system_create: function() {
             const gameContext = GameContextHolder.gameContext;
@@ -100,17 +108,6 @@ const AnimationManager = (function() {
             AnimationSpritesDatabase.clearDatabases();
             console.log(animations);
         },
-        sprites: [],
-        fetchSpriteFromPool: function(poolIndex) {
-            // Fetch a sprite from the pool
-            const sprite = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
-
-            // Save the sprite in our collection so that other functions can use it
-            const spriteIndex = ++lastSpriteIndexCreated;
-            animationManager.sprites[spriteIndex] = sprite;
-
-            return spriteIndex;
-        },
         fetchSpriteForAnimation: function(animationType) {
             //console.log(animationType, animations);
             const animation = animations[animationType];
@@ -118,7 +115,8 @@ const AnimationManager = (function() {
             const spritesheetPoolIndex = animationKeyToSpritePoolIndex[animationKey];
 
             // Fetch a sprite from the pool
-            const spriteIndex = animationManager.fetchSpriteFromPool(spritesheetPoolIndex);
+            // const spriteIndex = animationManager.fetchSpriteFromPool(spritesheetPoolIndex);
+            const spriteIndex = fetchSpriteFromPool(spritesheetPoolIndex);
             return spriteIndex;
         },
         playAnimationOnSprite: function(spriteIndex, animationType, x, y, angle_degrees, gameObjectDepth, scale = 1) {

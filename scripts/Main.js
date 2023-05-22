@@ -33,6 +33,7 @@ const gameManager = (function() {
 
     const objectsWith_update = [
         RobotManager,
+        ObjectAnchorManager,
         UIManager
     ];
     const totalObjectsWith_update = objectsWith_update.length;

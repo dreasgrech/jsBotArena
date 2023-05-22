@@ -226,30 +226,19 @@ const RobotManager = (function() {
         }
     };
 
+    // TODO: MOST OF THIS METHOD SHOULD GO TO ROBOTMATTERFACTORY.JS
+    // TODO: MOST OF THIS METHOD SHOULD GO TO ROBOTMATTERFACTORY.JS
+    // TODO: MOST OF THIS METHOD SHOULD GO TO ROBOTMATTERFACTORY.JS
+    // TODO: MOST OF THIS METHOD SHOULD GO TO ROBOTMATTERFACTORY.JS
     const removeAndHideRobot = function(robotIndex) {
-        const hullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
 
-        // Remove the hull's body from the arena
-        PhysicsBodies.removeArenaPhysicsBody(hullImage.body);
+        // Destroy the robot parts
+        RobotMatterFactory.destroyRobot(robotIndex);
 
-        // Disable and hide the hull image and its collider
-        //PhysicsBodies.disableMatterGameObject(hullImage);
-        hullImage.destroy();
-
-        const gameContext = GameContextHolder.gameContext;
-
-        // Remove the projectile sensor
-        gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
-        // Remove the projectile sensor constraint that ties it with the hull body
-        gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex]);
-
-        // Hide the turret image
-        const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
-        //turretImage.setActive(false);
-        //turretImage.setVisible(false);
-        turretImage.destroy();
-
+        // Remove the radar arc
         RobotsRadar.removeRadarArc(robotIndex);
+
+        // Remove the robot bounds debug-graphics
         RobotsBoundsHelpers.removeRobotBoundsGraphics(robotIndex);
 
         //Logger.log("finished removing", robotIndex);
