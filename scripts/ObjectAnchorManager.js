@@ -33,6 +33,7 @@ const ObjectAnchorManager = (function () {
             objectsAnchoredToGameObjects_anchorGameObjects.set(anchorageIndex, anchorGameObject);
             objectsAnchoredToGameObjects_originOffsetX.set(anchorageIndex, originOffsetX);
             objectsAnchoredToGameObjects_originOffsetY.set(anchorageIndex, originOffsetY);
+
             return anchorageIndex;
         },
         removeAnchor: function (anchorageIndex) {

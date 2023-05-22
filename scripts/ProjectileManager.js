@@ -147,6 +147,13 @@ const ProjectileManager = (function() {
                 GameObjectDepths.ImpactAnimation,
                 ROBOT_SCALE);
 
+            //ObjectAnchorManager.anchorToRobot(
+            //    AnimationManager.sprites[fireShotAnimationIndex],
+            //    robotIndex,
+            //    0,
+            //    0
+            //);
+
             //AnimationManager.sprites[fireShotAnimationIndex].setScale(ROBOT_SCALE);
 
             const now = GameContextHolder.gameTime;
