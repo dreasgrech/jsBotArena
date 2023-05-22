@@ -3,8 +3,8 @@
     "Key":  "tankeffects",
     "EnumType": "TankAnimationEffects",
     "SpritesheetTextureFilename": "TankEffects.png",
-    "SpritesheetTextureDirectory": "/images/robots/Spritesheets/",
-    "SpritesheetAtlasFilepath": "/images/robots/Spritesheets/TankEffects.json",
+    "SpritesheetTextureDirectory": "./images/robots/Spritesheets/",
+    "SpritesheetAtlasFilepath": "./images/robots/Spritesheets/TankEffects.json",
     "Animations": [
       {
         "Key": "Exhaust_01",
