@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO: Create a json database which contains all the spritesheets which need to be loaded
+
 const ImageDatabase = (function() {
     const baseImagesDirectory = 'images';
     const robotImagesDirectory = `${baseImagesDirectory}/robots`;
@@ -9,7 +11,12 @@ const ImageDatabase = (function() {
     const hullsImagesDirectory = `${robotImagesDirectory}/Hulls`;
     const turretsImagesDirectory = `${robotImagesDirectory}/Turrets`;
 
-    const totalTracks = 4;
+    // const totalTracks = 4;
+
+    // TODO: Replace with a json database which contains all the spritesheets which need to be loaded
+    const GameElementsSpritesheetKey = "GameElementsSpritesheet",
+        GameElementsSpritesheetAtlasFilePath = "./images/Spritesheets/GameSpritesheet.json",
+        GameElementsSpritesheetTextureDirectory = "./images/Spritesheets/";
 
     const loadImage = function(identifier, filePath) {
         GameContextHolder.gameContext.load.image(identifier, filePath);
@@ -35,27 +42,41 @@ const ImageDatabase = (function() {
         loadImage('floor_image', 'images/Arena/Floor - Dirt 2 64x64.png');
         loadImage('wall_image', 'images/Arena/Wall - Brick 2 64x64.png');
 
-    //    // Load the tracks images
-    //    for (let i = 0; i < totalTracks; i++) {
-    //        let track = `Track_${i + 1}`;
-    //        let trackAIdentifier = `${track}_A`;
-    //        let trackBIdentifier = `${track}_B`;
+        //    // Load the tracks images
+        //    for (let i = 0; i < totalTracks; i++) {
+        //        let track = `Track_${i + 1}`;
+        //        let trackAIdentifier = `${track}_A`;
+        //        let trackBIdentifier = `${track}_B`;
 
-    //        loadImage(trackAIdentifier, `${tracksImagesDirectory}/${trackAIdentifier}.png`);
-    //        loadImage(trackBIdentifier, `${tracksImagesDirectory}/${trackBIdentifier}.png`);
-    //    }
+        //        loadImage(trackAIdentifier, `${tracksImagesDirectory}/${trackAIdentifier}.png`);
+        //        loadImage(trackBIdentifier, `${tracksImagesDirectory}/${trackBIdentifier}.png`);
+        //    }
+
+        //Load the game elements spritesheet
+        const gameContext = GameContextHolder.gameContext;
+        //gameContext.load.on(`filecomplete-multiatlas-${GameElementsSpritesheetKey}`, function (key, type, data) {
+        //    //console.log("finished loading", key, type, data, savedThis.textures.get(pt.Tiles).frames);
+        //    console.log("finished loading", key, type, data);
+        //});
+        gameContext.load.multiatlas(
+            GameElementsSpritesheetKey,
+            GameElementsSpritesheetAtlasFilePath,
+            GameElementsSpritesheetTextureDirectory);
     };
 
     return {
         system_preload: loadAllImages,
-        loadProjectileImages: function(filenames, keys) {
-            loadImageList(filenames, keys, projectileImagesDirectory);
-        },
-        loadHullImages: function(filenames, keys) {
-            loadImageList(filenames, keys, hullsImagesDirectory);
-        },
-        loadTurretImages: function(filenames, keys) {
-            loadImageList(filenames, keys, turretsImagesDirectory);
+        //loadProjectileImages: function(filenames, keys) {
+        //    loadImageList(filenames, keys, projectileImagesDirectory);
+        //},
+        ////loadHullImages: function(filenames, keys) {
+        ////    loadImageList(filenames, keys, hullsImagesDirectory);
+        ////},
+        //loadTurretImages: function(filenames, keys) {
+        //    //loadImageList(filenames, keys, turretsImagesDirectory);
+        //},
+        get GameElementsSpritesheetKey() {
+            return GameElementsSpritesheetKey;
         }
     };
 }());

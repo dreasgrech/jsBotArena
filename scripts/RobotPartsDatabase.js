@@ -13,7 +13,6 @@ const RobotPartsDatabase = (function() {
     const hulls = {
         phaserImageKeys: [],
         physicsEditorSpriteNames: [],
-        filenames: [],
         TurretHoleOffsetsX: [],
         TurretHoleOffsetsY: [],
         ExhaustOffsetX: [],
@@ -22,7 +21,6 @@ const RobotPartsDatabase = (function() {
 
     const turrets = {
         phaserImageKeys: [],
-        filenames: [],
         originsX: [],
         originsY: [],
     };
@@ -38,7 +36,6 @@ const RobotPartsDatabase = (function() {
                     // Save the data from the definition loaded from the file
                     hulls.phaserImageKeys[i] = definition.PhaserImageKey;
                     hulls.physicsEditorSpriteNames[i] = definition.PhysicsEditor_SpriteName;
-                    hulls.filenames[i] = definition.Filename;
                     hulls.TurretHoleOffsetsX[i] = definition.TurretHoleOffsetX;
                     hulls.TurretHoleOffsetsY[i] = definition.TurretHoleOffsetY;
                     hulls.ExhaustOffsetX[i] = definition.ExhaustOffsetX;
@@ -52,7 +49,7 @@ const RobotPartsDatabase = (function() {
                 }
 
                 // Load the images
-                ImageDatabase.loadHullImages(hulls.filenames, hulls.phaserImageKeys);
+                //ImageDatabase.loadHullImages(hulls.filenames, hulls.phaserImageKeys);
             });
     };
     const loadTurretsDatabase = function() {
@@ -65,7 +62,6 @@ const RobotPartsDatabase = (function() {
 
                     // Save the data from the definition loaded from the file
                     turrets.phaserImageKeys[i] = definition.PhaserImageKey;
-                    turrets.filenames[i] = definition.Filename;
                     turrets.originsX[i] = definition.originX;
                     turrets.originsY[i] = definition.originY;
 
@@ -75,7 +71,7 @@ const RobotPartsDatabase = (function() {
                 }
 
                 // Load the images
-                ImageDatabase.loadTurretImages(turrets.filenames, turrets.phaserImageKeys);
+                //ImageDatabase.loadTurretImages(turrets.filenames, turrets.phaserImageKeys);
             });
 
     };

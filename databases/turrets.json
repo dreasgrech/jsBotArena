@@ -1,57 +1,49 @@
 [
   {
-    "PhaserImageKey": "Gun_01",
+    "PhaserImageKey": "Robots/Turrets/Gun_01.png",
     "EnumKey": "One",
-    "Filename": "Gun_01.png",
-    "originX": 0.3, 
-    "originY": 0.5 
+    "originX": 0.3,
+    "originY": 0.5
   },
   {
-    "PhaserImageKey": "Gun_02",
+    "PhaserImageKey": "Robots/Turrets/Gun_02.png",
     "EnumKey": "Two",
-    "Filename": "Gun_02.png",
     "originX": 0.3, 
     "originY": 0.5 
   },
   {
-    "PhaserImageKey": "Gun_03",
+    "PhaserImageKey": "Robots/Turrets/Gun_03.png",
     "EnumKey": "Three",
-    "Filename": "Gun_03.png",
     "originX": 0.2, 
     "originY": 0.5 
   },
   {
-    "PhaserImageKey": "Gun_04",
+    "PhaserImageKey": "Robots/Turrets/Gun_04.png",
     "EnumKey": "Four",
-    "Filename": "Gun_04.png",
     "originX": 0.25, 
     "originY": 0.5 
   },
   {
-    "PhaserImageKey": "Gun_05",
+    "PhaserImageKey": "Robots/Turrets/Gun_05.png",
     "EnumKey": "Five",
-    "Filename": "Gun_05.png",
     "originX": 0.2, 
     "originY": 0.5 
   },
   {
-    "PhaserImageKey": "Gun_06",
+    "PhaserImageKey": "Robots/Turrets/Gun_06.png",
     "EnumKey": "Six",
-    "Filename": "Gun_06.png",
     "originX": 0.3, 
     "originY": 0.5 
   },
   {
-    "PhaserImageKey": "Gun_07",
+    "PhaserImageKey": "Robots/Turrets/Gun_07.png",
     "EnumKey": "Seven",
-    "Filename": "Gun_07.png",
     "originX": 0.3, 
     "originY": 0.5 
   },
   {
-    "PhaserImageKey": "Gun_08",
+    "PhaserImageKey": "Robots/Turrets/Gun_08.png",
     "EnumKey": "Eight",
-    "Filename": "Gun_08.png",
     "originX": 0.28, 
     "originY": 0.5 
   }

@@ -1,6 +1,6 @@
 [
   {
-    "PhaserImageKey": "Light_Shell",
+    "PhaserImageKey": "Projectiles/Light_Shell.png",
     "PhysicsEditor_SpriteName": "Light_Shell",
     "EnumKey": "Light",
     "Filename": "Light_Shell.png",
@@ -8,7 +8,7 @@
     "BaseDamage": 10
   },
   {
-    "PhaserImageKey": "Medium_Shell",
+    "PhaserImageKey": "Projectiles/Medium_Shell.png",
     "PhysicsEditor_SpriteName": "Medium_Shell",
     "EnumKey": "Medium",
     "Filename": "Medium_Shell.png",
@@ -16,7 +16,7 @@
     "BaseDamage": 20
   },
   {
-    "PhaserImageKey": "Heavy_Shell",
+    "PhaserImageKey": "Projectiles/Heavy_Shell.png",
     "PhysicsEditor_SpriteName": "Heavy_Shell",
     "EnumKey": "Heavy",
     "Filename": "Heavy_Shell.png",
@@ -24,7 +24,7 @@
     "BaseDamage": 30
   },
   {
-    "PhaserImageKey": "Granade_Shell",
+    "PhaserImageKey": "Projectiles/Granade_Shell.png",
     "PhysicsEditor_SpriteName": "Granade_Shell",
     "EnumKey": "Granade",
     "Filename": "Granade_Shell.png",
@@ -32,7 +32,7 @@
     "BaseDamage": 40
   },
   {
-    "PhaserImageKey": "Shotgun_Shells",
+    "PhaserImageKey": "Projectiles/Shotgun_Shells.png",
     "PhysicsEditor_SpriteName": "Shotgun_Shells",
     "EnumKey": "Shotgun",
     "Filename": "Shotgun_Shells.png",
@@ -40,7 +40,7 @@
     "BaseDamage": 10
   },
   {
-    "PhaserImageKey": "Sniper_Shell",
+    "PhaserImageKey": "Projectiles/Sniper_Shell.png",
     "PhysicsEditor_SpriteName": "Sniper_Shell",
     "EnumKey": "Sniper",
     "Filename": "Sniper_Shell.png",
@@ -48,7 +48,7 @@
     "BaseDamage": 10
   },
   {
-    "PhaserImageKey": "Laser",
+    "PhaserImageKey": "Projectiles/Laser.png",
     "PhysicsEditor_SpriteName": "Laser",
     "EnumKey": "Laser",
     "Filename": "Laser.png",
@@ -56,7 +56,7 @@
     "BaseDamage": 10
   },
   {
-    "PhaserImageKey": "Plasma",
+    "PhaserImageKey": "Projectiles/Plasma.png",
     "PhysicsEditor_SpriteName": "Plasma",
     "EnumKey": "Plasma",
     "Filename": "Plasma.png",

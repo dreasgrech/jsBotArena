@@ -37,6 +37,7 @@ const ProjectileManager = (function() {
                         const projectileMatterGameObject = gameContext.matter.add.sprite(
                             0,
                             0,
+                            ImageDatabase.GameElementsSpritesheetKey,
                             projectilePhaserImageKey
                         );
                         return projectileMatterGameObject;

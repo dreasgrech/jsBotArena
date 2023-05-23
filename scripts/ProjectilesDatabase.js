@@ -7,7 +7,6 @@ const ProjectilesDatabase = (function() {
 
     const projectileDatabase = {
         phaserImageKeys : [],
-        filenames : [],
         physicsEditorSpriteNames : [],
         baseDamages : [],
         speeds : [],
@@ -23,7 +22,6 @@ const ProjectilesDatabase = (function() {
                         // Save the data from the projectile definition loaded from the file
                         projectileDatabase.phaserImageKeys[i] = projectileDefinition.PhaserImageKey;
                         projectileDatabase.physicsEditorSpriteNames[i] = projectileDefinition.PhysicsEditor_SpriteName;
-                        projectileDatabase.filenames[i] = projectileDefinition.Filename;
                         projectileDatabase.baseDamages[i] = projectileDefinition.BaseDamage;
                         projectileDatabase.speeds[i] = projectileDefinition.Speed;
 
@@ -33,7 +31,7 @@ const ProjectilesDatabase = (function() {
                     }
 
                     // Load the projectiles images
-                    ImageDatabase.loadProjectileImages(projectileDatabase.filenames, projectileDatabase.phaserImageKeys);
+                    //ImageDatabase.loadProjectileImages(projectileDatabase.filenames, projectileDatabase.phaserImageKeys);
 
                 });
         }

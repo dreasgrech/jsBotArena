@@ -51,16 +51,14 @@ const RobotMatterFactory = (function() {
         const hullPhysicsShapeName = hullsDB.physicsEditorSpriteNames[hullType];
 
         // ROBOT HULL
-        const hullImage = gameContext.matter.add.image(
+        //const hullImage = gameContext.matter.add.image(
+        const hullImage = gameContext.matter.add.sprite(
             x,
             y,
-            // `Hulls_Color_${hullColor}/Hull_${hullType}`,
-            hullPhaserImageKey,
-            null,
-            {
-                //shape: shapes[`Hull_${hullType}`],
-            
-            });
+            ImageDatabase.GameElementsSpritesheetKey,
+            hullPhaserImageKey
+        );
+        Logger.log(hullPhaserImageKey);
         const hullColors = hullSetup.colors;
         // hullImage.setBody(shapes[`Hull_${hullType}`], null);
         hullImage.setBody(shapes[hullPhysicsShapeName], null);
@@ -113,10 +111,11 @@ const RobotMatterFactory = (function() {
         const turretPhaserImageKey = turretsDB.phaserImageKeys[turretType];
 
         // ROBOT TURRET
-        const turretImage = GameContextHolder.gameContext.add.image(
+        //const turretImage = GameContextHolder.gameContext.add.image(
+        const turretImage = GameContextHolder.gameContext.add.sprite(
             hullImage.x,
             hullImage.y,
-            // `Weapon_Color_${turretColor}/Gun_${turretType}`
+            ImageDatabase.GameElementsSpritesheetKey,
             turretPhaserImageKey
         );
 

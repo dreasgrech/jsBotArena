@@ -209,11 +209,11 @@ const keyBot = function() {
             qeKeys = gameContext.input.keyboard.addKeys('Q,E');
 
             const hullSetup = robotSetup.hull;
-            hullSetup.hullType = RobotHullTypes.Six;
+            hullSetup.hullType = RobotHullTypes.One;
             //hullSetup.hullColor = RobotHullColors.Brown;
 
             const turretSetup = robotSetup.turret;
-            turretSetup.turretType = RobotTurretTypes.Eight;
+            turretSetup.turretType = RobotTurretTypes.One;
             // turretSetup.turretColor = RobotTurretColors.Green;
 
             const hullColors = hullSetup.colors;

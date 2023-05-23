@@ -124,7 +124,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../images/robots/Spritesheets/GameSpritesheet.json</filename>
+                <filename>../../images/Spritesheets/GameSpritesheet.json</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
