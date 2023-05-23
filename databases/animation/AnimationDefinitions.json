@@ -1,14 +1,11 @@
 [
   {
-    "Key":  "tankeffects",
+    "SpritesheetKey": "GameElementsSpritesheet",
     "EnumType": "TankAnimationEffects",
-    "SpritesheetTextureFilename": "TankEffects.png",
-    "SpritesheetTextureDirectory": "./images/robots/Spritesheets/",
-    "SpritesheetAtlasFilepath": "./images/robots/Spritesheets/TankEffects.json",
     "Animations": [
       {
         "Key": "Exhaust_01",
-        "FramePrefix": "Sprite_Effects_Exhaust_01_",
+        "FramePrefix": "TankEffects/Exhaust_01/Sprite_Effects_Exhaust_01_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 9,
         "FrameZeroPadding": 3,
@@ -18,7 +15,7 @@
       },
       {
         "Key": "Exhaust_02",
-        "FramePrefix": "Sprite_Effects_Exhaust_02_",
+        "FramePrefix": "TankEffects/Exhaust_02/Sprite_Effects_Exhaust_02_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 9,
         "FrameZeroPadding": 3,
@@ -28,7 +25,7 @@
       },
       {
         "Key": "Explosion",
-        "FramePrefix": "Sprite_Effects_Explosion_",
+        "FramePrefix": "TankEffects/Explosion/Sprite_Effects_Explosion_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 8,
         "FrameZeroPadding": 3,
@@ -38,7 +35,7 @@
       },
       {
         "Key": "Fire_Shots_Flame",
-        "FramePrefix": "Sprite_Fire_Shots_Flame_",
+        "FramePrefix": "TankEffects/Fire_Shots_Flame/Sprite_Fire_Shots_Flame_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 9,
         "FrameZeroPadding": 3,
@@ -48,7 +45,7 @@
       },
       {
         "Key": "Fire_Shots_Impact_A",
-        "FramePrefix": "Sprite_Fire_Shots_Impact_A_",
+        "FramePrefix": "TankEffects/Fire_Shots_Impact_A/Sprite_Fire_Shots_Impact_A_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 3,
         "FrameZeroPadding": 3,
@@ -58,7 +55,7 @@
       },
       {
         "Key": "Fire_Shots_Impact_B",
-        "FramePrefix": "Sprite_Fire_Shots_Impact_B_",
+        "FramePrefix": "TankEffects/Fire_Shots_Impact_B/Sprite_Fire_Shots_Impact_B_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 3,
         "FrameZeroPadding": 3,
@@ -68,7 +65,7 @@
       },
       {
         "Key": "Fire_Shots_A",
-        "FramePrefix": "Sprite_Fire_Shots_Shot_A_",
+        "FramePrefix": "TankEffects/Fire_Shots_Shot_A/Sprite_Fire_Shots_Shot_A_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 3,
         "FrameZeroPadding": 3,
@@ -78,7 +75,7 @@
       },
       {
         "Key": "Fire_Shots_B",
-        "FramePrefix": "Sprite_Fire_Shots_Shot_B_",
+        "FramePrefix": "TankEffects/Fire_Shots_Shot_B/Sprite_Fire_Shots_Shot_B_",
         "StartFrameNumber": 0,
         "EndFrameNumber": 3,
         "FrameZeroPadding": 3,

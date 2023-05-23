@@ -48,15 +48,16 @@ const AnimationManager = (function() {
                 const spriteDefinition = loadedDatabasesFromJSON[i];
                 // Logger.log(spriteDefinition);
 
-                const spritesheetTextureKey = spriteDefinition.Key;
-                const spritesheetTextureFilename = spriteDefinition.SpritesheetTextureFilename;
+                //const spritesheetTextureKey = spriteDefinition.Key;
+                //const spritesheetTextureFilename = spriteDefinition.SpritesheetTextureFilename;
                 const spritesheetEnumType = spriteDefinition.EnumType;
+                const spritesheetKey = spriteDefinition.SpritesheetKey;
 
                 // Create the pool of the sprites that will use this spritesheet
                 const spritesheetSpritesPoolIndex = GameObjectPoolsManager.createGameObjectPool({
-                    poolName: spritesheetTextureKey,
+                    poolName: spritesheetKey,
                     createElement: () => {
-                        const sprite = gameContext.add.sprite(0, 0, spritesheetTextureKey);
+                        const sprite = gameContext.add.sprite(0, 0, spritesheetKey, null);
                         sprite.on('animationcomplete',
                             function(animationThatCompleted, currentFrame, gameObject, frameKey) {
                                 //console.log('anim complete!', animationThatCompleted, currentFrame, gameObject, frameKey);
@@ -76,7 +77,7 @@ const AnimationManager = (function() {
 
                     const animationOptions = {
                         key: animationDefinition.Key,
-                        frames: gameContext.anims.generateFrameNames(spritesheetTextureKey,
+                        frames: gameContext.anims.generateFrameNames(spritesheetKey,
                             {
                                 start: animationDefinition.StartFrameNumber,
                                 end: animationDefinition.EndFrameNumber,

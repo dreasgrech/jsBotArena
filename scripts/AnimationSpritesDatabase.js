@@ -13,6 +13,7 @@ const AnimationSpritesDatabase = (function() {
                 function(definitions) {
                     const gameContext = GameContextHolder.gameContext;
 
+                        /*
                     // Go through all the spritesheet definitions in the file
                     for (let i = 0; i < definitions.length; i++) {
                         const spriteDefinition = definitions[i];
@@ -33,6 +34,7 @@ const AnimationSpritesDatabase = (function() {
                         //    const enumKey = projectileDefinition.EnumKey;
                         //    ProjectileTypes[enumKey] = i; // Ex: ProjectileTypes.Heavy = 3
                     }
+                            */
 
                     animationSpritesDatabase.loadedDatabasesFromJSON = definitions;
                 });
