@@ -272,14 +272,14 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
-            <key type="filename">images/Robots/Tracks/Track 1/Track_1_A.png</key>
-            <key type="filename">images/Robots/Tracks/Track 1/Track_1_B.png</key>
-            <key type="filename">images/Robots/Tracks/Track 2/Track_2_A.png</key>
-            <key type="filename">images/Robots/Tracks/Track 2/Track_2_B.png</key>
-            <key type="filename">images/Robots/Tracks/Track 3/Track_3_A.png</key>
-            <key type="filename">images/Robots/Tracks/Track 3/Track_3_B.png</key>
-            <key type="filename">images/Robots/Tracks/Track 4/Track_4_A.png</key>
-            <key type="filename">images/Robots/Tracks/Track 4/Track_4_B.png</key>
+            <key type="filename">images/Robots/Tracks/Track 1/Track_1_000.png</key>
+            <key type="filename">images/Robots/Tracks/Track 1/Track_1_001.png</key>
+            <key type="filename">images/Robots/Tracks/Track 2/Track_2_000.png</key>
+            <key type="filename">images/Robots/Tracks/Track 2/Track_2_001.png</key>
+            <key type="filename">images/Robots/Tracks/Track 3/Track_3_000.png</key>
+            <key type="filename">images/Robots/Tracks/Track 3/Track_3_001.png</key>
+            <key type="filename">images/Robots/Tracks/Track 4/Track_4_000.png</key>
+            <key type="filename">images/Robots/Tracks/Track 4/Track_4_001.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
                 <point_f>0.5,0.5</point_f>

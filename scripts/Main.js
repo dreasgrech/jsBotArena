@@ -110,13 +110,13 @@ const gameManager = (function() {
         }
 
         RobotManager.addRobot(keyBot());
-        RobotManager.addRobot(doNothingBot());
-        RobotManager.addRobot(shredder());
-        RobotManager.addRobot(circleBot());
-        RobotManager.addRobot(sittingBot());
-        RobotManager.addRobot(followBot_followAngle());
-        RobotManager.addRobot(followBot_followPosition());
-        RobotManager.addRobot(CornerGuardBot());
+    //    RobotManager.addRobot(doNothingBot());
+    //    RobotManager.addRobot(shredder());
+    //    RobotManager.addRobot(circleBot());
+    //    RobotManager.addRobot(sittingBot());
+    //    RobotManager.addRobot(followBot_followAngle());
+    //    RobotManager.addRobot(followBot_followPosition());
+    //    RobotManager.addRobot(CornerGuardBot());
     };
 
     const update = function(time, delta) {

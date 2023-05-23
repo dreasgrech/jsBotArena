@@ -787,7 +787,7 @@
 					}
 				},
 				{
-					"filename": "Robots/Tracks/Track 1/Track_1_A.png",
+					"filename": "Robots/Tracks/Track 1/Track_1_000.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1144,7 +1144,7 @@
 					}
 				},
 				{
-					"filename": "Robots/Tracks/Track 1/Track_1_B.png",
+					"filename": "Robots/Tracks/Track 1/Track_1_001.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1270,7 +1270,7 @@
 					}
 				},
 				{
-					"filename": "Robots/Tracks/Track 2/Track_2_A.png",
+					"filename": "Robots/Tracks/Track 2/Track_2_000.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1480,7 +1480,7 @@
 					}
 				},
 				{
-					"filename": "Robots/Tracks/Track 2/Track_2_B.png",
+					"filename": "Robots/Tracks/Track 2/Track_2_001.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1501,7 +1501,7 @@
 					}
 				},
 				{
-					"filename": "Robots/Tracks/Track 3/Track_3_A.png",
+					"filename": "Robots/Tracks/Track 3/Track_3_000.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1564,7 +1564,7 @@
 					}
 				},
 				{
-					"filename": "Robots/Tracks/Track 3/Track_3_B.png",
+					"filename": "Robots/Tracks/Track 3/Track_3_001.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1585,7 +1585,7 @@
 					}
 				},
 				{
-					"filename": "Robots/Tracks/Track 4/Track_4_A.png",
+					"filename": "Robots/Tracks/Track 4/Track_4_000.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1648,7 +1648,7 @@
 					}
 				},
 				{
-					"filename": "Robots/Tracks/Track 4/Track_4_B.png",
+					"filename": "Robots/Tracks/Track 4/Track_4_001.png",
 					"rotated": false,
 					"trimmed": false,
 					"sourceSize": {
@@ -1842,6 +1842,6 @@
 	"meta": {
 		"app": "https://www.codeandweb.com/texturepacker",
 		"version": "3.0",
-		"smartupdate": "$TexturePacker:SmartUpdate:9e839f2154c10db9484af5074a872175:d91ef28a87a3db6fbd09d3009eaf5067:b4e1c8fb1ffb9e21024ba93f35d4574f$"
+		"smartupdate": "$TexturePacker:SmartUpdate:04bda02c014f5869c565da0cd408765c:d91ef28a87a3db6fbd09d3009eaf5067:b4e1c8fb1ffb9e21024ba93f35d4574f$"
 	}
 }

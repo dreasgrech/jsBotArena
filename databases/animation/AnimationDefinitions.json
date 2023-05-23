@@ -82,6 +82,46 @@
         "FrameSuffix": ".png",
         "FrameRate": 10,
         "Repeat": 0
+      },
+      {
+        "Key": "Track_1",
+        "FramePrefix": "Robots/Tracks/Track 1/Track_1_",
+        "StartFrameNumber": 0,
+        "EndFrameNumber": 1,
+        "FrameZeroPadding": 3,
+        "FrameSuffix": ".png",
+        "FrameRate": 10,
+        "Repeat": -1
+      },
+      {
+        "Key": "Track_2",
+        "FramePrefix": "Robots/Tracks/Track 2/Track_2_",
+        "StartFrameNumber": 0,
+        "EndFrameNumber": 1,
+        "FrameZeroPadding": 3,
+        "FrameSuffix": ".png",
+        "FrameRate": 10,
+        "Repeat": -1
+      },
+      {
+        "Key": "Track_3",
+        "FramePrefix": "Robots/Tracks/Track 3/Track_3_",
+        "StartFrameNumber": 0,
+        "EndFrameNumber": 1,
+        "FrameZeroPadding": 3,
+        "FrameSuffix": ".png",
+        "FrameRate": 10,
+        "Repeat": -1
+      },
+      {
+        "Key": "Track_4",
+        "FramePrefix": "Robots/Tracks/Track 4/Track_4_",
+        "StartFrameNumber": 0,
+        "EndFrameNumber": 1,
+        "FrameZeroPadding": 3,
+        "FrameSuffix": ".png",
+        "FrameRate": 10,
+        "Repeat": -1
       }
     ]
   }

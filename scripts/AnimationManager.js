@@ -10,6 +10,10 @@ const AnimationEffects = {
         Fire_Shots_Impact_B: 0,
         Fire_Shots_A: 0,
         Fire_Shots_B: 0,
+        Track_1: 0,
+        Track_2: 0,
+        Track_3: 0,
+        Track_4: 0,
     }
 };
 
