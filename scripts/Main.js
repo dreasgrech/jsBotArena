@@ -110,7 +110,7 @@ const gameManager = (function() {
         }
 
         RobotManager.addRobot(keyBot());
-    //    RobotManager.addRobot(doNothingBot());
+        RobotManager.addRobot(doNothingBot());
     //    RobotManager.addRobot(shredder());
     //    RobotManager.addRobot(circleBot());
     //    RobotManager.addRobot(sittingBot());

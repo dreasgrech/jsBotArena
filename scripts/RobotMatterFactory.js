@@ -2,6 +2,9 @@
 
 const RobotMatterFactory = (function() {
 
+    const robotsTrackLeftAnimationSpriteIndex = [];
+    const robotsTrackRightAnimationSpriteIndex = [];
+
     const createProjectileSensor = function (robotIndex) {
         const gameContext = GameContextHolder.gameContext;
 
@@ -166,6 +169,10 @@ const RobotMatterFactory = (function() {
             hullsDB.TracksRightOffsetX[hullType],
             hullsDB.TracksRightOffsetY[hullType]
             );
+
+        robotsTrackLeftAnimationSpriteIndex[currentRobotIndex] = trackLeftAnimationSpriteIndex;
+        robotsTrackRightAnimationSpriteIndex[currentRobotIndex] = trackRightAnimationSpriteIndex;
+
         Logger.log("trackLeftAnimationSpriteIndex", trackLeftAnimationSpriteIndex);
     };
 
@@ -251,6 +258,14 @@ const RobotMatterFactory = (function() {
 
             // Remove the anchor between the turret and the hull
             ObjectAnchorManager.removeAnchor(RobotsData_Instance_hullTurretAnchorageIndex[robotIndex]);
+
+            // Remove the anchors between the tracks and the hull
+            const trackLeftAnimationSpriteIndex = robotsTrackLeftAnimationSpriteIndex[robotIndex];
+            const trackRightAnimationSpriteIndex = robotsTrackRightAnimationSpriteIndex[robotIndex];
+
+            // Destroy the tracks sprites
+            AnimationManager.destroySpriteAnimation(trackLeftAnimationSpriteIndex);
+            AnimationManager.destroySpriteAnimation(trackRightAnimationSpriteIndex);
         }
     };
 

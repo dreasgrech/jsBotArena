@@ -30,6 +30,8 @@ const AnimationManager = (function() {
 
     const animations = [];
 
+    const spritesAnchorageIndex = [];
+
     const fetchSpriteFromPool = function(poolIndex) {
         // Fetch a sprite from the pool
         const sprite = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
@@ -160,12 +162,33 @@ const AnimationManager = (function() {
         },
         anchorAnimationTo: (spriteIndex, gameObjectAnchor, originOffsetX, originOffsetY, copyRotation) => {
             const sprite = animationManager.sprites[spriteIndex];
-            ObjectAnchorManager.anchorToGameObject(
+            const anchorageIndex = ObjectAnchorManager.anchorToGameObject(
                 sprite,
                 gameObjectAnchor,
                 originOffsetX,
                 originOffsetY,
                 copyRotation);
+
+            spritesAnchorageIndex[spriteIndex] = anchorageIndex;
+        },
+        removeAnchor: (spriteIndex) => {
+            const anchorageIndex = spritesAnchorageIndex[spriteIndex];
+            if (anchorageIndex == null) {
+                return;
+            }
+
+            // Remove the anchor
+            ObjectAnchorManager.removeAnchor(anchorageIndex);
+
+            spritesAnchorageIndex[spriteIndex] = null;
+        },
+        // Called when you don't need the sprite anymore
+        destroySpriteAnimation: (spriteIndex) => {
+            // TODO: Return the sprite back to the pool
+
+            // Remove any anchors this sprite might have
+            animationManager.removeAnchor(spriteIndex);
+
         },
         // Allows you to vary the speed of the animations
         setTimescale: (spriteIndex, timeScale) => {
