@@ -2,8 +2,7 @@
 
 let gameRunning = true;
 
-//const GAME_DEBUG_MODE = true;
-const GAME_DEBUG_MODE = false;
+const GAME_DEBUG_MODE = true;
 
 const gameManager = (function() {
 

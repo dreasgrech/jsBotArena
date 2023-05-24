@@ -136,18 +136,11 @@ const RobotsRadar = (function() {
                             break;
                         }
                     }
-
-                    //robotFoundInRadar = true;
-                    //break;
                 }
             }
 
             // Add the information that will be provided to the scanning robot about the other robot that has been detected
             if (robotFoundInRadar) {
-
-                //const bearingRadians = Phaser.Math.Angle.Between(robotPositionX, robotPositionY, otherRobotPositionX, otherRobotPositionY);
-                //const bearingDegrees = Phaser.Math.RadToDeg(bearingRadians);
-                //const bearing_degrees = AngleOperations.normalizeAngleDegrees(bearingDegrees);
 
                 const bearing_degrees = AngleOperations.getBearing_degrees(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY);
 
