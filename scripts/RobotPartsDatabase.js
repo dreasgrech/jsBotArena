@@ -17,6 +17,7 @@ const RobotPartsDatabase = (function() {
         TurretHoleOffsetsY: [],
         ExhaustOffsetX: [],
         ExhaustOffsetY: [],
+        TracksSpriteScale: [],
         TracksLeftOffsetX: [],
         TracksLeftOffsetY: [],
         TracksRightOffsetX: [],
@@ -44,6 +45,7 @@ const RobotPartsDatabase = (function() {
                     hulls.TurretHoleOffsetsY[i] = definition.TurretHoleOffsetY;
                     hulls.ExhaustOffsetX[i] = definition.ExhaustOffsetX;
                     hulls.ExhaustOffsetY[i] = definition.ExhaustOffsetY;
+                    hulls.TracksSpriteScale[i] = definition.TracksSpriteScale;
                     hulls.TracksLeftOffsetX[i] = definition.TracksLeftOffsetX;
                     hulls.TracksLeftOffsetY[i] = definition.TracksLeftOffsetY;
                     hulls.TracksRightOffsetX[i] = definition.TracksRightOffsetX;

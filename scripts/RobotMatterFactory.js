@@ -155,15 +155,18 @@ const RobotMatterFactory = (function() {
         //Logger.log("exhaustAnimationSpriteIndex", exhaustAnimationSpriteIndex);
         //console.log("creating robot");
 
+        const trackType = AnimationEffects.TankAnimationEffects.Track_2;
         const trackLeftAnimationSpriteIndex = createTrackAnimationSprite(
-            AnimationEffects.TankAnimationEffects.Track_1,
+            trackType,
             hullImage,
+            hullsDB.TracksSpriteScale[hullType],
             hullsDB.TracksLeftOffsetX[hullType] * ROBOT_SCALE,
             hullsDB.TracksLeftOffsetY[hullType] * ROBOT_SCALE
-            );
+        );
         const trackRightAnimationSpriteIndex = createTrackAnimationSprite(
-            AnimationEffects.TankAnimationEffects.Track_1,
+            trackType,
             hullImage,
+            hullsDB.TracksSpriteScale[hullType],
             hullsDB.TracksRightOffsetX[hullType] * ROBOT_SCALE,
             hullsDB.TracksRightOffsetY[hullType] * ROBOT_SCALE
             );
@@ -172,12 +175,12 @@ const RobotMatterFactory = (function() {
         robotsTrackRightAnimationSpriteIndex[currentRobotIndex] = trackRightAnimationSpriteIndex;
     };
 
-    const createTrackAnimationSprite = function(trackType, hullImage, tracksLeftOffsetX, tracksLeftOffsetY) {
+    const createTrackAnimationSprite = function(trackType, hullImage, tracksScale, tracksLeftOffsetX, tracksLeftOffsetY) {
         const trackAnimationSpriteIndex = AnimationManager.fetchSpriteForAnimation(trackType);
         AnimationManager.setSpriteDetails(
             trackAnimationSpriteIndex,
             GameObjectDepths.RobotBody - 1,
-            ROBOT_SCALE
+            ROBOT_SCALE * tracksScale
         );
         AnimationManager.playAnimationOnSprite(
             trackAnimationSpriteIndex,

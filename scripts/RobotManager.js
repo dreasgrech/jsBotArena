@@ -7,9 +7,9 @@ const QueuedRobotForRemoval = function() {
     };
 };
 
-//const ROBOT_SCALE = 0.4;
 //const ROBOT_SCALE = 0.2;
-const ROBOT_SCALE = 1;
+const ROBOT_SCALE = 0.4;
+//const ROBOT_SCALE = 1;
 
 const RobotManager = (function() {
     let currentRobotIndex = 0;
