@@ -27,7 +27,8 @@ const RobotManager = (function() {
     let totalQueuedRobotsForRemovals = 0;
 
     // We wait some time before hiding the robot after it gets destroyed so that it gets hidden during the explosion animation
-    const SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED = 0.5;
+     const SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED = 0.5;
+    //const SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED = 0.3;
 
     const placeRobotInArena = function(robotBody) {
         const maxAttempts = 10;

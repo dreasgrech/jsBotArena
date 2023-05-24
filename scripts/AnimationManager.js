@@ -31,6 +31,7 @@ const AnimationManager = (function() {
     const animations = [];
 
     const spritesAnchorageIndex = [];
+    const spriteIndex_to_spriteIndexPool = [];
 
     const fetchSpriteFromPool = function(poolIndex) {
         // Fetch a sprite from the pool
@@ -39,6 +40,9 @@ const AnimationManager = (function() {
         // Save the sprite in our collection so that other functions can use it
         const spriteIndex = ++lastSpriteIndexCreated;
         animationManager.sprites[spriteIndex] = sprite;
+
+        // Save a reference from the spriteIndex to the pool index which it came from
+        spriteIndex_to_spriteIndexPool[spriteIndex] = poolIndex;
 
         return spriteIndex;
     };
@@ -184,7 +188,12 @@ const AnimationManager = (function() {
         },
         // Called when you don't need the sprite anymore
         destroySpriteAnimation: (spriteIndex) => {
-            // TODO: Return the sprite back to the pool
+            // Return the sprite back to the pool
+            const poolIndex = spriteIndex_to_spriteIndexPool[spriteIndex];
+            const sprite = animationManager.sprites[spriteIndex];
+            GameObjectPoolsManager.returnGameObjectToPool(poolIndex, sprite);
+
+            spriteIndex_to_spriteIndexPool[spriteIndex] = null;
 
             // Remove any anchors this sprite might have
             animationManager.removeAnchor(spriteIndex);
