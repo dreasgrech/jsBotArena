@@ -8,8 +8,8 @@ const QueuedRobotForRemoval = function() {
 };
 
 //const ROBOT_SCALE = 0.4;
-const ROBOT_SCALE = 0.2;
-//const ROBOT_SCALE = 1;
+//const ROBOT_SCALE = 0.2;
+const ROBOT_SCALE = 1;
 
 const RobotManager = (function() {
     let currentRobotIndex = 0;
@@ -189,8 +189,10 @@ const RobotManager = (function() {
             }
 
             // Draw the bounds of the hull and turret
-            RobotsBoundsHelpers.drawHullBounds(i);
-            RobotsBoundsHelpers.drawTurretBounds(i);
+            if (GAME_DEBUG_MODE) {
+                RobotsBoundsHelpers.drawHullBounds(i);
+                RobotsBoundsHelpers.drawTurretBounds(i);
+            }
 
             // Call the robot's update function
             const time = GameContextHolder.gameTime;

@@ -61,7 +61,6 @@ const RobotMatterFactory = (function() {
             ImageDatabase.GameElementsSpritesheetKey,
             hullPhaserImageKey
         );
-        Logger.log(hullPhaserImageKey);
         const hullColors = hullSetup.colors;
         // hullImage.setBody(shapes[`Hull_${hullType}`], null);
         hullImage.setBody(shapes[hullPhysicsShapeName], null);
@@ -144,7 +143,6 @@ const RobotMatterFactory = (function() {
             RobotsData_Instance_hullTurretHoleOffsetX[currentRobotIndex],
             RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex]);
         RobotsData_Instance_hullTurretAnchorageIndex[currentRobotIndex] = anchorageIndex;
-        Logger.log(anchorageIndex);
 
 
         // const exhaustAnimationSpriteIndex = AnimationManager.fetchSpriteForAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
@@ -172,8 +170,6 @@ const RobotMatterFactory = (function() {
 
         robotsTrackLeftAnimationSpriteIndex[currentRobotIndex] = trackLeftAnimationSpriteIndex;
         robotsTrackRightAnimationSpriteIndex[currentRobotIndex] = trackRightAnimationSpriteIndex;
-
-        Logger.log("trackLeftAnimationSpriteIndex", trackLeftAnimationSpriteIndex);
     };
 
     const createTrackAnimationSprite = function(trackType, hullImage, tracksLeftOffsetX, tracksLeftOffsetY) {

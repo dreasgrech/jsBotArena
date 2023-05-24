@@ -47,8 +47,7 @@ const ProjectileManager = (function() {
                 });
 
                 // Prepopulate the pool
-                // TODO: Increase the prepopulate number when everything is stable
-                MatterGameObjectPoolManager.prePopulateMatterGameObjectsPool(poolIndex, 1);
+                MatterGameObjectPoolManager.prePopulateMatterGameObjectsPool(poolIndex, PoolsPrepopulateValues.Projectiles);
 
                 pools[projectileTypeIndex] = poolIndex;
             }

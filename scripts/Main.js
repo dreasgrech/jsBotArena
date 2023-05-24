@@ -2,6 +2,9 @@
 
 let gameRunning = true;
 
+//const GAME_DEBUG_MODE = true;
+const GAME_DEBUG_MODE = false;
+
 const gameManager = (function() {
 
     const objectsWith_preload = [
@@ -161,7 +164,7 @@ GameContextHolder.game = new Phaser.Game({
     physics: {
         default: 'matter',
         matter: {
-            debug: true,
+            debug: GAME_DEBUG_MODE,
             gravity: {
                 x: 0,
                 y: 0

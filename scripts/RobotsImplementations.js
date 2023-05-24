@@ -267,7 +267,7 @@ const keyBot = function() {
             if (collisionsWithProjectiles.length > 0) {
                 for (let i = 0; i < collisionsWithProjectiles.length; i++) {
                     const collisionWithProjectile = collisionsWithProjectiles[i];
-                    Logger.log("We've been hit by a projectile!", collisionWithProjectile);
+                    //Logger.log("We've been hit by a projectile!", collisionWithProjectile);
                     // api.fire(ProjectileTypes.Medium);
                 }
 

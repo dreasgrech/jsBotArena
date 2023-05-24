@@ -17,6 +17,11 @@ const AnimationEffects = {
     }
 };
 
+const PoolsPrepopulateValues = {
+    Projectiles: 50,
+    Animations: 50, // TODO: this needs to be split into different values
+};
+
 
 const AnimationManager = (function() {
     /*
@@ -76,7 +81,7 @@ const AnimationManager = (function() {
                         return sprite;
                     }
                 });
-                GameObjectPoolsManager.prePopulateGameObjectsPool(spritesheetSpritesPoolIndex, 10);
+                GameObjectPoolsManager.prePopulateGameObjectsPool(spritesheetSpritesPoolIndex, PoolsPrepopulateValues.Animations);
                 // Logger.log("spritesheetSpritesPoolIndex", spritesheetSpritesPoolIndex);
 
                 const animationsDefinitions = spriteDefinition.Animations;

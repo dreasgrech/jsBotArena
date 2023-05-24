@@ -10,9 +10,9 @@ const RaycastManager = (function () {
 
             const raycasterOptions = {
                 debug: {
-                    enabled: true, //enable debug mode
-                    maps: true, //enable maps debug
-                    rays: true, //enable rays debug
+                    enabled: GAME_DEBUG_MODE, //enable debug mode
+                    maps: GAME_DEBUG_MODE, //enable maps debug
+                    rays: GAME_DEBUG_MODE, //enable rays debug
                     graphics: {
                         ray: 0x00ff00, //debug ray color; set false to disable
                         rayPoint: 0xff00ff, //debug ray point color; set false to disable
