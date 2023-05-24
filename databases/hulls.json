@@ -6,7 +6,11 @@
     "TurretHoleOffsetX": -18,
     "TurretHoleOffsetY": 0,
     "ExhaustOffsetX": 10,
-    "ExhaustOffsetY": 10
+    "ExhaustOffsetY": 10,
+    "TracksLeftOffsetX": 0,
+    "TracksLeftOffsetY": -25,
+    "TracksRightOffsetX": 0,
+    "TracksRightOffsetY": 25
   },
   {
     "PhaserImageKey": "Robots/Hulls/Hull_02.png",

@@ -140,7 +140,7 @@ const ProjectileManager = (function() {
 
             // Logger.log("mapping", projectileMatterGameObject.body.id, "to", currentProjectileIndex);
 
-            const fireShotAnimationIndex = AnimationManager.playAnimation(
+            const fireShotAnimationIndex = AnimationManager.playNewAnimation(
                 AnimationEffects.TankAnimationEffects.Fire_Shots_A,
                 turretTipPositionX,
                 turretTipPositionY,

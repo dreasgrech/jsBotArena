@@ -134,6 +134,16 @@ const RobotMatterFactory = (function() {
 
         RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
 
+        // Anchor the turret image to the robot so that it moves and rotates with it
+        const anchorageIndex = ObjectAnchorManager.anchorToGameObject(
+            turretImage,
+            hullImage,
+            RobotsData_Instance_hullTurretHoleOffsetX[currentRobotIndex],
+            RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex]);
+        RobotsData_Instance_hullTurretAnchorageIndex[currentRobotIndex] = anchorageIndex;
+        Logger.log(anchorageIndex);
+
+
         // const exhaustAnimationSpriteIndex = AnimationManager.fetchSpriteForAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
         //const exhaustAnimationSpriteIndex = AnimationManager.playAnimation(AnimationEffects.TankAnimationEffects.Exhaust_01);
         // TODO: continue here
@@ -144,14 +154,41 @@ const RobotMatterFactory = (function() {
         //Logger.log("exhaustAnimationSpriteIndex", exhaustAnimationSpriteIndex);
         //console.log("creating robot");
 
-        // Anchor the turret image to the robot so that it moves and rotates with it
-        const anchorageIndex = ObjectAnchorManager.anchorToGameObject(
-            turretImage,
+        const trackLeftAnimationSpriteIndex = createTrackAnimationSprite(
+            AnimationEffects.TankAnimationEffects.Track_1,
             hullImage,
-            RobotsData_Instance_hullTurretHoleOffsetX[currentRobotIndex],
-            RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex]);
-        RobotsData_Instance_hullTurretAnchorageIndex[currentRobotIndex] = anchorageIndex;
-        Logger.log(anchorageIndex);
+            hullsDB.TracksLeftOffsetX[hullType],
+            hullsDB.TracksLeftOffsetY[hullType]
+            );
+        const trackRightAnimationSpriteIndex = createTrackAnimationSprite(
+            AnimationEffects.TankAnimationEffects.Track_1,
+            hullImage,
+            hullsDB.TracksRightOffsetX[hullType],
+            hullsDB.TracksRightOffsetY[hullType]
+            );
+        Logger.log("trackLeftAnimationSpriteIndex", trackLeftAnimationSpriteIndex);
+    };
+
+    const createTrackAnimationSprite = function(trackType, hullImage, tracksLeftOffsetX, tracksLeftOffsetY) {
+        const trackAnimationSpriteIndex = AnimationManager.fetchSpriteForAnimation(trackType);
+        AnimationManager.setSpriteDetails(
+            trackAnimationSpriteIndex,
+            GameObjectDepths.RobotBody - 1,
+            ROBOT_SCALE
+        );
+        AnimationManager.playAnimationOnSprite(
+            trackAnimationSpriteIndex,
+            trackType);
+
+        //AnimationManager.setTimescale(trackLeftAnimationSpriteIndex, 0.1);
+        AnimationManager.anchorAnimationTo(
+            trackAnimationSpriteIndex,
+            hullImage,
+            tracksLeftOffsetX,
+            tracksLeftOffsetY,
+            true);
+
+        return trackAnimationSpriteIndex;
     };
 
     const robotMatterFactory = {

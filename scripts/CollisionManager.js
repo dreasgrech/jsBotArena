@@ -158,7 +158,7 @@ const CollisionManager = (function() {
         const oppositeProjectileAngle_degrees = AngleOperations.getOppositeAngle_degrees(projectileGameObject.angle);
 
         // Show the impact animation
-        AnimationManager.playAnimation(
+        AnimationManager.playNewAnimation(
             AnimationEffects.TankAnimationEffects.Fire_Shots_Impact_A,
             projectileGameObject.x,
             projectileGameObject.y,

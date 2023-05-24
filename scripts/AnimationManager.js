@@ -124,32 +124,56 @@ const AnimationManager = (function() {
             const spriteIndex = fetchSpriteFromPool(spritesheetPoolIndex);
             return spriteIndex;
         },
-        playAnimationOnSprite: function(spriteIndex, animationType, x, y, angle_degrees, gameObjectDepth, scale = 1) {
-            const animation = animations[animationType];
+        setSpriteDetails: function(spriteIndex, gameObjectDepth, scale = 1) {
             const sprite = animationManager.sprites[spriteIndex];
-
-            sprite.x = x;
-            sprite.y = y;
-            sprite.angle = angle_degrees;
             sprite.depth = gameObjectDepth;
             sprite.setScale(scale);
+        },
+        setSpritePosition: function(spriteIndex, x, y) {
+            const sprite = animationManager.sprites[spriteIndex];
+            sprite.x = x;
+            sprite.y = y;
+        },
+        setSpriteAngle_degrees: function(spriteIndex, angle_degrees) {
+            const sprite = animationManager.sprites[spriteIndex];
+            sprite.angle = angle_degrees;
+        },
+        playAnimationOnSprite: function(spriteIndex, animationType) {
+            const animation = animations[animationType];
+            const sprite = animationManager.sprites[spriteIndex];
 
             // Play the animation on the sprite
             sprite.anims.play(animation);
         },
-        playAnimation: function(animationType, x, y, angle_degrees, gameObjectDepth, scale = 1) {
+        playNewAnimation: function(animationType, x, y, angle_degrees, gameObjectDepth, scale = 1) {
             // Fetch a sprite for the animation from the pool
             const spriteIndex = animationManager.fetchSpriteForAnimation(animationType);
 
+            animationManager.setSpritePosition(spriteIndex, x, y);
+            animationManager.setSpriteAngle_degrees(spriteIndex, angle_degrees);
+            animationManager.setSpriteDetails(spriteIndex, gameObjectDepth, scale);
+
             // Play the animation on the sprite
-            animationManager.playAnimationOnSprite(spriteIndex, animationType, x, y, angle_degrees, gameObjectDepth, scale);
+            animationManager.playAnimationOnSprite(spriteIndex, animationType);
 
             return spriteIndex;
         },
-        anchorAnimationTo: (spriteIndex, gameObjectAnchor) => {
-            // TODO: implement this function so that animations like firing can be attached to objects like the turret tip
-
-        }
+        anchorAnimationTo: (spriteIndex, gameObjectAnchor, originOffsetX, originOffsetY, copyRotation) => {
+            const sprite = animationManager.sprites[spriteIndex];
+            ObjectAnchorManager.anchorToGameObject(
+                sprite,
+                gameObjectAnchor,
+                originOffsetX,
+                originOffsetY,
+                copyRotation);
+        },
+        // Allows you to vary the speed of the animations
+        setTimescale: (spriteIndex, timeScale) => {
+            const sprite = animationManager.sprites[spriteIndex];
+            sprite.anims.timeScale = timeScale;
+        },
+        // This function is only used for debugging-purposes
+        resolveSprite: (spriteIndex) => animationManager.sprites[spriteIndex]
     };
 
     return animationManager;

@@ -6,6 +6,7 @@ const ObjectAnchorManager = (function () {
     let objectsAnchoredToGameObjects_anchorGameObjects = new Map();
     let objectsAnchoredToGameObjects_originOffsetX = new Map();
     let objectsAnchoredToGameObjects_originOffsetY = new Map();
+    let objectsAnchoredToGameObjects_copyRotation = new Map();
     let lastAnchorageIndexCreated = -1;
 
     const objectAnchorManager = {
@@ -25,14 +26,19 @@ const ObjectAnchorManager = (function () {
                 const gameObjectPositionX = anchorGameObjectPosition.x + rotatedOffsetX;
                 const gameObjectPositionY = anchorGameObjectPosition.y + rotatedOffsetY;
                 anchoredGameObject.setPosition(gameObjectPositionX, gameObjectPositionY);
+
+                if (objectsAnchoredToGameObjects_copyRotation.get(index)) {
+                    anchoredGameObject.angle = anchorGameObject.angle;
+                }
             }
         },
-        anchorToGameObject: function (anchoredGameObject, anchorGameObject, originOffsetX, originOffsetY) {
+        anchorToGameObject: function (anchoredGameObject, anchorGameObject, originOffsetX, originOffsetY, copyRotation) {
             const anchorageIndex = ++lastAnchorageIndexCreated;
             objectsAnchoredToGameObjects_anchoredGameObjects.set(anchorageIndex, anchoredGameObject);
             objectsAnchoredToGameObjects_anchorGameObjects.set(anchorageIndex, anchorGameObject);
             objectsAnchoredToGameObjects_originOffsetX.set(anchorageIndex, originOffsetX);
             objectsAnchoredToGameObjects_originOffsetY.set(anchorageIndex, originOffsetY);
+            objectsAnchoredToGameObjects_copyRotation.set(anchorageIndex, copyRotation);
 
             return anchorageIndex;
         },
@@ -41,6 +47,7 @@ const ObjectAnchorManager = (function () {
             objectsAnchoredToGameObjects_anchorGameObjects.delete(anchorageIndex);
             objectsAnchoredToGameObjects_originOffsetX.delete(anchorageIndex);
             objectsAnchoredToGameObjects_originOffsetY.delete(anchorageIndex);
+            objectsAnchoredToGameObjects_copyRotation.delete(anchorageIndex);
         }
     };
 

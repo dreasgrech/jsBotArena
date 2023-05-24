@@ -276,7 +276,7 @@ const RobotManager = (function() {
 
             totalAliveRobots--;
 
-            AnimationManager.playAnimation(
+            AnimationManager.playNewAnimation(
                 AnimationEffects.TankAnimationEffects.Explosion,
                 RobotsData_CurrentData_positionXs[robotIndex],
                 RobotsData_CurrentData_positionYs[robotIndex],
