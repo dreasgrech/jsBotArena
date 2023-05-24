@@ -8,9 +8,9 @@
     "ExhaustOffsetX": 10,
     "ExhaustOffsetY": 10,
     "TracksLeftOffsetX": 0,
-    "TracksLeftOffsetY": -25,
+    "TracksLeftOffsetY": -60,
     "TracksRightOffsetX": 0,
-    "TracksRightOffsetY": 25
+    "TracksRightOffsetY": 60
   },
   {
     "PhaserImageKey": "Robots/Hulls/Hull_02.png",

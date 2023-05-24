@@ -160,14 +160,14 @@ const RobotMatterFactory = (function() {
         const trackLeftAnimationSpriteIndex = createTrackAnimationSprite(
             AnimationEffects.TankAnimationEffects.Track_1,
             hullImage,
-            hullsDB.TracksLeftOffsetX[hullType],
-            hullsDB.TracksLeftOffsetY[hullType]
+            hullsDB.TracksLeftOffsetX[hullType] * ROBOT_SCALE,
+            hullsDB.TracksLeftOffsetY[hullType] * ROBOT_SCALE
             );
         const trackRightAnimationSpriteIndex = createTrackAnimationSprite(
             AnimationEffects.TankAnimationEffects.Track_1,
             hullImage,
-            hullsDB.TracksRightOffsetX[hullType],
-            hullsDB.TracksRightOffsetY[hullType]
+            hullsDB.TracksRightOffsetX[hullType] * ROBOT_SCALE,
+            hullsDB.TracksRightOffsetY[hullType] * ROBOT_SCALE
             );
 
         robotsTrackLeftAnimationSpriteIndex[currentRobotIndex] = trackLeftAnimationSpriteIndex;
