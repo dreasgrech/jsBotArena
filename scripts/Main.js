@@ -109,14 +109,16 @@ const gameManager = (function() {
             toLoad.system_create();
         }
 
-        RobotManager.addRobot(keyBot());
-        RobotManager.addRobot(doNothingBot());
-        RobotManager.addRobot(shredder());
-        RobotManager.addRobot(circleBot());
-        RobotManager.addRobot(sittingBot());
-        RobotManager.addRobot(followBot_followAngle());
-        RobotManager.addRobot(followBot_followPosition());
-        RobotManager.addRobot(CornerGuardBot());
+        for (let i = 0; i < 3; i++) {
+            RobotManager.addRobot(keyBot());
+            RobotManager.addRobot(doNothingBot());
+            RobotManager.addRobot(shredder());
+            RobotManager.addRobot(circleBot());
+            RobotManager.addRobot(sittingBot());
+            RobotManager.addRobot(followBot_followAngle());
+            RobotManager.addRobot(followBot_followPosition());
+            RobotManager.addRobot(CornerGuardBot());
+        }
     };
 
     const update = function(time, delta) {

@@ -1,7 +1,7 @@
 "use strict";
 
 const UIRobotInfoPanel = (function() {
-    const panelWidth = 300; // Width of the panel
+    const panelWidth = 230; // Width of the panel
     const panelHeight = 900; // Height of the panel
 
     const panelY = 0; // Y position of the panel
@@ -31,7 +31,7 @@ const UIRobotInfoPanel = (function() {
                 panelY + 10,
                 'Robot Information',
                 {
-                    fontSize: '24px',
+                    fontSize: '19px',
                     color: '#ffffff'
                 }).setOrigin(0.5, 0);
             titleText.depth = panelTextDepth;
@@ -44,10 +44,10 @@ const UIRobotInfoPanel = (function() {
             const panelX = gameContext.cameras.main.width - panelWidth; // X position of the panel
 
             const infoText = gameContext.add.text(panelX + 10,
-                panelY + 50 + robotIndex * 120,
+                panelY + 30 + robotIndex * 90,
                 '',
                 {
-                    fontSize: '16px',
+                    fontSize: '10px',
                     color: '#ffffff'
                 });
             infoText.depth = panelTextDepth;
