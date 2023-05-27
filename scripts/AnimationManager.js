@@ -122,7 +122,6 @@ const AnimationManager = (function() {
 
             // Clear the loaded databases array so that the contents get released because we don't need them anymore
             AnimationSpritesDatabase.clearDatabases();
-            console.log(animations);
         },
         fetchSpriteForAnimation: function(animationType) {
             //console.log(animationType, animations);

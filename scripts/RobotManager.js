@@ -83,9 +83,6 @@ const RobotManager = (function() {
         RobotsData_CurrentData_arenaCollisions[currentRobotIndex] = [];
         RobotsData_CurrentData_projectileCollisions[currentRobotIndex] = [];
 
-        // TODO: Create the tracks
-        // const trackA = 
-
         // Create the API for the robot
         const api = RobotAPIFactory.createAPI(currentRobotIndex);
         RobotsData_Instance_robotAPIs[currentRobotIndex] = api;
@@ -258,8 +255,6 @@ const RobotManager = (function() {
         update: update,
         // TODO: move the logic for destroyed to delayed
         markRobotAsDestroyed: function(robotIndex) {
-            // TODO: needs more work
-
             // TODO: pool this
             const queuedRobotForRemoval = QueuedRobotForRemoval();
             // queuedRobotForRemoval.robotIndex = robotIndex;
@@ -276,6 +271,7 @@ const RobotManager = (function() {
 
             totalAliveRobots--;
 
+            // Play the explosion animation
             AnimationManager.playNewAnimation(
                 AnimationEffects.TankAnimationEffects.Explosion,
                 RobotsData_CurrentData_positionXs[robotIndex],
