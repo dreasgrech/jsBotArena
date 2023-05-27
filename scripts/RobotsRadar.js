@@ -14,7 +14,7 @@ const RobotsRadar = (function() {
     let ray;
 
     const sortByDistanceFunction = function(a, b) {
-        return a.distanceBetweenRobots - b.distanceBetweenRobots;
+        return a.distance - b.distance;
     };
 
     const isRadarEnabled = function(robotIndex) {
@@ -25,6 +25,158 @@ const RobotsRadar = (function() {
 
     const scanForRobotsEmptyResult = [[], []];
 
+    const scanForArenaObstacles = function(robotIndex) {
+        const radarEnabled = isRadarEnabled(robotIndex);
+        if (!radarEnabled) {
+            return scanForRobotsEmptyResult;
+        }
+
+        const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+        const robotHullBody = robotHullImage.body;
+        const robotHullBodyID = robotHullBody.id;
+        const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
+        const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
+        const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
+
+        const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
+        const radarFOVAngle_degrees = RobotsData_Radar_radarFOVAngles_degrees[robotIndex];
+
+        const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
+        const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
+
+        const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * pi + radarStartAngle_radians : radarStartAngle_radians;
+        const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * pi + radarEndAngle_radians : radarEndAngle_radians;
+
+        const scannedArenaBodies = [];
+
+        // Construct an array of the bodies for the ray to intersect with
+        const bodiesToIntersectWith = [
+            robotHullBody,
+            ...PhysicsBodies.getArenaBodies() // the ... operator expands the array into arguments for the function
+        ];
+
+        // Calculate the coordinates of the bounding box endpoints
+        const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
+        const startY = turretPositionY + radarMaxScanDistance * Math.sin(radarStartAngle_radians);
+        const endX = turretPositionX + radarMaxScanDistance * Math.cos(radarEndAngle_radians);
+        const endY = turretPositionY + radarMaxScanDistance * Math.sin(radarEndAngle_radians);
+
+        // Update the bounding box
+        const radarArcBoundingBox = {
+            minX: Math.min(turretPositionX, startX, endX),
+            minY: Math.min(turretPositionY, startY, endY),
+            maxX: Math.max(turretPositionX, startX, endX),
+            maxY: Math.max(turretPositionY, startY, endY)
+        };
+        radarArcBoundingBoxes[robotIndex] = radarArcBoundingBox;
+        const arenaBodiesBoundsFromSpatialHash = PhysicsBodies.queryArenaBodiesSpatialHash(radarArcBoundingBox);
+        const arenaBodiesBoundsFromSpatialHashLength = arenaBodiesBoundsFromSpatialHash.length;
+        //Logger.log(arenaBodiesBoundsFromSpatialHashLength, "arena bodies found");
+        for (let i = 0; i < arenaBodiesBoundsFromSpatialHashLength; i++) {
+            const arenaBodyBoundsFromSpatialHash = arenaBodiesBoundsFromSpatialHash[i];
+            const arenaBodyIndex = arenaBodyBoundsFromSpatialHash.arenaBodyIndex;
+            const arenaBody = PhysicsBodies.getArenaBody(arenaBodyIndex);
+            const arenaBodyPositionX = arenaBody.x;
+            const arenaBodyPositionY = arenaBody.y;
+            const distanceBetweenRobotAndArenaBody = Phaser.Math.Distance.Between(
+                turretPositionX,
+                turretPositionY,
+                arenaBodyPositionX,
+                arenaBodyPositionY);
+
+            if (distanceBetweenRobotAndArenaBody > radarMaxScanDistance) {
+                continue;
+            }
+
+            let bodyFoundInRadar = false;
+            for (const arenaObstacleCornerPoint of yieldArenaBodyBounds(arenaBodyIndex)) {
+                const arenaObstacleCornerPointX = arenaObstacleCornerPoint.x;
+                const arenaObstacleCornerPointY = arenaObstacleCornerPoint.y;
+                // Calculate the angle between the robot and the arena obstacle point
+                //console.log(arenaObstacleCornerPoint);
+                const angleBetween_radians = Phaser.Math.Angle.Between(
+                    turretPositionX,
+                    turretPositionY,
+                    arenaObstacleCornerPointX,
+                    arenaObstacleCornerPointY);
+
+                // Adjust the angle to account for Phaser's inverted y-axis
+                const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * pi + angleBetween_radians : angleBetween_radians;
+
+                // Check if the angle between the robot and the arena obstacle falls within the radar angles.
+                // If radar angles do not cross the 0-crossover point, we use the same condition as before.
+                // If radar angles cross the 0-crossover point, we modify the condition to check
+                // if the adjusted angle between the robot and the arena obstacle is either greater than the start angle
+                // or less than the end angle.
+                let pointWithinRadarAngles = false;
+
+                // Check if the radar angles cross the 0-crossover point or not
+                if (adjustedRadarStartAngle_radians <= adjustedRadarEndAngle_radians) {
+                    // If they don't cross the 0-crossover point, check if the angle between robots is within the radar range
+                    pointWithinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians && adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
+                } else {
+                    // If they cross the 0-crossover point, check if the angle between robots is within the radar range
+                    pointWithinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians || adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
+                }
+
+                if (pointWithinRadarAngles) {
+                    const rayOriginX = arenaObstacleCornerPointX, rayOriginY = arenaObstacleCornerPointY;
+                    ray.setOrigin(rayOriginX, rayOriginY);
+                    const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints(arenaObstacleCornerPoint, { x: turretPositionX, y: turretPositionY });
+                    ray.setAngle(angleBetweenPoints_radians); // radians
+
+                    // todo: continue here because bodiesToIntesectWith is not correct for scanning arena bodies
+                    // todo: continue here because bodiesToIntesectWith is not correct for scanning arena bodies
+                    // todo: continue here because bodiesToIntesectWith is not correct for scanning arena bodies
+                    // Cast the ray from the scanned arena obstacle's bounds point to the scanning robot
+                    const intersection = ray.cast({ objects: bodiesToIntersectWith });
+                    if (intersection) {
+                        const rayHitBody = intersection.object;
+                        const rayHitBodyID = rayHitBody.id;
+                        const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
+                        //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
+                        bodyFoundInRadar = isHitBodyTheScanningRobot;
+                        if (bodyFoundInRadar) {
+                            break;
+                        }
+                    }
+                }
+            }
+
+            // Add the information that will be provided to the scanning robot about the other robot that has been detected
+            if (bodyFoundInRadar) {
+
+                const arenaObstacleScannedEventInfo = ArenaObstacleScannedInfo();
+                arenaObstacleScannedEventInfo.index = arenaBodyIndex;
+                arenaObstacleScannedEventInfo.distance = distanceBetweenRobotAndArenaBody;
+                arenaObstacleScannedEventInfo.positionX = arenaBodyPositionX;
+                arenaObstacleScannedEventInfo.positionY = arenaBodyPositionY;
+                arenaObstacleScannedEventInfo.bearing_degrees = AngleOperations.getBearing_degrees(turretPositionX, turretPositionY, arenaBodyPositionX, arenaBodyPositionY);
+
+                scannedArenaBodies.push(arenaObstacleScannedEventInfo);
+            }
+        }
+
+        scannedArenaBodies.sort(sortByDistanceFunction);
+        return scannedArenaBodies;
+    };
+
+    const yieldArenaBodyBounds = function* (arenaBodyIndex) {
+        const arenaBody = PhysicsBodies.getArenaBody(arenaBodyIndex);
+        const arenaBodyBounds = arenaBody.bounds;
+        const arenaBodyPosition = arenaBody.position;
+        const arenaBodyPositionX = arenaBodyPosition.x;
+        const arenaBodyPositionY = arenaBodyPosition.y;
+        const halfWidth = (arenaBodyBounds.max.x - arenaBodyBounds.min.x) * 0.5;
+        const halfHeight = (arenaBodyBounds.max.y - arenaBodyBounds.min.y) * 0.5;
+
+        //yield { x: arenaBodyPositionX , y: arenaBodyPositionY };
+        yield { x: arenaBodyPositionX - halfWidth, y: arenaBodyPositionY - halfHeight }; // top left
+        yield { x: arenaBodyPositionX + halfWidth, y: arenaBodyPositionY - halfHeight }; // top right
+        yield { x: arenaBodyPositionX - halfWidth, y: arenaBodyPositionY + halfHeight }; // bottom left
+        yield { x: arenaBodyPositionX + halfWidth, y: arenaBodyPositionY + halfHeight }; // bottom right
+    }
+
     const scanForRobots = function(robotIndex) {
         const radarEnabled = isRadarEnabled(robotIndex);
         if (!radarEnabled) {
@@ -34,8 +186,6 @@ const RobotsRadar = (function() {
         const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
         const robotHullBody = robotHullImage.body;
         const robotHullBodyID = robotHullBody.id;
-        //const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
-        //const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
         const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
         const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
         const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
@@ -59,29 +209,6 @@ const RobotsRadar = (function() {
 
         //Logger.log("Scanning for robots", robotIndex, bodiesToIntersectWith);
 
-        // Calculate the coordinates of the bounding box endpoints
-        const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
-        const startY = turretPositionY + radarMaxScanDistance * Math.sin(radarStartAngle_radians);
-        const endX = turretPositionX + radarMaxScanDistance * Math.cos(radarEndAngle_radians);
-        const endY = turretPositionY + radarMaxScanDistance * Math.sin(radarEndAngle_radians);
-
-        // Update the bounding box
-        const radarArcBoundingBox = {
-            minX: Math.min(turretPositionX, startX, endX),
-            minY: Math.min(turretPositionY, startY, endY),
-            maxX: Math.max(turretPositionX, startX, endX),
-            maxY: Math.max(turretPositionY, startY, endY)
-        };
-        radarArcBoundingBoxes[robotIndex] = radarArcBoundingBox;
-        const arenaBodiesBoundsFromSpatialHash = PhysicsBodies.queryArenaBodiesSpatialHash(radarArcBoundingBox);
-        const arenaBodiesBoundsFromSpatialHashLength = arenaBodiesBoundsFromSpatialHash.length;
-        Logger.log(arenaBodiesBoundsFromSpatialHashLength, "arena bodies found");
-        for (let i = 0; i < arenaBodiesBoundsFromSpatialHashLength; i++) {
-            const arenaBodyBoundsFromSpatialHash = arenaBodiesBoundsFromSpatialHash[i];
-            const arenaBodyIndex = arenaBodyBoundsFromSpatialHash.arenaBodyIndex;
-            const arenaBody = PhysicsBodies.getArenaBody(arenaBodyIndex);
-            Logger.log(arenaBody);
-        }
         // TODO: Continue here
         // TODO: Continue here
         // TODO: Continue here
@@ -90,7 +217,6 @@ const RobotsRadar = (function() {
         // todo: try a spatial hash
         // Check all the alive robots
         const aliveRobotsIndexes = RobotManager.aliveRobotsIndexes;
-        // for (const aliveRobotsIndex of aliveRobotsIndexes) {
         for (const i of aliveRobotsIndexes) {
             if (i === robotIndex) {
                 continue;
@@ -158,6 +284,7 @@ const RobotsRadar = (function() {
                     if (intersection) {
                         const rayHitBody = intersection.object;
                         const rayHitBodyID = rayHitBody.id;
+                        console.log(rayHitBodyID);
                         const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
                         //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
                         robotFoundInRadar = isHitBodyTheScanningRobot;
@@ -175,21 +302,19 @@ const RobotsRadar = (function() {
 
                 const robotScannedEventInfo = RobotScannedInfo();
                 robotScannedEventInfo.index = i;
-                robotScannedEventInfo.distanceBetweenRobots = distanceBetweenRobots;
+                robotScannedEventInfo.distance = distanceBetweenRobots;
                 robotScannedEventInfo.positionX = otherRobotPositionX;
                 robotScannedEventInfo.positionY = otherRobotPositionY;
                 robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[i]; 
                 robotScannedEventInfo.bearing_degrees = bearing_degrees; 
                 robotScannedEventInfo.turret_angle = RobotsData_CurrentData_currentTurretAngles[i]; 
                 robotScannedEventInfo.radar_angle = RobotsData_CurrentData_currentRadarAngles_degrees[i];
-                robotScannedEventInfo.alive = RobotsData_CurrentData_alive[i];
 
                 scannedRobots.push(robotScannedEventInfo);
             }
         }
 
         scannedRobots.sort(sortByDistanceFunction);
-
         return scannedRobots;
     };
 
@@ -204,6 +329,7 @@ const RobotsRadar = (function() {
 
         },
         scanForRobots: scanForRobots,
+        scanForArenaObstacles: scanForArenaObstacles,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {
             return RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = AngleOperations.normalizeAngleDegrees(angle_degrees);
         },

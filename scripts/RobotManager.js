@@ -167,8 +167,9 @@ const RobotManager = (function() {
             const radar = api.radar;
             // const [scannedRobots, scannedAliveRobots] = RobotsRadar.scanForRobots(i);
             const scannedAliveRobots = RobotsRadar.scanForRobots(i);
-            // radar.scannedRobots = scannedRobots;
             radar.scannedAliveRobots = scannedAliveRobots;
+            const scannedArenaObstacles = RobotsRadar.scanForArenaObstacles(i);
+            radar.scannedArenaElements = scannedArenaObstacles;
 
             // Set the robot collisions to the api
             const api_collisions = api.collisions;

@@ -188,6 +188,7 @@ const RobotAPIFactory = (function() {
                     radarFollowTurret: false,
                     // The scanned robots that are alive
                     scannedAliveRobots: [], // RobotScannedInfo[]
+                    scannedArenaElements: [], // ArenaObstacleScannedInfo[]
                     // The FOV angle can be between 1 and 45
                     setFOVAngle_degrees: function(angle_degrees) {
                         return RobotsRadar.setRadarFOVAngle_degrees(robotIndex, angle_degrees);
@@ -277,13 +278,22 @@ const RobotToProjectileCollisionInfo = function() {
 const RobotScannedInfo = function() {
     return {
         index: 0, // the scanned robot's index
-        distanceBetweenRobots: 0, // the distance between the scanning robot and the scanned robot
+        distance: 0, // the distance between the scanning robot and the scanned robot
         positionX: 0, // the x-position of the scanned robot
         positionY: 0, // the y-position of the scanned robot
         angle_degrees: 0, // the angle in degrees of the scanned robot
         bearing_degrees: 0, // the angle in degrees that the scanning robot needs to rotate to to face the scanned robot
         turret_angle: 0, // the angle in degrees of the scanned robot's turret
-        radar_angle: 0, // the angle in degrees of the scanned robot's radar
-        alive: false // true if the scanned robot is not destroyed
+        radar_angle: 0 // the angle in degrees of the scanned robot's radar
+    }
+};
+
+const ArenaObstacleScannedInfo = function() {
+    return {
+        index: 0, // the scanned obstacle's index
+        distance: 0, // the distance between the scanning robot and the scanned arena obstacle
+        positionX: 0, // the x-position of the scanned arena obstacle
+        positionY: 0, // the y-position of the scanned arena obstacle
+        bearing_degrees: 0 // the angle in degrees that the scanning robot needs to rotate to to face the scanned arena obstacle
     }
 };

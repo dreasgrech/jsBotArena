@@ -282,6 +282,11 @@ const keyBot = function() {
             if (totalScannedAliveRobots > 0) {
                 //Logger.log(`KeyBot scannedAliveRobots: ${totalScannedAliveRobots}: `, scannedAliveRobots);
             }
+
+            const scannedArenaElements = radar.scannedArenaElements;
+            if (scannedArenaElements.length > 0) {
+                Logger.log(scannedArenaElements.length, "scanned arena elements");
+            }
         }
     };
 };
