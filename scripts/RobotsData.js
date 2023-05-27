@@ -15,6 +15,7 @@ const RobotsData_CurrentData_turretPositionYs = [];
 const RobotsData_CurrentData_currentRobotAngles_degrees = [];
 const RobotsData_CurrentData_currentRobotAngles_radians = [];
 const RobotsData_CurrentData_currentRobotVelocities = [];
+const RobotsData_CurrentData_currentRobotSpeedSqr = [];
 const RobotsData_CurrentData_currentTurretAngles = [];
 const RobotsData_CurrentData_currentRadarAngles_degrees = [];
 const RobotsData_CurrentData_robotCollisions = []; // [[{,,}], [{,,}], [{,,}]]

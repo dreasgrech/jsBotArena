@@ -205,32 +205,14 @@ const RobotMatterFactory = (function() {
         //},
         createRobot: createRobot,
         updateParts: function(robotIndex) {
-
-            /*
-            // Update the position of the turret to remain attached to the robot based on the hull's rotation
-            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
-            const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
-            const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
-
-            // Get the hull's rotation
-            const hullAngle_radians = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
-
-            const offsetX = RobotsData_Instance_hullTurretHoleOffsetX[robotIndex];
-            const offsetY = RobotsData_Instance_hullTurretHoleOffsetY[robotIndex];
-
-            // Apply the rotation transformation to the offset
-            const rotatedOffsetX = ROBOT_SCALE * offsetX * Math.cos(hullAngle_radians) - offsetY * Math.sin(hullAngle_radians);
-            const rotatedOffsetY = ROBOT_SCALE * offsetX * Math.sin(hullAngle_radians) + offsetY * Math.cos(hullAngle_radians);
-
-            // Add the rotated offset to the robot's position
-            const turretPositionX = robotPositionX + rotatedOffsetX;
-            const turretPositionY = robotPositionY + rotatedOffsetY;
-            robotTurretImage.setPosition(turretPositionX, turretPositionY);
-            */
-
             // Match the projectile sensor's angle to the robot hull's angle
             const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
             projectileSensor.angle = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
+
+            const isRobotMoving = RobotQueries.isRobotMoving(robotIndex);
+            const tracksAnimationTimescale = isRobotMoving ? 1 : 0;
+            AnimationManager.setTimescale(robotsTrackLeftAnimationSpriteIndex[robotIndex], tracksAnimationTimescale);
+            AnimationManager.setTimescale(robotsTrackRightAnimationSpriteIndex[robotIndex], tracksAnimationTimescale);
         },
         destroyRobot: function(robotIndex) {
             const hullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
@@ -270,3 +252,4 @@ const RobotMatterFactory = (function() {
 
     return robotMatterFactory;
 }());
+

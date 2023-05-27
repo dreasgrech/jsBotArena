@@ -143,7 +143,9 @@ const RobotManager = (function() {
             RobotsData_CurrentData_currentRobotAngles_degrees[i] = hullAngle_degrees;
             const hullAngle_radians = Phaser.Math.Angle.Wrap(robotBodyImage.rotation); // It's important to wrap the angle because by default it doesn't seem to be
             RobotsData_CurrentData_currentRobotAngles_radians[i] = hullAngle_radians;
-            RobotsData_CurrentData_currentRobotVelocities[i] = robotBodyImagePhysicsBody.velocity;
+            const robotVelocity = robotBodyImagePhysicsBody.velocity;
+            RobotsData_CurrentData_currentRobotVelocities[i] = robotVelocity;
+            RobotsData_CurrentData_currentRobotSpeedSqr[i] = MathOperations.sqrMagnitude(robotVelocity.x, robotVelocity.y);
 
             const turretImage = RobotsData_PhysicsBodies_robotTurretImages[i];
             const turretPositionX = turretImage.x;
