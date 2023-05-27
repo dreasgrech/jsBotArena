@@ -45,6 +45,10 @@ const gameManager = (function() {
         const gameContext = this;
         GameContextHolder.gameContext = gameContext;
 
+        gameContext.matter.world.autoUpdate = false;
+
+
+
         //gameContext.matter.set60Hz();
 
         // ImageDatabase.loadAllImages();
@@ -142,6 +146,9 @@ const gameManager = (function() {
 
         // Increase the frame counter
         FrameCounter.current++;
+
+        // Step the physics
+        GameContextHolder.gameContext.matter.world.step();
     };
 
     return {
