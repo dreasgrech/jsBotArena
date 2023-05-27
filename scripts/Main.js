@@ -151,38 +151,40 @@ const gameManager = (function() {
     }
 }());
 
-GameContextHolder.game = new Phaser.Game({
-    type: Phaser.AUTO,
-    width: GameSetup.Width,
-    height: GameSetup.Height,
-    scene: {
-        preload: gameManager.preload,
-        create: gameManager.create,
-        update: gameManager.update
-    },
-    physics: {
-        default: 'matter',
-        matter: {
-            debug: GAME_DEBUG_MODE,
-            gravity: {
-                x: 0,
-                y: 0
+window.onload = function(event) {
+    GameContextHolder.game = new Phaser.Game({
+        type: Phaser.AUTO,
+        width: GameSetup.Width,
+        height: GameSetup.Height,
+        scene: {
+            preload: gameManager.preload,
+            create: gameManager.create,
+            update: gameManager.update
+        },
+        physics: {
+            default: 'matter',
+            matter: {
+                debug: GAME_DEBUG_MODE,
+                gravity: {
+                    x: 0,
+                    y: 0
+                }
             }
+        },
+        plugins: {
+            scene: [
+                {
+                    key: 'PhaserRaycaster',
+                    plugin: PhaserRaycaster,
+                    mapping: 'raycasterPlugin'
+                }
+            ]
+        },
+        fps: {
+            limit: 144
+            //limit: 60
+            //limit: 40
+            //limit: 15
         }
-    },
-    plugins: {
-        scene: [
-            {
-                key: 'PhaserRaycaster',
-                plugin: PhaserRaycaster,
-                mapping: 'raycasterPlugin'
-            }
-        ]
-    },
-    fps: {
-        limit: 144
-        //limit: 60
-        //limit: 40
-        //limit: 15
-    }
-});
+    });
+};
