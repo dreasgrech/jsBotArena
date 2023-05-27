@@ -280,7 +280,10 @@ const RobotManager = (function() {
                 1);
 
             //Logger.log("marking bot for removal", robotIndex);
-        }
+        },
+        get aliveRobotsIndexes() {
+            return aliveRobotsIndexes;
+        } 
     };
 
     return robotManager;

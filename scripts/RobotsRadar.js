@@ -73,13 +73,25 @@ const RobotsRadar = (function() {
             maxY: Math.max(turretPositionY, startY, endY)
         };
         radarArcBoundingBoxes[robotIndex] = radarArcBoundingBox;
-        const arenaBodiesFromSpatialHash = PhysicsBodies.queryArenaBodiesSpatialHash(radarArcBoundingBox);
-        Logger.log(arenaBodiesFromSpatialHash);
+        const arenaBodiesBoundsFromSpatialHash = PhysicsBodies.queryArenaBodiesSpatialHash(radarArcBoundingBox);
+        const arenaBodiesBoundsFromSpatialHashLength = arenaBodiesBoundsFromSpatialHash.length;
+        Logger.log(arenaBodiesBoundsFromSpatialHashLength, "arena bodies found");
+        for (let i = 0; i < arenaBodiesBoundsFromSpatialHashLength; i++) {
+            const arenaBodyBoundsFromSpatialHash = arenaBodiesBoundsFromSpatialHash[i];
+            const arenaBodyIndex = arenaBodyBoundsFromSpatialHash.arenaBodyIndex;
+            const arenaBody = PhysicsBodies.getArenaBody(arenaBodyIndex);
+            Logger.log(arenaBody);
+        }
+        // TODO: Continue here
+        // TODO: Continue here
+        // TODO: Continue here
+        //Logger.log(arenaBodiesFromSpatialHash);
 
         // todo: try a spatial hash
-        // Check all the robots
-        const totalRobots = RobotManager.getTotalRobots();
-        for (let i = 0; i < totalRobots; i++) {
+        // Check all the alive robots
+        const aliveRobotsIndexes = RobotManager.aliveRobotsIndexes;
+        // for (const aliveRobotsIndex of aliveRobotsIndexes) {
+        for (const i of aliveRobotsIndexes) {
             if (i === robotIndex) {
                 continue;
             }
@@ -216,8 +228,8 @@ const RobotsRadar = (function() {
             RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = 0;
             //RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 5;
             RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = 45;
-            RobotsData_Radar_radarMaxScanDistance[robotIndex] = 1000;
-            //RobotsData_Radar_radarMaxScanDistance[robotIndex] = 200;
+            //RobotsData_Radar_radarMaxScanDistance[robotIndex] = 1000;
+            RobotsData_Radar_radarMaxScanDistance[robotIndex] = 200;
 
             // Create a graphics object to visualize the radar arc bounding box
             if (GAME_DEBUG_MODE) {

@@ -15,9 +15,14 @@ const PhysicsBodies = (function() {
     // contains all the bodies except the body of the specific robot index
     //const allOtherBodiesExceptThisRobot = []; // [[],[],[]]
 
+    let arenaBodiesAdded = false;
+
     const obj = {
         getArenaBodies: function() {
             return arenaBodies;
+        },
+        getArenaBody: function(arenaBodyIndex) {
+            return arenaBodies[arenaBodyIndex];
         },
         // TODO: also need to make sure not to have duplicates in arenaBodies
         // TODO: maybe using Set is an option
@@ -40,7 +45,12 @@ const PhysicsBodies = (function() {
 
             // If these are arena collider bodies, add them to their own collection too
             if (collisionCategory === CollisionCategories.Arena) {
-                arenaBodies = arenaBodies.concat(bodies);
+                if (arenaBodiesAdded) {
+                    throw "Arena bodies already added and cannot be readded";
+                }
+
+                // arenaBodies = arenaBodies.concat(bodies);
+                arenaBodies = bodies;
 
                 const bodiesLength = bodies.length;
                 const arenaBodiesElementsForSpatialHash = [];
@@ -54,7 +64,7 @@ const PhysicsBodies = (function() {
                         minY: arenaBodyBoundsMin.y,
                         maxX: arenaBodyBoundsMax.x,
                         maxY: arenaBodyBoundsMax.y,
-                        foo: 'bar'
+                        arenaBodyIndex: i
                     };
                     arenaBodiesElementsForSpatialHash.push(item);
                     Logger.log(item);
@@ -62,11 +72,13 @@ const PhysicsBodies = (function() {
 
                 arenaBodySpatialHash.load(arenaBodiesElementsForSpatialHash);
                 console.log(arenaBodySpatialHash);
+                arenaBodiesAdded = true;
             }
 
             RaycastManager.mapGameObjects(bodies, dynamic);
 
             //Logger.log("Added arena bodies:", ...bodies);
+
         },
         removeArenaPhysicsBody: function(body) {
             // Logger.log("Starting removal of arena body:", body, allBodies);
