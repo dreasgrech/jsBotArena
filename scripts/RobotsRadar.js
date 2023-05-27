@@ -8,6 +8,9 @@ const RobotsRadar = (function() {
 
     const radarRotationIncrement = 120;
 
+    const radarArcBoundingBoxes = [];
+    const radarArcBoundingBoxes_graphics = [];
+
     let ray;
 
     const sortByDistanceFunction = function(a, b) {
@@ -27,7 +30,6 @@ const RobotsRadar = (function() {
         if (!radarEnabled) {
             return scanForRobotsEmptyResult;
         }
-
 
         const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
         const robotHullBody = robotHullImage.body;
@@ -57,7 +59,22 @@ const RobotsRadar = (function() {
 
         //Logger.log("Scanning for robots", robotIndex, bodiesToIntersectWith);
 
-        // const ray = RaycastManager.createRay();
+        // Calculate the coordinates of the bounding box endpoints
+        const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
+        const startY = turretPositionY + radarMaxScanDistance * Math.sin(radarStartAngle_radians);
+        const endX = turretPositionX + radarMaxScanDistance * Math.cos(radarEndAngle_radians);
+        const endY = turretPositionY + radarMaxScanDistance * Math.sin(radarEndAngle_radians);
+
+        // Update the bounding box
+        const radarArcBoundingBox = {
+            minX: Math.min(turretPositionX, startX, endX),
+            minY: Math.min(turretPositionY, startY, endY),
+            maxX: Math.max(turretPositionX, startX, endX),
+            maxY: Math.max(turretPositionY, startY, endY)
+        };
+        radarArcBoundingBoxes[robotIndex] = radarArcBoundingBox;
+        const arenaBodiesFromSpatialHash = PhysicsBodies.queryArenaBodiesSpatialHash(radarArcBoundingBox);
+        Logger.log(arenaBodiesFromSpatialHash);
 
         // todo: try a spatial hash
         // Check all the robots
@@ -171,6 +188,9 @@ const RobotsRadar = (function() {
             ray = RaycastManager.createRay();
             //console.log(ray);
         },
+        update: function() {
+
+        },
         scanForRobots: scanForRobots,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {
             return RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = AngleOperations.normalizeAngleDegrees(angle_degrees);
@@ -196,13 +216,28 @@ const RobotsRadar = (function() {
             RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = 0;
             //RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 5;
             RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = 45;
-            // RobotsData_Radar.radarMaxScanDistance[index] = 200;
             RobotsData_Radar_radarMaxScanDistance[robotIndex] = 1000;
+            //RobotsData_Radar_radarMaxScanDistance[robotIndex] = 200;
+
+            // Create a graphics object to visualize the radar arc bounding box
+            if (GAME_DEBUG_MODE) {
+                const radarArcBoundingBoxGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
+                radarArcBoundingBoxGraphics.depth = GameObjectDepths.RobotRadarArc + 1;
+                radarArcBoundingBoxes_graphics[robotIndex] = radarArcBoundingBoxGraphics;
+                game.scene.scenes[0].add.existing(radarArcBoundingBoxGraphics);
+            }
+
+            // Fill the radarArcBoundingBox with initial values
+            radarArcBoundingBoxes[robotIndex] = { minX: 0, minY: 0, maxX: 0, maxY: 0 };
         },
         removeRadarArc: function(robotIndex) {
             const radarGraphics = RobotsData_Radar_radarGraphics[robotIndex];
-            // radarGraphics.clear();
             radarGraphics.destroy();
+
+            if (GAME_DEBUG_MODE) {
+                const radarArcBoundingBoxGraphics = radarArcBoundingBoxes_graphics[robotIndex];
+                radarArcBoundingBoxGraphics.destroy();
+            }
         },
         drawRadarArc: function(robotIndex) {
             const radarGraphics = RobotsData_Radar_radarGraphics[robotIndex];
@@ -242,6 +277,20 @@ const RobotsRadar = (function() {
             radarGraphics.closePath();
             radarGraphics.fillPath();
             radarGraphics.strokePath();
+
+            /*************************/
+            // Draw the bounding box around the radar arc
+            if (GAME_DEBUG_MODE) {
+                const radarArcBoundingBox = radarArcBoundingBoxes[robotIndex];
+                const radarArcBoundingBoxGraphics = radarArcBoundingBoxes_graphics[robotIndex];
+                radarArcBoundingBoxGraphics.clear();
+                radarArcBoundingBoxGraphics.lineStyle(1, 0xff0000, 1); // Line style: 1 pixel wide, red, full opacity
+                radarArcBoundingBoxGraphics.strokeRect(
+                    radarArcBoundingBox.minX,
+                    radarArcBoundingBox.minY,
+                    radarArcBoundingBox.maxX - radarArcBoundingBox.minX,
+                    radarArcBoundingBox.maxY - radarArcBoundingBox.minY);
+            }
         }
     };
 

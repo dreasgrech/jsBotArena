@@ -10,6 +10,8 @@ const PhysicsBodies = (function() {
 
     const projectileSensorBodyIDToRobotIndex = {};
 
+    let arenaBodySpatialHash = new rbush();
+
     // contains all the bodies except the body of the specific robot index
     //const allOtherBodiesExceptThisRobot = []; // [[],[],[]]
 
@@ -39,12 +41,32 @@ const PhysicsBodies = (function() {
             // If these are arena collider bodies, add them to their own collection too
             if (collisionCategory === CollisionCategories.Arena) {
                 arenaBodies = arenaBodies.concat(bodies);
+
+                const bodiesLength = bodies.length;
+                const arenaBodiesElementsForSpatialHash = [];
+                for (let i = 0; i < bodiesLength; i++) {
+                    const arenaBody = bodies[i];
+                    const arenaBodyBounds = arenaBody.bounds;
+                    const arenaBodyBoundsMin = arenaBodyBounds.min;
+                    const arenaBodyBoundsMax = arenaBodyBounds.max;
+                    const item = {
+                        minX: arenaBodyBoundsMin.x,
+                        minY: arenaBodyBoundsMin.y,
+                        maxX: arenaBodyBoundsMax.x,
+                        maxY: arenaBodyBoundsMax.y,
+                        foo: 'bar'
+                    };
+                    arenaBodiesElementsForSpatialHash.push(item);
+                    Logger.log(item);
+                }
+
+                arenaBodySpatialHash.load(arenaBodiesElementsForSpatialHash);
+                console.log(arenaBodySpatialHash);
             }
 
             RaycastManager.mapGameObjects(bodies, dynamic);
 
             //Logger.log("Added arena bodies:", ...bodies);
-
         },
         removeArenaPhysicsBody: function(body) {
             // Logger.log("Starting removal of arena body:", body, allBodies);
@@ -115,6 +137,11 @@ const PhysicsBodies = (function() {
         isBodyOverlappingWithArenaBodies: function(body) {
             const gameContext = GameContextHolder.gameContext;
             return gameContext.matter.overlap(body, allBodies);
+        },
+        queryArenaBodiesSpatialHash: function(bounds) {
+            const result = arenaBodySpatialHash.search(bounds);
+            //console.log(result);
+            return result;
         }
     };
 

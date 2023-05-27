@@ -253,7 +253,6 @@ const RobotManager = (function() {
         getTotalRobots: function() { return totalRobots; },
         addRobot: addRobot,
         update: update,
-        // TODO: move the logic for destroyed to delayed
         markRobotAsDestroyed: function(robotIndex) {
             // TODO: pool this
             const queuedRobotForRemoval = QueuedRobotForRemoval();
