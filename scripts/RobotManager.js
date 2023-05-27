@@ -230,10 +230,6 @@ const RobotManager = (function() {
         }
     };
 
-    // TODO: MOST OF THIS METHOD SHOULD GO TO ROBOTMATTERFACTORY.JS
-    // TODO: MOST OF THIS METHOD SHOULD GO TO ROBOTMATTERFACTORY.JS
-    // TODO: MOST OF THIS METHOD SHOULD GO TO ROBOTMATTERFACTORY.JS
-    // TODO: MOST OF THIS METHOD SHOULD GO TO ROBOTMATTERFACTORY.JS
     const removeAndHideRobot = function(robotIndex) {
 
         // Destroy the robot parts

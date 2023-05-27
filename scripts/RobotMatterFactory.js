@@ -209,6 +209,7 @@ const RobotMatterFactory = (function() {
             const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
             projectileSensor.angle = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
 
+            // Adjust the tracks animations based on the robot's speed
             const isRobotMoving = RobotQueries.isRobotMoving(robotIndex);
             const tracksAnimationTimescale = isRobotMoving ? 1 : 0;
             AnimationManager.setTimescale(robotsTrackLeftAnimationSpriteIndex[robotIndex], tracksAnimationTimescale);

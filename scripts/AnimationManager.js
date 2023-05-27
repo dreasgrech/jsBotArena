@@ -71,7 +71,7 @@ const AnimationManager = (function() {
                 // Create the pool of the sprites that will use this spritesheet
                 const spritesheetSpritesPoolIndex = GameObjectPoolsManager.createGameObjectPool({
                     poolName: spritesheetKey,
-                    createElement: () => {
+                    createElement: function() {
                         const sprite = gameContext.add.sprite(0, 0, spritesheetKey, null);
                         sprite.on('animationcomplete',
                             function(animationThatCompleted, currentFrame, gameObject, frameKey) {
@@ -133,6 +133,11 @@ const AnimationManager = (function() {
             // Fetch a sprite from the pool
             // const spriteIndex = animationManager.fetchSpriteFromPool(spritesheetPoolIndex);
             const spriteIndex = fetchSpriteFromPool(spritesheetPoolIndex);
+
+            // Make sure the sprite is ready for animations
+            const sprite = animationManager.sprites[spriteIndex];
+            sprite.anims.timeScale = 1;
+
             return spriteIndex;
         },
         setSpriteDetails: function(spriteIndex, gameObjectDepth, scale = 1) {
