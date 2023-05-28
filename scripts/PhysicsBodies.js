@@ -168,6 +168,23 @@ const PhysicsBodies = (function() {
             const result = arenaBodySpatialHash.search(bounds);
             //console.log(result);
             return result;
+        },
+        // Yields all the absolute world bound points of the arena body
+        yieldArenaBodyBounds: function*(arenaBodyIndex) {
+            // TODO: These can all probably be prefilled and cached because they don't change
+            const arenaBody = arenaBodies[arenaBodyIndex];
+            const arenaBodyBounds = arenaBody.bounds;
+            const arenaBodyPosition = arenaBody.position;
+            const arenaBodyPositionX = arenaBodyPosition.x;
+            const arenaBodyPositionY = arenaBodyPosition.y;
+            const halfWidth = (arenaBodyBounds.max.x - arenaBodyBounds.min.x) * 0.5;
+            const halfHeight = (arenaBodyBounds.max.y - arenaBodyBounds.min.y) * 0.5;
+
+            //yield { x: arenaBodyPositionX , y: arenaBodyPositionY };
+            yield { x: arenaBodyPositionX - halfWidth, y: arenaBodyPositionY - halfHeight }; // top left
+            yield { x: arenaBodyPositionX + halfWidth, y: arenaBodyPositionY - halfHeight }; // top right
+            yield { x: arenaBodyPositionX - halfWidth, y: arenaBodyPositionY + halfHeight }; // bottom left
+            yield { x: arenaBodyPositionX + halfWidth, y: arenaBodyPositionY + halfHeight }; // bottom right
         }
     };
 

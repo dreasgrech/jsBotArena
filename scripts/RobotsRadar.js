@@ -98,7 +98,7 @@ const RobotsRadar = (function() {
 
             let arenaObstacleFoundInRadar = false;
             let distanceBetweenRobotAndObstacle = false;
-            for (const arenaObstacleCornerPoint of yieldArenaBodyBounds(arenaBodyIndex)) {
+            for (const arenaObstacleCornerPoint of PhysicsBodies.yieldArenaBodyBounds(arenaBodyIndex)) {
                 const arenaObstacleCornerPointX = arenaObstacleCornerPoint.x;
                 const arenaObstacleCornerPointY = arenaObstacleCornerPoint.y;
                 // Calculate the angle between the robot and the arena obstacle point
@@ -185,22 +185,6 @@ const RobotsRadar = (function() {
         scannedArenaBodies.sort(sortByDistanceFunction);
         return scannedArenaBodies;
     };
-
-    const yieldArenaBodyBounds = function* (arenaBodyIndex) {
-        const arenaBody = PhysicsBodies.getArenaBody(arenaBodyIndex);
-        const arenaBodyBounds = arenaBody.bounds;
-        const arenaBodyPosition = arenaBody.position;
-        const arenaBodyPositionX = arenaBodyPosition.x;
-        const arenaBodyPositionY = arenaBodyPosition.y;
-        const halfWidth = (arenaBodyBounds.max.x - arenaBodyBounds.min.x) * 0.5;
-        const halfHeight = (arenaBodyBounds.max.y - arenaBodyBounds.min.y) * 0.5;
-
-        //yield { x: arenaBodyPositionX , y: arenaBodyPositionY };
-        yield { x: arenaBodyPositionX - halfWidth, y: arenaBodyPositionY - halfHeight }; // top left
-        yield { x: arenaBodyPositionX + halfWidth, y: arenaBodyPositionY - halfHeight }; // top right
-        yield { x: arenaBodyPositionX - halfWidth, y: arenaBodyPositionY + halfHeight }; // bottom left
-        yield { x: arenaBodyPositionX + halfWidth, y: arenaBodyPositionY + halfHeight }; // bottom right
-    }
 
     const scanForRobots = function(robotIndex) {
         const radarEnabled = isRadarEnabled(robotIndex);
@@ -309,7 +293,7 @@ const RobotsRadar = (function() {
                     if (intersection) {
                         const rayHitBody = intersection.object;
                         const rayHitBodyID = rayHitBody.id;
-                        console.log(rayHitBodyID);
+                        // console.log(rayHitBodyID);
                         const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
                         //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
                         robotFoundInRadar = isHitBodyTheScanningRobot;
