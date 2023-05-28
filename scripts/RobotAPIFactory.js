@@ -55,6 +55,9 @@ const RobotAPIFactory = (function() {
         return (function() {
 
             const api = {
+                /**
+                 * Moves the robot forward in the direction it's currently facing.
+                 */
                 move: function() {
                     const operationType = RobotHull_ActionType.Move;
                     const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
@@ -67,6 +70,9 @@ const RobotAPIFactory = (function() {
 
                     RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                 },
+                /**
+                 * Moves the robot backwards in the direction it's currently facing.
+                 */
                 reverse: function() {
                     const operationType = RobotHull_ActionType.Reverse;
                     const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
@@ -79,6 +85,9 @@ const RobotAPIFactory = (function() {
 
                     RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                 },
+                /**
+                 * Rotates the robot to the left.
+                 */
                 rotateLeft: function() {
                     const operationType = RobotHull_ActionType.RotateLeft;
                     const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
@@ -91,6 +100,9 @@ const RobotAPIFactory = (function() {
 
                     RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                 },
+                /**
+                 * Rotates the robot to the right.
+                 */
                 rotateRight: function() {
                     const operationType = RobotHull_ActionType.RotateRight;
                     const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
@@ -103,7 +115,12 @@ const RobotAPIFactory = (function() {
 
                     RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                 },
-                // returns true if we're at the requested angle
+                /**
+                 * Rotates the robot towards the specified angle (degrees).
+                 * Returns true if we're at the requested angle.
+                 * @param {number} angle_degrees
+                 * @returns {boolean}
+                 */
                 rotateTowardsAngle_degrees: function(angle_degrees) {
                     const operationType = RobotHull_ActionType.RotateTowardsAngle_degrees;
                     const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
@@ -116,7 +133,12 @@ const RobotAPIFactory = (function() {
 
                     return RobotOperations_Hull.rotateHullTowardsAngle_degrees(robotIndex, angle_degrees);
                 },
-                // returns true if we're at the requested angle
+                /**
+                 * Returns true if we're at the requested angle.
+                 * @param {number} positionX
+                 * @param {number} positionY
+                 * @returns {boolean}
+                 */
                 rotateTowardsPosition: function(positionX, positionY) {
                     const operationType = RobotHull_ActionType.rotateTowardsPosition;
                     const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
@@ -128,8 +150,17 @@ const RobotAPIFactory = (function() {
                     RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     return RobotOperations_Hull.rotateHullTowardsPosition(robotIndex, positionX, positionY);
                 },
+                /**
+                 * Operations involving the hull.
+                 */
                 turret: {
+                    /**
+                     * If set to true, the turret's rotation will be locked to the rotation of the hull.
+                     */
                     turretFollowHull: false,
+                    /**
+                     * Rotates the turret to the left.
+                     */
                     rotateLeft: function() {
                         const operationType = RobotTurret_ActionType.RotateLeft;
                         const operationsState = RobotsDataAPI_FrameOperations_Turret[robotIndex];
@@ -142,6 +173,9 @@ const RobotAPIFactory = (function() {
 
                         RobotsDataAPI_FrameOperations_Turret[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     },
+                    /**
+                     * Rotates the turret to the right.
+                     */
                     rotateRight: function() {
                         const operationType = RobotTurret_ActionType.RotateRight;
                         const operationsState = RobotsDataAPI_FrameOperations_Turret[robotIndex];
@@ -154,7 +188,12 @@ const RobotAPIFactory = (function() {
 
                         RobotsDataAPI_FrameOperations_Turret[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     },
-                    // returns true if we're at the requested angle
+                    /**
+                     * Rotates the turret towards the specified angle.
+                     * Returns true if we're at the requested angle.
+                     * @param {number} angle_degrees
+                     * @returns {boolean}
+                     */
                     rotateTowardsAngle_degrees: function(angle_degrees) {
                         const operationType = RobotTurret_ActionType.RotateTowardsAngle_degrees;
                         const operationsState = RobotsDataAPI_FrameOperations_Turret[robotIndex];
@@ -167,7 +206,14 @@ const RobotAPIFactory = (function() {
 
                         return RobotOperations_Turret.rotateTurretTowardsAngle_degrees(robotIndex, angle_degrees);
                     },
-                    // returns true if we're at the requested angle
+                    // 
+                    /**
+                     * Rotates the turret towards the specified absolute world position.
+                     * Returns true if we're at the requested angle.
+                     * @param {number} positionX
+                     * @param {number} positionY
+                     * @returns {boolean}
+                     */
                     rotateTowardsPosition: function(positionX, positionY) {
                         const operationType = RobotTurret_ActionType.rotateTowardsPosition;
                         const operationsState = RobotsDataAPI_FrameOperations_Turret[robotIndex];
@@ -181,18 +227,40 @@ const RobotAPIFactory = (function() {
                         return RobotOperations_Turret.rotateTurretTowardsPosition(robotIndex, positionX, positionY);
                     }
                 },
+                /**
+                 * Data and Operations involving the radar
+                 */
                 radar: {
-                    // If set to false, then radar scanning is disabled
+                    /**
+                     * If set to false, then radar scanning is disabled.
+                     */
                     radarEnabled: true,
-                    // If set to true, the radar will be locked to the turret and will rotate with it.
+                    /**
+                     * If set to true, the radar will be locked to the turret and will rotate with it.
+                     */
                     radarFollowTurret: false,
-                    // The scanned robots that are alive
-                    scannedAliveRobots: [], // RobotScannedInfo[]
-                    scannedArenaElements: [], // ArenaObstacleScannedInfo[]
-                    // The FOV angle can be between 1 and 45
+                    /**
+                     * The scanned robots that are alive.
+                     * @type {RobotScannedInfo[]}
+                     */
+                    scannedAliveRobots: [], 
+                    /**
+                     * The scanned arena obstacles.
+                     * @type {ArenaObstacleScannedInfo[]}
+                     */
+                    scannedArenaElements: [], 
+                    // 
+                    /**
+                     * The FOV angle can be between 1 and 45.
+                     * @param {number} angle_degrees
+                     * @returns {number}
+                     */
                     setFOVAngle_degrees: function(angle_degrees) {
                         return RobotsRadar.setRadarFOVAngle_degrees(robotIndex, angle_degrees);
                     },
+                    /**
+                     * Rotates the radar to the left
+                     */
                     rotateLeft: function() {
                         const operationType = RobotRadar_ActionType.RotateLeft;
                         const operationsState = RobotsDataAPI_FrameOperations_Radar[robotIndex];
@@ -205,6 +273,9 @@ const RobotAPIFactory = (function() {
 
                         RobotsDataAPI_FrameOperations_Radar[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     },
+                    /**
+                     * Rotates the radar to the right
+                     */
                     rotateRight: function() {
                         const operationType = RobotRadar_ActionType.RotateRight;
                         const operationsState = RobotsDataAPI_FrameOperations_Radar[robotIndex];
@@ -219,19 +290,50 @@ const RobotAPIFactory = (function() {
                     }
                 },
                 // returns true if the projectile was fired
+                /**
+                 * Fires a projectile.
+                 * Returns true if the projectile was fired.
+                 * @param {ProjectileTypes} projectileType
+                 * @returns {boolean}
+                 */
                 fire: function(projectileType) {
                     return ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
                 },
-                // Collisions this frame
+                /**
+                 * Data about the collisions that have occurred this frame
+                 */
                 collisions: {
-                    otherRobots: [], // type: RobotToRobotCollisionInfo[]
-                    arena: [], // type: RobotToArenaCollisionInfo[]
-                    projectiles: [] // type: RobotToProjectileCollisionInfo[]
+                    /**
+                     * Data about the robots that we collided with this frame
+                     * @type {RobotToRobotCollisionInfo[]}
+                     */
+                    otherRobots: [],
+                    /**
+                     * Data about the arena obstacles that we collided with this frame
+                     * @type {RobotToArenaCollisionInfo[]}
+                     */
+                    arena: [],
+                    /**
+                     * Data about the projectiles that we collided with this frame
+                     * @type {RobotToProjectileCollisionInfo[]}
+                     */
+                    projectiles: []
                 },
-                // Own robot's data
+                /**
+                 * Data about our own robot
+                 */
                 data: {
+                    /**
+                     * The robot's current absolute world x-position
+                     */
                     positionX: 0,
+                    /**
+                     * The robot's current absolute world y-position
+                     */
                     positionY: 0,
+                    /**
+                     * The robot's current angle (degrees)
+                     */
                     angle_degrees: 0
                 }
             };
