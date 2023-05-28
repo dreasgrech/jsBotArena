@@ -71,7 +71,7 @@ const PhysicsBodies = (function() {
                         arenaBodyIndex: i
                     };
                     arenaBodiesElementsForSpatialHash.push(item);
-                    Logger.log(item);
+                    //Logger.log(item);
                     const everyOtherArenaBodyExceptThis = [];
                     for (let j = 0; j < bodiesLength; j++) {
                         // Skip this particular body

@@ -164,6 +164,7 @@ window.onload = function(event) {
         type: Phaser.AUTO,
         width: GameSetup.Width,
         height: GameSetup.Height,
+        //antialias: true,
         scene: {
             preload: gameManager.preload,
             create: gameManager.create,
