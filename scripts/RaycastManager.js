@@ -18,8 +18,8 @@ const RaycastManager = (function () {
                         rayPoint: 0xff00ff, //debug ray point color; set false to disable
                         mapPoint: 0x00ffff, //debug map point color; set false to disable
                         mapSegment: 0x0000ff, //debug map segment color; set false to disable
-                        // mapBoundingBox: 0xff0000 //debug map bounding box color; set false to disable
-                        mapBoundingBox: false //debug map bounding box color; set false to disable
+                         mapBoundingBox: 0xff0000 //debug map bounding box color; set false to disable
+                        //mapBoundingBox: false //debug map bounding box color; set false to disable
                     }
                 }
             };

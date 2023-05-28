@@ -51,9 +51,11 @@ const RobotsRadar = (function() {
 
         // Construct an array of the bodies for the ray to intersect with
         const bodiesToIntersectWith = [
-            robotHullBody,
+            //robotHullBody,
+            // ...PhysicsBodies.getEveryOtherArenaBodyExceptThis(arenaBodyIndex) // the ... operator expands the array into arguments for the function
             ...PhysicsBodies.getArenaBodies() // the ... operator expands the array into arguments for the function
         ];
+
 
         // Calculate the coordinates of the bounding box endpoints
         const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
@@ -75,6 +77,7 @@ const RobotsRadar = (function() {
         for (let i = 0; i < arenaBodiesBoundsFromSpatialHashLength; i++) {
             const arenaBodyBoundsFromSpatialHash = arenaBodiesBoundsFromSpatialHash[i];
             const arenaBodyIndex = arenaBodyBoundsFromSpatialHash.arenaBodyIndex;
+            // TODO: arenaBodyPositionX and arenaBodyPositionY can be preset and cached in arrays because they do not change
             const arenaBody = PhysicsBodies.getArenaBody(arenaBodyIndex);
             const arenaBodyPositionX = arenaBody.x;
             const arenaBodyPositionY = arenaBody.y;
@@ -120,20 +123,35 @@ const RobotsRadar = (function() {
                 }
 
                 if (pointWithinRadarAngles) {
-                    const rayOriginX = arenaObstacleCornerPointX, rayOriginY = arenaObstacleCornerPointY;
+                    //const rayOriginX = arenaObstacleCornerPointX, rayOriginY = arenaObstacleCornerPointY;
+                    const rayOriginX = turretPositionX, rayOriginY = turretPositionY;
                     ray.setOrigin(rayOriginX, rayOriginY);
-                    const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints(arenaObstacleCornerPoint, { x: turretPositionX, y: turretPositionY });
+                    // const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints(arenaObstacleCornerPoint, { x: turretPositionX, y: turretPositionY });
+                    const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints({ x: turretPositionX, y: turretPositionY }, arenaObstacleCornerPoint);
                     ray.setAngle(angleBetweenPoints_radians); // radians
 
                     // todo: continue here because bodiesToIntesectWith is not correct for scanning arena bodies
                     // todo: continue here because bodiesToIntesectWith is not correct for scanning arena bodies
                     // todo: continue here because bodiesToIntesectWith is not correct for scanning arena bodies
                     // Cast the ray from the scanned arena obstacle's bounds point to the scanning robot
+                    //Logger.log(ray,"Checking for index", arenaBodyIndex, bodiesToIntersectWith);
                     const intersection = ray.cast({ objects: bodiesToIntersectWith });
                     if (intersection) {
                         const rayHitBody = intersection.object;
                         const rayHitBodyID = rayHitBody.id;
-                        const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
+                        const distanceBetweenRayOriginAndIntersectionPoint = Phaser.Math.Distance.Between(
+                            rayOriginX,
+                            rayOriginY,
+                            intersection.x,
+                            intersection.y);
+                        if (distanceBetweenRayOriginAndIntersectionPoint > radarMaxScanDistance) {
+                            continue;
+                        }
+
+                        //console.log("distance", distanceBetweenRayOriginAndIntersectionPoint);
+                        // const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
+                        const isHitBodyTheScanningRobot = rayHitBody === arenaBody;
+                        //console.log(rayHitBody, arenaBody);
                         //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
                         bodyFoundInRadar = isHitBodyTheScanningRobot;
                         if (bodyFoundInRadar) {

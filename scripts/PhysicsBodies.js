@@ -3,6 +3,7 @@
 const PhysicsBodies = (function() {
     let allBodies = []; // contains all the physics bodies in the arena
     let arenaBodies = []; // contains the arena bodies (walls, obstacles, etc..)
+    let arenaBodyMappingToEveryOtherArenaBody = {};
 
     // const matterBodyToObjectType = {};
     const matterBodyToCollisionCategory = {};
@@ -24,16 +25,20 @@ const PhysicsBodies = (function() {
         getArenaBody: function(arenaBodyIndex) {
             return arenaBodies[arenaBodyIndex];
         },
+        getEveryOtherArenaBodyExceptThis: function(arenaBodyIndex) {
+            return arenaBodyMappingToEveryOtherArenaBody[arenaBodyIndex];
+        },
         // TODO: also need to make sure not to have duplicates in arenaBodies
         // TODO: maybe using Set is an option
         addArenaPhysicsBodies: function(collisionCategory, bodies, dynamic) {
             const arenaBodiesTotalBeforeAdd = allBodies.length;
             allBodies = allBodies.concat(bodies);
-
-            console.assert(allBodies.length === arenaBodiesTotalBeforeAdd + bodies.length,
+            const bodiesLength = bodies.length;
+            console.assert(allBodies.length === arenaBodiesTotalBeforeAdd + bodiesLength,
                 "Make sure that all the elements were added");
 
-            for (let i = 0; i < bodies.length; i++) {
+
+            for (let i = 0; i < bodiesLength; i++) {
                 let body = bodies[i];
                 matterBodyToCollisionCategory[body.id] =
                 {
@@ -52,7 +57,6 @@ const PhysicsBodies = (function() {
                 // arenaBodies = arenaBodies.concat(bodies);
                 arenaBodies = bodies;
 
-                const bodiesLength = bodies.length;
                 const arenaBodiesElementsForSpatialHash = [];
                 for (let i = 0; i < bodiesLength; i++) {
                     const arenaBody = bodies[i];
@@ -68,6 +72,16 @@ const PhysicsBodies = (function() {
                     };
                     arenaBodiesElementsForSpatialHash.push(item);
                     Logger.log(item);
+                    const everyOtherArenaBodyExceptThis = [];
+                    for (let j = 0; j < bodiesLength; j++) {
+                        // Skip this particular body
+                        if (j === i) {
+                            continue;
+                        }
+                        everyOtherArenaBodyExceptThis.push(bodies[j]);
+                    }
+
+                    arenaBodyMappingToEveryOtherArenaBody[i] = everyOtherArenaBodyExceptThis;
                 }
 
                 arenaBodySpatialHash.load(arenaBodiesElementsForSpatialHash);
