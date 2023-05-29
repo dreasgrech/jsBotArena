@@ -347,55 +347,94 @@ const RobotAPIFactory = (function() {
     };
 }());
 
-const RobotToRobotCollisionInfo = function() {
+/**
+ * Data about a Robot to Arena Obstacle collision
+ */
+const RobotToRobotCollisionInfo = function () {
     return {
+        /** The type of collision */
         type: 0,
         data: {
+            /** The index of the other robot involved in the collision */
             robotIndex: 0,
+            /** The name of the other robot involved in the collision */
             name: 0,
+            /** The angle of the other robot involved in the collision */
             angle: 0,
+            /** The velocity of the other robot involved in the collision */
             velocity: 0,
+            /** The x-position of the other robot involved in the collision */
             positionX: 0,
-            positionY: 0,
+            /** The y-position of the other robot involved in the collision */
+            positionY: 0
         }
     };
 };
-
+/**
+ * Data about a Robot to Arena Obstacle collision
+ */
 const RobotToArenaCollisionInfo = function() {
     return {
         type: 0,
     };
 };
 
+/**
+ * Data about a Robot to Projectile collision
+ */
 const RobotToProjectileCollisionInfo = function() {
     return {
-        positionX: 0, // the x-position of the projectile
-        positionY: 0, // the y-position of the projectile
-        angle_degrees: 0, // the angle in degrees of the projectile
-        bearing_degrees: 0, // the angle in degrees that the robot needs to rotate to to face the projectile
-        damageApplied: 0 // the total damage applied
+        /** The x-position of the projectile */
+        positionX: 0,
+        /** The y-position of the projectile */
+        positionY: 0, 
+        /** The angle in degrees of the projectile */
+        angle_degrees: 0, 
+        /** The angle in degrees that the robot needs to rotate to to face the projectile */
+        bearing_degrees: 0,
+        /** The total damage applied */
+        damageApplied: 0 
     };
 };
 
-const RobotScannedInfo = function() {
+/**
+ * Data about a robot scanned by the radar
+ */
+const RobotScannedInfo = function () {
     return {
-        index: 0, // the scanned robot's index
-        distance: 0, // the distance between the scanning robot and the scanned robot
-        positionX: 0, // the x-position of the scanned robot
-        positionY: 0, // the y-position of the scanned robot
-        angle_degrees: 0, // the angle in degrees of the scanned robot
-        bearing_degrees: 0, // the angle in degrees that the scanning robot needs to rotate to to face the scanned robot
-        turret_angle: 0, // the angle in degrees of the scanned robot's turret
-        radar_angle: 0 // the angle in degrees of the scanned robot's radar
+        /** The scanned robot's index */
+        index: 0,
+        /** The distance between the scanning robot and the scanned robot */
+        distance: 0,
+        /** The x-position of the scanned robot */
+        positionX: 0,
+        /** The y-position of the scanned robot */
+        positionY: 0,
+        /** The angle in degrees of the scanned robot */
+        angle_degrees: 0,
+        /** The angle in degrees that the scanning robot needs to rotate to face the scanned robot */
+        bearing_degrees: 0,
+        /** The angle in degrees of the scanned robot's turret */
+        turret_angle: 0,
+        /** The angle in degrees of the scanned robot's radar */
+        radar_angle: 0
     }
 };
 
-const ArenaObstacleScannedInfo = function() {
+/**
+ * Data about an arena obstacle scanned by the radar
+ */
+const ArenaObstacleScannedInfo = function () {
     return {
-        index: 0, // the scanned obstacle's index
-        distance: 0, // the distance between the scanning robot and the scanned arena obstacle
-        positionX: 0, // the x-position of the scanned arena obstacle
-        positionY: 0, // the y-position of the scanned arena obstacle
-        bearing_degrees: 0 // the angle in degrees that the scanning robot needs to rotate to to face the scanned arena obstacle
+        /** The scanned obstacle's index */
+        index: 0,
+        /** The distance between the scanning robot and the scanned arena obstacle */
+        distance: 0,
+        /** The x-position of the scanned arena obstacle */
+        positionX: 0,
+        /** The y-position of the scanned arena obstacle */
+        positionY: 0,
+        /** The angle in degrees that the scanning robot needs to rotate to face the scanned arena obstacle */
+        bearing_degrees: 0
     }
 };
