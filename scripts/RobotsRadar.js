@@ -73,6 +73,8 @@ const RobotsRadar = (function() {
             maxY: Math.max(turretPositionY, startY, endY)
         };
         radarArcBoundingBoxes[robotIndex] = radarArcBoundingBox;
+
+        // Query the spatial hash for all the arena bodies in the radar's AABB
         const arenaBodiesBoundsFromSpatialHash = PhysicsBodies.queryArenaBodiesSpatialHash(radarArcBoundingBox);
         const arenaBodiesBoundsFromSpatialHashLength = arenaBodiesBoundsFromSpatialHash.length;
         //Logger.log(arenaBodiesBoundsFromSpatialHashLength, "arena bodies found");
@@ -84,25 +86,13 @@ const RobotsRadar = (function() {
             const arenaBodyPositionX = arenaBody.x;
             const arenaBodyPositionY = arenaBody.y;
 
-            /*
-            const distanceBetweenRobotAndArenaBody = Phaser.Math.Distance.Between(
-                turretPositionX,
-                turretPositionY,
-                arenaBodyPositionX,
-                arenaBodyPositionY);
-
-            if (distanceBetweenRobotAndArenaBody > radarMaxScanDistance) {
-                continue;
-            }
-            */
-
             let arenaObstacleFoundInRadar = false;
             let distanceBetweenRobotAndObstacle = false;
+            // Check each point in the arena obstacle's bounds to determine whether this arena obstacle is truly in the radar's field-of-view
             for (const arenaObstacleCornerPoint of PhysicsBodies.yieldArenaBodyBounds(arenaBodyIndex)) {
                 const arenaObstacleCornerPointX = arenaObstacleCornerPoint.x;
                 const arenaObstacleCornerPointY = arenaObstacleCornerPoint.y;
                 // Calculate the angle between the robot and the arena obstacle point
-                //console.log(arenaObstacleCornerPoint);
                 const angleBetween_radians = Phaser.Math.Angle.Between(
                     turretPositionX,
                     turretPositionY,
@@ -143,20 +133,14 @@ const RobotsRadar = (function() {
                     //ray.destroy();
                     if (intersection) {
                         const rayHitBody = intersection.object;
-                        //const rayHitBodyID = rayHitBody.id;
-                        const distanceBetweenRayOriginAndIntersectionPoint = Phaser.Math.Distance.Between(
-                            rayOriginX,
-                            rayOriginY,
-                            intersection.x,
-                            intersection.y);
+
+                        // Make sure this point is within the radar's distance range
+                        const distanceBetweenRayOriginAndIntersectionPoint = Phaser.Math.Distance.Between(rayOriginX, rayOriginY, intersection.x, intersection.y);
                         if (distanceBetweenRayOriginAndIntersectionPoint > radarMaxScanDistance) {
                             continue;
                         }
 
-                        //console.log("distance", distanceBetweenRayOriginAndIntersectionPoint);
-                        // const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
                         const isHitBodyTheArenaObstacle = rayHitBody.id === arenaBody.id;
-                        //console.log(rayHitBody, arenaBody);
                         //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
                         arenaObstacleFoundInRadar = isHitBodyTheArenaObstacle;
                         if (arenaObstacleFoundInRadar) {
@@ -217,11 +201,6 @@ const RobotsRadar = (function() {
         ];
 
         //Logger.log("Scanning for robots", robotIndex, bodiesToIntersectWith);
-
-        // TODO: Continue here
-        // TODO: Continue here
-        // TODO: Continue here
-        //Logger.log(arenaBodiesFromSpatialHash);
 
         // todo: try a spatial hash
         // Check all the alive robots
