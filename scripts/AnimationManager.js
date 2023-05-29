@@ -38,6 +38,8 @@ const AnimationManager = (function() {
     const spritesAnchorageIndex = [];
     const spriteIndex_to_spriteIndexPool = [];
 
+    const animationCompleteCallbacks = [];
+
     const fetchSpriteFromPool = function(poolIndex) {
         // Fetch a sprite from the pool
         const sprite = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
@@ -48,6 +50,9 @@ const AnimationManager = (function() {
 
         // Save a reference from the spriteIndex to the pool index which it came from
         spriteIndex_to_spriteIndexPool[spriteIndex] = poolIndex;
+
+        // Save the sprite index with the sprite object for later use
+        sprite.spriteIndex = spriteIndex;
 
         return spriteIndex;
     };
@@ -75,8 +80,16 @@ const AnimationManager = (function() {
                         const sprite = gameContext.add.sprite(0, 0, spritesheetKey, null);
                         sprite.on('animationcomplete',
                             function(animationThatCompleted, currentFrame, gameObject, frameKey) {
-                                //console.log('anim complete!', animationThatCompleted, currentFrame, gameObject, frameKey);
+                                const spriteIndex = sprite.spriteIndex;
+                                //Logger.log('anim complete!', 'sprite-index:', spriteIndex, animationThatCompleted, currentFrame, gameObject, frameKey);
                                 GameObjectPoolsManager.returnGameObjectToPool(spritesheetSpritesPoolIndex, sprite);
+
+                                // Run animationcomplete callbacks
+                                const animationCompleteCallbacksLength = animationCompleteCallbacks.length;
+                                for (let j = 0; j < animationCompleteCallbacksLength; j++) {
+                                    const animationCompleteCallback = animationCompleteCallbacks[j];
+                                    animationCompleteCallback(spriteIndex);
+                                }
                             });
                         return sprite;
                     }
@@ -123,6 +136,9 @@ const AnimationManager = (function() {
             // Clear the loaded databases array so that the contents get released because we don't need them anymore
             AnimationSpritesDatabase.clearDatabases();
         },
+        registerAnimationCompleteCallback: function(callback) {
+            animationCompleteCallbacks.push(callback);
+        },
         fetchSpriteForAnimation: function(animationType) {
             //console.log(animationType, animations);
             const animation = animations[animationType];
@@ -151,6 +167,12 @@ const AnimationManager = (function() {
         },
         setSpriteAngle_degrees: function(spriteIndex, angle_degrees) {
             const sprite = animationManager.sprites[spriteIndex];
+            sprite.angle = angle_degrees;
+        },
+        setSpritePositionAndAngle: function(spriteIndex, x, y, angle_degrees) {
+            const sprite = animationManager.sprites[spriteIndex];
+            sprite.x = x;
+            sprite.y = y;
             sprite.angle = angle_degrees;
         },
         playAnimationOnSprite: function(spriteIndex, animationType) {

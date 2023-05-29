@@ -17,6 +17,16 @@ const ProjectileManager = (function() {
 
     const robotsLastFiredTime = [];
 
+    const robotFiringProjectilesActiveAnimationSprites = {};
+
+    AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
+        const robotFiringProjectileAnimationSpriteIndex = robotFiringProjectilesActiveAnimationSprites[spriteIndex];
+        if (robotFiringProjectileAnimationSpriteIndex >= 0) {
+            // console.log("firing animation complete", robotFiringProjectileAnimationSpriteIndex);
+            delete robotFiringProjectilesActiveAnimationSprites[spriteIndex];
+        }
+    });
+
     const projectileManager = {
         system_create: function() {
             gameContext = GameContextHolder.gameContext;
@@ -52,7 +62,34 @@ const ProjectileManager = (function() {
                 pools[projectileTypeIndex] = poolIndex;
             }
         },
-        update: function() { },
+        update: function() {
+            // Update all the currently active robot firing projectiles muzzle flash animations
+            // to stay attached to the turret tip
+            for (let fireShotAnimationSpriteIndex in robotFiringProjectilesActiveAnimationSprites) {
+                if (!robotFiringProjectilesActiveAnimationSprites.hasOwnProperty(fireShotAnimationSpriteIndex)) {
+                    continue;
+                }
+
+                const robotIndex = robotFiringProjectilesActiveAnimationSprites[fireShotAnimationSpriteIndex];
+                //Logger.log(
+                //    'fireShotAnimationSpriteIndex',
+                //    fireShotAnimationSpriteIndex,
+                //    'robotIndex',
+                //    robotIndex);
+
+                const turretTipPosition = RobotsBoundsHelpers.getTurretTipPosition(robotIndex);
+                const turretTipPositionX = turretTipPosition.x;
+                const turretTipPositionY = turretTipPosition.y;
+                const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+                const turretAngle_degrees = turretImage.angle;
+
+                AnimationManager.setSpritePositionAndAngle(
+                    fireShotAnimationSpriteIndex,
+                    turretTipPositionX,
+                    turretTipPositionY,
+                    turretAngle_degrees);
+            }
+        },
         onRobotAdded: function(robotIndex) {
             robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
         },
@@ -139,13 +176,16 @@ const ProjectileManager = (function() {
 
             // Logger.log("mapping", projectileMatterGameObject.body.id, "to", currentProjectileIndex);
 
-            const fireShotAnimationIndex = AnimationManager.playNewAnimation(
+            const fireShotAnimationSpriteIndex = AnimationManager.playNewAnimation(
                 AnimationEffects.TankAnimationEffects.Fire_Shots_A,
                 turretTipPositionX,
                 turretTipPositionY,
                 turretAngle_degrees,
                 GameObjectDepths.ImpactAnimation,
                 ROBOT_SCALE);
+
+            robotFiringProjectilesActiveAnimationSprites[fireShotAnimationSpriteIndex] = robotIndex;
+            //robotFiringProjectilesActiveAnimationSprites[fireShotAnimationSpriteIndex] = true;
 
             //ObjectAnchorManager.anchorToRobot(
             //    AnimationManager.sprites[fireShotAnimationIndex],

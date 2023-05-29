@@ -36,6 +36,7 @@ const gameManager = (function() {
     const objectsWith_update = [
         RobotManager,
         RobotsRadar,
+        ProjectileManager,
         ObjectAnchorManager,
         UIManager
     ];
@@ -93,19 +94,6 @@ const gameManager = (function() {
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
-        //RobotManager.addRobot(keyBot());
-        //RobotManager.addRobot(doNothingBot());
-        //RobotManager.addRobot(shredder());
-        //RobotManager.addRobot(circleBot());
-        //RobotManager.addRobot(sittingBot());
-        //RobotManager.addRobot(followBot_followAngle());
-        //RobotManager.addRobot(followBot_followPosition());
-        //RobotManager.addRobot(CornerGuardBot());
-
-        // setTimeout(() => { RobotManager.addRobot(circleBot()); }, 1500);
-        //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2000);
-        //setTimeout(() => { RobotManager.addRobot(doNothingBot()); }, 2500);
-
         gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
         //gameContext.anims.on('stop', function() { // doesnt work
         //    console.log('anim complete!');
@@ -118,6 +106,7 @@ const gameManager = (function() {
 
         for (let i = 0; i < 1; i++) {
             RobotManager.addRobot(keyBot());
+            RobotManager.addRobot(astarBot());
             RobotManager.addRobot(doNothingBot());
             RobotManager.addRobot(shredder());
             RobotManager.addRobot(circleBot());
@@ -127,6 +116,9 @@ const gameManager = (function() {
             RobotManager.addRobot(CornerGuardBot());
         }
     };
+
+    const FIXED_DELTA_TIME = 0.02; //50hz
+    let stepTimer = 0;
 
     const update = function(time, delta) {
         if (!gameRunning) {
@@ -148,8 +140,15 @@ const gameManager = (function() {
         // Increase the frame counter
         FrameCounter.current++;
 
+        stepTimer += delta * 0.001;
+
         // Step the physics
         GameContextHolder.gameContext.matter.world.step();
+    //    while (stepTimer >= FIXED_DELTA_TIME) {
+    //        stepTimer -= FIXED_DELTA_TIME;
+    //        //GameContextHolder.gameContext.matter.world.step(FIXED_DELTA_TIME);
+    //        GameContextHolder.gameContext.matter.world.step();
+    //    }
     };
 
     return {
