@@ -3,6 +3,8 @@
 // Makes use of this raycasting Phaser plugin: https://wiserim.github.io/phaser-raycaster/
 const RaycastManager = (function () {
     let raycaster;
+    let lastRaycasterIndexCreated = -1;
+    const createdRays = {};
 
     const raycastManager = {
         system_preload: function() {
@@ -34,18 +36,33 @@ const RaycastManager = (function () {
         },
         createRay: function() {
             const ray = raycaster.createRay();
+            const rayIndex = ++lastRaycasterIndexCreated;
+            ray.rayIndex = rayIndex;
             //ray.autoSlice = true; //enable auto slicing field of view
+            createdRays[rayIndex] = ray;
 
             // todo: keep a list of all created rays
 
             return ray;
         },
         destroyRay: function(ray) {
+            const rayIndex = ray.rayIndex;
+            delete createdRays[rayIndex];
             ray.destroy();
         },
         logStatistics: function() {
             const stats = raycaster.getStats();
             Logger.log(stats);
+        },
+        system_newRoundReset: function() {
+            for (let rayIndex in createdRays) {
+                if (!createdRays.hasOwnProperty(rayIndex)) {
+                    continue;
+                }
+                // TODO: I don't know if it's good to be deleting keys from the object you're iterating from
+                const ray = createdRays[rayIndex];
+                raycastManager.destroyRay(ray);
+            }
         },
         system_dispose: function() {
             raycaster.destroy();

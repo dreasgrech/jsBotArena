@@ -417,6 +417,9 @@ const RobotsRadar = (function() {
                     radarArcBoundingBox.maxX - radarArcBoundingBox.minX,
                     radarArcBoundingBox.maxY - radarArcBoundingBox.minY);
             }
+        },
+        system_reset: function() {
+            RaycastManager.destroyRay(ray);
         }
     };
 

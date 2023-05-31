@@ -249,7 +249,6 @@ const RobotAPIFactory = (function() {
                      * @type {ArenaObstacleScannedInfo[]}
                      */
                     scannedArenaElements: [], 
-                    // 
                     /**
                      * The FOV angle can be between 1 and 45.
                      * @param {number} angle_degrees
@@ -289,7 +288,6 @@ const RobotAPIFactory = (function() {
                         RobotsDataAPI_FrameOperations_Radar[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     }
                 },
-                // returns true if the projectile was fired
                 /**
                  * Fires a projectile.
                  * Returns true if the projectile was fired.

@@ -42,6 +42,11 @@ const gameManager = (function() {
     ];
     const totalObjectsWith_update = objectsWith_update.length;
 
+    const objectsWith_newRoundReset = [
+        RaycastManager
+
+    ];
+
 
     const preload = function() {
         const gameContext = this;
@@ -104,9 +109,8 @@ const gameManager = (function() {
             toLoad.system_create();
         }
 
-        for (let i = 0; i < 1; i++) {
+        for (let i = 0; i < 2; i++) {
             RobotManager.addRobot(keyBot());
-            RobotManager.addRobot(astarBot());
             RobotManager.addRobot(doNothingBot());
             RobotManager.addRobot(shredder());
             RobotManager.addRobot(circleBot());
@@ -114,6 +118,7 @@ const gameManager = (function() {
             RobotManager.addRobot(followBot_followAngle());
             RobotManager.addRobot(followBot_followPosition());
             RobotManager.addRobot(CornerGuardBot());
+            //RobotManager.addRobot(astarBot());
         }
     };
 

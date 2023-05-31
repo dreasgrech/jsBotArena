@@ -17,51 +17,42 @@ const AnimationEffects = {
     }
 };
 
+/** The values of how many elements are pre-populated */
 const PoolsPrepopulateValues = {
     Projectiles: 50,
     Animations: 50, // TODO: this needs to be split into different values
 };
-
 
 const AnimationManager = (function() {
     /*
      * animationcomplete parameters:https://newdocs.phaser.io/docs/3.52.0/Phaser.Animations.Events.ANIMATION_COMPLETE
      */
 
+    /** The index of the last sprite that was fetched from the pool*/
     let lastSpriteIndexCreated = -1;
-    let lastAnimationIndexCreated = -1;
 
+    /** Contains a mapping from the animation key to its corresponding sprite pool index */
     const animationKeyToSpritePoolIndex = {};
 
+    /** An array of all the loaded and available animations, indexed by the animation index */
     const animations = [];
 
+    /** An array of the anchorage indexes that are currently active */
     const spritesAnchorageIndex = [];
-    const spriteIndex_to_spriteIndexPool = [];
 
+    /** An array of all the registered callbacks */
     const animationCompleteCallbacks = [];
 
-    const fetchSpriteFromPool = function(poolIndex) {
-        // Fetch a sprite from the pool
-        const sprite = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
-
-        // Save the sprite in our collection so that other functions can use it
-        const spriteIndex = ++lastSpriteIndexCreated;
-        animationManager.sprites[spriteIndex] = sprite;
-
-        // Save a reference from the spriteIndex to the pool index which it came from
-        spriteIndex_to_spriteIndexPool[spriteIndex] = poolIndex;
-
-        // Save the sprite index with the sprite object for later use
-        sprite.spriteIndex = spriteIndex;
-
-        return spriteIndex;
-    };
+    /** An array of all the spawned sprites from the pool right now */
+    const spriteIndex_to_spriteIndexPool = [];
 
     const animationManager = {
         sprites: [],
         system_preload: function() {},
         system_create: function() {
             const gameContext = GameContextHolder.gameContext;
+
+            let lastAnimationIndexCreated = -1;
 
             const loadedDatabasesFromJSON = AnimationSpritesDatabase.loadedDatabasesFromJSON;
             for (let i = 0; i < loadedDatabasesFromJSON.length; i++) {
@@ -136,9 +127,19 @@ const AnimationManager = (function() {
             // Clear the loaded databases array so that the contents get released because we don't need them anymore
             AnimationSpritesDatabase.clearDatabases();
         },
+        /**
+         * Registers a callback function that's called whenever an animation finishes
+         * @param {function} callback
+         */
         registerAnimationCompleteCallback: function(callback) {
             animationCompleteCallbacks.push(callback);
         },
+        /**
+         * Fetches a new sprite that's ready to be used for animations.
+         * Returns the sprite index of the newly fetched sprite
+         * @param {AnimationEffects} animationType
+         * @returns {number}
+         */
         fetchSpriteForAnimation: function(animationType) {
             //console.log(animationType, animations);
             const animation = animations[animationType];
@@ -175,6 +176,11 @@ const AnimationManager = (function() {
             sprite.y = y;
             sprite.angle = angle_degrees;
         },
+        /**
+         * Plays an animation on the specified sprite
+         * @param {number} spriteIndex
+         * @param {AnimationEffects} animationType
+         */
         playAnimationOnSprite: function(spriteIndex, animationType) {
             const animation = animations[animationType];
             const sprite = animationManager.sprites[spriteIndex];
@@ -182,6 +188,17 @@ const AnimationManager = (function() {
             // Play the animation on the sprite
             sprite.anims.play(animation);
         },
+        /**
+         * Plays an animation.
+         * Returns the sprite index of the animation
+         * @param {AnimationEffects} animationType
+         * @param {number} x
+         * @param {number} y
+         * @param {number} angle_degrees
+         * @param {number} gameObjectDepth
+         * @param {number} scale
+         * @returns {number}
+         */
         playNewAnimation: function(animationType, x, y, angle_degrees, gameObjectDepth, scale = 1) {
             // Fetch a sprite for the animation from the pool
             const spriteIndex = animationManager.fetchSpriteForAnimation(animationType);
@@ -195,6 +212,14 @@ const AnimationManager = (function() {
 
             return spriteIndex;
         },
+        /**
+         * Anchors an animation to a GameObject
+         * @param {number} spriteIndex
+         * @param {Phaser.GameObjects.GameObject} gameObjectAnchor
+         * @param {number} originOffsetX
+         * @param {number} originOffsetY
+         * @param {boolean} copyRotation
+         */
         anchorAnimationTo: (spriteIndex, gameObjectAnchor, originOffsetX, originOffsetY, copyRotation) => {
             const sprite = animationManager.sprites[spriteIndex];
             const anchorageIndex = ObjectAnchorManager.anchorToGameObject(
@@ -206,6 +231,10 @@ const AnimationManager = (function() {
 
             spritesAnchorageIndex[spriteIndex] = anchorageIndex;
         },
+        /**
+         * Removes a previously created anchor
+         * @param {number} spriteIndex
+         */
         removeAnchor: (spriteIndex) => {
             const anchorageIndex = spritesAnchorageIndex[spriteIndex];
             if (anchorageIndex == null) {
@@ -217,7 +246,10 @@ const AnimationManager = (function() {
 
             spritesAnchorageIndex[spriteIndex] = null;
         },
-        // Called when you don't need the sprite anymore
+        /**
+         * Called when you don't need the sprite anymore
+         * @param {number} spriteIndex
+         */
         destroySpriteAnimation: (spriteIndex) => {
             // Return the sprite back to the pool
             const poolIndex = spriteIndex_to_spriteIndexPool[spriteIndex];
@@ -230,13 +262,43 @@ const AnimationManager = (function() {
             animationManager.removeAnchor(spriteIndex);
 
         },
-        // Allows you to vary the speed of the animations
+        /**
+         * Allows you to vary the speed of the animations
+         * @param {number} spriteIndex
+         * @param {number} timeScale
+         */
         setTimescale: (spriteIndex, timeScale) => {
             const sprite = animationManager.sprites[spriteIndex];
             sprite.anims.timeScale = timeScale;
         },
         // This function is only used for debugging-purposes
-        resolveSprite: (spriteIndex) => animationManager.sprites[spriteIndex]
+        resolveSprite: (spriteIndex) => animationManager.sprites[spriteIndex],
+        system_resetNewRound: function() {
+            lastSpriteIndexCreated = -1;
+        }
+    };
+
+    /**
+     * Fetches a new Phaser.Physics.Matter.Sprite from the pool.
+     * Returns the newly fetched sprite's index
+     * @param {number} poolIndex
+     * @returns {number}
+     */
+    const fetchSpriteFromPool = function(poolIndex) {
+        // Fetch a sprite from the pool
+        const sprite = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
+
+        // Save the sprite in our collection so that other functions can use it
+        const spriteIndex = ++lastSpriteIndexCreated;
+        animationManager.sprites[spriteIndex] = sprite;
+
+        // Save a reference from the spriteIndex to the pool index which it came from
+        spriteIndex_to_spriteIndexPool[spriteIndex] = poolIndex;
+
+        // Save the sprite index with the sprite object for later use
+        sprite.spriteIndex = spriteIndex;
+
+        return spriteIndex;
     };
 
     return animationManager;
