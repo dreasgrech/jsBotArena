@@ -6,12 +6,17 @@ const RobotsRadar = (function() {
     const MIN_ALLOWED_RADAR_FOV_ANGLE = 1;
     const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
 
-    const radarRotationIncrement = 120;
+    const RADAR_ROTATION_INCREMENT = 120;
 
     const radarArcBoundingBoxes = [];
     const radarArcBoundingBoxes_graphics = [];
 
+    /**The ray that's used for all the radar work */
     let ray;
+
+    const RobotsData_Radar_radarGraphics = [];
+    const RobotsData_Radar_radarFOVAngles_degrees = [];
+    const RobotsData_Radar_radarMaxScanDistance = [];
 
     const sortByDistanceFunction = function(a, b) {
         return a.distance - b.distance;
@@ -323,7 +328,7 @@ const RobotsRadar = (function() {
         },
         rotateRadar: function(robotIndex, direction) {
             const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
-            const multiplier = radarRotationIncrement * direction * GameContextHolder.deltaTime;
+            const multiplier = RADAR_ROTATION_INCREMENT * direction * GameContextHolder.deltaTime;
             const newRadarAngle_degrees = AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, multiplier);
             //const newRadarAngle_degrees = AngleOperations.lerp_incrementAngle_degrees(currentRadarAngle_degrees, multiplier);
             return robotsRadar.setRadarAngle_degrees(robotIndex, newRadarAngle_degrees);
@@ -418,8 +423,25 @@ const RobotsRadar = (function() {
                     radarArcBoundingBox.maxY - radarArcBoundingBox.minY);
             }
         },
-        system_reset: function() {
-            RaycastManager.destroyRay(ray);
+        system_newRoundReset: function() {
+            //RaycastManager.destroyRay(ray);
+
+            // Destroy all the radar arc graphics
+            const totalRobots = RobotsData_Radar_radarGraphics.length;
+            for (let robotIndex = 0; robotIndex < totalRobots; robotIndex++) {
+                const radarGraphics = RobotsData_Radar_radarGraphics[robotIndex];
+                radarGraphics.destroy();
+
+                // Remove the radar bounding box
+                if (GAME_DEBUG_MODE) {
+                    const radarArcBoundingBoxGraphics = radarArcBoundingBoxes_graphics[robotIndex];
+                    radarArcBoundingBoxGraphics.destroy();
+                }
+            }
+
+            RobotsData_Radar_radarGraphics.length = 0;
+            RobotsData_Radar_radarFOVAngles_degrees.length = 0;
+            RobotsData_Radar_radarMaxScanDistance.length = 0;
         }
     };
 

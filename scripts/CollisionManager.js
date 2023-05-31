@@ -2,6 +2,9 @@
 
 const CollisionManager = (function() {
 
+    // Holds the keys that map to the different collisions that can happen
+    const collisionHandlers = {};
+
     const saveCollision_RobotToRobot = function(collidingBody, collidedWithBody) {
         // const collidingBodyID = collidingBody.parent.id;
 
@@ -51,9 +54,6 @@ const CollisionManager = (function() {
 
         RobotsData_CurrentData_arenaCollisions[robotIndex].push(eventInfo);
     };
-
-    // Holds the keys that map to the different collisions that can happen
-    const collisionHandlers = {};
 
     // Robot to Robot 
     const handleCollision_RobotToRobot = function(matterBodyA, matterBodyB) {
@@ -167,7 +167,7 @@ const CollisionManager = (function() {
             ROBOT_SCALE);
     };
 
-    const obj = {
+    const collisionManager = {
         system_create: function() {
 
             // Set up all the collision handlers lookups.  This is the matrix which allows for the collision handler resolution
@@ -240,5 +240,5 @@ const CollisionManager = (function() {
         }
     };
 
-    return obj;
+    return collisionManager;
 }());

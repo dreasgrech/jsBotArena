@@ -1,10 +1,9 @@
 "use strict";
 
-let gameRunning = true;
-
 const GAME_DEBUG_MODE = true;
 
 const gameManager = (function() {
+    let roundRunning = true;
 
     const objectsWith_preload = [
         RaycastManager,
@@ -43,8 +42,8 @@ const gameManager = (function() {
     const totalObjectsWith_update = objectsWith_update.length;
 
     const objectsWith_newRoundReset = [
-        RaycastManager
-
+        RobotsRadar,
+        RaycastManager,
     ];
 
 
@@ -126,7 +125,7 @@ const gameManager = (function() {
     let stepTimer = 0;
 
     const update = function(time, delta) {
-        if (!gameRunning) {
+        if (!roundRunning) {
             return;
         }
 
@@ -159,7 +158,15 @@ const gameManager = (function() {
     return {
         preload: preload,
         create: create,
-        update: update
+        update: update,
+        resetRound: function() {
+            Logger.log("Resetting round");
+            for (let i = 0; i < objectsWith_newRoundReset.length; i++) {
+                const toLoad = objectsWith_newRoundReset[i];
+                toLoad.system_newRoundReset();
+            }
+            roundRunning = false;
+        }
     }
 }());
 
