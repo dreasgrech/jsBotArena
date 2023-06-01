@@ -1,7 +1,7 @@
 "use strict";
 
 const RobotOperations_Hull = (function() {
-    const constantAngularVelocityForHullRotation = 1;
+    const ANGULAR_VELOCITY_FOR_HULLROTATION = 1;
 
     const operations = {
         moveHull: function(robotIndex, direction) {
@@ -18,7 +18,7 @@ const RobotOperations_Hull = (function() {
             robotBody.applyForce(force);
         },
         rotateHull: function(robotIndex, direction) {
-            const angularVelocity = constantAngularVelocityForHullRotation * direction * GameContextHolder.deltaTime;
+            const angularVelocity = ANGULAR_VELOCITY_FOR_HULLROTATION * direction * GameContextHolder.deltaTime;
             //const angularVelocity = constantAngularVelocityForHullRotation * direction;
 
             const robotBody = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
@@ -43,7 +43,7 @@ const RobotOperations_Hull = (function() {
             const angularVelocity = RobotOperations_Hull.rotateHull(robotIndex, direction);
 
             // Calculate the angle change without including deltaTime
-            const angleChange_degrees = constantAngularVelocityForHullRotation * direction;
+            const angleChange_degrees = ANGULAR_VELOCITY_FOR_HULLROTATION * direction;
 
             // Check if the robot has reached the target angle
             const angleAfterRotation_degrees = Phaser.Math.Angle.WrapDegrees(currentAngle_degrees + angleChange_degrees);

@@ -12,7 +12,7 @@ const ROBOT_SCALE = 0.4;
 //const ROBOT_SCALE = 1;
 
 const RobotManager = (function() {
-    let currentRobotIndex = 0;
+    let currentRobotIndex = -1;
     let totalRobots = 0;
 
     // An array of the indexes of the robots that are currently alive
@@ -30,7 +30,7 @@ const RobotManager = (function() {
      const SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED = 0.5;
 
     const placeRobotInArena = function(robotBody) {
-        const maxAttempts = 10;
+        const maxAttempts = 20;
         let attempts = 0;
 
         const gameWidth = GameSetup.Width,
@@ -52,7 +52,9 @@ const RobotManager = (function() {
     };
 
     const addRobot = function(newRobot) {
-        RobotsData_Instance_ids[currentRobotIndex] = currentRobotIndex + 1;
+        currentRobotIndex++;
+        //RobotsData_Instance_ids[currentRobotIndex] = currentRobotIndex + 1;
+        RobotsData_Instance_ids[currentRobotIndex] = currentRobotIndex;
         RobotsData_Instance_names[currentRobotIndex] = newRobot.name;
         RobotsData_Instance_updateFunctions[currentRobotIndex] = newRobot.update;
 
@@ -61,6 +63,8 @@ const RobotManager = (function() {
 
         // Call the robot's create() method
         const robotSetup = RobotSetupFactory.createRobotSetup();
+        // TODO: Pass also an arenaData (or something like that) to robot.create()
+        // TODO: so that it provides them with info about the arena, like dimensions.
         newRobot.create(robotSetup);
 
         RobotMatterFactory.createRobot({
@@ -118,7 +122,7 @@ const RobotManager = (function() {
             Logger.warn(newRobot, "doesn't have onCreate()");
         }
 
-        currentRobotIndex++;
+        //currentRobotIndex++;
     };
 
     const update = function() {
