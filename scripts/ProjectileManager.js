@@ -5,6 +5,9 @@ const ProjectileManager = (function() {
     // The minimum time between firing projectiles
     const BASE_PROJECTILE_INTERVAL_DELAY_SECONDS = 1;
 
+    /** Holds the Matter bodies of the projectiles */
+    const ProjectilesData_matterBody = [];
+
     let projectilesCollisionData;
     let gameContext;
     let currentProjectileIndex = 0;
@@ -12,12 +15,38 @@ const ProjectileManager = (function() {
     const pools = [];
 
     const projectileMatterBodyID_to_ProjectileIndex = {};
-
     const queuedProjectilesForRemoval = new Set();
-
     const robotsLastFiredTime = [];
-
     const robotFiringProjectilesActiveAnimationSprites = {};
+
+    const resolveProjectileType_from_Projectile = function(projectileMatterGameObject) {
+        const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
+        const projectileType = ProjectilesData_projectileType[projectileIndex];
+
+        return projectileType;
+    };
+
+    const destroyProjectile = function(projectileMatterGameObject) {
+        const projectileType = resolveProjectileType_from_Projectile(projectileMatterGameObject);
+        const projectilePoolIndex = pools[projectileType];
+        const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
+        //Logger.log("Destroying Projectile.  Resolved type:", projectileType, ".  Object type:", JSObjectOperations.getObjectTypeName(projectileMatterGameObject));
+
+        // Remove the projectile from the arena bodies collection
+        PhysicsBodies.removeArenaPhysicsBody(projectileMatterGameObject.body);
+        //RaycastManager.removeMappedGameObjects(projectileMatterGameObject);
+
+        // projectilePool.push(projectileMatterGameObject);
+        MatterGameObjectPoolManager.returnMatterGameObjectToPool(projectilePoolIndex, projectileMatterGameObject);
+
+        const projectileMatterBodyID = projectileMatterGameObject.id;
+        //delete ProjectilesData_matterBody[projectileIndex];
+        //delete ProjectilesData_projectileType[projectileIndex];
+        //delete projectileMatterBodyID_to_ProjectileIndex[projectileMatterBodyID];
+        ProjectilesData_matterBody[projectileIndex] = null;
+        ProjectilesData_projectileType[projectileIndex] = null;
+        projectileMatterBodyID_to_ProjectileIndex[projectileMatterBodyID] = null;
+    };
 
     AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
         const robotFiringProjectileAnimationSpriteIndex = robotFiringProjectilesActiveAnimationSprites[spriteIndex];
@@ -95,17 +124,29 @@ const ProjectileManager = (function() {
         },
         onEndOfFrame: function() {
             for (const projectileMatterGameObject of queuedProjectilesForRemoval) {
-                projectileManager.destroyProjectile(projectileMatterGameObject);
+                destroyProjectile(projectileMatterGameObject);
             }
 
             queuedProjectilesForRemoval.clear();
         },
+        /**
+         * Returns a value indicating whether the specified robot can currently fire
+         * @param {number} robotIndex
+         * @returns {boolean}
+         */
         robotAllowedToFireNow: function(robotIndex) {
             const now = GameContextHolder.gameTime;
             const robotLastFiredTime = robotsLastFiredTime[robotIndex];
             const allowedToFireNow = now - robotLastFiredTime > BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
             return allowedToFireNow;
         },
+        /**
+         * Fires a projectile from the robot's turret.
+         * Returns true if the shot was fired.
+         * @param {number} robotIndex
+         * @param {ProjectileTypes} projectileType
+         * @returns {boolean}
+         */
         fireRobotProjectile: function(robotIndex, projectileType) {
             const allowedToFireNow = projectileManager.robotAllowedToFireNow(robotIndex);
             if (!allowedToFireNow) {
@@ -203,23 +244,19 @@ const ProjectileManager = (function() {
 
             return true;
         },
-        // Mark a projectile for removal so that it's removed at the end of frame
+        /**
+         * Mark a projectile for removal so that it's removed at the end of frame
+         * @param {Phaser.GameObjects.GameObject} projectileMatterGameObject
+         */
         markProjectileForRemoval: function(projectileMatterGameObject) {
             // Add the projectile to the queue so that it gets removed later
             queuedProjectilesForRemoval.add(projectileMatterGameObject);
         },
-        destroyProjectile: function(projectileMatterGameObject) {
-            const projectileType = projectileManager.resolveProjectileType_from_Projectile(projectileMatterGameObject);
-            const projectilePoolIndex = pools[projectileType];
-            //Logger.log("Destroying Projectile.  Resolved type:", projectileType, ".  Object type:", JSObjectOperations.getObjectTypeName(projectileMatterGameObject));
-
-            // Remove the projectile from the arena bodies collection
-            PhysicsBodies.removeArenaPhysicsBody(projectileMatterGameObject.body);
-            //RaycastManager.removeMappedGameObjects(projectileMatterGameObject);
-
-            // projectilePool.push(projectileMatterGameObject);
-            MatterGameObjectPoolManager.returnMatterGameObjectToPool(projectilePoolIndex, projectileMatterGameObject);
-        },
+        /**
+         * Resolves the projectile index from the projectile Matter GameObject
+         * @param {Phaser.GameObjects.GameObject} projectileMatterGameObject
+         * @returns {number}
+         */
         resolveProjectileIndex_from_Projectile: function(projectileMatterGameObject) {
             const projectileMatterBody = projectileMatterGameObject.body;
             const projectileMatterBodyID = projectileMatterBody.id;
@@ -227,12 +264,6 @@ const ProjectileManager = (function() {
             // Logger.log(projectileMatterGameObject, "'s index is", projectileIndex);
 
             return projectileIndex;
-        },
-        resolveProjectileType_from_Projectile: function(projectileMatterGameObject) {
-            const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
-            const projectileType = ProjectilesData_projectileType[projectileIndex];
-
-            return projectileType;
         },
         system_newRoundReset: function() {
             // TODO: Keep track of all projectiles and remove them here

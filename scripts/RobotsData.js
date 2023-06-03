@@ -39,7 +39,6 @@ const RobotsData_Instance_hullTurretAnchorageIndex = [];
 
 // Projectiles data
 const ProjectilesData_projectileType = [];
-const ProjectilesData_matterBody = [];
 
 // API-specific data
 const RobotsDataAPI_FrameOperations_Hull = [];
