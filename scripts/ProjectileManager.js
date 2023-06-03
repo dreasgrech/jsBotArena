@@ -233,6 +233,10 @@ const ProjectileManager = (function() {
             const projectileType = ProjectilesData_projectileType[projectileIndex];
 
             return projectileType;
+        },
+        system_newRoundReset: function() {
+            // TODO: Keep track of all projectiles and remove them here
+
         }
     };
 

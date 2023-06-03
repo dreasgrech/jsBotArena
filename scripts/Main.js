@@ -42,8 +42,10 @@ const gameManager = (function() {
     const totalObjectsWith_update = objectsWith_update.length;
 
     const objectsWith_newRoundReset = [
-        RobotsRadar,
         RaycastManager,
+        RobotManager,
+        RobotsRadar,
+        ProjectileManager
     ];
 
 

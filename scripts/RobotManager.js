@@ -12,6 +12,11 @@ const ROBOT_SCALE = 0.4;
 //const ROBOT_SCALE = 1;
 
 const RobotManager = (function() {
+    // TODO: This value will probably eventually be set depending on some preset database values
+    const STARTING_ROBOT_HEALTH = 100;
+    // We wait some time before hiding the robot after it gets destroyed so that it gets hidden during the explosion animation
+    const SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED = 0.5;
+
     let currentRobotIndex = -1;
     let totalRobots = 0;
 
@@ -19,15 +24,8 @@ const RobotManager = (function() {
     const aliveRobotsIndexes = new Set();
     let totalAliveRobots = 0;
 
-
-    // TODO: This value will probably eventually be set depending on some preset database values
-    const STARTING_ROBOT_HEALTH = 100;
-
     const queuedRobotsForRemoval = {};
     let totalQueuedRobotsForRemovals = 0;
-
-    // We wait some time before hiding the robot after it gets destroyed so that it gets hidden during the explosion animation
-     const SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED = 0.5;
 
     const placeRobotInArena = function(robotBody) {
         const maxAttempts = 20;
@@ -288,7 +286,23 @@ const RobotManager = (function() {
         },
         get aliveRobotsIndexes() {
             return aliveRobotsIndexes;
-        } 
+        },
+        system_newRoundReset: function() {
+            // Remove all the robots
+            for (const robotIndex of aliveRobotsIndexes) {
+                removeAndHideRobot(robotIndex);
+            }
+
+            currentRobotIndex = -1;
+            totalRobots = 0;
+            aliveRobotsIndexes.clear();
+            totalAliveRobots = 0;
+            totalQueuedRobotsForRemovals = 0;
+            
+            for (const prop of Object.getOwnPropertyNames(queuedRobotsForRemoval)) {
+                delete queuedRobotsForRemoval[prop];
+            }
+        }
     };
 
     return robotManager;

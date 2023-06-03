@@ -210,19 +210,19 @@ const RobotsRadar = (function() {
         // todo: try a spatial hash
         // Check all the alive robots
         const aliveRobotsIndexes = RobotManager.aliveRobotsIndexes;
-        for (const i of aliveRobotsIndexes) {
-            if (i === robotIndex) {
+        for (const otherRobotIndex of aliveRobotsIndexes) {
+            if (otherRobotIndex === robotIndex) {
                 continue;
             }
 
             // Skip destroyed robots
-            const otherRobotAlive = RobotsData_CurrentData_alive[i];
+            const otherRobotAlive = RobotsData_CurrentData_alive[otherRobotIndex];
             if (!otherRobotAlive) {
                 continue;
             }
 
-            const otherRobotPositionX = RobotsData_CurrentData_positionXs[i];
-            const otherRobotPositionY = RobotsData_CurrentData_positionYs[i];
+            const otherRobotPositionX = RobotsData_CurrentData_positionXs[otherRobotIndex];
+            const otherRobotPositionY = RobotsData_CurrentData_positionYs[otherRobotIndex];
             const distanceBetweenRobots = Phaser.Math.Distance.Between(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY);
 
             if (distanceBetweenRobots > radarMaxScanDistance) {
@@ -232,7 +232,7 @@ const RobotsRadar = (function() {
             let robotFoundInRadar = false;
 
             // Check each of this other robot's bounds points to see if they're in the radar
-            const otherRobotBounds = RobotsBoundsHelpers.getHullBounds(i);
+            const otherRobotBounds = RobotsBoundsHelpers.getHullBounds(otherRobotIndex);
             const otherRobotBoundsLength = otherRobotBounds.length;
             for (let j = 0; j < otherRobotBoundsLength; j++) {
 
@@ -245,7 +245,7 @@ const RobotsRadar = (function() {
                 const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * pi + angleBetween_radians : angleBetween_radians;
 
                 //if (robotIndex === 0) {
-                //    console.log(`Robot ${robotIndex} -> Robot ${i}: angleBetween=${Phaser.Math.RadToDeg(adjustedAngleBetween_radians)}°,
+                //    console.log(`Robot ${robotIndex} -> Robot ${otherRobotIndex}: angleBetween=${Phaser.Math.RadToDeg(adjustedAngleBetween_radians)}°,
                 //radarStart=${Phaser.Math.RadToDeg(adjustedRadarStartAngle_radians)}°,
                 //radarEnd=${Phaser.Math.RadToDeg(adjustedRadarEndAngle_radians)}°`);
                 //}
@@ -294,14 +294,14 @@ const RobotsRadar = (function() {
                 const bearing_degrees = AngleOperations.getBearing_degrees(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY);
 
                 const robotScannedEventInfo = RobotScannedInfo();
-                robotScannedEventInfo.index = i;
+                robotScannedEventInfo.index = otherRobotIndex;
                 robotScannedEventInfo.distance = distanceBetweenRobots;
                 robotScannedEventInfo.positionX = otherRobotPositionX;
                 robotScannedEventInfo.positionY = otherRobotPositionY;
-                robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[i]; 
+                robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[otherRobotIndex]; 
                 robotScannedEventInfo.bearing_degrees = bearing_degrees; 
-                robotScannedEventInfo.turret_angle = RobotsData_CurrentData_currentTurretAngles[i]; 
-                robotScannedEventInfo.radar_angle = RobotsData_CurrentData_currentRadarAngles_degrees[i];
+                robotScannedEventInfo.turret_angle = RobotsData_CurrentData_currentTurretAngles[otherRobotIndex]; 
+                robotScannedEventInfo.radar_angle = RobotsData_CurrentData_currentRadarAngles_degrees[otherRobotIndex];
 
                 scannedRobots.push(robotScannedEventInfo);
             }

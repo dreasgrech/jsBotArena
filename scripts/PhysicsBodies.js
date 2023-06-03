@@ -85,7 +85,6 @@ const PhysicsBodies = (function() {
                 }
 
                 arenaBodySpatialHash.load(arenaBodiesElementsForSpatialHash);
-                console.log(arenaBodySpatialHash);
                 arenaBodiesAdded = true;
             }
 
