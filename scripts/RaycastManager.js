@@ -55,6 +55,7 @@ const RaycastManager = (function () {
             Logger.log(stats);
         },
         system_newRoundReset: function() {
+/*
             for (let rayIndex in createdRays) {
                 if (!createdRays.hasOwnProperty(rayIndex)) {
                     continue;
@@ -63,6 +64,7 @@ const RaycastManager = (function () {
                 const ray = createdRays[rayIndex];
                 raycastManager.destroyRay(ray);
             }
+*/
         },
         system_dispose: function() {
             raycaster.destroy();

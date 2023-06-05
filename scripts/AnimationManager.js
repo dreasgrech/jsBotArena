@@ -273,7 +273,7 @@ const AnimationManager = (function() {
         },
         // This function is only used for debugging-purposes
         resolveSprite: (spriteIndex) => animationManager.sprites[spriteIndex],
-        system_resetNewRound: function() {
+        system_newRoundReset: function() {
             lastSpriteIndexCreated = -1;
         }
     };

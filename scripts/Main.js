@@ -2,8 +2,9 @@
 
 const GAME_DEBUG_MODE = true;
 
-const gameManager = (function() {
-    let roundRunning = true;
+const GameManager = (function() {
+    // TODO: Create a statemachine to keep track of whether the round is happening
+    let roundRunning = false;
 
     const objectsWith_preload = [
         RaycastManager,
@@ -15,6 +16,7 @@ const gameManager = (function() {
     ];
 
     const objectsWith_create = [
+        TweakPaneManager,
         AnimationSpritesDatabase,
         ProjectileManager,
         AnimationManager,
@@ -45,15 +47,24 @@ const gameManager = (function() {
         RaycastManager,
         RobotManager,
         RobotsRadar,
-        ProjectileManager
+        ProjectileManager,
+        AnimationManager,
+        UIRobotInfoPanel
     ];
-
 
     const preload = function() {
         const gameContext = this;
         GameContextHolder.gameContext = gameContext;
 
         gameContext.matter.world.autoUpdate = false;
+
+        //this.load.scripts('inspector', [
+        //    'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.js',
+        //    'https://cdn.jsdelivr.net/npm/phaser-plugin-inspector@1.9.1/dist/phaser-plugin-inspector.umd.js',
+        //]);
+        //this.load.once('complete', () => {
+        //    PhaserPluginInspector.Install(this.plugins);
+        //});
 
 
 
@@ -110,17 +121,15 @@ const gameManager = (function() {
             toLoad.system_create();
         }
 
-        for (let i = 0; i < 2; i++) {
-            RobotManager.addRobot(keyBot());
-            RobotManager.addRobot(doNothingBot());
-            RobotManager.addRobot(shredder());
-            RobotManager.addRobot(circleBot());
-            RobotManager.addRobot(sittingBot());
-            RobotManager.addRobot(followBot_followAngle());
-            RobotManager.addRobot(followBot_followPosition());
-            RobotManager.addRobot(CornerGuardBot());
-            //RobotManager.addRobot(astarBot());
-        }
+        const obj = {
+            Name: 'Dreas',
+            Ages: [1,2,3]
+        };
+        const paneFolder = gameContext.inspectorGame.pane.addFolder({title: 'Dreas Folder'});
+        paneFolder.addMonitor(obj, 'Name');
+        //paneFolder.addMonitor(obj, 'Ages');
+        
+        gameManager.startRound();
     };
 
     const FIXED_DELTA_TIME = 0.02; //50hz
@@ -157,11 +166,36 @@ const gameManager = (function() {
     //    }
     };
 
-    return {
+    const gameManager = {
         preload: preload,
         create: create,
         update: update,
+        startRound: function() {
+            if (roundRunning) {
+                Logger.error("Round already running so not starting");
+                return;
+            }
+            
+            Logger.log("Starting new round");
+            for (let i = 0; i < 1; i++) {
+                RobotManager.addRobot(keyBot());
+                RobotManager.addRobot(doNothingBot());
+                RobotManager.addRobot(shredder());
+                RobotManager.addRobot(circleBot());
+                RobotManager.addRobot(sittingBot());
+                RobotManager.addRobot(followBot_followAngle());
+                RobotManager.addRobot(followBot_followPosition());
+                RobotManager.addRobot(CornerGuardBot());
+                //RobotManager.addRobot(astarBot());
+            }
+            
+            roundRunning = true;
+        },
         resetRound: function() {
+            if (!roundRunning) {
+                Logger.error("Round not running so not stopping");
+                return;
+            }
             Logger.log("Resetting round");
             for (let i = 0; i < objectsWith_newRoundReset.length; i++) {
                 const toLoad = objectsWith_newRoundReset[i];
@@ -169,19 +203,23 @@ const gameManager = (function() {
             }
             roundRunning = false;
         }
-    }
+    };
+    
+    return gameManager;
 }());
 
 window.onload = function(event) {
+    const { InspectorGlobalPlugin, InspectorScenePlugin } = PhaserPluginInspector;
+
     GameContextHolder.game = new Phaser.Game({
         type: Phaser.AUTO,
         width: GameSetup.Width,
         height: GameSetup.Height,
         //antialias: true,
         scene: {
-            preload: gameManager.preload,
-            create: gameManager.create,
-            update: gameManager.update
+            preload: GameManager.preload,
+            create: GameManager.create,
+            update: GameManager.update
         },
         physics: {
             default: 'matter',
@@ -194,12 +232,24 @@ window.onload = function(event) {
             }
         },
         plugins: {
+            global: [
+                {
+                    key: 'InspectorGlobalPlugin',
+                    plugin: InspectorGlobalPlugin,
+                    mapping: 'inspectorGame'
+                }
+            ],
             scene: [
                 {
                     key: 'PhaserRaycaster',
                     plugin: PhaserRaycaster,
                     mapping: 'raycasterPlugin'
-                }
+                },
+                //{
+                //    key: 'InspectorScenePlugin',
+                //    plugin: InspectorScenePlugin,
+                //    mapping: 'inspectorScene'
+                //}
             ]
         },
         fps: {

@@ -21,9 +21,7 @@ const ProjectileManager = (function() {
 
     const resolveProjectileType_from_Projectile = function(projectileMatterGameObject) {
         const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
-        const projectileType = ProjectilesData_projectileType[projectileIndex];
-
-        return projectileType;
+        return ProjectilesData_projectileType[projectileIndex];
     };
 
     const destroyProjectile = function(projectileMatterGameObject) {
@@ -239,8 +237,7 @@ const ProjectileManager = (function() {
 
             //AnimationManager.sprites[fireShotAnimationIndex].setScale(ROBOT_SCALE);
 
-            const now = GameContextHolder.gameTime;
-            robotsLastFiredTime[robotIndex] = now;
+            robotsLastFiredTime[robotIndex] = GameContextHolder.gameTime;
 
             currentProjectileIndex++;
 

@@ -86,6 +86,13 @@ Turret Rotation: ${turretRotation.toFixed(2)}°
                 //Logger.log(robotInfoTexts[robotIndex]);
 
             }
+        },
+        system_newRoundReset: function(){
+            for (let i = 0; i < robotInfoTexts.length; i++) {
+                const robotInfoText = robotInfoTexts[i];
+                robotInfoText.destroy();
+            }
+            
         }
     };
 
