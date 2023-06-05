@@ -127,6 +127,7 @@ const RobotManager = (function() {
     const update = function() {
         for (let i = 0; i < totalRobots; i++) {
             const robotAlive = RobotsData_CurrentData_alive[i];
+            // TODO: We can avoid this check here if we iterate over alive robots instead of all of them
             if (!robotAlive) {
                 continue;
             }
@@ -168,11 +169,8 @@ const RobotManager = (function() {
 
             // Set the radar scanned robots to the api
             const radar = api.radar;
-            // const [scannedRobots, scannedAliveRobots] = RobotsRadar.scanForRobots(i);
-            const scannedAliveRobots = RobotsRadar.scanForRobots(i);
-            radar.scannedAliveRobots = scannedAliveRobots;
-            const scannedArenaObstacles = RobotsRadar.scanForArenaObstacles(i);
-            radar.scannedArenaElements = scannedArenaObstacles;
+            radar.scannedAliveRobots = RobotsRadar.scanForRobots(i);
+            radar.scannedArenaElements = RobotsRadar.scanForArenaObstacles(i);
 
             // Set the robot collisions to the api
             const api_collisions = api.collisions;

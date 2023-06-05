@@ -132,8 +132,8 @@ const GameManager = (function() {
         gameManager.startRound();
     };
 
-    const FIXED_DELTA_TIME = 0.02; //50hz
-    let stepTimer = 0;
+    //const FIXED_DELTA_TIME = 0.02; //50hz
+    // let stepTimer = 0;
 
     const update = function(time, delta) {
         if (!roundRunning) {
@@ -155,7 +155,7 @@ const GameManager = (function() {
         // Increase the frame counter
         FrameCounter.current++;
 
-        stepTimer += delta * 0.001;
+        // stepTimer += delta * 0.001;
 
         // Step the physics
         GameContextHolder.gameContext.matter.world.step();
@@ -196,6 +196,7 @@ const GameManager = (function() {
                 Logger.error("Round not running so not stopping");
                 return;
             }
+            
             Logger.log("Resetting round");
             for (let i = 0; i < objectsWith_newRoundReset.length; i++) {
                 const toLoad = objectsWith_newRoundReset[i];

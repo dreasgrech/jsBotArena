@@ -175,8 +175,15 @@ const RobotsRadar = (function() {
         return scannedArenaBodies;
     };
 
+    /**
+     * Scans for any alive robots
+     * @param robotIndex The robot's index
+     * @returns {[]}
+     */
     const scanForRobots = function(robotIndex) {
         const radarEnabled = isRadarEnabled(robotIndex);
+        
+        // TODO: We need to remove this if-branch because this is a hotpath
         if (!radarEnabled) {
             return scanForRobotsEmptyResult;
         }
@@ -215,11 +222,11 @@ const RobotsRadar = (function() {
                 continue;
             }
 
-            // Skip destroyed robots
-            const otherRobotAlive = RobotsData_CurrentData_alive[otherRobotIndex];
-            if (!otherRobotAlive) {
-                continue;
-            }
+            // // Skip destroyed robots
+            // const otherRobotAlive = RobotsData_CurrentData_alive[otherRobotIndex];
+            // if (!otherRobotAlive) {
+            //     continue;
+            // }
 
             const otherRobotPositionX = RobotsData_CurrentData_positionXs[otherRobotIndex];
             const otherRobotPositionY = RobotsData_CurrentData_positionYs[otherRobotIndex];
@@ -245,9 +252,9 @@ const RobotsRadar = (function() {
                 const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * pi + angleBetween_radians : angleBetween_radians;
 
                 //if (robotIndex === 0) {
-                //    console.log(`Robot ${robotIndex} -> Robot ${otherRobotIndex}: angleBetween=${Phaser.Math.RadToDeg(adjustedAngleBetween_radians)}°,
-                //radarStart=${Phaser.Math.RadToDeg(adjustedRadarStartAngle_radians)}°,
-                //radarEnd=${Phaser.Math.RadToDeg(adjustedRadarEndAngle_radians)}°`);
+                //    console.log(`Robot ${robotIndex} -> Robot ${otherRobotIndex}: angleBetween=${Phaser.Math.RadToDeg(adjustedAngleBetween_radians)}ï¿½,
+                //radarStart=${Phaser.Math.RadToDeg(adjustedRadarStartAngle_radians)}ï¿½,
+                //radarEnd=${Phaser.Math.RadToDeg(adjustedRadarEndAngle_radians)}ï¿½`);
                 //}
 
                 // Check if the angle between the robots falls within the radar angles.
