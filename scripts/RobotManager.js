@@ -55,6 +55,7 @@ const RobotManager = (function() {
         RobotsData_Instance_ids[currentRobotIndex] = currentRobotIndex;
         RobotsData_Instance_names[currentRobotIndex] = newRobot.name;
         RobotsData_Instance_updateFunctions[currentRobotIndex] = newRobot.update;
+        RobotsData_Instance_hullMatterGroup[currentRobotIndex] = currentRobotIndex + 1; // Important: This can never be 0 because these values are needed to be signed and 0 can't be +0 or -0
 
         const gameWidth = GameSetup.Width, gameHeight = GameSetup.Height;
         const x = gameWidth * .5, y = gameHeight * .5;

@@ -185,11 +185,13 @@ const ProjectileManager = (function() {
             // Logger.log("created projectile", projectileMatterGameObject);
             const projectileMatterBody = projectileMatterGameObject.body;
 
-            const robotID = RobotsData_Instance_ids[robotIndex];
+            // const robotID = RobotsData_Instance_ids[robotIndex];
+            const robotHullMatterGroup = RobotsData_Instance_hullMatterGroup[robotIndex];
             // Logger.log("Setting group of projectile to", -robotID);
             PhysicsHelperFunctions.setCollisionProperties({
                 physicsObject: projectileMatterBody,
-                group: -robotID, // -robotID so that it doesn't collide with the robot that fired it
+                //group: -robotID, // -robotID so that it doesn't collide with the robot that fired it
+                group: -robotHullMatterGroup, // -robotHullMatterGroup so that it doesn't collide with the robot that fired it
                 category: CollisionCategories.RobotProjectile,
                 // collidesWithCategories: CollisionCategories.RobotBody |
                 collidesWithCategories: CollisionCategories.RobotProjectileSensor |
@@ -249,6 +251,7 @@ const ProjectileManager = (function() {
          * @param {Phaser.GameObjects.GameObject} projectileMatterGameObject
          */
         markProjectileForRemoval: function(projectileMatterGameObject) {
+            // Logger.log("Marking projectile for removal", projectileMatterGameObject);
             // Add the projectile to the queue so that it gets removed later
             queuedProjectilesForRemoval.add(projectileMatterGameObject);
         },

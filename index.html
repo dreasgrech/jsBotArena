@@ -2,15 +2,21 @@
 <html>
 <head>
     <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>-->
+    <script type="text/javascript" src="./scripts/lib/phaser@3.60.0.js"></script>
+    <!-- WARNING: Do not use the phaser-raycaster script from the cdn because it contains a bug: https://github.com/wiserim/phaser-raycaster/issues/39 -->
     <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/phaser-raycaster@0.10.6/dist/phaser-raycaster.min.js"></script>-->
-    <script type="text/javascript" src="https://unpkg.com/rbush@2.0.1/rbush.js"></script>
+    <script type="text/javascript" src="./scripts/lib/phaser-raycaster@0.10.6.js"></script>
 
-    <script type="text/javascript" src="./scripts/lib/phaser-3.60.0.js"></script>
-    <script type="text/javascript" src="./scripts/lib/phaser-raycaster.js"></script>
-    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/flatbush"></script>-->
-    <!--<script type="text/javascript" src="./scripts/lib/rbush-3.0.1.js"></script>-->
+    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/rbush@3.0.1/rbush.min.js"></script>-->
+    <script type="text/javascript" src="./scripts/lib/rbush@3.0.1.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/tweakpane@3.1.9/dist/tweakpane.js"></script>-->
+    <script src="./scripts/lib/tweakpane@3.1.9.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/phaser-plugin-inspector@2.0.0-2/dist/phaser-plugin-inspector.umd.js"></script>-->
+    <script src="./scripts/lib/phaser-plugin-inspector@2.0.0-2.umd.js"></script>
+    
     <!--<script type="text/javascript" src="./scripts/lib/xxhash.min.js"></script>-->
 
+    <script type="text/javascript" src="./scripts/TweakPaneManager.js"></script>
     <script type="text/javascript" src="./scripts/BitmaskableObjectOperations.js"></script>
     <script type="text/javascript" src="./scripts/JSObjectOperations.js"></script>
     <script type="text/javascript" src="./scripts/JSONDatabaseReader.js"></script>
@@ -72,6 +78,8 @@
     <script type="text/javascript" src="./scripts/ExampleRobots/stealthBot_robot.js"></script>
     <script type="text/javascript" src="./scripts/ExampleRobots/apiUsageExampleBot_robot.js"></script>
     <script type="text/javascript" src="./scripts/ExampleRobots/astarBot_robot.js"></script>
+
+    
 </head>
 <body>
 </body>

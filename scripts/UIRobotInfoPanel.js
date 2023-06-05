@@ -6,7 +6,7 @@ const UIRobotInfoPanel = (function() {
 
     const panelY = 0; // Y position of the panel
 
-    const robotIds = [];
+    const robotsIndex = [];
     const robotInfoTexts = [];
 
     const panelDepth = GameObjectDepths.UI_RobotInformationPanel;
@@ -39,7 +39,7 @@ const UIRobotInfoPanel = (function() {
         add: function(robotIndex) {
             const gameContext = GameContextHolder.gameContext;
 
-            robotIds.push(robotIndex);
+            robotsIndex.push(robotIndex);
 
             const panelX = gameContext.cameras.main.width - panelWidth; // X position of the panel
 
@@ -51,22 +51,23 @@ const UIRobotInfoPanel = (function() {
                     color: '#ffffff'
                 });
             infoText.depth = panelTextDepth;
-            robotInfoTexts.push(infoText);
+            //robotInfoTexts.push(infoText);
+            robotInfoTexts[robotIndex] = infoText;
         },
         update: function() {
-            for (let j = 0; j < robotIds.length; j++) {
-                let i = robotIds[j];
+            for (let j = 0; j < robotsIndex.length; j++) {
+                let robotIndex = robotsIndex[j];
 
-                const id = RobotsData_Instance_ids[i];
-                const name = RobotsData_Instance_names[i];
-                const positionX = RobotsData_CurrentData_positionXs[i];
-                const positionY = RobotsData_CurrentData_positionYs[i];
-                const angle = RobotsData_CurrentData_currentRobotAngles_degrees[i];
-                const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[i];
+                const id = RobotsData_Instance_ids[robotIndex];
+                const name = RobotsData_Instance_names[robotIndex];
+                const positionX = RobotsData_CurrentData_positionXs[robotIndex];
+                const positionY = RobotsData_CurrentData_positionYs[robotIndex];
+                const angle = RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
+                const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
                 const projectileSensorAngle = Phaser.Math.RadToDeg(projectileSensor.angle);
-                const radarAngle = RobotsData_CurrentData_currentRadarAngles_degrees[i];
-                const turretRotation = RobotsData_CurrentData_currentTurretAngles[i];
-                const robotHealth = RobotsData_CurrentData_health[i];
+                const radarAngle = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
+                const turretRotation = RobotsData_CurrentData_currentTurretAngles[robotIndex];
+                const robotHealth = RobotsData_CurrentData_health[robotIndex];
 
                 const infoText = `
 Robot ${id}: ${name}
@@ -78,11 +79,11 @@ Radar Angle: ${radarAngle.toFixed(2)}°
 Turret Rotation: ${turretRotation.toFixed(2)}°
 `;
 //Turret Rotation: ${Phaser.Math.RadToDeg(turretRotation).toFixed(2)}°
-                robotInfoTexts[i].setText(infoText);
+                robotInfoTexts[robotIndex].setText(infoText);
                 if (robotHealth === 0) {
-                    robotInfoTexts[i].setColor('#ff0000');
+                    robotInfoTexts[robotIndex].setColor('#ff0000');
                 }
-                //Logger.log(robotInfoTexts[i]);
+                //Logger.log(robotInfoTexts[robotIndex]);
 
             }
         }

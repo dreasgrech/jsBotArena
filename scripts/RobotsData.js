@@ -36,6 +36,7 @@ const RobotsData_Instance_robotSpeeds = [];
 const RobotsData_Instance_hullTurretHoleOffsetX = [];
 const RobotsData_Instance_hullTurretHoleOffsetY = [];
 const RobotsData_Instance_hullTurretAnchorageIndex = [];
+const RobotsData_Instance_hullMatterGroup = [];
 
 // Projectiles data
 const ProjectilesData_projectileType = [];

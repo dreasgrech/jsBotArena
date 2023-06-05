@@ -64,10 +64,12 @@ const CollisionManager = (function() {
 
     // Robot to Projectile
     const handleCollision_RobotToProjectile = function(matterBodyA, matterBodyB) {
+        // Logger.log("handleCollision_RobotToProjectile", matterBodyA, matterBodyB);
         // const isBodyA_Robot = matterBodyA.collisionFilter.category & CollisionCategories.RobotBody;
         const isBodyA_RobotProjectileSensor = matterBodyA.collisionFilter.category & CollisionCategories.RobotProjectileSensor;
         const robotProjectileSensorMatterBody = isBodyA_RobotProjectileSensor ? matterBodyA : matterBodyB;
         const projectileMatterBody = isBodyA_RobotProjectileSensor ? matterBodyB : matterBodyA;
+        // Logger.log("robotProjectileSensorMatterBody", robotProjectileSensorMatterBody, "projectileMatterBody", projectileMatterBody);
 
         //console.log(matterBodyA, matterBodyB);
         //console.log(robotProjectileSensorMatterBody, projectileMatterBody);
@@ -137,6 +139,7 @@ const CollisionManager = (function() {
 
     // Projectile to Projectile
     const handleCollision_ProjectileToProjectile = function(projectileMatterBodyA, projectileMatterBodyB) {
+        // Logger.log("handleCollision_ProjectileToProjectile", projectileMatterBodyA, projectileMatterBodyB);
         // Mark the projectiles for removal
         ProjectileManager.markProjectileForRemoval(projectileMatterBodyA.parent.gameObject);
         ProjectileManager.markProjectileForRemoval(projectileMatterBodyB.parent.gameObject);
@@ -144,6 +147,7 @@ const CollisionManager = (function() {
 
     // Projectile to Arena
     const handleCollision_ProjectileToArena = function(matterBodyA, matterBodyB) {
+        // Logger.log("handleCollision_ProjectileToArena", matterBodyA, matterBodyB);
         const isBodyA_Arena = matterBodyA.collisionFilter.category & CollisionCategories.Arena;
         const projectileMatterBody = isBodyA_Arena ? matterBodyB : matterBodyA;
         const arenaBody = isBodyA_Arena ? matterBodyA : matterBodyB;
@@ -184,48 +188,49 @@ const CollisionManager = (function() {
             //Logger.log(event);
             const eventPairs = event.pairs;
 
-            if (eventPairs.length > 0) {
-                //Logger.log(`Total pairs: ${eventPairs.length}`);
-                //Logger.log(eventPairs[0], eventPairs[1]);
-                // RobotsData_CurrentData.totalCollisions = eventPairs.length;
+            const eventPairsLength = eventPairs.length;
+            //if (eventPairsLength > 0) {
+            //Logger.log(`Total pairs: ${eventPairs.length}`);
+            //Logger.log(eventPairs[0], eventPairs[1]);
+            // RobotsData_CurrentData.totalCollisions = eventPairs.length;
 
-                for (let i = 0; i < eventPairs.length; i++) {
-                    const matterCollisionData = eventPairs[i];
-                    //Logger.log(matterCollisionData);
+            for (let i = 0; i < eventPairsLength; i++) {
+                const matterCollisionData = eventPairs[i];
+                //Logger.log(matterCollisionData);
 
-                    const bodyA = matterCollisionData.bodyA;
-                    //Logger.log("bodyA", bodyA, JSObjectOperations.getObjectTypeName(bodyA));
-                    const bodyA_parent = bodyA.parent;
-                    //const bodyA_parent = matterCollisionData.parentA; // <- mentioned in docs but doesnt exist
-                    //Logger.log("bodyA_parent", bodyA_parent, JSObjectOperations.getObjectTypeName(bodyA_parent));
-                    //Logger.log("bodyA_parent.gameObject", bodyA_parent.gameObject, JSObjectOperations.getObjectTypeName(bodyA_parent.gameObject));
-                    // const bodyA_id = bodyA_parent.id;
-                    // const bodyA_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyA_id).type;
-                    const bodyA_CollisionCategory = bodyA_parent.collisionFilter.category;
-                    // Logger.log(bodyA.collisionFilter.category, bodyA.parent.collisionFilter.category);
+                const bodyA = matterCollisionData.bodyA;
+                //Logger.log("bodyA", bodyA, JSObjectOperations.getObjectTypeName(bodyA));
+                const bodyA_parent = bodyA.parent;
+                //const bodyA_parent = matterCollisionData.parentA; // <- mentioned in docs but doesnt exist
+                //Logger.log("bodyA_parent", bodyA_parent, JSObjectOperations.getObjectTypeName(bodyA_parent));
+                //Logger.log("bodyA_parent.gameObject", bodyA_parent.gameObject, JSObjectOperations.getObjectTypeName(bodyA_parent.gameObject));
+                // const bodyA_id = bodyA_parent.id;
+                // const bodyA_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyA_id).type;
+                const bodyA_CollisionCategory = bodyA_parent.collisionFilter.category;
+                // Logger.log(bodyA.collisionFilter.category, bodyA.parent.collisionFilter.category);
 
-                    const bodyB = matterCollisionData.bodyB;
-                    const bodyB_parent = bodyB.parent;
-                    //const bodyB_parent = matterCollisionData.parentB; // <- mentioned in docs but doesnt exist
-                    //const bodyB_id = bodyB_parent.id;
-                    //const bodyB_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyB_id).type;
-                    const bodyB_CollisionCategory = bodyB_parent.collisionFilter.category;
-                    // Logger.log(bodyB.parent.collisionFilter.category);
+                const bodyB = matterCollisionData.bodyB;
+                const bodyB_parent = bodyB.parent;
+                //const bodyB_parent = matterCollisionData.parentB; // <- mentioned in docs but doesnt exist
+                //const bodyB_id = bodyB_parent.id;
+                //const bodyB_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(bodyB_id).type;
+                const bodyB_CollisionCategory = bodyB_parent.collisionFilter.category;
+                // Logger.log(bodyB.parent.collisionFilter.category);
 
-                    // Resolve the lookup key based on the physics category
-                    const collisionLookupKey = EnumHelpers.createLookupKey(bodyA_CollisionCategory, bodyB_CollisionCategory);
-                    const collisionHandler = collisionHandlers[collisionLookupKey];
+                // Resolve the lookup key based on the physics category
+                const collisionLookupKey = EnumHelpers.createLookupKey(bodyA_CollisionCategory, bodyB_CollisionCategory);
+                const collisionHandler = collisionHandlers[collisionLookupKey];
 
-                    if (collisionHandler != null) {
-                        // Logger.log('Found handler:', collisionHandler, ' => ', bodyA_CollisionCategory, 'and', bodyB_CollisionCategory, '. Key:', collisionLookupKey);
-                        collisionHandler(bodyA, bodyB);
-                    } else {
-                        Logger.error('Unable to find collision handler for', bodyA_CollisionCategory, 'and', bodyB_CollisionCategory, '. Key:', collisionLookupKey);
-                    }
-
-                    // Logger.log(bodyA, bodyB);
+                if (collisionHandler != null) {
+                    // Logger.log('Found handler:', collisionHandler, ' => ', bodyA_CollisionCategory, 'and', bodyB_CollisionCategory, '. Key:', collisionLookupKey);
+                    collisionHandler(bodyA, bodyB);
+                } else {
+                    Logger.error('Unable to find collision handler for', bodyA_CollisionCategory, 'and', bodyB_CollisionCategory, '. Key:', collisionLookupKey);
                 }
+
+                // Logger.log(bodyA, bodyB);
             }
+            //}
         },
         onEndOfFrame: function() {
             // Clear all the collisions

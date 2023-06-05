@@ -20,10 +20,12 @@ const RobotMatterFactory = (function() {
         const constraint = gameContext.matter.add.constraint(RobotsData_PhysicsBodies_robotBodyImages[robotIndex].body, sensorBody, 0, 1);
         RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex] = constraint;
 
-        const robotID = RobotsData_Instance_ids[robotIndex];
+        //const robotID = RobotsData_Instance_ids[robotIndex];
+        const robotHullMatterGroup = RobotsData_Instance_hullMatterGroup[robotIndex];
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: sensorBody,
-            group: -robotID, // -robotID so that it doesn't collide with the firing robot
+            //group: -robotID, // -robotID so that it doesn't collide with the firing robot
+            group: -robotHullMatterGroup, // -robotHullMatterGroup so that it doesn't collide with the firing robot
             category: CollisionCategories.RobotProjectileSensor,
             collidesWithCategories:
                 CollisionCategories.RobotProjectile
@@ -80,10 +82,12 @@ const RobotMatterFactory = (function() {
         hullImage.setDensity(density);
         //Logger.log("Robot area", area, "density", hullImagePhysicsBody.density, "mass", hullImagePhysicsBody.mass);
 
-        const robotID = RobotsData_Instance_ids[currentRobotIndex];
+        //const robotID = RobotsData_Instance_ids[currentRobotIndex];
+        const robotHullMatterGroup = RobotsData_Instance_hullMatterGroup[currentRobotIndex];
         PhysicsHelperFunctions.setCollisionProperties({
             physicsObject: hullImagePhysicsBody,
-            group: -robotID,
+            //group: -robotID,
+            group: -robotHullMatterGroup,
             category: CollisionCategories.RobotBody,
             collidesWithCategories:
                 CollisionCategories.RobotBody

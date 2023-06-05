@@ -11,7 +11,8 @@ const PhysicsBodies = (function() {
 
     const projectileSensorBodyIDToRobotIndex = {};
 
-    let arenaBodySpatialHash = new rbush();
+    //let arenaBodySpatialHash = new rbush();
+    let arenaBodySpatialHash = new RBush();
 
     // contains all the bodies except the body of the specific robot index
     //const allOtherBodiesExceptThisRobot = []; // [[],[],[]]
