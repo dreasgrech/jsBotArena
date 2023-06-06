@@ -1003,7 +1003,7 @@
         get 'getDuration()' () { return loop.getDuration(); }
       };
       const loopFolder = folder.addFolder({ title: 'Loop', expanded: false });
-      loopFolder.addMonitor(loop, 'actualFps', { view: 'graph', min: 0, max: 120 });
+      loopFolder.addMonitor(loop, 'actualFps', { view: 'graph', min: 0, max: 165 });
       loopFolder.addMonitor(loop, 'delta', { view: 'graph', min: 0, max: 50 });
       loopFolder.addMonitor(loop, 'frame', { format: Math.floor });
       loopFolder.addMonitor(loopProxy, 'getDuration()');
