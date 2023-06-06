@@ -1,7 +1,11 @@
 "use strict";
 
 const RobotsRadar = (function() {
-    const pi = Math.PI;
+    const PI = Math.PI;
+
+    const DEFAULT_RADAR_FOV_ANGLES = 45;
+    // const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 1000;
+    const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 200;
 
     const MIN_ALLOWED_RADAR_FOV_ANGLE = 1;
     const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
@@ -49,8 +53,8 @@ const RobotsRadar = (function() {
         const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
         const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
 
-        const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * pi + radarStartAngle_radians : radarStartAngle_radians;
-        const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * pi + radarEndAngle_radians : radarEndAngle_radians;
+        const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * PI + radarStartAngle_radians : radarStartAngle_radians;
+        const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * PI + radarEndAngle_radians : radarEndAngle_radians;
 
         const scannedArenaBodies = [];
 
@@ -105,7 +109,7 @@ const RobotsRadar = (function() {
                     arenaObstacleCornerPointY);
 
                 // Adjust the angle to account for Phaser's inverted y-axis
-                const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * pi + angleBetween_radians : angleBetween_radians;
+                const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * PI + angleBetween_radians : angleBetween_radians;
 
                 // Check if the angle between the robot and the arena obstacle falls within the radar angles.
                 // If radar angles do not cross the 0-crossover point, we use the same condition as before.
@@ -201,8 +205,8 @@ const RobotsRadar = (function() {
         const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
         const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
 
-        const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * pi + radarStartAngle_radians : radarStartAngle_radians;
-        const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * pi + radarEndAngle_radians : radarEndAngle_radians;
+        const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * PI + radarStartAngle_radians : radarStartAngle_radians;
+        const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * PI + radarEndAngle_radians : radarEndAngle_radians;
 
          const scannedRobots = [];
 
@@ -249,7 +253,7 @@ const RobotsRadar = (function() {
                 const angleBetween_radians = Phaser.Math.Angle.Between(turretPositionX, turretPositionY, otherRobotBoundsPoint.x, otherRobotBoundsPoint.y);
 
                 // Adjust the angle to account for Phaser's inverted y-axis
-                const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * pi + angleBetween_radians : angleBetween_radians;
+                const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * PI + angleBetween_radians : angleBetween_radians;
 
                 //if (robotIndex === 0) {
                 //    console.log(`Robot ${robotIndex} -> Robot ${otherRobotIndex}: angleBetween=${Phaser.Math.RadToDeg(adjustedAngleBetween_radians)}�,
@@ -353,8 +357,8 @@ const RobotsRadar = (function() {
             RobotsData_Radar_radarGraphics[robotIndex] = radarGraphics;
             RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = 0;
             //RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 5;
-            RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = 45;
-            RobotsData_Radar_radarMaxScanDistance[robotIndex] = 1000;
+            RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = DEFAULT_RADAR_FOV_ANGLES;
+            RobotsData_Radar_radarMaxScanDistance[robotIndex] = DEFAULT_RADAR_MAX_SCAN_DISTANCE;
             //RobotsData_Radar_radarMaxScanDistance[robotIndex] = 200;
 
             // Create a graphics object to visualize the radar arc bounding box
