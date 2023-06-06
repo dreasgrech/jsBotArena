@@ -160,18 +160,34 @@ const PhysicsBodies = (function() {
             matterGameObject.setActive(false);
             matterGameObject.setVisible(false);
         },
-        isBodyOverlappingWithArenaBodies: function(body) {
+        /**
+         * Returns true if the specified Matter body overlaps any Matter bodies that are currently registered
+         * @param body {Phaser.Types.Physics.Matter.MatterBody}
+         * @returns {boolean}
+         */
+        isBodyOverlappingWithOtherBodies: function(body) {
             const gameContext = GameContextHolder.gameContext;
             return gameContext.matter.overlap(body, allBodies);
         },
         queryArenaBodiesSpatialHash: function(bounds) {
+            //performance.mark('queryArenaBodiesSpatialHash:start');
             const result = arenaBodySpatialHash.search(bounds);
+            //performance.mark('queryArenaBodiesSpatialHash:end');
             //console.log(result);
+            // performance.measure('Spatial hash stuff', 
+            //     'queryArenaBodiesSpatialHash:start', 
+            //     'queryArenaBodiesSpatialHash:end');
             return result;
         },
-        // Yields all the absolute world bound points of the arena body
+        /**
+         * Yields all the absolute world bound points of the arena body
+         * @param arenaBodyIndex {number}
+         * @returns {Generator<{x: number, y: number}, void, *>}
+         */
         yieldArenaBodyBounds: function*(arenaBodyIndex) {
             // TODO: These can all probably be prefilled and cached because they don't change
+            // TODO: Especially since this function is called in a hot-path (scanForArenaObstacles).
+            // TODO: Also, it's probably to just have them all stored in the same array and remove the generator stuff
             const arenaBody = arenaBodies[arenaBodyIndex];
             const arenaBodyBounds = arenaBody.bounds;
             const arenaBodyPosition = arenaBody.position;

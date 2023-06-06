@@ -234,7 +234,7 @@ const CollisionManager = (function() {
         },
         onEndOfFrame: function() {
             // Clear all the collisions
-            const totalRobots = RobotManager.getTotalRobots();
+            const totalRobots = RobotManager.totalRobots;
             for (let i = 0; i < totalRobots; i++) {
                 RobotsData_CurrentData_robotCollisions[i] = [];
                 RobotsData_CurrentData_arenaCollisions[i] = [];

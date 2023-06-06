@@ -121,14 +121,6 @@ const GameManager = (function() {
             toLoad.system_create();
         }
 
-        const obj = {
-            Name: 'Dreas',
-            Ages: [1,2,3]
-        };
-        const paneFolder = gameContext.inspectorGame.pane.addFolder({title: 'Dreas Folder'});
-        paneFolder.addMonitor(obj, 'Name');
-        //paneFolder.addMonitor(obj, 'Ages');
-        
         gameManager.startRound();
     };
 
@@ -143,9 +135,14 @@ const GameManager = (function() {
         GameContextHolder.gameTime = time*0.001;
         GameContextHolder.deltaTime = delta*0.001;
 
+        // performance.mark('mainupdate:start');
         for (let i = 0; i < totalObjectsWith_update; i++) {
             objectsWith_update[i].update();
         }
+        // performance.mark('mainupdate:end');
+        // performance.measure('Main Update',
+        //     'mainupdate:start',
+        //     'mainupdate:end');
 
         // Since we're now at the end of frame, clear any per-frame data
         for (let i = 0; i < totalObjectsWith_onEndOfFrame; i++) {
