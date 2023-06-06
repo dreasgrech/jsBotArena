@@ -1,9 +1,19 @@
 "use strict";
 
 const PhysicsBodies = (function() {
-    let allBodies = []; // contains all the physics bodies in the arena
-    let arenaBodies = []; // contains the arena bodies (walls, obstacles, etc..)
-    let arenaBodyMappingToEveryOtherArenaBody = {};
+    /**
+     * Contains all the physics bodies in the arena
+     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
+     */
+    let allBodies = [];
+    
+    /**
+     * Contains the arena bodies (walls, obstacles, etc..)
+     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
+     */
+    let arenaBodies = []; 
+    
+    // let arenaBodyMappingToEveryOtherArenaBody = {};
 
     // const matterBodyToObjectType = {};
     const matterBodyToCollisionCategory = {};
@@ -18,6 +28,8 @@ const PhysicsBodies = (function() {
     //const allOtherBodiesExceptThisRobot = []; // [[],[],[]]
 
     let arenaBodiesAdded = false;
+    
+    const arenaStaticObstacleBodiesBounds = [];
 
     const obj = {
         getArenaBodies: function() {
@@ -26,9 +38,9 @@ const PhysicsBodies = (function() {
         getArenaBody: function(arenaBodyIndex) {
             return arenaBodies[arenaBodyIndex];
         },
-        getEveryOtherArenaBodyExceptThis: function(arenaBodyIndex) {
-            return arenaBodyMappingToEveryOtherArenaBody[arenaBodyIndex];
-        },
+        // getEveryOtherArenaBodyExceptThis: function(arenaBodyIndex) {
+        //     return arenaBodyMappingToEveryOtherArenaBody[arenaBodyIndex];
+        // },
         // TODO: also need to make sure not to have duplicates in arenaBodies
         // TODO: maybe using Set is an option
         addArenaPhysicsBodies: function(collisionCategory, bodies, dynamic) {
@@ -64,15 +76,15 @@ const PhysicsBodies = (function() {
                     const arenaBodyBounds = arenaBody.bounds;
                     const arenaBodyBoundsMin = arenaBodyBounds.min;
                     const arenaBodyBoundsMax = arenaBodyBounds.max;
-                    const item = {
+                    const boundsForSpatialHash = {
                         minX: arenaBodyBoundsMin.x,
                         minY: arenaBodyBoundsMin.y,
                         maxX: arenaBodyBoundsMax.x,
                         maxY: arenaBodyBoundsMax.y,
                         arenaBodyIndex: i
                     };
-                    arenaBodiesElementsForSpatialHash.push(item);
-                    //Logger.log(item);
+                    arenaBodiesElementsForSpatialHash.push(boundsForSpatialHash);
+/*
                     const everyOtherArenaBodyExceptThis = [];
                     for (let j = 0; j < bodiesLength; j++) {
                         // Skip this particular body
@@ -83,6 +95,7 @@ const PhysicsBodies = (function() {
                     }
 
                     arenaBodyMappingToEveryOtherArenaBody[i] = everyOtherArenaBodyExceptThis;
+*/
                 }
 
                 arenaBodySpatialHash.load(arenaBodiesElementsForSpatialHash);
@@ -193,14 +206,16 @@ const PhysicsBodies = (function() {
             const arenaBodyPosition = arenaBody.position;
             const arenaBodyPositionX = arenaBodyPosition.x;
             const arenaBodyPositionY = arenaBodyPosition.y;
-            const halfWidth = (arenaBodyBounds.max.x - arenaBodyBounds.min.x) * 0.5;
-            const halfHeight = (arenaBodyBounds.max.y - arenaBodyBounds.min.y) * 0.5;
+            const arenaBodyBoundsMax = arenaBodyBounds.max;
+            const arenaBodyBoundsMin = arenaBodyBounds.min;
+            const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMax.x - arenaBodyBoundsMin.x) * 0.5;
+            const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMax.y - arenaBodyBoundsMin.y) * 0.5;
 
             //yield { x: arenaBodyPositionX , y: arenaBodyPositionY };
-            yield { x: arenaBodyPositionX - halfWidth, y: arenaBodyPositionY - halfHeight }; // top left
-            yield { x: arenaBodyPositionX + halfWidth, y: arenaBodyPositionY - halfHeight }; // top right
-            yield { x: arenaBodyPositionX - halfWidth, y: arenaBodyPositionY + halfHeight }; // bottom left
-            yield { x: arenaBodyPositionX + halfWidth, y: arenaBodyPositionY + halfHeight }; // bottom right
+            yield { x: arenaBodyPositionX - arenaBodyBoundsHalfWidth, y: arenaBodyPositionY - arenaBodyBoundsHalfHeight }; // top left
+            yield { x: arenaBodyPositionX + arenaBodyBoundsHalfWidth, y: arenaBodyPositionY - arenaBodyBoundsHalfHeight }; // top right
+            yield { x: arenaBodyPositionX - arenaBodyBoundsHalfWidth, y: arenaBodyPositionY + arenaBodyBoundsHalfHeight }; // bottom left
+            yield { x: arenaBodyPositionX + arenaBodyBoundsHalfWidth, y: arenaBodyPositionY + arenaBodyBoundsHalfHeight }; // bottom right
         }
     };
 
