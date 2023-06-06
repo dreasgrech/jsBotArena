@@ -1,5 +1,16 @@
 "use strict";
 
+/**
+ * The positions of the bounds of the static arena obstacles.  Each obstacle has 4 bounds points stored after each other, hence the multiplication by 4.
+ * The bounds of each static arena obstacle can be accessed like this:
+ *      left-top: bounds[i * 4], bounds[i * 4 + 2]
+ *      right-top: bounds[i * 4 + 1], bounds[i * 4 + 2]
+ *      left-bottom: bounds[i * 4], bounds[i * 4 + 3]
+ *      right-bottom: bounds[i * 4 + 1], bounds[i * 4 + 3]
+ * @type {number[]}
+ */
+const arenaStaticObstacleBodiesBounds = [];
+
 const PhysicsBodies = (function() {
     /**
      * Contains all the physics bodies in the arena
@@ -29,14 +40,38 @@ const PhysicsBodies = (function() {
 
     let arenaBodiesAdded = false;
     
-    const arenaStaticObstacleBodiesBounds = [];
+    // /**
+    //  * The x-positions of the bounds of the static arena obstacles
+    //  * @type {number[]}
+    //  */
+    // const arenaStaticObstacleBodiesBoundsX = [];
+    // /**
+    //  * The y-positions of the bounds of the static arena obstacles
+    //  * @type {number[]}
+    //  */
+    // const arenaStaticObstacleBodiesBoundsY = [];
 
     const obj = {
+        // TODO: Rename these two gets to proper ES getters
         getArenaBodies: function() {
             return arenaBodies;
         },
         getArenaBody: function(arenaBodyIndex) {
             return arenaBodies[arenaBodyIndex];
+        },
+        system_create: function() {
+            // Create the Tweak pane data
+            const dataForTweakPane = {
+                get allBodiesTotal() {
+                    return allBodies.length;
+                },
+                get arenaStaticObstacleBodiesTotal() {
+                    return arenaBodies.length;
+                },
+            };
+            const tweakPaneFolderID = TweakPaneManager.createFolder("Physics Bodies Manager");
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'allBodiesTotal');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'arenaStaticObstacleBodiesTotal');
         },
         // getEveryOtherArenaBodyExceptThis: function(arenaBodyIndex) {
         //     return arenaBodyMappingToEveryOtherArenaBody[arenaBodyIndex];
@@ -76,14 +111,61 @@ const PhysicsBodies = (function() {
                     const arenaBodyBounds = arenaBody.bounds;
                     const arenaBodyBoundsMin = arenaBodyBounds.min;
                     const arenaBodyBoundsMax = arenaBodyBounds.max;
+                    const arenaBodyIndex = i;
                     const boundsForSpatialHash = {
                         minX: arenaBodyBoundsMin.x,
                         minY: arenaBodyBoundsMin.y,
                         maxX: arenaBodyBoundsMax.x,
                         maxY: arenaBodyBoundsMax.y,
-                        arenaBodyIndex: i
+                        arenaBodyIndex: arenaBodyIndex
                     };
                     arenaBodiesElementsForSpatialHash.push(boundsForSpatialHash);
+
+                    const arenaBodyPosition = arenaBody.position;
+                    const arenaBodyPositionX = arenaBodyPosition.x;
+                    const arenaBodyPositionY = arenaBodyPosition.y;
+                    const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMax.x - arenaBodyBoundsMin.x) * 0.5;
+                    const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMax.y - arenaBodyBoundsMin.y) * 0.5;
+                    
+                    const leftX= arenaBodyPositionX - arenaBodyBoundsHalfWidth;
+                    const rightX = arenaBodyPositionX + arenaBodyBoundsHalfWidth;
+                    const topY = arenaBodyPositionY - arenaBodyBoundsHalfHeight;
+                    const bottomY = arenaBodyPositionY + arenaBodyBoundsHalfHeight;
+                    
+                    arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4] = leftX; // left
+                    arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 1] = rightX; // right
+                    arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 2] = topY; // top
+                    arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 3] = bottomY; // bottom
+                    
+                    /*
+                    // The bounds of each static arena obstacle can be accessed like this (The multiplication by 4 is because each obstacle has 4 bound points):
+                    left-top: bounds[i * 4], bounds[i * 4 + 2]
+                    right-top: bounds[i * 4 + 1], bounds[i * 4 + 2]
+                    left-bottom: bounds[i * 4], bounds[i * 4 + 3]
+                    right-bottom: bounds[i * 4 + 1], bounds[i * 4 + 3]
+                     */
+/*
+                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex] = leftX; // x-left
+                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex + 1] = rightX; // x-right
+
+                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex] = topY; // y-top
+                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex + 1] = bottomY; // y-bottom
+*/
+                    
+                    
+/*
+                    // TODO: two of these are redundant
+                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex] = leftX; // Top Left
+                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex + 1] = rightX; // Top Right
+                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex + 2] = leftX; // Bottom left
+                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex + 3] = rightX; // Bottom right
+
+                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex] = topY; // Top Left
+                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex + 1] = topY; // Top Right
+                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex + 2] = bottomY; // Bottom left
+                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex + 3] = bottomY; // Bottom right
+*/
+                    
 /*
                     const everyOtherArenaBodyExceptThis = [];
                     for (let j = 0; j < bodiesLength; j++) {
@@ -195,9 +277,15 @@ const PhysicsBodies = (function() {
         /**
          * Yields all the absolute world bound points of the arena body
          * @param arenaBodyIndex {number}
-         * @returns {Generator<{x: number, y: number}, void, *>}
+         * @returns {Generator<{x: number, y: number}>}
          */
         yieldArenaBodyBounds: function*(arenaBodyIndex) {
+            yield { x: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4], y: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 2] }; // left top 
+            yield { x: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 1], y: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 2] }; // right top 
+            yield { x: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4], y: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 3] }; // left bottom 
+            yield { x: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 1], y: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 3] }; // right bottom 
+            
+            /*
             // TODO: These can all probably be prefilled and cached because they don't change
             // TODO: Especially since this function is called in a hot-path (scanForArenaObstacles).
             // TODO: Also, it's probably to just have them all stored in the same array and remove the generator stuff
@@ -210,12 +298,23 @@ const PhysicsBodies = (function() {
             const arenaBodyBoundsMin = arenaBodyBounds.min;
             const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMax.x - arenaBodyBoundsMin.x) * 0.5;
             const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMax.y - arenaBodyBoundsMin.y) * 0.5;
+            
+            const leftX= arenaBodyPositionX - arenaBodyBoundsHalfWidth;
+            const rightX = arenaBodyPositionX + arenaBodyBoundsHalfWidth;
+            const topY = arenaBodyPositionY - arenaBodyBoundsHalfHeight;
+            const bottomY = arenaBodyPositionY + arenaBodyBoundsHalfHeight;
+            */
+            
+            // yield { x: leftX, y: topY }; // top left
+            // yield { x: rightX, y: topY }; // top right
+            // yield { x: leftX, y: bottomY }; // bottom left
+            // yield { x: rightX, y: bottomY }; // bottom right
 
-            //yield { x: arenaBodyPositionX , y: arenaBodyPositionY };
-            yield { x: arenaBodyPositionX - arenaBodyBoundsHalfWidth, y: arenaBodyPositionY - arenaBodyBoundsHalfHeight }; // top left
-            yield { x: arenaBodyPositionX + arenaBodyBoundsHalfWidth, y: arenaBodyPositionY - arenaBodyBoundsHalfHeight }; // top right
-            yield { x: arenaBodyPositionX - arenaBodyBoundsHalfWidth, y: arenaBodyPositionY + arenaBodyBoundsHalfHeight }; // bottom left
-            yield { x: arenaBodyPositionX + arenaBodyBoundsHalfWidth, y: arenaBodyPositionY + arenaBodyBoundsHalfHeight }; // bottom right
+            // //yield { x: arenaBodyPositionX , y: arenaBodyPositionY };
+            // yield { x: arenaBodyPositionX - arenaBodyBoundsHalfWidth, y: arenaBodyPositionY - arenaBodyBoundsHalfHeight }; // top left
+            // yield { x: arenaBodyPositionX + arenaBodyBoundsHalfWidth, y: arenaBodyPositionY - arenaBodyBoundsHalfHeight }; // top right
+            // yield { x: arenaBodyPositionX - arenaBodyBoundsHalfWidth, y: arenaBodyPositionY + arenaBodyBoundsHalfHeight }; // bottom left
+            // yield { x: arenaBodyPositionX + arenaBodyBoundsHalfWidth, y: arenaBodyPositionY + arenaBodyBoundsHalfHeight }; // bottom right
         }
     };
 
