@@ -62,34 +62,35 @@ const RobotManager = (function() {
     };
     
    const createTweakPaneData = function(){
-       const dataForTweakPane = {
-           get totalRobots() {
-               return totalRobots;
-           },
-           get totalAliveRobots() {
-               return totalAliveRobots;
-           },
-           get totalQueuedRobotsForRemovals() {
-               return totalQueuedRobotsForRemovals;
-           }
-       };
-       const tweakPaneFolderID = TweakPaneManager.createFolder("Robot Manager");
-       TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalRobots');
-       TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalAliveRobots');
-       TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalQueuedRobotsForRemovals');
    };
 
     const robotManager = {
         get totalRobots() { return totalRobots; },
         get aliveRobotsIndexes() { return aliveRobotsIndexes; },
         system_create: function() {
-        //    GameContextHolder.gameContext.matter.world.on('afterupdate',
-        //        function() {
-        //            for (let i = 0; i < totalRobots; i++) {
-        //                RobotMatterFactory.updateParts(i);
-        //            }
-        //        });
-            createTweakPaneData();
+            //    GameContextHolder.gameContext.matter.world.on('afterupdate',
+            //        function() {
+            //            for (let i = 0; i < totalRobots; i++) {
+            //                RobotMatterFactory.updateParts(i);
+            //            }
+            //        });
+            
+            // Create the Tweak pane data
+            const dataForTweakPane = {
+                get totalRobots() {
+                    return totalRobots;
+                },
+                get totalAliveRobots() {
+                    return totalAliveRobots;
+                },
+                get totalQueuedRobotsForRemovals() {
+                    return totalQueuedRobotsForRemovals;
+                }
+            };
+            const tweakPaneFolderID = TweakPaneManager.createFolder("Robot Manager");
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalRobots');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalAliveRobots');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalQueuedRobotsForRemovals');
         },
         addRobot: function(newRobot) {
             currentRobotIndex++;
