@@ -132,39 +132,12 @@ const PhysicsBodies = (function() {
                     const topY = arenaBodyPositionY - arenaBodyBoundsHalfHeight;
                     const bottomY = arenaBodyPositionY + arenaBodyBoundsHalfHeight;
                     
-                    arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4] = leftX; // left
-                    arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 1] = rightX; // right
-                    arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 2] = topY; // top
-                    arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 3] = bottomY; // bottom
-                    
-                    /*
-                    // The bounds of each static arena obstacle can be accessed like this (The multiplication by 4 is because each obstacle has 4 bound points):
-                    left-top: bounds[i * 4], bounds[i * 4 + 2]
-                    right-top: bounds[i * 4 + 1], bounds[i * 4 + 2]
-                    left-bottom: bounds[i * 4], bounds[i * 4 + 3]
-                    right-bottom: bounds[i * 4 + 1], bounds[i * 4 + 3]
-                     */
-/*
-                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex] = leftX; // x-left
-                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex + 1] = rightX; // x-right
-
-                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex] = topY; // y-top
-                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex + 1] = bottomY; // y-bottom
-*/
-                    
-                    
-/*
-                    // TODO: two of these are redundant
-                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex] = leftX; // Top Left
-                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex + 1] = rightX; // Top Right
-                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex + 2] = leftX; // Bottom left
-                    arenaStaticObstacleBodiesBoundsX[arenaBodyIndex + 3] = rightX; // Bottom right
-
-                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex] = topY; // Top Left
-                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex + 1] = topY; // Top Right
-                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex + 2] = bottomY; // Bottom left
-                    arenaStaticObstacleBodiesBoundsY[arenaBodyIndex + 3] = bottomY; // Bottom right
-*/
+                    // Save the 4 absolute world bound points of the arena obstacle
+                    const boundsIndex = arenaBodyIndex * 4;
+                    arenaStaticObstacleBodiesBounds[boundsIndex] = leftX; // left
+                    arenaStaticObstacleBodiesBounds[boundsIndex + 1] = rightX; // right
+                    arenaStaticObstacleBodiesBounds[boundsIndex + 2] = topY; // top
+                    arenaStaticObstacleBodiesBounds[boundsIndex + 3] = bottomY; // bottom
                     
 /*
                     const everyOtherArenaBodyExceptThis = [];
@@ -280,41 +253,11 @@ const PhysicsBodies = (function() {
          * @returns {Generator<{x: number, y: number}>}
          */
         yieldArenaBodyBounds: function*(arenaBodyIndex) {
-            yield { x: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4], y: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 2] }; // left top 
-            yield { x: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 1], y: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 2] }; // right top 
-            yield { x: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4], y: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 3] }; // left bottom 
-            yield { x: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 1], y: arenaStaticObstacleBodiesBounds[arenaBodyIndex * 4 + 3] }; // right bottom 
-            
-            /*
-            // TODO: These can all probably be prefilled and cached because they don't change
-            // TODO: Especially since this function is called in a hot-path (scanForArenaObstacles).
-            // TODO: Also, it's probably to just have them all stored in the same array and remove the generator stuff
-            const arenaBody = arenaBodies[arenaBodyIndex];
-            const arenaBodyBounds = arenaBody.bounds;
-            const arenaBodyPosition = arenaBody.position;
-            const arenaBodyPositionX = arenaBodyPosition.x;
-            const arenaBodyPositionY = arenaBodyPosition.y;
-            const arenaBodyBoundsMax = arenaBodyBounds.max;
-            const arenaBodyBoundsMin = arenaBodyBounds.min;
-            const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMax.x - arenaBodyBoundsMin.x) * 0.5;
-            const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMax.y - arenaBodyBoundsMin.y) * 0.5;
-            
-            const leftX= arenaBodyPositionX - arenaBodyBoundsHalfWidth;
-            const rightX = arenaBodyPositionX + arenaBodyBoundsHalfWidth;
-            const topY = arenaBodyPositionY - arenaBodyBoundsHalfHeight;
-            const bottomY = arenaBodyPositionY + arenaBodyBoundsHalfHeight;
-            */
-            
-            // yield { x: leftX, y: topY }; // top left
-            // yield { x: rightX, y: topY }; // top right
-            // yield { x: leftX, y: bottomY }; // bottom left
-            // yield { x: rightX, y: bottomY }; // bottom right
-
-            // //yield { x: arenaBodyPositionX , y: arenaBodyPositionY };
-            // yield { x: arenaBodyPositionX - arenaBodyBoundsHalfWidth, y: arenaBodyPositionY - arenaBodyBoundsHalfHeight }; // top left
-            // yield { x: arenaBodyPositionX + arenaBodyBoundsHalfWidth, y: arenaBodyPositionY - arenaBodyBoundsHalfHeight }; // top right
-            // yield { x: arenaBodyPositionX - arenaBodyBoundsHalfWidth, y: arenaBodyPositionY + arenaBodyBoundsHalfHeight }; // bottom left
-            // yield { x: arenaBodyPositionX + arenaBodyBoundsHalfWidth, y: arenaBodyPositionY + arenaBodyBoundsHalfHeight }; // bottom right
+            const boundsIndex = arenaBodyIndex * 4;
+            yield { x: arenaStaticObstacleBodiesBounds[boundsIndex], y: arenaStaticObstacleBodiesBounds[boundsIndex + 2] }; // left top 
+            yield { x: arenaStaticObstacleBodiesBounds[boundsIndex + 1], y: arenaStaticObstacleBodiesBounds[boundsIndex + 2] }; // right top 
+            yield { x: arenaStaticObstacleBodiesBounds[boundsIndex], y: arenaStaticObstacleBodiesBounds[boundsIndex + 3] }; // left bottom 
+            yield { x: arenaStaticObstacleBodiesBounds[boundsIndex + 1], y: arenaStaticObstacleBodiesBounds[boundsIndex + 3] }; // right bottom 
         }
     };
 
