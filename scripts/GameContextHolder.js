@@ -1,12 +1,16 @@
 "use strict";
 
 const GameContextHolder = (function() {
-    const holder = {
+    return {
+        /**
+         * @type {Phaser.Game}
+         */
         game: null,
+        /**
+         * @type {Phaser.Scene}
+         */
         gameContext: null,
         gameTime: 0,
         deltaTime: 0
     };
-
-    return holder;
 }());

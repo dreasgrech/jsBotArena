@@ -5,9 +5,7 @@ const RobotOperations_Hull = (function() {
 
     const operations = {
         moveHull: function(robotIndex, direction) {
-            const robotBody = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
             const robotSpeed = RobotsData_Instance_robotSpeeds[robotIndex];
-
             const angle_radians = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
 
             //const force = new Phaser.Math.Vector2(Math.cos(angle_radians) * robotSpeed * direction, Math.sin(angle_radians) * robotSpeed * direction);
@@ -15,14 +13,16 @@ const RobotOperations_Hull = (function() {
             const force = new Phaser.Math.Vector2(
                 Math.cos(angle_radians) * multiplier,
                 Math.sin(angle_radians) * multiplier);
-            robotBody.applyForce(force);
+            
+            const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
+            robotHullGameObject.applyForce(force);
         },
         rotateHull: function(robotIndex, direction) {
             const angularVelocity = ANGULAR_VELOCITY_FOR_HULLROTATION * direction * GameContextHolder.deltaTime;
             //const angularVelocity = constantAngularVelocityForHullRotation * direction;
 
-            const robotBody = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
-            robotBody.setAngularVelocity(angularVelocity);
+            const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
+            robotHullGameObject.setAngularVelocity(angularVelocity);
             return angularVelocity;
         },
         rotateHullTowardsAngle_degrees: function(robotIndex, angle_degrees) {
@@ -56,8 +56,9 @@ const RobotOperations_Hull = (function() {
             return reachedTargetAngle;
         },
         rotateHullTowardsPosition: function (robotIndex, positionX, positionY) {
-            const hullImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
-            const hullPosition = hullImage.getCenter();
+            const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
+            // TODO: Can't we use the robot's position here?
+            const hullPosition = robotHullGameObject.getCenter();
 
             // Calculate the angle between the hull and the target position in degrees
             const angleToTarget_degrees = Phaser.Math.RadToDeg(

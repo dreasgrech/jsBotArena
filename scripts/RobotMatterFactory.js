@@ -220,14 +220,15 @@ const RobotMatterFactory = (function() {
             AnimationManager.setTimescale(robotsTrackRightAnimationSpriteIndex[robotIndex], tracksAnimationTimescale);
         },
         destroyRobot: function(robotIndex) {
-            const hullImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
-
             // Remove the hull's body from the arena
-            PhysicsBodiesManager.removeArenaPhysicsBody(hullImage.body);
+            const robotHullMatterBody = RobotsData_PhysicsBodies_robotHullMatterBodies[robotIndex];
+            PhysicsBodiesManager.removeArenaPhysicsBody(robotHullMatterBody);
 
             // Disable and hide the hull image and its collider
             //PhysicsBodies.disableMatterGameObject(hullImage);
-            hullImage.destroy();
+            
+            const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
+            robotHullGameObject.destroy();
 
             const gameContext = GameContextHolder.gameContext;
 

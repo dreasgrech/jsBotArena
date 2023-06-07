@@ -173,21 +173,22 @@ const RobotManager = (function() {
                 if (!robotAlive) {
                     continue;
                 }
-
-                const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(robotIndex);
-                const robotPositionX = robotCenterPosition.x;
-                const robotPositionY = robotCenterPosition.y;
+                
+                const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
+                // const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(robotIndex);
+                // const robotPositionX = robotCenterPosition.x;
+                // const robotPositionY = robotCenterPosition.y;
+                const robotPositionX = robotHullGameObject.x;
+                const robotPositionY = robotHullGameObject.y;
                 RobotsData_CurrentData_positionXs[robotIndex] = robotPositionX;
                 RobotsData_CurrentData_positionYs[robotIndex] = robotPositionY;
 
-                const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
-                //const robotBodyImagePhysicsBody = robotBodyImage.body;
-                const robotBodyImagePhysicsBody = RobotsData_PhysicsBodies_robotHullMatterBodies[robotIndex];
-                const hullAngle_degrees = robotBodyImage.angle;
+                const hullAngle_degrees = robotHullGameObject.angle;
                 RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex] = hullAngle_degrees;
-                const hullAngle_radians = Phaser.Math.Angle.Wrap(robotBodyImage.rotation); // It's important to wrap the angle because by default it doesn't seem to be
+                const hullAngle_radians = Phaser.Math.Angle.Wrap(robotHullGameObject.rotation); // It's important to wrap the angle because by default it doesn't seem to be
                 RobotsData_CurrentData_currentRobotAngles_radians[robotIndex] = hullAngle_radians;
-                const robotVelocity = robotBodyImagePhysicsBody.velocity;
+                const robotHullMatterBody = RobotsData_PhysicsBodies_robotHullMatterBodies[robotIndex];
+                const robotVelocity = robotHullMatterBody.velocity;
                 RobotsData_CurrentData_currentRobotVelocities[robotIndex] = robotVelocity;
                 RobotsData_CurrentData_currentRobotSpeedSqr[robotIndex] = MathOperations.sqrMagnitude(robotVelocity.x, robotVelocity.y);
 

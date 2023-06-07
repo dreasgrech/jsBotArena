@@ -298,9 +298,7 @@ const RobotsRadar = (function() {
                 }
 
                 // The ray will be cast from the other robot's current bounds point towards our radar
-                const rayOriginX = otherRobotBoundsPointX;
-                const rayOriginY = otherRobotBoundsPointY;
-                ray.setOrigin(rayOriginX, rayOriginY);
+                ray.setOrigin(otherRobotBoundsPointX, otherRobotBoundsPointY);
                 
                 // Calculate the angle between the other robot and the radar for casting the ray in that direction
                 const rayAngle_radians = Phaser.Math.Angle.Between(
@@ -353,9 +351,7 @@ const RobotsRadar = (function() {
             ray = RaycastManager.createRay();
             //console.log(ray);
         },
-        update: function() {
-
-        },
+        update: function() { },
         scanForRobots: scanForRobots,
         scanForArenaObstacles: scanForArenaObstacles,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {
@@ -372,11 +368,11 @@ const RobotsRadar = (function() {
             return RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE);
         },
         createRadar: function(robotIndex) {
-            const game = GameContextHolder.game;
+            const scene = GameContextHolder.gameContext;
 
-            const radarGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
+            const radarGraphics = new Phaser.GameObjects.Graphics(scene);
             radarGraphics.depth = GameObjectDepths.RobotRadarArc;
-            game.scene.scenes[0].add.existing(radarGraphics);
+            scene.add.existing(radarGraphics);
 
             RobotsData_Radar_radarGraphics[robotIndex] = radarGraphics;
             RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = 0;
@@ -385,10 +381,10 @@ const RobotsRadar = (function() {
 
             // Create a graphics object to visualize the radar arc bounding box
             if (GAME_DEBUG_MODE) {
-                const radarArcBoundingBoxGraphics = new Phaser.GameObjects.Graphics(game.scene.scenes[0]);
+                const radarArcBoundingBoxGraphics = new Phaser.GameObjects.Graphics(scene);
                 radarArcBoundingBoxGraphics.depth = GameObjectDepths.RobotRadarArc + 1;
                 radarArcBoundingBoxes_graphics[robotIndex] = radarArcBoundingBoxGraphics;
-                game.scene.scenes[0].add.existing(radarArcBoundingBoxGraphics);
+                scene.add.existing(radarArcBoundingBoxGraphics);
             }
 
             // Fill the radarArcBoundingBox with initial values

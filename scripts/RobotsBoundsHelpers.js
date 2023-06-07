@@ -38,10 +38,10 @@ const RobotsBoundsHelpers = (function() {
     }
 
     const robotsBoundsHelpers = {
-        getHullCenter: function(index) {
-            const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[index];
-            return robotBodyImage.getCenter();
-        },
+        // getHullCenter: function(index) {
+        //     const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[index];
+        //     return robotHullGameObject.getCenter();
+        // },
         getHullBounds: function(index) {
             //const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[index];
             // const robotBody_imageMatterBody = robotBodyImage.body;
