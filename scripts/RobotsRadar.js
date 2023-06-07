@@ -98,15 +98,13 @@ const RobotsRadar = (function() {
             let arenaObstacleFoundInRadar = false;
             let distanceBetweenRobotAndObstacle = false;
             // Check each point in the arena obstacle's bounds to determine whether this arena obstacle is truly in the radar's field-of-view
-            for (const arenaObstacleCornerPoint of PhysicsBodies.yieldArenaBodyBounds(arenaBodyIndex)) {
-                const arenaObstacleCornerPointX = arenaObstacleCornerPoint.x;
-                const arenaObstacleCornerPointY = arenaObstacleCornerPoint.y;
-                // Calculate the angle between the robot and the arena obstacle point
-                const angleBetween_radians = Phaser.Math.Angle.Between(
-                    turretPositionX,
-                    turretPositionY,
-                    arenaObstacleCornerPointX,
-                    arenaObstacleCornerPointY);
+            const boundsPointIndex = arenaBodyIndex * 8;
+            for (let boundsPointNumber = 0; boundsPointNumber < 8; boundsPointNumber++) {
+                const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBoundsX[boundsPointIndex + boundsPointNumber];
+                const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBoundsY[boundsPointIndex + boundsPointNumber + 1];
+                
+                // Calculate the angle in radians between the robot and the arena obstacle point
+                const angleBetween_radians = Math.atan2(arenaObstacleCornerPointY - turretPositionY, arenaObstacleCornerPointX - turretPositionX );
 
                 // Adjust the angle to account for Phaser's inverted y-axis
                 const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * PI + angleBetween_radians : angleBetween_radians;
@@ -133,8 +131,8 @@ const RobotsRadar = (function() {
                     const rayOriginX = turretPositionX, rayOriginY = turretPositionY;
                     //const ray = RaycastManager.createRay();
                     ray.setOrigin(rayOriginX, rayOriginY);
-                    // const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints(arenaObstacleCornerPoint, { x: turretPositionX, y: turretPositionY });
-                    const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints({ x: turretPositionX, y: turretPositionY }, arenaObstacleCornerPoint);
+                    // Calculate the angle in radians between the radar origin and the obstacle corner point
+                    const angleBetweenPoints_radians = Math.atan2(arenaObstacleCornerPointY - turretPositionY, arenaObstacleCornerPointX - turretPositionX);
                     ray.setAngle(angleBetweenPoints_radians); // radians
 
                     //Logger.log(ray,"Checking for index", arenaBodyIndex, bodiesToIntersectWith);
@@ -162,7 +160,6 @@ const RobotsRadar = (function() {
 
             // Add the information that will be provided to the scanning robot about the other robot that has been detected
             if (arenaObstacleFoundInRadar) {
-
                 const arenaObstacleScannedEventInfo = ArenaObstacleScannedInfo();
                 arenaObstacleScannedEventInfo.index = arenaBodyIndex;
                 // arenaObstacleScannedEventInfo.distance = distanceBetweenRobotAndArenaBody;
