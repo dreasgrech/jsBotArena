@@ -3,7 +3,8 @@
 const RobotsRadar = (function() {
     const PI = Math.PI;
 
-    const DEFAULT_RADAR_FOV_ANGLES = 45;
+    const DEFAULT_RADAR_FOV_ANGLES_DEGREES = 45;
+    const DEFAULT_RADAR_FOV_ANGLES_RADIANS = Phaser.Math.DegToRad(DEFAULT_RADAR_FOV_ANGLES_DEGREES);
     const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 1000;
     //const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 200;
 
@@ -20,9 +21,12 @@ const RobotsRadar = (function() {
 
     const RobotsData_Radar_radarGraphics = [];
     const RobotsData_Radar_radarFOVAngles_degrees = [];
+    const RobotsData_Radar_radarFOVAngles_radians = [];
     const RobotsData_Radar_radarMaxScanDistance = [];
     
     const scanForRobotsEmptyResult = [[], []];
+    
+    const dataForRaycast = {objects: null};
 
     const sortByDistanceFunction = function(a, b) {
         return a.distance - b.distance;
@@ -36,8 +40,6 @@ const RobotsRadar = (function() {
         return radar.radarEnabled;
     };
     
-    const dataForRaycast = {objects: null};
-
     const scanForArenaObstacles = function(robotIndex) {
         const radarEnabled = isRadarEnabled(robotIndex);
         if (!radarEnabled) {
@@ -46,13 +48,17 @@ const RobotsRadar = (function() {
 
         const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
         const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
-        const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
+        // const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
+        const currentRadarAngle_radians = RobotsData_CurrentData_currentRadarAngles_radians[robotIndex];
 
         const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
-        const radarFOVAngle_degrees = RobotsData_Radar_radarFOVAngles_degrees[robotIndex];
+        // const radarFOVAngle_degrees = RobotsData_Radar_radarFOVAngles_degrees[robotIndex];
+        const radarFOVAngle_radians = RobotsData_Radar_radarFOVAngles_radians[robotIndex];
 
-        const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
-        const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
+        // const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
+        // const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
+        const radarStartAngle_radians = currentRadarAngle_radians - radarFOVAngle_radians * 0.5;
+        const radarEndAngle_radians = currentRadarAngle_radians + radarFOVAngle_radians * 0.5;
 
         const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * PI + radarStartAngle_radians : radarStartAngle_radians;
         const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * PI + radarEndAngle_radians : radarEndAngle_radians;
@@ -76,6 +82,7 @@ const RobotsRadar = (function() {
         const endY = turretPositionY + radarMaxScanDistance * Math.sin(radarEndAngle_radians);
 
         // Update the bounding box
+        // TODO: Can we update the existing object instead of creating a new one every time
         const radarArcBoundingBox = {
             minX: Math.min(turretPositionX, startX, endX),
             minY: Math.min(turretPositionY, startY, endY),
@@ -204,14 +211,18 @@ const RobotsRadar = (function() {
         const robotHullBodyID = RobotsData_PhysicsBodies_robotHullMatterBodyIDs[robotIndex];
         const radarOriginX = RobotsData_CurrentData_turretPositionXs[robotIndex];
         const radarOriginY = RobotsData_CurrentData_turretPositionYs[robotIndex];
-        const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
+        //const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
+        const currentRadarAngle_radians = RobotsData_CurrentData_currentRadarAngles_radians[robotIndex];
 
         const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
-        const radarFOVAngle_degrees = RobotsData_Radar_radarFOVAngles_degrees[robotIndex];
+        //const radarFOVAngle_degrees = RobotsData_Radar_radarFOVAngles_degrees[robotIndex];
+        const radarFOVAngle_radians = RobotsData_Radar_radarFOVAngles_radians[robotIndex];
 
         // TODO: Find a way to use radians directly instead of calling Phaser.Math.DegToRad() here.
-        const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
-        const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
+        // const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
+        // const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
+        const radarStartAngle_radians = currentRadarAngle_radians - radarFOVAngle_radians * 0.5;
+        const radarEndAngle_radians = currentRadarAngle_radians + radarFOVAngle_radians * 0.5;
 
         const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * PI + radarStartAngle_radians : radarStartAngle_radians;
         const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * PI + radarEndAngle_radians : radarEndAngle_radians;
@@ -355,7 +366,11 @@ const RobotsRadar = (function() {
         scanForRobots: scanForRobots,
         scanForArenaObstacles: scanForArenaObstacles,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {
-            return RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = AngleOperations.normalizeAngleDegrees(angle_degrees);
+            const normalizedAngle_degrees = AngleOperations.normalizeAngleDegrees(angle_degrees);
+            const normalizedAngle_radians = Phaser.Math.DegToRad(normalizedAngle_degrees);
+            RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = normalizedAngle_degrees;
+            RobotsData_CurrentData_currentRadarAngles_radians[robotIndex] = normalizedAngle_radians;
+            return normalizedAngle_degrees;
         },
         rotateRadar: function(robotIndex, direction) {
             const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
@@ -365,7 +380,12 @@ const RobotsRadar = (function() {
             return robotsRadar.setRadarAngle_degrees(robotIndex, newRadarAngle_degrees);
         },
         setRadarFOVAngle_degrees: function(robotIndex, angle_degrees) {
-            return RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE);
+            const normalizedAngle_degrees = AngleOperations.normalizeAngleDegrees(MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE));
+            const normalizedAngle_radians = Phaser.Math.DegToRad(normalizedAngle_degrees);
+            RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = normalizedAngle_degrees;
+            RobotsData_Radar_radarFOVAngles_radians[robotIndex] = normalizedAngle_radians;
+            return normalizedAngle_degrees;
+            // return RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE);
         },
         createRadar: function(robotIndex) {
             const scene = GameContextHolder.scene;
@@ -376,7 +396,9 @@ const RobotsRadar = (function() {
 
             RobotsData_Radar_radarGraphics[robotIndex] = radarGraphics;
             RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = 0;
-            RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = DEFAULT_RADAR_FOV_ANGLES;
+            RobotsData_CurrentData_currentRadarAngles_radians[robotIndex] = 0;
+            RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = DEFAULT_RADAR_FOV_ANGLES_DEGREES;
+            RobotsData_Radar_radarFOVAngles_radians[robotIndex] = DEFAULT_RADAR_FOV_ANGLES_RADIANS;
             RobotsData_Radar_radarMaxScanDistance[robotIndex] = DEFAULT_RADAR_MAX_SCAN_DISTANCE;
 
             // Create a graphics object to visualize the radar arc bounding box
@@ -470,6 +492,7 @@ const RobotsRadar = (function() {
 
             RobotsData_Radar_radarGraphics.length = 0;
             RobotsData_Radar_radarFOVAngles_degrees.length = 0;
+            RobotsData_Radar_radarFOVAngles_radians.length = 0;
             RobotsData_Radar_radarMaxScanDistance.length = 0;
         }
     };
