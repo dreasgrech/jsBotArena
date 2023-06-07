@@ -4,8 +4,8 @@ const RobotsRadar = (function() {
     const PI = Math.PI;
 
     const DEFAULT_RADAR_FOV_ANGLES = 45;
-    const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 1000;
-    //const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 200;
+    //const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 1000;
+    const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 200;
 
     const MIN_ALLOWED_RADAR_FOV_ANGLE = 1;
     const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
@@ -99,9 +99,12 @@ const RobotsRadar = (function() {
             let distanceBetweenRobotAndObstacle = false;
             // Check each point in the arena obstacle's bounds to determine whether this arena obstacle is truly in the radar's field-of-view
             const boundsPointIndex = arenaBodyIndex * 8;
-            for (let boundsPointNumber = 0; boundsPointNumber < 8; boundsPointNumber++) {
-                const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBoundsX[boundsPointIndex + boundsPointNumber];
-                const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBoundsY[boundsPointIndex + boundsPointNumber + 1];
+            //for (let boundsPointNumber = 0; boundsPointNumber < 8; boundsPointNumber++) {
+            for (let boundsPointNumber = 0; boundsPointNumber < 8; boundsPointNumber+=2) {
+                // const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBoundsX[boundsPointIndex + boundsPointNumber];
+                // const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBoundsY[boundsPointIndex + boundsPointNumber];
+                const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBounds[boundsPointIndex + boundsPointNumber];
+                const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBounds[boundsPointIndex + boundsPointNumber + 1];
                 
                 // Calculate the angle in radians between the robot and the arena obstacle point
                 const angleBetween_radians = Math.atan2(arenaObstacleCornerPointY - turretPositionY, arenaObstacleCornerPointX - turretPositionX );

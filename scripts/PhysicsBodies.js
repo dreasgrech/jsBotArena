@@ -1,28 +1,37 @@
 "use strict";
 
 /**
- * The positions of the bounds of the static arena obstacles.  Each obstacle has 4 bounds points stored after each other, hence the multiplication by 4.
- * The bounds of each static arena obstacle can be accessed like this:
- *      left-top: bounds[i * 4], bounds[i * 4 + 2]
- *      right-top: bounds[i * 4 + 1], bounds[i * 4 + 2]
- *      left-bottom: bounds[i * 4], bounds[i * 4 + 3]
- *      right-bottom: bounds[i * 4 + 1], bounds[i * 4 + 3]
+ * The absolute world bound positions of all the static arena obstacles.  
+ * Each obstacle occupies 8 elements in the array to hold the four bounds points because each x and y point values are stored after each other as such:
+ *
+ * Top-Left:
+ * arenaStaticObstacleBodiesBounds[boundsPointsIndex] = leftX;
+ * arenaStaticObstacleBodiesBounds[boundsPointsIndex + 1] = topY;
+ * Top-Right:
+ * arenaStaticObstacleBodiesBounds[boundsPointsIndex + 2] = rightX;
+ * arenaStaticObstacleBodiesBounds[boundsPointsIndex + 3] = topY;
+ * Bottom-Left:
+ * arenaStaticObstacleBodiesBounds[boundsPointsIndex + 4] = leftX;
+ * arenaStaticObstacleBodiesBounds[boundsPointsIndex + 5] = bottomY;
+ * Bottom-Right:
+ * arenaStaticObstacleBodiesBounds[boundsPointsIndex + 6] = rightX;
+ * arenaStaticObstacleBodiesBounds[boundsPointsIndex + 7] = bottomY;
  * @type {number[]}
  */
-// const arenaStaticObstacleBodiesBounds = [];
+const arenaStaticObstacleBodiesBounds = [];
 
 /**
  * The x-positions of all the 8 bounds points of all the static arena obstacles.
  * Used in conjunction with arenaStaticObstacleBodiesBoundsY[]
  * @type {number[]}
  */
-const arenaStaticObstacleBodiesBoundsX = [];
+//const arenaStaticObstacleBodiesBoundsX = [];
 /**
  * The y-positions of all the 8 bounds points of all the static arena obstacles
  * Used in conjunction with arenaStaticObstacleBodiesBoundsX[]
  * @type {number[]}
  */
-const arenaStaticObstacleBodiesBoundsY = [];
+//const arenaStaticObstacleBodiesBoundsY = [];
 
 const PhysicsBodies = (function() {
     /**
@@ -154,14 +163,23 @@ const PhysicsBodies = (function() {
 
                     // Save the 8 absolute world bound points of the arena obstacle
                     const boundsPointsIndex = arenaBodyIndex * 8;
-                    arenaStaticObstacleBodiesBoundsX[boundsPointsIndex] = leftX;
-                    arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 1] = topY;
-                    arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 2] = rightX;
-                    arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 3] = topY;
-                    arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 4] = leftX;
-                    arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 5] = bottomY;
-                    arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 6] = rightX;
-                    arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 7] = bottomY;
+                    // arenaStaticObstacleBodiesBoundsX[boundsPointsIndex] = leftX;
+                    // arenaStaticObstacleBodiesBoundsY[boundsPointsIndex] = topY;
+                    // arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 1] = rightX;
+                    // arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 1] = topY;
+                    // arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 2] = leftX;
+                    // arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 2] = bottomY;
+                    // arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 3] = rightX;
+                    // arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 3] = bottomY;
+
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex] = leftX;
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 1] = topY;
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 2] = rightX;
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 3] = topY;
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 4] = leftX;
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 5] = bottomY;
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 6] = rightX;
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 7] = bottomY;
                     
 /*
                     const everyOtherArenaBodyExceptThis = [];
@@ -282,7 +300,12 @@ const PhysicsBodies = (function() {
         //     yield { x: arenaStaticObstacleBodiesBounds[boundsIndex + 1], y: arenaStaticObstacleBodiesBounds[boundsIndex + 2] }; // right top 
         //     yield { x: arenaStaticObstacleBodiesBounds[boundsIndex], y: arenaStaticObstacleBodiesBounds[boundsIndex + 3] }; // left bottom 
         //     yield { x: arenaStaticObstacleBodiesBounds[boundsIndex + 1], y: arenaStaticObstacleBodiesBounds[boundsIndex + 3] }; // right bottom 
-        // }
+        // },
+        system_newRoundReset: function(){
+            // arenaStaticObstacleBodiesBoundsX.length = 0;
+            // arenaStaticObstacleBodiesBoundsY.length = 0;
+            
+        }
     };
 
     return obj;
