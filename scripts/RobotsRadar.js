@@ -4,8 +4,8 @@ const RobotsRadar = (function() {
     const PI = Math.PI;
 
     const DEFAULT_RADAR_FOV_ANGLES = 45;
-    //const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 1000;
-    const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 200;
+    const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 1000;
+    //const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 200;
 
     const MIN_ALLOWED_RADAR_FOV_ANGLE = 1;
     const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
