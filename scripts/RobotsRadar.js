@@ -96,10 +96,7 @@ const RobotsRadar = (function() {
         for (let i = 0; i < arenaBodiesBoundsFromSpatialHashLength; i++) {
             const arenaBodyBoundsFromSpatialHash = arenaBodiesBoundsFromSpatialHash[i];
             const arenaBodyIndex = arenaBodyBoundsFromSpatialHash.arenaBodyIndex;
-            // TODO: arenaBodyPositionX and arenaBodyPositionY can be preset and cached in arrays because they do not change
-            const arenaBody = PhysicsBodies.resolveStaticArenaObstacleBody(arenaBodyIndex);
-            const arenaBodyPositionX = arenaBody.x;
-            const arenaBodyPositionY = arenaBody.y;
+            const arenaBodyID = arenaStaticObstacleBodiesIDs[arenaBodyIndex];
 
             let arenaObstacleFoundInRadar = false;
             let distanceBetweenRobotAndObstacle = false;
@@ -153,7 +150,7 @@ const RobotsRadar = (function() {
                             continue;
                         }
 
-                        const isHitBodyTheArenaObstacle = rayHitBody.id === arenaBody.id;
+                        const isHitBodyTheArenaObstacle = rayHitBody.id === arenaBodyID;
                         //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
                         arenaObstacleFoundInRadar = isHitBodyTheArenaObstacle;
                         if (arenaObstacleFoundInRadar) {
@@ -166,6 +163,10 @@ const RobotsRadar = (function() {
 
             // Add the information that will be provided to the scanning robot about the other robot that has been detected
             if (arenaObstacleFoundInRadar) {
+                const positionIndex = arenaBodyIndex * 2;
+                const arenaBodyPositionX = arenaStaticObstacleBodiesPositions[positionIndex];
+                const arenaBodyPositionY = arenaStaticObstacleBodiesPositions[positionIndex + 1];
+                
                 const arenaObstacleScannedEventInfo = ArenaObstacleScannedInfo();
                 arenaObstacleScannedEventInfo.index = arenaBodyIndex;
                 // arenaObstacleScannedEventInfo.distance = distanceBetweenRobotAndArenaBody;

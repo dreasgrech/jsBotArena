@@ -4,6 +4,7 @@
  * The absolute world bound positions of all the static arena obstacles.  
  * Each obstacle occupies 8 elements in the array to hold the four bounds points because each x and y point values are stored after each other as such:
  *
+ * const boundsPointsIndex = arenaBodyIndex * 8;
  * Top-Left:
  * arenaStaticObstacleBodiesBounds[boundsPointsIndex] = leftX;
  * arenaStaticObstacleBodiesBounds[boundsPointsIndex + 1] = topY;
@@ -19,6 +20,19 @@
  * @type {number[]}
  */
 const arenaStaticObstacleBodiesBounds = [];
+
+/**
+ * Holds all the Matter IDs of all the static arena obstacles
+ * @type {number[]}
+ */
+const arenaStaticObstacleBodiesIDs = [];
+
+/**
+ * Holds all the positions of all the static arena obstacles.
+ * Each obstacle occupies 2 elements in the array to hold the x and y coordinates
+ * @type {number[]}
+ */
+const arenaStaticObstacleBodiesPositions = [];
 
 const ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS = 8;
 
@@ -114,7 +128,10 @@ const PhysicsBodies = (function() {
 
                 const arenaBodiesElementsForSpatialHash = [];
                 for (let i = 0; i < bodiesLength; i++) {
+                    const arenaBodyIndex = i;
                     const arenaBody = bodies[i];
+                    arenaStaticObstacleBodiesIDs[arenaBodyIndex] = arenaBody.id;
+                    
                     const arenaBodyBounds = arenaBody.bounds;
                     const arenaBodyBoundsMin = arenaBodyBounds.min;
                     const arenaBodyBoundsMinX = arenaBodyBoundsMin.x;
@@ -122,7 +139,7 @@ const PhysicsBodies = (function() {
                     const arenaBodyBoundsMax = arenaBodyBounds.max;
                     const arenaBodyBoundsMaxX = arenaBodyBoundsMax.x;
                     const arenaBodyBoundsMaxY = arenaBodyBoundsMax.y;
-                    const arenaBodyIndex = i;
+                    // Create the bounds that will be handed to the spatial hash
                     const boundsForSpatialHash = {
                         minX: arenaBodyBoundsMinX,
                         minY: arenaBodyBoundsMinY,
@@ -135,6 +152,12 @@ const PhysicsBodies = (function() {
                     const arenaBodyPosition = arenaBody.position;
                     const arenaBodyPositionX = arenaBodyPosition.x;
                     const arenaBodyPositionY = arenaBodyPosition.y;
+                    
+                    // Save the arena obstacle's position
+                    const positionIndex = arenaBodyIndex * 2;
+                    arenaStaticObstacleBodiesPositions[positionIndex] = arenaBodyPositionX;
+                    arenaStaticObstacleBodiesPositions[positionIndex + 1] = arenaBodyPositionY;
+                    
                     const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMaxX - arenaBodyBoundsMinX) * 0.5;
                     const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMaxY - arenaBodyBoundsMinY) * 0.5;
                     
@@ -201,9 +224,9 @@ const PhysicsBodies = (function() {
 
             // Logger.log("Finished removing arena body:", body, allBodies);
         },
-        resolveStaticArenaObstacleBody: function(arenaBodyIndex) {
-            return staticArenaBodies[arenaBodyIndex];
-        },
+        // resolveStaticArenaObstacleBody: function(arenaBodyIndex) {
+        //     return staticArenaBodies[arenaBodyIndex];
+        // },
         mapHullImageBodyIDToRobotIndex: function(matterObjectID, robotIndex) {
             matterBodyIDToRobotIndex[matterObjectID] = robotIndex;
         },
