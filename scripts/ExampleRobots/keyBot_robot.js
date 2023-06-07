@@ -136,7 +136,7 @@ const keyBot = function() {
 
             const scannedArenaElements = radar.scannedArenaElements;
             if (scannedArenaElements.length > 0) {
-                Logger.log(scannedArenaElements.length, "scanned arena elements");
+                //Logger.log(scannedArenaElements.length, "scanned arena elements");
             }
         }
     };
