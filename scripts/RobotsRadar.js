@@ -368,7 +368,7 @@ const RobotsRadar = (function() {
             return RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE);
         },
         createRadar: function(robotIndex) {
-            const scene = GameContextHolder.gameContext;
+            const scene = GameContextHolder.scene;
 
             const radarGraphics = new Phaser.GameObjects.Graphics(scene);
             radarGraphics.depth = GameObjectDepths.RobotRadarArc;

@@ -50,7 +50,7 @@ const AnimationManager = (function() {
         sprites: [],
         system_preload: function() {},
         system_create: function() {
-            const gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.scene;
 
             let lastAnimationIndexCreated = -1;
 

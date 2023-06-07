@@ -92,7 +92,7 @@ const CornerGuardBot = function() {
     return {
         name: 'Corner Guard Bot',
         create: function(robotSetup) {
-            gameContext = GameContextHolder.gameContext;
+            gameContext = GameContextHolder.scene;
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Four;

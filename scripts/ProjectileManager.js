@@ -56,7 +56,7 @@ const ProjectileManager = (function() {
 
     const projectileManager = {
         system_create: function() {
-            gameContext = GameContextHolder.gameContext;
+            gameContext = GameContextHolder.scene;
 
             projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
             // console.log("projectilesCollisionData", projectilesCollisionData);

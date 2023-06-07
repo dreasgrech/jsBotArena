@@ -16,7 +16,7 @@ const UIRobotInfoPanel = (function() {
 
     const obj = {
         create: function() {
-            const gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.scene;
 
             const panelX = gameContext.cameras.main.width - panelWidth; // X position of the panel
 
@@ -37,7 +37,7 @@ const UIRobotInfoPanel = (function() {
             titleText.depth = panelTextDepth;
         },
         add: function(robotIndex) {
-            const gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.scene;
 
             robotsIndex.push(robotIndex);
 

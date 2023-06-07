@@ -10,7 +10,7 @@ const ImageDatabase = (function() {
         GameElementsSpritesheetTextureDirectory = "./images/Spritesheets/";
 
     const loadImage = function(identifier, filePath) {
-        GameContextHolder.gameContext.load.image(identifier, filePath);
+        GameContextHolder.scene.load.image(identifier, filePath);
         // console.log(identifier, filePath);
     };
 
@@ -34,7 +34,7 @@ const ImageDatabase = (function() {
         loadImage('wall_image', 'images/Arena/Wall - Brick 2 64x64.png');
 
         //Load the game elements spritesheet
-        const gameContext = GameContextHolder.gameContext;
+        const gameContext = GameContextHolder.scene;
         //gameContext.load.on(`filecomplete-multiatlas-${GameElementsSpritesheetKey}`, function (key, type, data) {
         //    //console.log("finished loading", key, type, data, savedThis.textures.get(pt.Tiles).frames);
         //    console.log("finished loading", key, type, data);

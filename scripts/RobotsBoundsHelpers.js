@@ -80,7 +80,7 @@ const RobotsBoundsHelpers = (function() {
             let graphics = robotsBounds[index];
             if (graphics == null) {
                 //const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[index];
-                graphics = GameContextHolder.gameContext.add.graphics();
+                graphics = GameContextHolder.scene.add.graphics();
                 //graphics.depth = robotBodyImage.depth;
                 graphics.depth = GameObjectDepths.RobotBody;
                 robotsBounds[index] = graphics;
@@ -99,7 +99,7 @@ const RobotsBoundsHelpers = (function() {
 
             let graphics = turretBounds[index];
             if (graphics == null) {
-                graphics = GameContextHolder.gameContext.add.graphics();
+                graphics = GameContextHolder.scene.add.graphics();
                 graphics.depth = robotTurretImage.depth;
                 turretBounds[index] = graphics;
             }

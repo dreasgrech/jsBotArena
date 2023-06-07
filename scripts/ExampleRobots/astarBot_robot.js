@@ -6,7 +6,7 @@ const astarBot = function() {
     return {
         name: 'astarBot',
         create: function(robotSetup) {
-            gameContext = GameContextHolder.gameContext;
+            gameContext = GameContextHolder.scene;
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Eight;

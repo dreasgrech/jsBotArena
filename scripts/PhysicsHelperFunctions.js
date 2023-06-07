@@ -19,7 +19,7 @@ const PhysicsHelperFunctions = (function() {
                     const y = tile.getCenterY();
                     const w = tile.width;
                     const h = tile.height;
-                    const body = GameContextHolder.gameContext.matter.add.rectangle(x, y, w, h, { isStatic: true });
+                    const body = GameContextHolder.scene.matter.add.rectangle(x, y, w, h, { isStatic: true });
                     setCollisionProperties({
                         physicsObject: body,
                         group: 0,
@@ -34,7 +34,7 @@ const PhysicsHelperFunctions = (function() {
         },
         // Shows collision on a layer with a different color for debugging.
         showDebugLayerCollisions: function(layer) {
-            const debugGraphics = GameContextHolder.gameContext.add.graphics().setAlpha(0.75);
+            const debugGraphics = GameContextHolder.scene.add.graphics().setAlpha(0.75);
             layer.renderDebug(debugGraphics,
                 {
                     tileColor: null, // Color of non-colliding tiles

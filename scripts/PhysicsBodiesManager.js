@@ -272,7 +272,7 @@ const PhysicsBodiesManager = (function() {
          * @returns {boolean}
          */
         isBodyOverlappingWithOtherBodies: function(body) {
-            const gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.scene;
             return gameContext.matter.overlap(body, allBodies);
         },
         queryArenaBodiesSpatialHash: function(bounds) {

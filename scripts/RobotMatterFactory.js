@@ -5,7 +5,7 @@ const RobotMatterFactory = (function() {
     const robotsTrackRightAnimationSpriteIndex = [];
 
     const createProjectileSensor = function (robotIndex) {
-        const gameContext = GameContextHolder.gameContext;
+        const gameContext = GameContextHolder.scene;
 
         // Get the robot's vertices
         const vertices = RobotsBoundsHelpers.getHullBounds(robotIndex);
@@ -38,7 +38,7 @@ const RobotMatterFactory = (function() {
     };
 
     const createRobot = function({ currentRobotIndex, x, y, scale, robotSetup }) {
-        const gameContext = GameContextHolder.gameContext;
+        const gameContext = GameContextHolder.scene;
 
         const shapes = gameContext.cache.json.get('Hulls_CollisionData');
 
@@ -118,7 +118,7 @@ const RobotMatterFactory = (function() {
 
         // ROBOT TURRET
         //const turretImage = GameContextHolder.gameContext.add.image(
-        const turretImage = GameContextHolder.gameContext.add.sprite(
+        const turretImage = GameContextHolder.scene.add.sprite(
             hullImage.x,
             hullImage.y,
             ImageDatabase.GameElementsSpritesheetKey,
@@ -230,7 +230,7 @@ const RobotMatterFactory = (function() {
             const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
             robotHullGameObject.destroy();
 
-            const gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.scene;
 
             // Remove the projectile sensor
             gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);

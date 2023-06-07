@@ -10,7 +10,7 @@ const followBot_followPosition = function() {
     return {
         name: 'Follow Bot (Position)',
         create: function(robotSetup) {
-            gameContext = GameContextHolder.gameContext;
+            gameContext = GameContextHolder.scene;
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Four;

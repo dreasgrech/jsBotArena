@@ -6,7 +6,7 @@ const sittingBot = function() {
     return {
         name: 'Sitting Bot',
         create: function(robotSetup) {
-            gameContext = GameContextHolder.gameContext;
+            gameContext = GameContextHolder.scene;
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Six;

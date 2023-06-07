@@ -9,7 +9,7 @@ const MatterPhysicsHelpers = (function() {
             //console.log(shapes);
         }
 
-        const image = GameContextHolder.gameContext.matter.add.image(x, y, id, null, options);
+        const image = GameContextHolder.scene.matter.add.image(x, y, id, null, options);
         return image;
     }
 

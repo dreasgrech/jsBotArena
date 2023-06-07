@@ -11,7 +11,7 @@ const AnimationSpritesDatabase = (function() {
             JSONDatabaseReader.loadDatabase(ANIMATIONS_DEFINITIONS_DB_FILE_KEY,
                 ANIMATIONS_DEFINITIONS_DB_FILEPATH,
                 function(definitions) {
-                    const gameContext = GameContextHolder.gameContext;
+                    const gameContext = GameContextHolder.scene;
 
                         /*
                     // Go through all the spritesheet definitions in the file
@@ -40,7 +40,7 @@ const AnimationSpritesDatabase = (function() {
                 });
         },
         system_create: function() {
-            const gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.scene;
 
 
             // Load the projectiles images

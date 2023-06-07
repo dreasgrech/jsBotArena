@@ -6,7 +6,7 @@ const TweakPaneManager = (function(){
     let pane;
     const tweakPaneManager = {
         system_create:function(){
-            const gameContext = GameContextHolder.gameContext;
+            const gameContext = GameContextHolder.scene;
             pane = gameContext.inspectorGame.pane;
         },
         createFolder: function(title, {expanded= true} = {}) {

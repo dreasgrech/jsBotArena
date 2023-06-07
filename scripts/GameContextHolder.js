@@ -9,7 +9,7 @@ const GameContextHolder = (function() {
         /**
          * @type {Phaser.Scene}
          */
-        gameContext: null,
+        scene: null,
         gameTime: 0,
         deltaTime: 0
     };

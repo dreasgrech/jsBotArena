@@ -7,7 +7,7 @@ const apiUsageExampleBot = function() {
     return {
         name: 'apiUsageExampleBot',
         create: function(robotSetup) {
-            gameContext = GameContextHolder.gameContext;
+            gameContext = GameContextHolder.scene;
 
             const hullSetup = robotSetup.hull;
             hullSetup.hullType = RobotHullTypes.Eight;
