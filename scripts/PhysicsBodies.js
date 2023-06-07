@@ -20,6 +20,8 @@
  */
 const arenaStaticObstacleBodiesBounds = [];
 
+const ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS = 8;
+
 const PhysicsBodies = (function() {
     /**
      * Contains all the physics bodies in the arena
@@ -119,13 +121,17 @@ const PhysicsBodies = (function() {
                     const arenaBody = bodies[i];
                     const arenaBodyBounds = arenaBody.bounds;
                     const arenaBodyBoundsMin = arenaBodyBounds.min;
+                    const arenaBodyBoundsMinX = arenaBodyBoundsMin.x;
+                    const arenaBodyBoundsMinY = arenaBodyBoundsMin.y;
                     const arenaBodyBoundsMax = arenaBodyBounds.max;
+                    const arenaBodyBoundsMaxX = arenaBodyBoundsMax.x;
+                    const arenaBodyBoundsMaxY = arenaBodyBoundsMax.y;
                     const arenaBodyIndex = i;
                     const boundsForSpatialHash = {
-                        minX: arenaBodyBoundsMin.x,
-                        minY: arenaBodyBoundsMin.y,
-                        maxX: arenaBodyBoundsMax.x,
-                        maxY: arenaBodyBoundsMax.y,
+                        minX: arenaBodyBoundsMinX,
+                        minY: arenaBodyBoundsMinY,
+                        maxX: arenaBodyBoundsMaxX,
+                        maxY: arenaBodyBoundsMaxY,
                         arenaBodyIndex: arenaBodyIndex
                     };
                     arenaBodiesElementsForSpatialHash.push(boundsForSpatialHash);
@@ -133,8 +139,8 @@ const PhysicsBodies = (function() {
                     const arenaBodyPosition = arenaBody.position;
                     const arenaBodyPositionX = arenaBodyPosition.x;
                     const arenaBodyPositionY = arenaBodyPosition.y;
-                    const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMax.x - arenaBodyBoundsMin.x) * 0.5;
-                    const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMax.y - arenaBodyBoundsMin.y) * 0.5;
+                    const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMaxX - arenaBodyBoundsMinX) * 0.5;
+                    const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMaxY - arenaBodyBoundsMinY) * 0.5;
                     
                     const leftX= arenaBodyPositionX - arenaBodyBoundsHalfWidth;
                     const rightX = arenaBodyPositionX + arenaBodyBoundsHalfWidth;
@@ -142,7 +148,7 @@ const PhysicsBodies = (function() {
                     const bottomY = arenaBodyPositionY + arenaBodyBoundsHalfHeight;
                     
                     // Save the 8 absolute world bound points of the arena obstacle
-                    const boundsPointsIndex = arenaBodyIndex * 8;
+                    const boundsPointsIndex = arenaBodyIndex * ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS;
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex] = leftX;
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex + 1] = topY;
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex + 2] = rightX;
@@ -170,6 +176,7 @@ const PhysicsBodies = (function() {
                 arenaBodiesAdded = true;
             }
 
+            // Register the bodies with the RaycastManager
             RaycastManager.mapGameObjects(bodies, dynamic);
 
             //Logger.log("Added arena bodies:", ...bodies);

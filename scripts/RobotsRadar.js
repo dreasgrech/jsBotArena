@@ -98,9 +98,9 @@ const RobotsRadar = (function() {
             let arenaObstacleFoundInRadar = false;
             let distanceBetweenRobotAndObstacle = false;
             // Check each point in the arena obstacle's bounds to determine whether this arena obstacle is truly in the radar's field-of-view
-            const boundsPointIndex = arenaBodyIndex * 8;
+            const boundsPointIndex = arenaBodyIndex * ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS;
             //for (let boundsPointNumber = 0; boundsPointNumber < 8; boundsPointNumber++) {
-            for (let boundsPointNumber = 0; boundsPointNumber < 8; boundsPointNumber+=2) {
+            for (let boundsPointNumber = 0; boundsPointNumber < ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS; boundsPointNumber+=2) {
                 // const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBoundsX[boundsPointIndex + boundsPointNumber];
                 // const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBoundsY[boundsPointIndex + boundsPointNumber];
                 const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBounds[boundsPointIndex + boundsPointNumber];
