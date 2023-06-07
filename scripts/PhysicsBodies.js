@@ -20,19 +20,6 @@
  */
 const arenaStaticObstacleBodiesBounds = [];
 
-/**
- * The x-positions of all the 8 bounds points of all the static arena obstacles.
- * Used in conjunction with arenaStaticObstacleBodiesBoundsY[]
- * @type {number[]}
- */
-//const arenaStaticObstacleBodiesBoundsX = [];
-/**
- * The y-positions of all the 8 bounds points of all the static arena obstacles
- * Used in conjunction with arenaStaticObstacleBodiesBoundsX[]
- * @type {number[]}
- */
-//const arenaStaticObstacleBodiesBoundsY = [];
-
 const PhysicsBodies = (function() {
     /**
      * Contains all the physics bodies in the arena
@@ -154,24 +141,8 @@ const PhysicsBodies = (function() {
                     const topY = arenaBodyPositionY - arenaBodyBoundsHalfHeight;
                     const bottomY = arenaBodyPositionY + arenaBodyBoundsHalfHeight;
                     
-                    // Save the 4 absolute world bound left and right points of the arena obstacle
-                    // const boundsIndex = arenaBodyIndex * 4;
-                    // arenaStaticObstacleBodiesBounds[boundsIndex] = leftX; // left
-                    // arenaStaticObstacleBodiesBounds[boundsIndex + 1] = rightX; // right
-                    // arenaStaticObstacleBodiesBounds[boundsIndex + 2] = topY; // top
-                    // arenaStaticObstacleBodiesBounds[boundsIndex + 3] = bottomY; // bottom
-
                     // Save the 8 absolute world bound points of the arena obstacle
                     const boundsPointsIndex = arenaBodyIndex * 8;
-                    // arenaStaticObstacleBodiesBoundsX[boundsPointsIndex] = leftX;
-                    // arenaStaticObstacleBodiesBoundsY[boundsPointsIndex] = topY;
-                    // arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 1] = rightX;
-                    // arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 1] = topY;
-                    // arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 2] = leftX;
-                    // arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 2] = bottomY;
-                    // arenaStaticObstacleBodiesBoundsX[boundsPointsIndex + 3] = rightX;
-                    // arenaStaticObstacleBodiesBoundsY[boundsPointsIndex + 3] = bottomY;
-
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex] = leftX;
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex + 1] = topY;
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex + 2] = rightX;
@@ -289,18 +260,6 @@ const PhysicsBodies = (function() {
             //     'queryArenaBodiesSpatialHash:end');
             return result;
         },
-        /**
-         * Yields all the absolute world bound points of the arena body
-         * @param arenaBodyIndex {number}
-         * @returns {Generator<{x: number, y: number}>}
-         */
-        // yieldArenaBodyBounds: function*(arenaBodyIndex) {
-        //     const boundsIndex = arenaBodyIndex * 4;
-        //     yield { x: arenaStaticObstacleBodiesBounds[boundsIndex], y: arenaStaticObstacleBodiesBounds[boundsIndex + 2] }; // left top 
-        //     yield { x: arenaStaticObstacleBodiesBounds[boundsIndex + 1], y: arenaStaticObstacleBodiesBounds[boundsIndex + 2] }; // right top 
-        //     yield { x: arenaStaticObstacleBodiesBounds[boundsIndex], y: arenaStaticObstacleBodiesBounds[boundsIndex + 3] }; // left bottom 
-        //     yield { x: arenaStaticObstacleBodiesBounds[boundsIndex + 1], y: arenaStaticObstacleBodiesBounds[boundsIndex + 3] }; // right bottom 
-        // },
         system_newRoundReset: function(){
             // arenaStaticObstacleBodiesBoundsX.length = 0;
             // arenaStaticObstacleBodiesBoundsY.length = 0;
