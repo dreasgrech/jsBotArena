@@ -56,7 +56,6 @@ const RobotsRadar = (function() {
         const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * PI + radarStartAngle_radians : radarStartAngle_radians;
         const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * PI + radarEndAngle_radians : radarEndAngle_radians;
 
-        const scannedArenaBodies = [];
 
         // Construct an array of the bodies for the ray to intersect with
         /*
@@ -66,7 +65,8 @@ const RobotsRadar = (function() {
             ...PhysicsBodies.getArenaBodies() // the ... operator expands the array into arguments for the function
         ];
         */
-        const bodiesToIntersectWith = PhysicsBodies.getArenaBodies();
+        // const bodiesToIntersectWith = PhysicsBodies.getStaticArenaBodies();
+        const bodiesToIntersectWith = PhysicsBodies.staticArenaBodies;
 
         // Calculate the coordinates of the bounding box endpoints
         const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
@@ -83,6 +83,12 @@ const RobotsRadar = (function() {
         };
         radarArcBoundingBoxes[robotIndex] = radarArcBoundingBox;
 
+        /**
+         * Holds the 
+         * @type {ArenaObstacleScannedInfo[]}
+         */
+        const arenaObstaclesScannedInfo = [];
+
         // Query the spatial hash for all the arena bodies in the radar's AABB
         const arenaBodiesBoundsFromSpatialHash = PhysicsBodies.queryArenaBodiesSpatialHash(radarArcBoundingBox);
         const arenaBodiesBoundsFromSpatialHashLength = arenaBodiesBoundsFromSpatialHash.length;
@@ -91,7 +97,7 @@ const RobotsRadar = (function() {
             const arenaBodyBoundsFromSpatialHash = arenaBodiesBoundsFromSpatialHash[i];
             const arenaBodyIndex = arenaBodyBoundsFromSpatialHash.arenaBodyIndex;
             // TODO: arenaBodyPositionX and arenaBodyPositionY can be preset and cached in arrays because they do not change
-            const arenaBody = PhysicsBodies.getArenaBody(arenaBodyIndex);
+            const arenaBody = PhysicsBodies.resolveStaticArenaObstacleBody(arenaBodyIndex);
             const arenaBodyPositionX = arenaBody.x;
             const arenaBodyPositionY = arenaBody.y;
 
@@ -99,10 +105,7 @@ const RobotsRadar = (function() {
             let distanceBetweenRobotAndObstacle = false;
             // Check each point in the arena obstacle's bounds to determine whether this arena obstacle is truly in the radar's field-of-view
             const boundsPointIndex = arenaBodyIndex * ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS;
-            //for (let boundsPointNumber = 0; boundsPointNumber < 8; boundsPointNumber++) {
             for (let boundsPointNumber = 0; boundsPointNumber < ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS; boundsPointNumber+=2) {
-                // const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBoundsX[boundsPointIndex + boundsPointNumber];
-                // const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBoundsY[boundsPointIndex + boundsPointNumber];
                 const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBounds[boundsPointIndex + boundsPointNumber];
                 const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBounds[boundsPointIndex + boundsPointNumber + 1];
                 
@@ -171,12 +174,14 @@ const RobotsRadar = (function() {
                 arenaObstacleScannedEventInfo.positionY = arenaBodyPositionY;
                 arenaObstacleScannedEventInfo.bearing_degrees = AngleOperations.getBearing_degrees(turretPositionX, turretPositionY, arenaBodyPositionX, arenaBodyPositionY);
 
-                scannedArenaBodies.push(arenaObstacleScannedEventInfo);
+                arenaObstaclesScannedInfo.push(arenaObstacleScannedEventInfo);
             }
         }
 
-        scannedArenaBodies.sort(sortByDistanceFunction);
-        return scannedArenaBodies;
+        // Sort the event info array by the distance to the robot
+        arenaObstaclesScannedInfo.sort(sortByDistanceFunction);
+        
+        return arenaObstaclesScannedInfo;
     };
 
     /**
@@ -213,7 +218,8 @@ const RobotsRadar = (function() {
         // Construct an array of the bodies for the ray to intersect with
         const bodiesToIntersectWith = [
             robotHullBody,
-            ...PhysicsBodies.getArenaBodies() // the ... operator expands the array into arguments for the function
+            //...PhysicsBodies.getStaticArenaBodies() // the ... operator expands the array into arguments for the function
+            ...PhysicsBodies.staticArenaBodies // the ... operator expands the array into arguments for the function
         ];
 
         //Logger.log("Scanning for robots", robotIndex, bodiesToIntersectWith);
@@ -301,16 +307,14 @@ const RobotsRadar = (function() {
 
             // Add the information that will be provided to the scanning robot about the other robot that has been detected
             if (robotFoundInRadar) {
-
-                const bearing_degrees = AngleOperations.getBearing_degrees(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY);
-
+                // TODO: Pool this
                 const robotScannedEventInfo = RobotScannedInfo();
                 robotScannedEventInfo.index = otherRobotIndex;
                 robotScannedEventInfo.distance = distanceBetweenRobots;
                 robotScannedEventInfo.positionX = otherRobotPositionX;
                 robotScannedEventInfo.positionY = otherRobotPositionY;
                 robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[otherRobotIndex]; 
-                robotScannedEventInfo.bearing_degrees = bearing_degrees; 
+                robotScannedEventInfo.bearing_degrees = AngleOperations.getBearing_degrees(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY); 
                 robotScannedEventInfo.turret_angle = RobotsData_CurrentData_currentTurretAngles[otherRobotIndex]; 
                 robotScannedEventInfo.radar_angle = RobotsData_CurrentData_currentRadarAngles_degrees[otherRobotIndex];
 

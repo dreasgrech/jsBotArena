@@ -33,7 +33,7 @@ const PhysicsBodies = (function() {
      * Contains the arena bodies (walls, obstacles, etc..)
      * @type {Phaser.Types.Physics.Matter.MatterBody[]}
      */
-    let arenaBodies = []; 
+    let staticArenaBodies = []; 
     
     // let arenaBodyMappingToEveryOtherArenaBody = {};
 
@@ -63,12 +63,8 @@ const PhysicsBodies = (function() {
     // const arenaStaticObstacleBodiesBoundsY = [];
 
     const obj = {
-        // TODO: Rename these two gets to proper ES getters
-        getArenaBodies: function() {
-            return arenaBodies;
-        },
-        getArenaBody: function(arenaBodyIndex) {
-            return arenaBodies[arenaBodyIndex];
+        get staticArenaBodies() {
+            return staticArenaBodies;
         },
         system_create: function() {
             // Create the Tweak pane data
@@ -77,7 +73,7 @@ const PhysicsBodies = (function() {
                     return allBodies.length;
                 },
                 get arenaStaticObstacleBodiesTotal() {
-                    return arenaBodies.length;
+                    return staticArenaBodies.length;
                 },
             };
             const tweakPaneFolderID = TweakPaneManager.createFolder("Physics Bodies Manager");
@@ -114,7 +110,7 @@ const PhysicsBodies = (function() {
                 }
 
                 // arenaBodies = arenaBodies.concat(bodies);
-                arenaBodies = bodies;
+                staticArenaBodies = bodies;
 
                 const arenaBodiesElementsForSpatialHash = [];
                 for (let i = 0; i < bodiesLength; i++) {
@@ -204,6 +200,9 @@ const PhysicsBodies = (function() {
             RaycastManager.removeMappedGameObjects(body);
 
             // Logger.log("Finished removing arena body:", body, allBodies);
+        },
+        resolveStaticArenaObstacleBody: function(arenaBodyIndex) {
+            return staticArenaBodies[arenaBodyIndex];
         },
         mapHullImageBodyIDToRobotIndex: function(matterObjectID, robotIndex) {
             matterBodyIDToRobotIndex[matterObjectID] = robotIndex;
