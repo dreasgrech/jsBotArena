@@ -185,7 +185,7 @@ const GameManager = (function() {
                 RobotManager.addRobot(followBot_followAngle());
                 RobotManager.addRobot(followBot_followPosition());
                 RobotManager.addRobot(CornerGuardBot());
-                RobotManager.addRobot(astarBot());
+                //RobotManager.addRobot(astarBot());
             }
             
             roundRunning = true;
