@@ -41,7 +41,7 @@ const RobotManager = (function() {
             robotBody.setPosition(x, y);
 
             attempts++;
-        } while (attempts < MAX_TRIES_FOR_PLACING_ROBOT_IN_ARENA && PhysicsBodies.isBodyOverlappingWithOtherBodies(robotBody));
+        } while (attempts < MAX_TRIES_FOR_PLACING_ROBOT_IN_ARENA && PhysicsBodiesManager.isBodyOverlappingWithOtherBodies(robotBody));
 
         if (attempts >= MAX_TRIES_FOR_PLACING_ROBOT_IN_ARENA) {
             Logger.error("Failed to place the robot without overlapping after", MAX_TRIES_FOR_PLACING_ROBOT_IN_ARENA, "attempts.");

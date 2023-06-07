@@ -17,12 +17,12 @@ const CollisionManager = (function() {
 
         // Add the information about the other collision for this robot
         const collidedWithBody_ID = collidedWithBody.parent.id;
-        const collidedWithBody_CollisionCategory = PhysicsBodies.resolveCollisionCategoryFromMatterObjectID(collidedWithBody_ID);
+        const collidedWithBody_CollisionCategory = PhysicsBodiesManager.resolveCollisionCategoryFromMatterObjectID(collidedWithBody_ID);
         if (collidedWithBody_CollisionCategory == null) {
             throw "collidedWithBodyObjectType is undefined!!";
         }
 
-        const collidedWithBody_RobotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(collidedWithBody_ID);
+        const collidedWithBody_RobotIndex = PhysicsBodiesManager.resolveRobotIndexFromMatterBodyID(collidedWithBody_ID);
         // Logger.log(`bot #${collidingBodyRobotIndex} collided with bot #${collidedWithBodyRobotIndex}`);
 
         // Create the collision event info object which will be passed to the robots api
@@ -38,7 +38,7 @@ const CollisionManager = (function() {
 
         // Save the collisions in the colliding robot's data
         const collidingBodyID = collidingBody.parent.id;
-        const collidingBodyRobotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(collidingBodyID);
+        const collidingBodyRobotIndex = PhysicsBodiesManager.resolveRobotIndexFromMatterBodyID(collidingBodyID);
         const collidingBodyRobotCollisions = RobotsData_CurrentData_robotCollisions[collidingBodyRobotIndex];
         collidingBodyRobotCollisions.push(eventInfo);
         RobotsData_CurrentData_robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
@@ -46,7 +46,7 @@ const CollisionManager = (function() {
     };
 
     const saveCollision_RobotToArena = function(robotMatterBody, arenaMatterBody) {
-        const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterBody.parent.id);
+        const robotIndex = PhysicsBodiesManager.resolveRobotIndexFromMatterBodyID(robotMatterBody.parent.id);
 
         // Create the collision event info object which will be passed to the robots api
         const eventInfo = RobotToArenaCollisionInfo();
@@ -80,7 +80,7 @@ const CollisionManager = (function() {
         const projectileIndex = ProjectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
         //const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotMatterGameObject.body.id);
         //const robotIndex = PhysicsBodies.resolveRobotIndexFromMatterBodyID(robotProjectileSensorMatterBody.id);
-        const robotIndex = PhysicsBodies.resolveRobotIndexFromProjectileSensorBodyID(robotProjectileSensorMatterBody.id);
+        const robotIndex = PhysicsBodiesManager.resolveRobotIndexFromProjectileSensorBodyID(robotProjectileSensorMatterBody.id);
 
         // If the colliding robot is alive, then we need to apply damage to it
         if (RobotsData_CurrentData_alive[robotIndex]) {

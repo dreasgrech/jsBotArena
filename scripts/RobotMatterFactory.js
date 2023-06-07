@@ -35,7 +35,7 @@ const RobotMatterFactory = (function() {
         RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex] = sensorBody;
 
         // Map the sensor body id to the robot index so that we can later resolve the robot index from it
-        PhysicsBodies.mapProjectileSensorBodyIDToRobotIndex(sensorBody.id, robotIndex);
+        PhysicsBodiesManager.mapProjectileSensorBodyIDToRobotIndex(sensorBody.id, robotIndex);
     };
 
     const createRobot = function({ currentRobotIndex, x, y, scale, robotSetup }) {
@@ -104,10 +104,10 @@ const RobotMatterFactory = (function() {
         RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex] = hullsDB.TurretHoleOffsetsY[hullType];
 
         // Add the robot's body to the arena bodies collection
-        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody], true); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodiesManager.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody], true); // Add all the bodies from the arena to the arena bodies collection
 
         // Make a reference to the current robot index from the matter object id
-        PhysicsBodies.mapHullImageBodyIDToRobotIndex(hullImagePhysicsBodyID, currentRobotIndex);
+        PhysicsBodiesManager.mapHullImageBodyIDToRobotIndex(hullImagePhysicsBodyID, currentRobotIndex);
         // Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 
         // Create the Projectile Sensor for the robot which detects which projectiles hit this robot
@@ -223,7 +223,7 @@ const RobotMatterFactory = (function() {
             const hullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
 
             // Remove the hull's body from the arena
-            PhysicsBodies.removeArenaPhysicsBody(hullImage.body);
+            PhysicsBodiesManager.removeArenaPhysicsBody(hullImage.body);
 
             // Disable and hide the hull image and its collider
             //PhysicsBodies.disableMatterGameObject(hullImage);

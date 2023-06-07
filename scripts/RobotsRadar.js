@@ -70,7 +70,7 @@ const RobotsRadar = (function() {
         ];
         */
         // const bodiesToIntersectWith = PhysicsBodies.getStaticArenaBodies();
-        const bodiesToIntersectWith = PhysicsBodies.staticArenaBodies;
+        const bodiesToIntersectWith = PhysicsBodiesManager.staticArenaBodies;
 
         // Calculate the coordinates of the bounding box endpoints
         const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
@@ -94,7 +94,7 @@ const RobotsRadar = (function() {
         const arenaObstaclesScannedInfo = [];
 
         // Query the spatial hash for all the arena bodies in the radar's AABB
-        const arenaBodiesBoundsFromSpatialHash = PhysicsBodies.queryArenaBodiesSpatialHash(radarArcBoundingBox);
+        const arenaBodiesBoundsFromSpatialHash = PhysicsBodiesManager.queryArenaBodiesSpatialHash(radarArcBoundingBox);
         const arenaBodiesBoundsFromSpatialHashLength = arenaBodiesBoundsFromSpatialHash.length;
         //Logger.log(arenaBodiesBoundsFromSpatialHashLength, "arena bodies found");
         for (let i = 0; i < arenaBodiesBoundsFromSpatialHashLength; i++) {
@@ -225,7 +225,7 @@ const RobotsRadar = (function() {
         const bodiesToIntersectWith = [
             robotHullBody,
             //...PhysicsBodies.getStaticArenaBodies() // the ... operator expands the array into arguments for the function
-            ...PhysicsBodies.staticArenaBodies // the ... operator expands the array into arguments for the function
+            ...PhysicsBodiesManager.staticArenaBodies // the ... operator expands the array into arguments for the function
         ];
 
         //Logger.log("Scanning for robots", robotIndex, bodiesToIntersectWith);

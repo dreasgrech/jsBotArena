@@ -37,7 +37,7 @@ const MatterGameObjectPoolManager = (function() {
             const matterGameObject = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
 
             // Enable the matter game object
-            PhysicsBodies.enableMatterBody(matterGameObject);
+            PhysicsBodiesManager.enableMatterBody(matterGameObject);
 
             return matterGameObject;
         },
@@ -48,7 +48,7 @@ const MatterGameObjectPoolManager = (function() {
             }
 
             // Disable and hide the matter gameObject
-            PhysicsBodies.disableMatterGameObject(matterGameObject);
+            PhysicsBodiesManager.disableMatterGameObject(matterGameObject);
 
             GameObjectPoolsManager.returnGameObjectToPool(poolIndex, matterGameObject);
         },

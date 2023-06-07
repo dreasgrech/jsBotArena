@@ -36,7 +36,7 @@ const arenaStaticObstacleBodiesPositions = [];
 
 const ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS = 8;
 
-const PhysicsBodies = (function() {
+const PhysicsBodiesManager = (function() {
     /**
      * Contains all the physics bodies in the arena
      * @type {Phaser.Types.Physics.Matter.MatterBody[]}
