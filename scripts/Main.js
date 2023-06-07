@@ -24,7 +24,8 @@ const GameManager = (function() {
         CollisionManager,
         UIManager,
         RobotsRadar,
-        RobotManager
+        RobotManager,
+        PhysicsBodies
     ];
 
     const objectsWith_onEndOfFrame = [
