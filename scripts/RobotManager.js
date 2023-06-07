@@ -118,7 +118,7 @@ const RobotManager = (function() {
             });
 
             // Find a spot for the robot to spawn in and place it there
-            placeRobotInArena(RobotsData_PhysicsBodies_robotBodyImages[currentRobotIndex]);
+            placeRobotInArena(RobotsData_PhysicsBodies_robotHullGameObjects[currentRobotIndex]);
 
             // Set the starting data for the robot
             RobotsData_CurrentData_health[currentRobotIndex] = STARTING_ROBOT_HEALTH;
@@ -180,7 +180,7 @@ const RobotManager = (function() {
                 RobotsData_CurrentData_positionXs[i] = robotPositionX;
                 RobotsData_CurrentData_positionYs[i] = robotPositionY;
 
-                const robotBodyImage = RobotsData_PhysicsBodies_robotBodyImages[i];
+                const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[i];
                 const robotBodyImagePhysicsBody = robotBodyImage.body;
                 const hullAngle_degrees = robotBodyImage.angle;
                 RobotsData_CurrentData_currentRobotAngles_degrees[i] = hullAngle_degrees;
@@ -190,7 +190,7 @@ const RobotManager = (function() {
                 RobotsData_CurrentData_currentRobotVelocities[i] = robotVelocity;
                 RobotsData_CurrentData_currentRobotSpeedSqr[i] = MathOperations.sqrMagnitude(robotVelocity.x, robotVelocity.y);
 
-                const turretImage = RobotsData_PhysicsBodies_robotTurretImages[i];
+                const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[i];
                 const turretPositionX = turretImage.x;
                 const turretPositionY = turretImage.y;
                 const turretAngle_degrees = turretImage.angle;

@@ -99,7 +99,7 @@ const CollisionManager = (function() {
 
             const damageApplied = robotHealthBeforeDamage - newRobotHealth;
 
-            const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+            const robotHullImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
             const robotX = robotHullImage.x;
             const robotY = robotHullImage.y;
 

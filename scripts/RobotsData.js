@@ -1,9 +1,12 @@
 "use strict";
 
 // Physics bodies
-const RobotsData_PhysicsBodies_robotBodyImages = [];
-const RobotsData_PhysicsBodies_robotHullBodyIDs = [];
-const RobotsData_PhysicsBodies_robotTurretImages = [];
+// TODO: Add an array that holds the Matter body object because a lot of places just need the body with the gameObject
+// TODO: Rename RobotsData_PhysicsBodies_robotBodyImages to RobotsData_PhysicsBodies_robotHullGameObjects
+const RobotsData_PhysicsBodies_robotHullGameObjects = [];
+const RobotsData_PhysicsBodies_robotHullMatterBodies = [];
+const RobotsData_PhysicsBodies_robotHullMatterBodyIDs = [];
+const RobotsData_PhysicsBodies_robotTurretGameObjects = [];
 const RobotsData_PhysicsBodies_robotProjectileSensorBodies = [];
 const RobotsData_PhysicsBodies_robotProjectileSensorConstraints = [];
 

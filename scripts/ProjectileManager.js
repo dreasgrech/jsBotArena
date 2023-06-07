@@ -107,7 +107,7 @@ const ProjectileManager = (function() {
                 const turretTipPosition = RobotsBoundsHelpers.getTurretTipPosition(robotIndex);
                 const turretTipPositionX = turretTipPosition.x;
                 const turretTipPositionY = turretTipPosition.y;
-                const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+                const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
                 const turretAngle_degrees = turretImage.angle;
 
                 AnimationManager.setSpritePositionAndAngle(
@@ -151,7 +151,7 @@ const ProjectileManager = (function() {
                 return false;
             }
 
-            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
             const turretAngle_degrees = turretImage.angle;
 
             //const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];

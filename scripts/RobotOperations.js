@@ -5,7 +5,7 @@ const RobotOperations_Hull = (function() {
 
     const operations = {
         moveHull: function(robotIndex, direction) {
-            const robotBody = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+            const robotBody = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
             const robotSpeed = RobotsData_Instance_robotSpeeds[robotIndex];
 
             const angle_radians = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
@@ -21,7 +21,7 @@ const RobotOperations_Hull = (function() {
             const angularVelocity = ANGULAR_VELOCITY_FOR_HULLROTATION * direction * GameContextHolder.deltaTime;
             //const angularVelocity = constantAngularVelocityForHullRotation * direction;
 
-            const robotBody = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+            const robotBody = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
             robotBody.setAngularVelocity(angularVelocity);
             return angularVelocity;
         },
@@ -56,7 +56,7 @@ const RobotOperations_Hull = (function() {
             return reachedTargetAngle;
         },
         rotateHullTowardsPosition: function (robotIndex, positionX, positionY) {
-            const hullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+            const hullImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
             const hullPosition = hullImage.getCenter();
 
             // Calculate the angle between the hull and the target position in degrees
@@ -84,7 +84,7 @@ const RobotOperations_Turret = (function() {
             operations.incrementTurretAngle_degrees(robotIndex, multiplier);
         },
         rotateTurretTowardsPosition: function (robotIndex, positionX, positionY) {
-            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
             const turretPosition = turretImage.getCenter();
 
             // Calculate the angle between the turret and the target position in degrees
@@ -99,7 +99,7 @@ const RobotOperations_Turret = (function() {
             return operations.rotateTurretTowardsAngle_degrees(robotIndex, angleToTarget_degrees);
         },
         rotateTurretTowardsAngle_degrees: function(robotIndex, angle_degrees) {
-            const currentAngle_degrees = RobotsData_PhysicsBodies_robotTurretImages[robotIndex].angle;
+            const currentAngle_degrees = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex].angle;
             const angleDifference_degrees = Phaser.Math.Angle.WrapDegrees(angle_degrees - currentAngle_degrees);
 
             // Determine the direction of rotation
@@ -135,11 +135,11 @@ const RobotOperations_Turret = (function() {
             return reachedTargetAngle;
         },
         setTurretAngle_degrees: function(robotIndex, angle_degrees) {
-            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
             turretImage.angle = angle_degrees;
         },
         incrementTurretAngle_degrees: function(robotIndex, angle_degrees) {
-            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
             // const currentTurretImageAngle_degrees = turretImage.angle;
             // todo: here i was working on trying to reduce the jitter when the turret is changing rotation direction very fast (every frame)
             const currentTurretImageAngle_degrees = AngleOperations.normalizeAngleDegrees(turretImage.angle);

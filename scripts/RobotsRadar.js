@@ -44,7 +44,7 @@ const RobotsRadar = (function() {
             return scanForRobotsEmptyResult;
         }
 
-        const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+        const robotHullImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
         const robotHullBody = robotHullImage.body;
         const robotHullBodyID = robotHullBody.id;
         const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
@@ -204,7 +204,7 @@ const RobotsRadar = (function() {
         }
 
         // TODO: Resolve robotHullBody and robotHullBody.id from an array directly instead of resolve the entire robotHullImage
-        const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+        const robotHullImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
         const robotHullBody = robotHullImage.body;
         const robotHullBodyID = robotHullBody.id;
         const radarOriginX = RobotsData_CurrentData_turretPositionXs[robotIndex];

@@ -39,11 +39,11 @@ const RobotsBoundsHelpers = (function() {
 
     const robotsBoundsHelpers = {
         getHullCenter: function(index) {
-            const robotBodyImage = RobotsData_PhysicsBodies_robotBodyImages[index];
+            const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[index];
             return robotBodyImage.getCenter();
         },
         getHullBounds: function(index) {
-            const robotBodyImage = RobotsData_PhysicsBodies_robotBodyImages[index];
+            const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[index];
             const robotBody_imageMatterBody = robotBodyImage.body;
 
             /*
@@ -71,14 +71,14 @@ const RobotsBoundsHelpers = (function() {
             return bounds;
         },
         getTurretTipPosition: function(index) {
-            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[index];
+            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[index];
             const turretTipPosition = robotTurretImage.getRightCenter(); // images are rotated to the right so we need the right-center point 
             return turretTipPosition;
         },
         drawHullBounds: function(index) {
             let graphics = robotsBounds[index];
             if (graphics == null) {
-                const robotBodyImage = RobotsData_PhysicsBodies_robotBodyImages[index];
+                const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[index];
                 graphics = GameContextHolder.gameContext.add.graphics();
                 graphics.depth = robotBodyImage.depth;
                 robotsBounds[index] = graphics;
@@ -88,11 +88,11 @@ const RobotsBoundsHelpers = (function() {
             drawPoints(graphics, bounds, boundsVisualizer_color, boundsVisualizer_radius);
 
             // Draw the origin
-            const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[index];
+            const robotHullImage = RobotsData_PhysicsBodies_robotHullGameObjects[index];
             drawPointWithNewColor(graphics, robotHullImage.x, robotHullImage.y, hullOriginVisualizer_color, hullOriginVisualizer_radius);
         },
         drawTurretBounds: function(index) {
-            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretImages[index];
+            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[index];
 
             let graphics = turretBounds[index];
             if (graphics == null) {

@@ -17,7 +17,7 @@ const RobotMatterFactory = (function() {
         });
 
         // Add a constraint between the hull body and the sensor body so that the sensor moves with the hull
-        const constraint = gameContext.matter.add.constraint(RobotsData_PhysicsBodies_robotBodyImages[robotIndex].body, sensorBody, 0, 1);
+        const constraint = gameContext.matter.add.constraint(RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex].body, sensorBody, 0, 1);
         RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex] = constraint;
 
         //const robotID = RobotsData_Instance_ids[robotIndex];
@@ -76,6 +76,7 @@ const RobotMatterFactory = (function() {
         hullImage.depth = GameObjectDepths.RobotBody;
 
         const hullImagePhysicsBody = hullImage.body;
+        RobotsData_PhysicsBodies_robotHullMatterBodies[currentRobotIndex] = hullImagePhysicsBody;
 
         //const area = hullImagePhysicsBody.area;
         const density = 1;
@@ -97,8 +98,8 @@ const RobotMatterFactory = (function() {
 
         const hullImagePhysicsBodyID = hullImagePhysicsBody.id;
 
-        RobotsData_PhysicsBodies_robotBodyImages[currentRobotIndex] = hullImage;
-        RobotsData_PhysicsBodies_robotHullBodyIDs[currentRobotIndex] = hullImagePhysicsBodyID;
+        RobotsData_PhysicsBodies_robotHullGameObjects[currentRobotIndex] = hullImage;
+        RobotsData_PhysicsBodies_robotHullMatterBodyIDs[currentRobotIndex] = hullImagePhysicsBodyID;
 
         RobotsData_Instance_hullTurretHoleOffsetX[currentRobotIndex] = hullsDB.TurretHoleOffsetsX[hullType];
         RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex] = hullsDB.TurretHoleOffsetsY[hullType];
@@ -138,7 +139,7 @@ const RobotMatterFactory = (function() {
         //hullImage.alpha = 0.1;// TODO: setting this while calibrating hull turret hole offset
         //turretImage.alpha = 1;// TODO: setting this while calibrating hull turret hole offset
 
-        RobotsData_PhysicsBodies_robotTurretImages[currentRobotIndex] = turretImage;
+        RobotsData_PhysicsBodies_robotTurretGameObjects[currentRobotIndex] = turretImage;
 
         // Anchor the turret image to the robot so that it moves and rotates with it
         const anchorageIndex = ObjectAnchorManager.anchorToGameObject(
@@ -220,7 +221,7 @@ const RobotMatterFactory = (function() {
             AnimationManager.setTimescale(robotsTrackRightAnimationSpriteIndex[robotIndex], tracksAnimationTimescale);
         },
         destroyRobot: function(robotIndex) {
-            const hullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
+            const hullImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
 
             // Remove the hull's body from the arena
             PhysicsBodiesManager.removeArenaPhysicsBody(hullImage.body);
@@ -237,7 +238,7 @@ const RobotMatterFactory = (function() {
             gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex]);
 
             // Hide the turret image
-            const turretImage = RobotsData_PhysicsBodies_robotTurretImages[robotIndex];
+            const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
             //turretImage.setActive(false);
             //turretImage.setVisible(false);
             turretImage.destroy();
