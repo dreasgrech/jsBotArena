@@ -203,28 +203,29 @@ const RobotsRadar = (function() {
             return scanForRobotsEmptyResult;
         }
 
+        // TODO: Resolve robotHullBody and robotHullBody.id from an array directly instead of resolve the entire robotHullImage
         const robotHullImage = RobotsData_PhysicsBodies_robotBodyImages[robotIndex];
         const robotHullBody = robotHullImage.body;
         const robotHullBodyID = robotHullBody.id;
-        const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
-        const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
+        const radarOriginX = RobotsData_CurrentData_turretPositionXs[robotIndex];
+        const radarOriginY = RobotsData_CurrentData_turretPositionYs[robotIndex];
         const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
 
         const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
         const radarFOVAngle_degrees = RobotsData_Radar_radarFOVAngles_degrees[robotIndex];
 
+        // TODO: Find a way to use radians directly instead of calling Phaser.Math.DegToRad() here.
         const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
         const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
 
         const adjustedRadarStartAngle_radians = radarStartAngle_radians < 0 ? 2 * PI + radarStartAngle_radians : radarStartAngle_radians;
         const adjustedRadarEndAngle_radians = radarEndAngle_radians < 0 ? 2 * PI + radarEndAngle_radians : radarEndAngle_radians;
 
-         const scannedRobots = [];
+        const scannedRobotsInfo = [];
 
         // Construct an array of the bodies for the ray to intersect with
         const bodiesToIntersectWith = [
             robotHullBody,
-            //...PhysicsBodies.getStaticArenaBodies() // the ... operator expands the array into arguments for the function
             ...PhysicsBodiesManager.staticArenaBodies // the ... operator expands the array into arguments for the function
         ];
 
@@ -246,9 +247,10 @@ const RobotsRadar = (function() {
 
             const otherRobotPositionX = RobotsData_CurrentData_positionXs[otherRobotIndex];
             const otherRobotPositionY = RobotsData_CurrentData_positionYs[otherRobotIndex];
-            const distanceBetweenRobots = Phaser.Math.Distance.Between(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY);
-
-            if (distanceBetweenRobots > radarMaxScanDistance) {
+            // TODO: Change to check against distanceSqr instead of distance to avoid the sqrt.
+            // TODO: But then this distance is needed for the event info for the API.  Maybe you can sqrt down there when it's needed.
+            const distanceBetweenRadarAndOtherRobot = Phaser.Math.Distance.Between(radarOriginX, radarOriginY, otherRobotPositionX, otherRobotPositionY);
+            if (distanceBetweenRadarAndOtherRobot > radarMaxScanDistance) {
                 continue;
             }
 
@@ -260,12 +262,18 @@ const RobotsRadar = (function() {
             for (let j = 0; j < otherRobotBoundsLength; j++) {
 
                 const otherRobotBoundsPoint = otherRobotBounds[j];
+                const otherRobotBoundsPointX = otherRobotBoundsPoint.x;
+                const otherRobotBoundsPointY = otherRobotBoundsPoint.y;
 
                 // Calculate the angle between the robots
-                const angleBetween_radians = Phaser.Math.Angle.Between(turretPositionX, turretPositionY, otherRobotBoundsPoint.x, otherRobotBoundsPoint.y);
+                const angleBetweenRadarAndOtherRobot_radians = Phaser.Math.Angle.Between(
+                    radarOriginX, 
+                    radarOriginY, 
+                    otherRobotBoundsPointX, 
+                    otherRobotBoundsPointY);
 
                 // Adjust the angle to account for Phaser's inverted y-axis
-                const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * PI + angleBetween_radians : angleBetween_radians;
+                const adjustedAngleBetweenRadarAndOtherRobot_radians = angleBetweenRadarAndOtherRobot_radians < 0 ? 2 * PI + angleBetweenRadarAndOtherRobot_radians : angleBetweenRadarAndOtherRobot_radians;
 
                 //if (robotIndex === 0) {
                 //    console.log(`Robot ${robotIndex} -> Robot ${otherRobotIndex}: angleBetween=${Phaser.Math.RadToDeg(adjustedAngleBetween_radians)}�,
@@ -283,31 +291,42 @@ const RobotsRadar = (function() {
                 // Check if the radar angles cross the 0-crossover point or not
                 if (adjustedRadarStartAngle_radians <= adjustedRadarEndAngle_radians) {
                     // If they don't cross the 0-crossover point, check if the angle between robots is within the radar range
-                    pointWithinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians && adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
+                    pointWithinRadarAngles = adjustedAngleBetweenRadarAndOtherRobot_radians >= adjustedRadarStartAngle_radians && adjustedAngleBetweenRadarAndOtherRobot_radians <= adjustedRadarEndAngle_radians;
                 } else {
                     // If they cross the 0-crossover point, check if the angle between robots is within the radar range
-                    pointWithinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians || adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
+                    pointWithinRadarAngles = adjustedAngleBetweenRadarAndOtherRobot_radians >= adjustedRadarStartAngle_radians || adjustedAngleBetweenRadarAndOtherRobot_radians <= adjustedRadarEndAngle_radians;
                 }
 
-                if (pointWithinRadarAngles) {
-                    const rayOriginX = otherRobotBoundsPoint.x, rayOriginY = otherRobotBoundsPoint.y;
-                    ray.setOrigin(rayOriginX, rayOriginY);
-                    const angleBetweenPoints_radians = Phaser.Math.Angle.BetweenPoints(otherRobotBoundsPoint, { x: turretPositionX, y: turretPositionY });
-                    ray.setAngle(angleBetweenPoints_radians); // radians
+                // Skip this point if it's not within the radar angle
+                if (!pointWithinRadarAngles) {
+                    continue
+                }
 
-                    // Cast the ray from the scanned robot's bounds point to the scanning robot
-                    dataForRaycast.objects = bodiesToIntersectWith;
-                    const intersection = ray.cast(dataForRaycast);
-                    if (intersection) {
-                        const rayHitBody = intersection.object;
-                        const rayHitBodyID = rayHitBody.id;
-                        // console.log(rayHitBodyID);
-                        const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
-                        //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
-                        robotFoundInRadar = isHitBodyTheScanningRobot;
-                        if (robotFoundInRadar) {
-                            break;
-                        }
+                // The ray will be cast from the other robot's current bounds point towards our radar
+                const rayOriginX = otherRobotBoundsPointX;
+                const rayOriginY = otherRobotBoundsPointY;
+                ray.setOrigin(rayOriginX, rayOriginY);
+                
+                // Calculate the angle between the other robot and the radar for casting the ray in that direction
+                const rayAngle_radians = Phaser.Math.Angle.Between(
+                    otherRobotBoundsPoint.x,
+                    otherRobotBoundsPoint.y,
+                    radarOriginX,
+                    radarOriginY,
+                    );
+                ray.setAngle(rayAngle_radians); // radians
+
+                // Cast the ray from the scanned robot's bounds point to the scanning robot
+                dataForRaycast.objects = bodiesToIntersectWith;
+                const intersection = ray.cast(dataForRaycast);
+                if (intersection) {
+                    const rayHitBody = intersection.object;
+                    const rayHitBodyID = rayHitBody.id;
+                    const isHitBodyTheScanningRobot = robotHullBodyID === rayHitBodyID;
+                    //Logger.log("hit body id", rayHitBody.id, "is a robot?", isHitBodyTheScanningRobot);
+                    robotFoundInRadar = isHitBodyTheScanningRobot;
+                    if (robotFoundInRadar) {
+                        break;
                     }
                 }
             }
@@ -315,27 +334,26 @@ const RobotsRadar = (function() {
             // Add the information that will be provided to the scanning robot about the other robot that has been detected
             if (robotFoundInRadar) {
                 // TODO: Pool this
+                // TODO: Or find a way to not use the object at all
                 const robotScannedEventInfo = RobotScannedInfo();
                 robotScannedEventInfo.index = otherRobotIndex;
-                robotScannedEventInfo.distance = distanceBetweenRobots;
+                robotScannedEventInfo.distance = distanceBetweenRadarAndOtherRobot;
                 robotScannedEventInfo.positionX = otherRobotPositionX;
                 robotScannedEventInfo.positionY = otherRobotPositionY;
                 robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[otherRobotIndex]; 
-                robotScannedEventInfo.bearing_degrees = AngleOperations.getBearing_degrees(turretPositionX, turretPositionY, otherRobotPositionX, otherRobotPositionY); 
+                robotScannedEventInfo.bearing_degrees = AngleOperations.getBearing_degrees(radarOriginX, radarOriginY, otherRobotPositionX, otherRobotPositionY); 
                 robotScannedEventInfo.turret_angle = RobotsData_CurrentData_currentTurretAngles[otherRobotIndex]; 
                 robotScannedEventInfo.radar_angle = RobotsData_CurrentData_currentRadarAngles_degrees[otherRobotIndex];
 
-                scannedRobots.push(robotScannedEventInfo);
+                scannedRobotsInfo.push(robotScannedEventInfo);
             }
         }
 
-        scannedRobots.sort(sortByDistanceFunction);
-        return scannedRobots;
+        scannedRobotsInfo.sort(sortByDistanceFunction);
+        return scannedRobotsInfo;
     };
 
     const robotsRadar = {
-        MIN_ALLOWED_RADAR_FOV_ANGLE: MIN_ALLOWED_RADAR_FOV_ANGLE,
-        MAX_ALLOWED_RADAR_FOV_ANGLE: MAX_ALLOWED_RADAR_FOV_ANGLE,
         system_create: function() {
             ray = RaycastManager.createRay();
             //console.log(ray);
@@ -367,10 +385,8 @@ const RobotsRadar = (function() {
 
             RobotsData_Radar_radarGraphics[robotIndex] = radarGraphics;
             RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = 0;
-            //RobotsData_Radar.radarFOVAngles_degrees[robotIndex] = 5;
             RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = DEFAULT_RADAR_FOV_ANGLES;
             RobotsData_Radar_radarMaxScanDistance[robotIndex] = DEFAULT_RADAR_MAX_SCAN_DISTANCE;
-            //RobotsData_Radar_radarMaxScanDistance[robotIndex] = 200;
 
             // Create a graphics object to visualize the radar arc bounding box
             if (GAME_DEBUG_MODE) {
