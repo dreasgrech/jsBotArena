@@ -21,18 +21,22 @@ const RobotsRadar = (function() {
     const RobotsData_Radar_radarGraphics = [];
     const RobotsData_Radar_radarFOVAngles_degrees = [];
     const RobotsData_Radar_radarMaxScanDistance = [];
+    
+    const scanForRobotsEmptyResult = [[], []];
 
     const sortByDistanceFunction = function(a, b) {
         return a.distance - b.distance;
     };
 
+    // TODO: Optimize this function to resolve the radarEnabled value directly instead of resolving the
+    // TODO: entire API object just to read the radar.
     const isRadarEnabled = function(robotIndex) {
         const api = RobotsData_Instance_robotAPIs[robotIndex];
         const radar = api.radar;
         return radar.radarEnabled;
     };
-
-    const scanForRobotsEmptyResult = [[], []];
+    
+    const dataForRaycast = {objects: null};
 
     const scanForArenaObstacles = function(robotIndex) {
         const radarEnabled = isRadarEnabled(robotIndex);
@@ -139,7 +143,8 @@ const RobotsRadar = (function() {
                     ray.setAngle(angleBetweenPoints_radians); // radians
 
                     //Logger.log(ray,"Checking for index", arenaBodyIndex, bodiesToIntersectWith);
-                    const intersection = ray.cast({ objects: bodiesToIntersectWith });
+                    dataForRaycast.objects = bodiesToIntersectWith;
+                    const intersection = ray.cast(dataForRaycast);
                     //ray.destroy();
                     if (intersection) {
                         const rayHitBody = intersection.object;
@@ -291,7 +296,8 @@ const RobotsRadar = (function() {
                     ray.setAngle(angleBetweenPoints_radians); // radians
 
                     // Cast the ray from the scanned robot's bounds point to the scanning robot
-                    const intersection = ray.cast({ objects: bodiesToIntersectWith });
+                    dataForRaycast.objects = bodiesToIntersectWith;
+                    const intersection = ray.cast(dataForRaycast);
                     if (intersection) {
                         const rayHitBody = intersection.object;
                         const rayHitBodyID = rayHitBody.id;

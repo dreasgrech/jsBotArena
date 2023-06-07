@@ -76,7 +76,7 @@ const PhysicsBodies = (function() {
     //  */
     // const arenaStaticObstacleBodiesBoundsY = [];
 
-    const obj = {
+    const physicsBodiesManager = {
         get staticArenaBodies() {
             return staticArenaBodies;
         },
@@ -120,7 +120,7 @@ const PhysicsBodies = (function() {
             // If these are arena collider bodies, add them to their own collection too
             if (collisionCategory === CollisionCategories.Arena) {
                 if (arenaBodiesAdded) {
-                    throw "Arena bodies already added and cannot be readded";
+                    throw "Arena bodies already added and cannot be re-added";
                 }
 
                 // arenaBodies = arenaBodies.concat(bodies);
@@ -219,14 +219,10 @@ const PhysicsBodies = (function() {
                 delete matterBodyIDToRobotIndex[body.id];
             }
 
-            // console.log(body);
             RaycastManager.removeMappedGameObjects(body);
 
             // Logger.log("Finished removing arena body:", body, allBodies);
         },
-        // resolveStaticArenaObstacleBody: function(arenaBodyIndex) {
-        //     return staticArenaBodies[arenaBodyIndex];
-        // },
         mapHullImageBodyIDToRobotIndex: function(matterObjectID, robotIndex) {
             matterBodyIDToRobotIndex[matterObjectID] = robotIndex;
         },
@@ -296,5 +292,5 @@ const PhysicsBodies = (function() {
         }
     };
 
-    return obj;
+    return physicsBodiesManager;
 }());
