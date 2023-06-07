@@ -1,7 +1,6 @@
 "use strict";
 
 const RobotMatterFactory = (function() {
-
     const robotsTrackLeftAnimationSpriteIndex = [];
     const robotsTrackRightAnimationSpriteIndex = [];
 

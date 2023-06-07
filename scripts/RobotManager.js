@@ -167,42 +167,43 @@ const RobotManager = (function() {
             //currentRobotIndex++;
         },
         update: function() {
-            for (let i = 0; i < totalRobots; i++) {
-                const robotAlive = RobotsData_CurrentData_alive[i];
+            for (let robotIndex = 0; robotIndex < totalRobots; robotIndex++) {
+                const robotAlive = RobotsData_CurrentData_alive[robotIndex];
                 // TODO: We can avoid this check here if we iterate over alive robots instead of all of them
                 if (!robotAlive) {
                     continue;
                 }
 
-                const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(i);
+                const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(robotIndex);
                 const robotPositionX = robotCenterPosition.x;
                 const robotPositionY = robotCenterPosition.y;
-                RobotsData_CurrentData_positionXs[i] = robotPositionX;
-                RobotsData_CurrentData_positionYs[i] = robotPositionY;
+                RobotsData_CurrentData_positionXs[robotIndex] = robotPositionX;
+                RobotsData_CurrentData_positionYs[robotIndex] = robotPositionY;
 
-                const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[i];
-                const robotBodyImagePhysicsBody = robotBodyImage.body;
+                const robotBodyImage = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
+                //const robotBodyImagePhysicsBody = robotBodyImage.body;
+                const robotBodyImagePhysicsBody = RobotsData_PhysicsBodies_robotHullMatterBodies[robotIndex];
                 const hullAngle_degrees = robotBodyImage.angle;
-                RobotsData_CurrentData_currentRobotAngles_degrees[i] = hullAngle_degrees;
+                RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex] = hullAngle_degrees;
                 const hullAngle_radians = Phaser.Math.Angle.Wrap(robotBodyImage.rotation); // It's important to wrap the angle because by default it doesn't seem to be
-                RobotsData_CurrentData_currentRobotAngles_radians[i] = hullAngle_radians;
+                RobotsData_CurrentData_currentRobotAngles_radians[robotIndex] = hullAngle_radians;
                 const robotVelocity = robotBodyImagePhysicsBody.velocity;
-                RobotsData_CurrentData_currentRobotVelocities[i] = robotVelocity;
-                RobotsData_CurrentData_currentRobotSpeedSqr[i] = MathOperations.sqrMagnitude(robotVelocity.x, robotVelocity.y);
+                RobotsData_CurrentData_currentRobotVelocities[robotIndex] = robotVelocity;
+                RobotsData_CurrentData_currentRobotSpeedSqr[robotIndex] = MathOperations.sqrMagnitude(robotVelocity.x, robotVelocity.y);
 
-                const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[i];
+                const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
                 const turretPositionX = turretImage.x;
                 const turretPositionY = turretImage.y;
                 const turretAngle_degrees = turretImage.angle;
-                RobotsData_CurrentData_currentTurretAngles[i] = turretAngle_degrees;
-                RobotsData_CurrentData_turretPositionXs[i] = turretPositionX;
-                RobotsData_CurrentData_turretPositionYs[i] = turretPositionY;
+                RobotsData_CurrentData_currentTurretAngles[robotIndex] = turretAngle_degrees;
+                RobotsData_CurrentData_turretPositionXs[robotIndex] = turretPositionX;
+                RobotsData_CurrentData_turretPositionYs[robotIndex] = turretPositionY;
 
-                RobotMatterFactory.updateParts(i);
+                RobotMatterFactory.updateParts(robotIndex);
 
-                RobotsRadar.drawRadarArc(i);
+                RobotsRadar.drawRadarArc(robotIndex);
 
-                const api = RobotsData_Instance_robotAPIs[i];
+                const api = RobotsData_Instance_robotAPIs[robotIndex];
 
                 const data = api.data;
                 data.positionX = robotPositionX;
@@ -211,41 +212,41 @@ const RobotManager = (function() {
 
                 // Set the radar scanned robots to the api
                 const radar = api.radar;
-                radar.scannedAliveRobots = RobotsRadar.scanForRobots(i);
-                radar.scannedArenaElements = RobotsRadar.scanForArenaObstacles(i);
+                radar.scannedAliveRobots = RobotsRadar.scanForRobots(robotIndex);
+                radar.scannedArenaElements = RobotsRadar.scanForArenaObstacles(robotIndex);
 
                 // Set the robot collisions to the api
                 const api_collisions = api.collisions;
-                api_collisions.otherRobots = RobotsData_CurrentData_robotCollisions[i];
-                api_collisions.arena = RobotsData_CurrentData_arenaCollisions[i];
-                api_collisions.projectiles = RobotsData_CurrentData_projectileCollisions[i];
+                api_collisions.otherRobots = RobotsData_CurrentData_robotCollisions[robotIndex];
+                api_collisions.arena = RobotsData_CurrentData_arenaCollisions[robotIndex];
+                api_collisions.projectiles = RobotsData_CurrentData_projectileCollisions[robotIndex];
 
                 const turret = api.turret;
                 const turretFollowHull = turret.turretFollowHull;
                 if (turretFollowHull) {
-                    RobotOperations_Turret.setTurretAngle_degrees(i, hullAngle_degrees);
+                    RobotOperations_Turret.setTurretAngle_degrees(robotIndex, hullAngle_degrees);
                 }
                 const radarFollowTurret = radar.radarFollowTurret;
                 if (radarFollowTurret) {
-                    RobotsRadar.setRadarAngle_degrees(i, turretAngle_degrees);
+                    RobotsRadar.setRadarAngle_degrees(robotIndex, turretAngle_degrees);
                 }
 
                 // Draw the bounds of the hull and turret
                 if (GAME_DEBUG_MODE) {
-                    RobotsBoundsHelpers.drawHullBounds(i);
-                    RobotsBoundsHelpers.drawTurretBounds(i);
+                    RobotsBoundsHelpers.drawHullBounds(robotIndex);
+                    RobotsBoundsHelpers.drawTurretBounds(robotIndex);
                 }
 
                 // Call the robot's update function
                 const time = GameContextHolder.gameTime;
                 const deltaTime = GameContextHolder.deltaTime;
-                const updateFunction = RobotsData_Instance_updateFunctions[i];
+                const updateFunction = RobotsData_Instance_updateFunctions[robotIndex];
                 updateFunction(api, time, deltaTime);
 
                 // Clear the per-frame operation flags since this robot has now executed its turn
-                RobotsDataAPI_FrameOperations_Hull[i] = 0;
-                RobotsDataAPI_FrameOperations_Turret[i] = 0;
-                RobotsDataAPI_FrameOperations_Radar[i] = 0;
+                RobotsDataAPI_FrameOperations_Hull[robotIndex] = 0;
+                RobotsDataAPI_FrameOperations_Turret[robotIndex] = 0;
+                RobotsDataAPI_FrameOperations_Radar[robotIndex] = 0;
             }
 
             // Check if there are any robots queued for removal
