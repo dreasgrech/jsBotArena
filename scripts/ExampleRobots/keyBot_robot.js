@@ -54,7 +54,7 @@ const keyBot = function() {
     return {
         name: 'keyBot',
         create: function(robotSetup) {
-            gameContext = GameContextHolder.gameContext;
+            gameContext = GameContextHolder.scene;
             cursors = gameContext.input.keyboard.createCursorKeys();
             wasdKeys = gameContext.input.keyboard.addKeys('W,S,A,D');
             qeKeys = gameContext.input.keyboard.addKeys('Q,E');
