@@ -1,6 +1,7 @@
 "use strict";
 
-const GAME_DEBUG_MODE = true;
+// const GAME_DEBUG_MODE = true;
+const GAME_DEBUG_MODE = false;
 
 const GameManager = (function() {
     // TODO: Create a statemachine to keep track of whether the round is happening
@@ -25,7 +26,7 @@ const GameManager = (function() {
         UIManager,
         RobotsRadar,
         RobotManager,
-        PhysicsBodies
+        PhysicsBodiesManager
     ];
 
     const objectsWith_onEndOfFrame = [
@@ -51,12 +52,12 @@ const GameManager = (function() {
         ProjectileManager,
         AnimationManager,
         UIRobotInfoPanel,
-        PhysicsBodies
+        PhysicsBodiesManager
     ];
 
     const preload = function() {
         const gameContext = this;
-        GameContextHolder.gameContext = gameContext;
+        GameContextHolder.scene = gameContext;
 
         gameContext.matter.world.autoUpdate = false;
 
@@ -87,7 +88,7 @@ const GameManager = (function() {
     };
 
     const create = function() {
-        const gameContext = GameContextHolder.gameContext;
+        const gameContext = GameContextHolder.scene;
 
         // Enable Matter physics
         // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
@@ -109,7 +110,7 @@ const GameManager = (function() {
             collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
         });
 
-        PhysicsBodies.addArenaPhysicsBodies(CollisionCategories.Arena, matterBodies, false); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodiesManager.addArenaPhysicsBodies(CollisionCategories.Arena, matterBodies, false); // Add all the bodies from the arena to the arena bodies collection
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
@@ -157,7 +158,7 @@ const GameManager = (function() {
         // stepTimer += delta * 0.001;
 
         // Step the physics
-        GameContextHolder.gameContext.matter.world.step();
+        GameContextHolder.scene.matter.world.step();
     //    while (stepTimer >= FIXED_DELTA_TIME) {
     //        stepTimer -= FIXED_DELTA_TIME;
     //        //GameContextHolder.gameContext.matter.world.step(FIXED_DELTA_TIME);
@@ -176,7 +177,7 @@ const GameManager = (function() {
             }
             
             Logger.log("Starting new round");
-            for (let i = 0; i < 1; i++) {
+            for (let i = 0; i < 4; i++) {
                 RobotManager.addRobot(keyBot());
                 RobotManager.addRobot(doNothingBot());
                 RobotManager.addRobot(shredder());

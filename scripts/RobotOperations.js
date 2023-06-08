@@ -25,6 +25,12 @@ const RobotOperations_Hull = (function() {
             robotHullGameObject.setAngularVelocity(angularVelocity);
             return angularVelocity;
         },
+        /**
+         * Returns a boolean value indicating whether we've arrived at the requested target angle
+         * @param robotIndex
+         * @param angle_degrees
+         * @returns {boolean}
+         */
         rotateHullTowardsAngle_degrees: function(robotIndex, angle_degrees) {
             const currentAngle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
             const angleDifference_degrees = Phaser.Math.Angle.WrapDegrees(angle_degrees - currentAngle_degrees);

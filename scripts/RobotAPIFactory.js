@@ -126,7 +126,7 @@ const RobotAPIFactory = (function() {
                     const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
                     if (BitmaskableObjectOperations.has(operationsState, operationType)) {
                         Logger.warn("Already called rotateTowardsAngle_degrees() this frame");
-                        return null; // TODO: Should we store a cache of return values returned this frame so we return that instead of null?
+                        return false;
                     }
 
                     RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
@@ -134,6 +134,7 @@ const RobotAPIFactory = (function() {
                     return RobotOperations_Hull.rotateHullTowardsAngle_degrees(robotIndex, angle_degrees);
                 },
                 /**
+                 * Rotates the robot towards the specified absolute world position.
                  * Returns true if we're at the requested angle.
                  * @param {number} positionX
                  * @param {number} positionY
@@ -144,7 +145,7 @@ const RobotAPIFactory = (function() {
                     const operationsState = RobotsDataAPI_FrameOperations_Hull[robotIndex];
                     if (BitmaskableObjectOperations.has(operationsState, operationType)) {
                         Logger.warn("Already called rotateTowardsPosition() this frame");
-                        return null; // TODO: Should we store a cache of return values returned this frame so we return that instead of null?
+                        return false;
                     }
 
                     RobotsDataAPI_FrameOperations_Hull[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
