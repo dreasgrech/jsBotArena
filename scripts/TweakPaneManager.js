@@ -4,7 +4,7 @@ const TweakPaneManager = (function(){
     const tweakPaneFolders = {};
     let lastTweakPaneFolderIDCreated = -1;
     let pane;
-    const tweakPaneManager = {
+    return {
         system_create:function(){
             const gameContext = GameContextHolder.scene;
             pane = gameContext.inspectorGame.pane;
@@ -32,5 +32,4 @@ const TweakPaneManager = (function(){
             folder.addButton({title: text}).on('click', onClick);
         },
     };
-    return tweakPaneManager;
 }());
