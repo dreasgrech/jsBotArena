@@ -61,9 +61,6 @@ const RobotManager = (function() {
         //Logger.log("finished removing", robotIndex);
     };
     
-   const createTweakPaneData = function(){
-   };
-
     const robotManager = {
         get totalRobots() { return totalRobots; },
         get aliveRobotsIndexes() { return aliveRobotsIndexes; },
