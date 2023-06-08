@@ -36,7 +36,7 @@ const apiUsageExampleBot = function() {
             const radar = api.radar;
             //radar.radarFollowTurret = true;
             // radar.rotateLeft();
-            radar.setFOVAngle_degrees(10);
+            //radar.setFOVAngle_degrees(10);
             radar.setFOVAngle_degrees(45);
         },
         update: function(api, time_seconds, delta_seconds) {
