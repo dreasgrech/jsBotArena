@@ -22,7 +22,7 @@ const circleBot = function() {
         const radar = api.radar;
         radar.radarFollowTurret = true;
         if (radar.scannedAliveRobots.length > 0) {
-            api.fire(ProjectileTypes.Light);
+            api.fire(ProjectileTypes.Medium);
         }
     };
 

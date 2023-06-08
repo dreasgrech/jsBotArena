@@ -58,7 +58,7 @@ const SniperBot = function () {
 
                 if (time_seconds - lastFiredTimeSeconds > fireDelaySeconds) {
                     if (turret.rotateTowardsPosition(targetPositionX, targetPositionY)) {
-                        api.fire(ProjectileTypes.Light);
+                        api.fire(ProjectileTypes.Medium);
                         lastFiredTimeSeconds = time_seconds;
                     }
                 }

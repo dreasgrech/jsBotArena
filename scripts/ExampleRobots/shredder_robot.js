@@ -96,7 +96,7 @@ const shredder = function() {
         const totalScannedAliveRobots = scannedAliveRobots.length;
         if (totalScannedAliveRobots > 0) {
             //Logger.log(`Shredder scannedAliveRobots: ${totalScannedAliveRobots}: `, scannedAliveRobots);
-            api.fire(ProjectileTypes.Light);
+            api.fire(ProjectileTypes.Heavy);
             turretRotatingLeft = !turretRotatingLeft;
         }
     };
