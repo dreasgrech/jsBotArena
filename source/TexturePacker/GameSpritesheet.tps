@@ -195,6 +195,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">images/Robots/Hulls/AngelicaBot_Hull.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>59,35,117,71</rect>
+                <key>scale9Paddings</key>
+                <rect>59,35,117,71</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">images/Robots/Hulls/Hull_01.png</key>
             <key type="filename">images/Robots/Hulls/Hull_02.png</key>
             <key type="filename">images/Robots/Hulls/Hull_03.png</key>
@@ -291,6 +306,21 @@
                 <rect>11,62,21,123</rect>
                 <key>scale9Paddings</key>
                 <rect>11,62,21,123</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">images/Robots/Turrets/AngelicaBot_Turret.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>47,19,93,38</rect>
+                <key>scale9Paddings</key>
+                <rect>47,19,93,38</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>

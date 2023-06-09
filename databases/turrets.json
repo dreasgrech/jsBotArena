@@ -46,5 +46,11 @@
     "EnumKey": "Eight",
     "originX": 0.28, 
     "originY": 0.5 
-  }
+  },
+  {
+  "PhaserImageKey": "Robots/Turrets/AngelicaBot_Turret.png",
+  "EnumKey": "AngelicaBot_Turret",
+  "originX": 0.6,
+  "originY": 0.5
+}
 ]

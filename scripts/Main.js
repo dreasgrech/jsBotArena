@@ -1,6 +1,6 @@
 "use strict";
 
-// const GAME_DEBUG_MODE = true;
+//const GAME_DEBUG_MODE = true;
 const GAME_DEBUG_MODE = false;
 
 const GameManager = (function() {
@@ -177,15 +177,17 @@ const GameManager = (function() {
             }
             
             Logger.log("Starting new round");
-            for (let i = 0; i < 4; i++) {
+            const ROBOT_CREATION_ITERATIONS = 1;
+            // const ROBOT_CREATION_ITERATIONS = 4;
+            for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
                 RobotManager.addRobot(keyBot());
-                RobotManager.addRobot(doNothingBot());
-                RobotManager.addRobot(shredder());
-                RobotManager.addRobot(circleBot());
-                RobotManager.addRobot(sittingBot());
-                RobotManager.addRobot(followBot_followAngle());
-                RobotManager.addRobot(followBot_followPosition());
-                RobotManager.addRobot(CornerGuardBot());
+                // RobotManager.addRobot(doNothingBot());
+                // RobotManager.addRobot(shredder());
+                // RobotManager.addRobot(circleBot());
+                // RobotManager.addRobot(sittingBot());
+                // RobotManager.addRobot(followBot_followAngle());
+                // RobotManager.addRobot(followBot_followPosition());
+                // RobotManager.addRobot(CornerGuardBot());
                 //RobotManager.addRobot(astarBot());
             }
             

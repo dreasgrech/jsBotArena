@@ -60,18 +60,18 @@ const keyBot = function() {
             qeKeys = gameContext.input.keyboard.addKeys('Q,E');
 
             const hullSetup = robotSetup.hull;
-            hullSetup.hullType = RobotHullTypes.One;
-            //hullSetup.hullColor = RobotHullColors.Brown;
+            // hullSetup.hullType = RobotHullTypes.One;
+            hullSetup.hullType = RobotHullTypes.AngelicaBot_Hull;
 
             const turretSetup = robotSetup.turret;
-            turretSetup.turretType = RobotTurretTypes.One;
-            // turretSetup.turretColor = RobotTurretColors.Green;
+            // turretSetup.turretType = RobotTurretTypes.One;
+            turretSetup.turretType = RobotTurretTypes.AngelicaBot_Turret;
 
-            const hullColors = hullSetup.colors;
-            hullColors.topLeft = 0xb83dba;
-            hullColors.topRight = 0xb83dba;
-            hullColors.bottomLeft = 0xb83dba;
-            hullColors.bottomRight = 0xb83dba;
+            // const hullColors = hullSetup.colors;
+            // hullColors.topLeft = 0xb83dba;
+            // hullColors.topRight = 0xb83dba;
+            // hullColors.bottomLeft = 0xb83dba;
+            // hullColors.bottomRight = 0xb83dba;
 
 
             // const radarSetup = robotSetup.radar;

@@ -110,5 +110,19 @@
     "TracksLeftOffsetY": -60,
     "TracksRightOffsetX": 0,
     "TracksRightOffsetY": 60
+  },
+  {
+    "PhaserImageKey": "Robots/Hulls/AngelicaBot_Hull.png",
+    "PhysicsEditor_SpriteName": "AngelicaBot_Hull",
+    "EnumKey": "AngelicaBot_Hull",
+    "TurretHoleOffsetX": -30,
+    "TurretHoleOffsetY": 0,
+    "ExhaustOffsetX": 10,
+    "ExhaustOffsetY": 10,
+    "TracksSpriteScale": 0.7,
+    "TracksLeftOffsetX": 0,
+    "TracksLeftOffsetY": -60,
+    "TracksRightOffsetX": 0,
+    "TracksRightOffsetY": 60
   }
 ]
