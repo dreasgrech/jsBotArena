@@ -120,5 +120,77 @@
 				]
 			}
 		]
+	},
+	"Laser": {
+		"type": "fromPhysicsEditor",
+		"label": "Laser",
+		"isStatic": false,
+		"density": 0.10000000149011612,
+		"restitution": 0,
+		"friction": 0.10000000149011612,
+		"frictionAir": 0.009999999776482582,
+		"frictionStatic": 0.5,
+		"collisionFilter": {
+			"group": 0,
+			"category": 1,
+			"mask": 255
+		},
+		"fixtures": [
+			{
+				"label": "",
+				"isSensor": false,
+				"vertices": [
+					[ { "x":26, "y":70 }, { "x":102, "y":70 }, { "x":102, "y":58 }, { "x":26, "y":58 } ]
+				]
+			}
+		]
+	},
+	"Plasma": {
+		"type": "fromPhysicsEditor",
+		"label": "Plasma",
+		"isStatic": false,
+		"density": 0.10000000149011612,
+		"restitution": 0,
+		"friction": 0.10000000149011612,
+		"frictionAir": 0.009999999776482582,
+		"frictionStatic": 0.5,
+		"collisionFilter": {
+			"group": 0,
+			"category": 1,
+			"mask": 255
+		},
+		"fixtures": [
+			{
+				"label": "",
+				"isSensor": false,
+				"vertices": [
+					[ { "x":102, "y":63 }, { "x":72, "y":56 }, { "x":27, "y":65 }, { "x":60, "y":72 }, { "x":87, "y":72 } ]
+				]
+			}
+		]
+	},
+	"Sniper_Shell": {
+		"type": "fromPhysicsEditor",
+		"label": "Sniper_Shell",
+		"isStatic": false,
+		"density": 0.10000000149011612,
+		"restitution": 0,
+		"friction": 0.10000000149011612,
+		"frictionAir": 0.009999999776482582,
+		"frictionStatic": 0.5,
+		"collisionFilter": {
+			"group": 0,
+			"category": 1,
+			"mask": 255
+		},
+		"fixtures": [
+			{
+				"label": "",
+				"isSensor": false,
+				"vertices": [
+					[ { "x":89, "y":64 }, { "x":74, "y":59 }, { "x":39, "y":63 }, { "x":48, "y":69 }, { "x":74, "y":69 } ]
+				]
+			}
+		]
 	}
 }
