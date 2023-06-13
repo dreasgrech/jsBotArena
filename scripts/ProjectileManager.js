@@ -11,6 +11,7 @@ const ProjectileManager = (function() {
     let projectilesCollisionData;
     let gameContext;
     let currentProjectileIndex = 0;
+    let totalSpawnedProjectiles = 0;
 
     const pools = [];
 
@@ -44,6 +45,8 @@ const ProjectileManager = (function() {
         ProjectilesData_matterBody[projectileIndex] = null;
         ProjectilesData_projectileType[projectileIndex] = null;
         projectileMatterBodyID_to_ProjectileIndex[projectileMatterBodyID] = null;
+        
+        totalSpawnedProjectiles--;
     };
 
     AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
@@ -88,6 +91,23 @@ const ProjectileManager = (function() {
 
                 pools[projectileTypeIndex] = poolIndex;
             }
+            
+            const tweakPaneFolderID = TweakPaneManager.createFolder("Projectile Manager");
+            const dataForTweakPane = {
+                get totalSpawnedProjectiles() {
+                    return totalSpawnedProjectiles;
+                },
+                get totalQueuedProjectilesForRemoval() {
+                    return queuedProjectilesForRemoval.size;
+                },
+                get totalRobotsLastFiredTime() {
+                    return robotsLastFiredTime.length;
+                }
+            };
+            
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalSpawnedProjectiles');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalQueuedProjectilesForRemoval');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalRobotsLastFiredTime');
         },
         update: function() {
             // Update all the currently active robot firing projectiles muzzle flash animations
@@ -240,6 +260,8 @@ const ProjectileManager = (function() {
             robotsLastFiredTime[robotIndex] = GameContextHolder.gameTime;
 
             currentProjectileIndex++;
+            
+            totalSpawnedProjectiles++;
 
             return true;
         },
@@ -267,7 +289,7 @@ const ProjectileManager = (function() {
         },
         system_newRoundReset: function() {
             // TODO: Keep track of all projectiles and remove them here
-
+            robotsLastFiredTime.length = 0;
         }
     };
 
