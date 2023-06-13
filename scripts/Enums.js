@@ -20,7 +20,8 @@ const ProjectileTypes = { };
     Five: number,
     Six: number,
     Seven: number,
-    Eight: number
+    Eight: number,
+    AngelicaBot_Hull: number
 }}
  */
 const RobotHullTypes = { };
@@ -34,7 +35,8 @@ const RobotHullTypes = { };
     Five: number,
     Six: number,
     Seven: number,
-    Eight: number
+    Eight: number,
+    AngelicaBot_Turret: number
 }}
  */
 const RobotTurretTypes = { };
