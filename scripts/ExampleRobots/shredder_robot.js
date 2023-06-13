@@ -105,12 +105,16 @@ const shredder = function() {
         name: 'shredder',
         create: function(robotSetup) {
             const hullSetup = robotSetup.hull;
-            const hullColors = hullSetup.colors;
-            hullColors.topLeft = 0xff0000;
-            hullColors.topRight = 0xff0000;
-            hullColors.bottomLeft = 0xff0000;
-            hullColors.bottomRight = 0xff0000;
+            // const hullColors = hullSetup.colors;
+            // hullColors.topLeft = 0xff0000;
+            // hullColors.topRight = 0xff0000;
+            // hullColors.bottomLeft = 0xff0000;
+            // hullColors.bottomRight = 0xff0000;
+            
+            hullSetup.hullType = RobotHullTypes.AngelicaBot_Hull;
 
+            const turretSetup = robotSetup.turret;
+            turretSetup.turretType = RobotTurretTypes.AngelicaBot_Turret;
         },
         update: update
     };
