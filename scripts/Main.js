@@ -181,13 +181,13 @@ const GameManager = (function() {
             // const ROBOT_CREATION_ITERATIONS = 4;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
                 RobotManager.addRobot(keyBot());
-                // RobotManager.addRobot(doNothingBot());
-                // RobotManager.addRobot(shredder());
-                // RobotManager.addRobot(circleBot());
-                // RobotManager.addRobot(sittingBot());
-                // RobotManager.addRobot(followBot_followAngle());
-                // RobotManager.addRobot(followBot_followPosition());
-                // RobotManager.addRobot(CornerGuardBot());
+                RobotManager.addRobot(doNothingBot());
+                RobotManager.addRobot(shredder());
+                RobotManager.addRobot(circleBot());
+                RobotManager.addRobot(sittingBot());
+                RobotManager.addRobot(followBot_followAngle());
+                RobotManager.addRobot(followBot_followPosition());
+                RobotManager.addRobot(CornerGuardBot());
                 //RobotManager.addRobot(astarBot());
             }
             
