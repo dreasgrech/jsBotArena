@@ -115,7 +115,7 @@
     "PhaserImageKey": "Robots/Hulls/AngelicaBot_Hull.png",
     "PhysicsEditor_SpriteName": "AngelicaBot_Hull",
     "EnumKey": "AngelicaBot_Hull",
-    "TurretHoleOffsetX": -30,
+    "TurretHoleOffsetX": 12,
     "TurretHoleOffsetY": 0,
     "ExhaustOffsetX": 10,
     "ExhaustOffsetY": 10,
