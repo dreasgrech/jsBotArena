@@ -2,10 +2,24 @@
 
 const astarBot = function() {
     let gameContext;
+    
+    let pathfinderGrid;
+    
+    const scannedArenaObstacles = {};
+    
+    let moving;
+    let movingToX, movingToY;
+    
+    const pointerDown = function(pointer){
+        movingToX = pointer.x;
+        movingToY = pointer.y;
+        moving = true;
+        Logger.log(pointer.x, pointer.y);
+    };
 
     return {
         name: 'astarBot',
-        create: function(robotSetup) {
+        create: function(robotSetup, gameOptions) {
             gameContext = GameContextHolder.scene;
 
             const hullSetup = robotSetup.hull;
@@ -30,6 +44,17 @@ const astarBot = function() {
             turretColors.bottomRight = turretColor;
 
             // const radarSetup = robotSetup.radar;
+            
+            GameContextHolder.scene.input.on('pointerdown', pointerDown);
+            
+            const gameWidth = gameOptions.width;
+            const gameHeight = gameOptions.height;
+            
+            // const gridWidth = gameWidth;
+            // const gridWidth = 800;
+            pathfinderGrid = new PF.Grid(gameWidth, gameHeight);
+            
+            //new PF.AStarFinder();
         },
         onSpawned: function(api, time_seconds) {
             const radar = api.radar;
@@ -39,8 +64,12 @@ const astarBot = function() {
         },
         update: function(api, time_seconds, delta_seconds) {
             //const x = api.rotateTowardsPosition( )
-
-            //api.radar.scannedArenaElements
+            
+            if (moving){
+                if (api.rotateTowardsPosition(movingToX, movingToY)){
+                    api.move();
+                }
+            }
 
             //api.turretFollowHull = true;
 
@@ -83,7 +112,8 @@ const astarBot = function() {
             const turret = api.turret;
             //turret.rotateLeft();
 
-            //const radar = api.radar;
+            const radar = api.radar;
+            radar.rotateLeft();
             //const scannedAliveRobots = radar.scannedAliveRobots;
             //const totalScannedAliveRobots = scannedAliveRobots.length;
             //if (totalScannedAliveRobots > 0) {
@@ -94,7 +124,14 @@ const astarBot = function() {
             if (scannedArenaElements.length > 0) {
                 for (let i = 0; i < scannedArenaElements.length; i++) {
                     const scannedArenaElement = scannedArenaElements[i];
-
+                    const scannedArenaElementIndex = scannedArenaElement.index;
+                    if (scannedArenaObstacles[scannedArenaElementIndex]){
+                        continue;
+                    }
+                    
+                    pathfinderGrid.setWalkableAt(scannedArenaElement.positionX, scannedArenaElement.positionY, false);
+                    scannedArenaObstacles[scannedArenaElementIndex] = true;
+                    Logger.log(pathfinderGrid);
                 }
                 //Logger.log(scannedArenaElements.length, "scanned arena elements");
             }
