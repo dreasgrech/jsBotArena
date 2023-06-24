@@ -47,7 +47,8 @@ const astarBot = function() {
             // Math.trunc(pointerX),
             // Math.trunc(pointerY),
             pfGridClone);
-        currentPathNodeIndex = 0; // Reset the index to 0 so that we continue from the start of this new path
+        // currentPathNodeIndex = 0; // Reset the index to 0 so that we continue from the start of this new path
+        currentPathNodeIndex = 1; // Reset the index to 0 so that we continue from the start of this new path
         //Logger.log("New path", currentPath);
 
         // Draw a circle at each point in the path
@@ -60,6 +61,7 @@ const astarBot = function() {
         });
         
         // Color the first node in the path
+        currentPathNodeGraphics.clear();
         currentPathNodeGraphics.fillCircle(
             currentPath[currentPathNodeIndex][0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
             currentPath[currentPathNodeIndex][1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
@@ -149,8 +151,8 @@ const astarBot = function() {
                     currentPathNodeX, currentPathNodeY,
                     truncCurrentPositionX, truncCurrentPositionY)
                 // if (currentPathNodeX === truncCurrentPositionX && currentPathNodeY === truncCurrentPositionY) {
-                // if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 2) {
-                if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 0.5) {
+                if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 5) {
+                //if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 0.5) {
                     if (currentPathNodeIndex < currentPath.length - 1) {
                         Logger.log("Moving to next node", currentPathNodeIndex);
                         currentPathNodeIndex++;
