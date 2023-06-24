@@ -23,6 +23,11 @@ const astarBot = function() {
     
     let pointerX, pointerY;
     
+    //const isWorldPositionInCell
+    const getGridCellIndex = function(worldPosition){
+        return Math.floor(worldPosition / GRID_CELL_SIZE_PIXELS);
+    };
+    
     const pointerDown = function(pointer){
         // const pointerX = pointer.x;
         // const pointerY = pointer.y;
@@ -30,11 +35,11 @@ const astarBot = function() {
         pointerY = pointer.y;
         moving = true;
 
-        const pointerGridX = Math.floor(pointerX / GRID_CELL_SIZE_PIXELS);
-        const pointerGridY = Math.floor(pointerY / GRID_CELL_SIZE_PIXELS);
+        const pointerGridX = getGridCellIndex(pointerX);
+        const pointerGridY = getGridCellIndex(pointerY);
         
-        const currentPositionGridX = Math.floor(ourCurrentPositionX / GRID_CELL_SIZE_PIXELS);
-        const currentPositionGridY = Math.floor(ourCurrentPositionY / GRID_CELL_SIZE_PIXELS);
+        const currentPositionGridX = getGridCellIndex(ourCurrentPositionX);
+        const currentPositionGridY = getGridCellIndex(ourCurrentPositionY);
         
         const pfGridClone = pfGrid.clone();
         currentPath = pfFinder.findPath(
@@ -47,6 +52,8 @@ const astarBot = function() {
             // Math.trunc(pointerX),
             // Math.trunc(pointerY),
             pfGridClone);
+        //currentPath = PF.Util.smoothenPath(pfGridClone.clone(), currentPath);
+        //currentPath = PF.Util.expandPath(pfGridClone, currentPath);
         // currentPathNodeIndex = 0; // Reset the index to 0 so that we continue from the start of this new path
         currentPathNodeIndex = 1; // Reset the index to 0 so that we continue from the start of this new path
         //Logger.log("New path", currentPath);
@@ -77,7 +84,8 @@ const astarBot = function() {
             currentPathNodeGraphics = gameContext.add.graphics({ fillStyle: { color: 0x00ff00 } }); // Red color
 
             const hullSetup = robotSetup.hull;
-            hullSetup.hullType = RobotHullTypes.Eight;
+            //hullSetup.hullType = RobotHullTypes.Eight;
+            hullSetup.hullType = EnumHelpers.getRandomValue(RobotHullTypes);
 
             const turretSetup = robotSetup.turret;
             turretSetup.turretType = RobotTurretTypes.One;
@@ -110,9 +118,10 @@ const astarBot = function() {
             Logger.log(pfGrid);
             
             pfFinder = new PF.BiAStarFinder({
-                    //pfFinder = new PF.AStarFinder({
+            //pfFinder = new PF.AStarFinder({
                     allowDiagonal: true,
-                    dontCrossCorners: true
+                    dontCrossCorners: true,
+                    //heuristic: PF.Heuristic.chebyshev
                 }
             );
         },
@@ -144,14 +153,19 @@ const astarBot = function() {
                 const currentPathNodeX = currentPathNode[0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5);
                 const currentPathNodeY = currentPathNode[1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5);
                 //Logger.log(currentPathNode);
+                
+                const currentPathNodeXCellIndex = getGridCellIndex(currentPathNodeX);
+                const currentPathNodeYCellIndex = getGridCellIndex(currentPathNodeY);
+                const ourCurrentPositionXCellIndex = getGridCellIndex(ourCurrentPositionX);
+                const ourCurrentPositionYCellIndex = getGridCellIndex(ourCurrentPositionY);
+                // console.log(currentPathNodeXCellIndex, currentPathNodeYCellIndex, ourCurrentPositionXCellIndex, ourCurrentPositionYCellIndex);
 
-                const truncCurrentPositionX = Math.floor(ourCurrentPositionX);
-                const truncCurrentPositionY = Math.floor(ourCurrentPositionY);
                 const distanceBetweenCurrentPositionAndCurrentPathNodePosition = Phaser.Math.Distance.Between(
                     currentPathNodeX, currentPathNodeY,
-                    truncCurrentPositionX, truncCurrentPositionY)
+                    ourCurrentPositionX, ourCurrentPositionY)
                 // if (currentPathNodeX === truncCurrentPositionX && currentPathNodeY === truncCurrentPositionY) {
-                if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 5) {
+                //if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 5) {
+                if (currentPathNodeXCellIndex === ourCurrentPositionXCellIndex && currentPathNodeYCellIndex === ourCurrentPositionYCellIndex) {
                 //if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 0.5) {
                     if (currentPathNodeIndex < currentPath.length - 1) {
                         Logger.log("Moving to next node", currentPathNodeIndex);
