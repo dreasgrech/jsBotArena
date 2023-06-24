@@ -8,7 +8,7 @@ const astarBot = function() {
     let ourCurrentPositionX;
     let ourCurrentPositionY;
     
-    let moving;
+    let pathCharted;
     let currentPath;
     let currentPathNodeIndex;
     
@@ -23,12 +23,17 @@ const astarBot = function() {
     let currentDestinationX;
     let currentDestinationY;
     
+    let previousFrameOurPositionX;
+    let previousFrameOurPositionY;
+    
+    let timeNotMoving = 0;
+    
     const getGridCellIndex = function(worldPosition){
         return Math.floor(worldPosition / GRID_CELL_SIZE_PIXELS);
     };
     
     const chartNewPathTo = function(worldX, worldY){
-        moving = true;
+        pathCharted = true;
         
         currentDestinationX = worldX;
         currentDestinationY = worldY;
@@ -136,45 +141,48 @@ const astarBot = function() {
             ourCurrentPositionX = data.positionX;
             ourCurrentPositionY = data.positionY;
 
-/*
-            if (moving) {
-                const rotatedTowardsPosition = api.rotateTowardsPosition(pointerX, pointerY);
-                if (!rotatedTowardsPosition){
-                    Logger.log("rotating towards")
+            if (pathCharted) {
+                const deltaOurPositionX = ourCurrentPositionX - previousFrameOurPositionX;
+                const deltaOurPositionY = ourCurrentPositionY - previousFrameOurPositionY;
+                const currentlyMoving = Math.abs(deltaOurPositionX) > 0.01 && Math.abs(deltaOurPositionY) > 0.01;
+
+                // Check if we're currently not moving
+                if (!currentlyMoving) {
+                    timeNotMoving += delta_seconds;
+
+                    // If we've been stuck for some time, recalculate the path
+                    if (timeNotMoving > 0.5) {
+                        //console.log("stuck, so charting new path");
+                        chartNewPathTo(currentDestinationX, currentDestinationY);
+                        timeNotMoving = 0;
+                    }
                 } else {
-                    api.move();
+                    timeNotMoving = 0;
                 }
-            }
-*/
-            
-            if (moving) {
+
                 const currentPathNode = currentPath[currentPathNodeIndex];
                 const currentPathNodeX = currentPathNode[0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5);
                 const currentPathNodeY = currentPathNode[1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5);
-                //Logger.log(currentPathNode);
-                
+
                 const currentPathNodeXCellIndex = getGridCellIndex(currentPathNodeX);
                 const currentPathNodeYCellIndex = getGridCellIndex(currentPathNodeY);
                 const ourCurrentPositionXCellIndex = getGridCellIndex(ourCurrentPositionX);
                 const ourCurrentPositionYCellIndex = getGridCellIndex(ourCurrentPositionY);
                 // console.log(currentPathNodeXCellIndex, currentPathNodeYCellIndex, ourCurrentPositionXCellIndex, ourCurrentPositionYCellIndex);
 
-                const distanceBetweenCurrentPositionAndCurrentPathNodePosition = Phaser.Math.Distance.Between(
-                    currentPathNodeX, currentPathNodeY,
-                    ourCurrentPositionX, ourCurrentPositionY)
                 if (currentPathNodeXCellIndex === ourCurrentPositionXCellIndex && currentPathNodeYCellIndex === ourCurrentPositionYCellIndex) {
-                    if (currentPathNodeIndex < currentPath.length - 1) {
-                        //Logger.log("Moving to next node", currentPathNodeIndex);
-                        currentPathNodeIndex++;
-/*
-                        currentPathNodeGraphics.clear();
-                        currentPathNodeGraphics.fillCircle(
-                            currentPath[currentPathNodeIndex][0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
-                            currentPath[currentPathNodeIndex][1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
-                            10); // 5 is the radius of the circle
-*/
-                        // Recalculate the path to our current destination to get an improved path
-                        chartNewPathTo(currentDestinationX, currentDestinationY);
+                    const haveWeArrived = currentPathNodeIndex === currentPath.length - 1;
+                    //console.log(haveWeArrived, currentPathNodeIndex, currentPath.length);
+                    if (haveWeArrived) {
+                        pathCharted = false;
+                    } else {
+                        if (currentPathNodeIndex < currentPath.length - 1) {
+                            //Logger.log("Moving to next node", currentPathNodeIndex);
+                            currentPathNodeIndex++;
+
+                            // Recalculate the path to our current destination to get an improved path
+                            chartNewPathTo(currentDestinationX, currentDestinationY);
+                        }
                     }
                 } else {
                     // TODO: The problem here is that rotateTowardsPosition keeps rotating
@@ -194,7 +202,9 @@ const astarBot = function() {
             const collisionsWithRobots = collisions.otherRobots;
             if (collisionsWithRobots.length > 0) {
                 // Recalculate the path to our current destination to get an improved path
-                chartNewPathTo(currentDestinationX, currentDestinationY);
+                if (pathCharted){
+                    chartNewPathTo(currentDestinationX, currentDestinationY);
+                }
                // Logger.log(`KeyBot robot collisions: ${collisionsWithRobots.length}: `, collisionsWithRobots);
                // for (let i = 0; i < collisionsWithRobots.length; i++) {
                //     const collisionWithRobot = collisionsWithRobots[i].data;
@@ -207,7 +217,9 @@ const astarBot = function() {
             const collisionsWithArena = collisions.arena;
             if (collisionsWithArena.length > 0) {
                 // Recalculate the path to our current destination to get an improved path
-                chartNewPathTo(currentDestinationX, currentDestinationY);
+                if (pathCharted) {
+                    chartNewPathTo(currentDestinationX, currentDestinationY);
+                }
                 // Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
                 // for (let i = 0; i < collisionsWithArena.length; i++) {
                 //     const collisionWithArena = collisionsWithArena[i];
@@ -255,6 +267,9 @@ const astarBot = function() {
                 }
                 //Logger.log(scannedArenaElements.length, "scanned arena elements");
             }
+            
+            previousFrameOurPositionX = ourCurrentPositionX;
+            previousFrameOurPositionY = ourCurrentPositionY;
         }
     };
 };
