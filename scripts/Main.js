@@ -1,7 +1,7 @@
 "use strict";
 
-//const GAME_DEBUG_MODE = true;
-const GAME_DEBUG_MODE = false;
+const GAME_DEBUG_MODE = true;
+//const GAME_DEBUG_MODE = false;
 
 const GameManager = (function() {
     // TODO: Create a statemachine to keep track of whether the round is happening
@@ -59,7 +59,7 @@ const GameManager = (function() {
         const gameContext = this;
         GameContextHolder.scene = gameContext;
 
-        gameContext.matter.world.autoUpdate = false;
+        // gameContext.matter.world.autoUpdate = false;
 
         //this.load.scripts('inspector', [
         //    'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.js',
@@ -95,6 +95,11 @@ const GameManager = (function() {
         //gameContext.matter.world.setBounds();
 
         const map = gameContext.make.tilemap({ key: 'arena_json' });
+        const mapWidthInPixels = map.widthInPixels;
+        const mapHeightInPixels = map.heightInPixels;
+        GameSetup.Width = mapWidthInPixels;
+        GameSetup.Height = mapHeightInPixels;
+        Logger.log(map);
 
         const floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
         const wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
@@ -158,7 +163,8 @@ const GameManager = (function() {
         // stepTimer += delta * 0.001;
 
         // Step the physics
-        GameContextHolder.scene.matter.world.step();
+        //GameContextHolder.scene.matter.world.step();
+        
     //    while (stepTimer >= FIXED_DELTA_TIME) {
     //        stepTimer -= FIXED_DELTA_TIME;
     //        //GameContextHolder.gameContext.matter.world.step(FIXED_DELTA_TIME);
@@ -178,8 +184,10 @@ const GameManager = (function() {
             
             Logger.log("Starting new round");
             const ROBOT_CREATION_ITERATIONS = 1;
-            // const ROBOT_CREATION_ITERATIONS = 4;
+             //const ROBOT_CREATION_ITERATIONS = 2;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
+                RobotManager.addRobot(astarBot());
+                /*
                 RobotManager.addRobot(keyBot());
                 RobotManager.addRobot(doNothingBot());
                 RobotManager.addRobot(shredder());
@@ -189,6 +197,16 @@ const GameManager = (function() {
                 RobotManager.addRobot(followBot_followPosition());
                 RobotManager.addRobot(CornerGuardBot());
                 //RobotManager.addRobot(astarBot());
+                */
+                
+/*
+                RobotManager.addRobot(keyBot());
+                RobotManager.addRobot(shredder());
+                RobotManager.addRobot(circleBot());
+                RobotManager.addRobot(followBot_followAngle());
+                RobotManager.addRobot(followBot_followPosition());
+                RobotManager.addRobot(CornerGuardBot());
+*/
             }
             
             roundRunning = true;
@@ -231,6 +249,9 @@ window.onload = function(event) {
                 gravity: {
                     x: 0,
                     y: 0
+                },
+                runner: {
+                    isFixed: true
                 }
             }
         },
@@ -256,7 +277,7 @@ window.onload = function(event) {
             ]
         },
         fps: {
-            limit: 144
+             limit: 144
             //limit: 60
             //limit: 40
             //limit: 15
