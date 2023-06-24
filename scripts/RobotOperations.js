@@ -1,7 +1,7 @@
 "use strict";
 
 const RobotOperations_Hull = (function() {
-    const ANGULAR_VELOCITY_FOR_HULLROTATION = 1;
+    const ANGULAR_VELOCITY_FOR_HULLROTATION = 2;
 
     const operations = {
         moveHull: function(robotIndex, direction) {
@@ -34,6 +34,16 @@ const RobotOperations_Hull = (function() {
         rotateHullTowardsAngle_degrees: function(robotIndex, angle_degrees) {
             const currentAngle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
             const angleDifference_degrees = Phaser.Math.Angle.WrapDegrees(angle_degrees - currentAngle_degrees);
+
+            // If the target angle has been reached, return immediately
+            //Logger.log("Current angle:", currentAngle_degrees, "Requested angle:", angle_degrees, "Difference:", angleDifference_degrees);
+            // if (angleDifference_degrees === 0) {
+            if (Math.abs(angleDifference_degrees) < 1) {
+                //console.log('already there.  difference: ', angleDifference_degrees, "target:", angle_degrees);
+                const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
+                robotHullGameObject.angle = angle_degrees;
+                return true;
+            }
 
             // Determine the direction of rotation
             let direction;
@@ -73,6 +83,8 @@ const RobotOperations_Hull = (function() {
                     positionX, positionY
                 )
             );
+            
+            // Logger.log("Rotating towards:", positionX, positionY, "Current hull position:", hullPosition.x, hullPosition.y, "angleToTarget:", angleToTarget_degrees);
 
             // Rotate the hull towards the calculated angle
             return operations.rotateHullTowardsAngle_degrees(robotIndex, angleToTarget_degrees);
