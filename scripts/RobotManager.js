@@ -60,6 +60,15 @@ const RobotManager = (function() {
 
         //Logger.log("finished removing", robotIndex);
     };
+
+    /**
+     * Game Options for robots
+     * @type {{width: number, height: number}}
+     */
+    let gameOptionsForRobots = {
+        width: 0,
+        height: 0,
+    };
     
     const robotManager = {
         get totalRobots() { return totalRobots; },
@@ -71,6 +80,9 @@ const RobotManager = (function() {
             //                RobotMatterFactory.updateParts(i);
             //            }
             //        });
+            
+            gameOptionsForRobots.width = GameSetup.Width;
+            gameOptionsForRobots.height = GameSetup.Height;
             
             // Create the Tweak pane data
             const dataForTweakPane = {
@@ -104,7 +116,7 @@ const RobotManager = (function() {
             const robotSetup = RobotSetupFactory.createRobotSetup();
             // TODO: Pass also an arenaData (or something like that) to robot.create()
             // TODO: so that it provides them with info about the arena, like dimensions.
-            newRobot.create(robotSetup);
+            newRobot.create(robotSetup, gameOptionsForRobots);
 
             RobotMatterFactory.createRobot({
                 currentRobotIndex: currentRobotIndex,
