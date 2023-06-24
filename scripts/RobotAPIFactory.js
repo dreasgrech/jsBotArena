@@ -420,8 +420,10 @@ const RobotScannedInfo = function () {
     }
 };
 
-/**
+/***
  * Data about an arena obstacle scanned by the radar
+ * @returns {{positionY: number, distance: number, index: number, bearing_degrees: number, positionX: number}}
+ * @constructor
  */
 const ArenaObstacleScannedInfo = function () {
     return {
