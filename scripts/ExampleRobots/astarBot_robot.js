@@ -18,62 +18,61 @@ const astarBot = function() {
     let pfFinder;
     
     let currentPathVisualizationGraphics;
-    
     let currentPathNodeGraphics;
     
-    let pointerX, pointerY;
+    let currentDestinationX;
+    let currentDestinationY;
     
-    //const isWorldPositionInCell
     const getGridCellIndex = function(worldPosition){
         return Math.floor(worldPosition / GRID_CELL_SIZE_PIXELS);
     };
     
-    const pointerDown = function(pointer){
-        // const pointerX = pointer.x;
-        // const pointerY = pointer.y;
-        pointerX = pointer.x;
-        pointerY = pointer.y;
+    const chartNewPathTo = function(worldX, worldY){
         moving = true;
-
-        const pointerGridX = getGridCellIndex(pointerX);
-        const pointerGridY = getGridCellIndex(pointerY);
         
+        currentDestinationX = worldX;
+        currentDestinationY = worldY;
+
+        const worldXGridIndex = getGridCellIndex(worldX);
+        const worldYGridIndex = getGridCellIndex(worldY);
+
         const currentPositionGridX = getGridCellIndex(ourCurrentPositionX);
         const currentPositionGridY = getGridCellIndex(ourCurrentPositionY);
-        
+
         const pfGridClone = pfGrid.clone();
         currentPath = pfFinder.findPath(
             currentPositionGridX,
             currentPositionGridY,
-            pointerGridX,
-            pointerGridY,
-            // Math.trunc(ourCurrentPositionX),
-            // Math.trunc(ourCurrentPositionY),
-            // Math.trunc(pointerX),
-            // Math.trunc(pointerY),
+            worldXGridIndex,
+            worldYGridIndex,
             pfGridClone);
         //currentPath = PF.Util.smoothenPath(pfGridClone.clone(), currentPath);
         //currentPath = PF.Util.expandPath(pfGridClone, currentPath);
-        // currentPathNodeIndex = 0; // Reset the index to 0 so that we continue from the start of this new path
-        currentPathNodeIndex = 1; // Reset the index to 0 so that we continue from the start of this new path
+        currentPathNodeIndex = 1; // Reset the index and skip the first node
         //Logger.log("New path", currentPath);
 
         // Draw a circle at each point in the path
         currentPathVisualizationGraphics.clear();
         currentPath.forEach(point => {
             currentPathVisualizationGraphics.fillCircle(
-                point[0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5), 
-                point[1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5), 
+                point[0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
+                point[1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
                 10); // 5 is the radius of the circle
         });
-        
+
         // Color the first node in the path
         currentPathNodeGraphics.clear();
         currentPathNodeGraphics.fillCircle(
             currentPath[currentPathNodeIndex][0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
             currentPath[currentPathNodeIndex][1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
             10); // 5 is the radius of the circle
-        // Logger.log(pointer.x, pointer.y);
+        // Logger.log(pointer.x, pointer.y);       
+    };
+    
+    const pointerDown = function(pointer){
+        const pointerX = pointer.x;
+        const pointerY = pointer.y;
+        chartNewPathTo(pointerX, pointerY);
     };
 
     return {
@@ -163,18 +162,19 @@ const astarBot = function() {
                 const distanceBetweenCurrentPositionAndCurrentPathNodePosition = Phaser.Math.Distance.Between(
                     currentPathNodeX, currentPathNodeY,
                     ourCurrentPositionX, ourCurrentPositionY)
-                // if (currentPathNodeX === truncCurrentPositionX && currentPathNodeY === truncCurrentPositionY) {
-                //if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 5) {
                 if (currentPathNodeXCellIndex === ourCurrentPositionXCellIndex && currentPathNodeYCellIndex === ourCurrentPositionYCellIndex) {
-                //if (distanceBetweenCurrentPositionAndCurrentPathNodePosition < 0.5) {
                     if (currentPathNodeIndex < currentPath.length - 1) {
-                        Logger.log("Moving to next node", currentPathNodeIndex);
+                        //Logger.log("Moving to next node", currentPathNodeIndex);
                         currentPathNodeIndex++;
+/*
                         currentPathNodeGraphics.clear();
                         currentPathNodeGraphics.fillCircle(
                             currentPath[currentPathNodeIndex][0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
                             currentPath[currentPathNodeIndex][1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
                             10); // 5 is the radius of the circle
+*/
+                        // Recalculate the path to our current destination to get an improved path
+                        chartNewPathTo(currentDestinationX, currentDestinationY);
                     }
                 } else {
                     // TODO: The problem here is that rotateTowardsPosition keeps rotating
@@ -182,9 +182,6 @@ const astarBot = function() {
                     if (rotatedTowardsPosition) {
                         api.move();
                     }
-                    // if (api.rotateTowardsPosition(pointerX, pointerY)){
-                    //     api.move();
-                    // }
                 }
             }
 
@@ -193,27 +190,31 @@ const astarBot = function() {
             const ourAngle_degrees = data.angle_degrees;
             //console.log(ourAngle_degrees);
 
-            //const collisions = api.collisions;
-            //const collisionsWithRobots = collisions.otherRobots;
-            //if (collisionsWithRobots.length > 0) {
-            //    // Logger.log(`KeyBot robot collisions: ${collisionsWithRobots.length}: `, collisionsWithRobots);
-            //    for (let i = 0; i < collisionsWithRobots.length; i++) {
-            //        const collisionWithRobot = collisionsWithRobots[i].data;
-            //        //Logger.log(collisionWithRobot.positionX, collisionWithRobot.positionY);
-            //        // api.fire(ProjectileTypes.Medium);
+            const collisions = api.collisions;
+            const collisionsWithRobots = collisions.otherRobots;
+            if (collisionsWithRobots.length > 0) {
+                // Recalculate the path to our current destination to get an improved path
+                chartNewPathTo(currentDestinationX, currentDestinationY);
+               // Logger.log(`KeyBot robot collisions: ${collisionsWithRobots.length}: `, collisionsWithRobots);
+               // for (let i = 0; i < collisionsWithRobots.length; i++) {
+               //     const collisionWithRobot = collisionsWithRobots[i].data;
+               //     //Logger.log(collisionWithRobot.positionX, collisionWithRobot.positionY);
+               //     // api.fire(ProjectileTypes.Medium);
+               //
+               // }
+            }
 
-            //    }
-            //}
-
-            //const collisionsWithArena = collisions.arena;
-            //if (collisionsWithArena.length > 0) {
-            //    // Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
-            //    for (let i = 0; i < collisionsWithArena.length; i++) {
-            //        const collisionWithArena = collisionsWithArena[i];
-            //        //Logger.log('firing!');
-            //        // api.fire(ProjectileTypes.Medium);
-            //    }
-            //}
+            const collisionsWithArena = collisions.arena;
+            if (collisionsWithArena.length > 0) {
+                // Recalculate the path to our current destination to get an improved path
+                chartNewPathTo(currentDestinationX, currentDestinationY);
+                // Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
+                // for (let i = 0; i < collisionsWithArena.length; i++) {
+                //     const collisionWithArena = collisionsWithArena[i];
+                //     //Logger.log('firing!');
+                //     // api.fire(ProjectileTypes.Medium);
+                // }
+            }
 
             //const collisionsWithProjectiles = collisions.projectiles;
             //if (collisionsWithProjectiles.length > 0) {
