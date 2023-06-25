@@ -31,7 +31,7 @@ const RobotManager = (function() {
     const placeRobotInArena = function(robotBody) {
         let attempts = 0;
 
-        const gameWidth = GameSetup.Width, gameHeight = GameSetup.Height;
+        const gameWidth = GameSetup.width, gameHeight = GameSetup.height;
 
         do {
             // Generate new random position
@@ -61,14 +61,15 @@ const RobotManager = (function() {
         //Logger.log("finished removing", robotIndex);
     };
 
-    /**
-     * Game Options for robots
-     * @type {{width: number, height: number}}
-     */
-    let gameOptionsForRobots = {
-        width: 0,
-        height: 0,
-    };
+    // /**
+    //  * Game Options for robots
+    //  * @type {{width: number, height: number}}
+    //  */
+    // let gameOptionsForRobots = {
+    //     width: 0,
+    //     height: 0,
+    //     //tile
+    // };
     
     const robotManager = {
         get totalRobots() { return totalRobots; },
@@ -81,8 +82,8 @@ const RobotManager = (function() {
             //            }
             //        });
             
-            gameOptionsForRobots.width = GameSetup.Width;
-            gameOptionsForRobots.height = GameSetup.Height;
+            // gameOptionsForRobots.width = GameSetup.Width;
+            // gameOptionsForRobots.height = GameSetup.Height;
             
             // Create the Tweak pane data
             const dataForTweakPane = {
@@ -109,14 +110,15 @@ const RobotManager = (function() {
             RobotsData_Instance_updateFunctions[currentRobotIndex] = newRobot.update;
             RobotsData_Instance_hullMatterGroup[currentRobotIndex] = currentRobotIndex + 1; // Important: This can never be 0 because these values are needed to be signed and 0 can't be +0 or -0
 
-            const gameWidth = GameSetup.Width, gameHeight = GameSetup.Height;
+            const gameWidth = GameSetup.width, gameHeight = GameSetup.height;
             const x = gameWidth * .5, y = gameHeight * .5;
 
             // Call the robot's create() method
             const robotSetup = RobotSetupFactory.createRobotSetup();
             // TODO: Pass also an arenaData (or something like that) to robot.create()
             // TODO: so that it provides them with info about the arena, like dimensions.
-            newRobot.create(robotSetup, gameOptionsForRobots);
+            // newRobot.create(robotSetup, gameOptionsForRobots);
+            newRobot.create(robotSetup, GameSetup);
 
             RobotMatterFactory.createRobot({
                 currentRobotIndex: currentRobotIndex,

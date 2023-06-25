@@ -1,6 +1,7 @@
 "use script";
 
 const astarBot = function() {
+    const DRAW_PATHFINDING_NODES = true;
     let gameContext;
     
     const scannedArenaObstacles = {};
@@ -12,10 +13,10 @@ const astarBot = function() {
     let currentPath;
     let currentPathNodeIndex;
     
-    const GRID_CELL_SIZE_PIXELS = 64;
-    //const GRID_CELL_SIZE_PIXELS = 16;
+    let gridCellSizePixels_X = 64;
+    let gridCellSizePixels_Y = 64;
     let pfGrid;
-    let pfFinder;
+    // let pfFinder;
     
     let currentPathVisualizationGraphics;
     let currentPathNodeGraphics;
@@ -26,61 +27,94 @@ const astarBot = function() {
     let previousFrameOurPositionX;
     let previousFrameOurPositionY;
     
-    let timeNotMoving = 0;
+    let timeNotMoving_seconds = 0;
     
-    const getGridCellIndex = function(worldPosition){
-        return Math.floor(worldPosition / GRID_CELL_SIZE_PIXELS);
+    const cornersGridCellIndices = [
+        [0, 0], // top left
+        [0, 1], // top right
+    ];
+    
+    const getGridCellIndex_X = function(worldPosition){
+        return Math.floor(worldPosition / gridCellSizePixels_X);
+    };
+    
+    const getGridCellIndex_Y = function(worldPosition){
+        return Math.floor(worldPosition / gridCellSizePixels_Y);
     };
     
     const chartNewPathTo = function(worldX, worldY){
+        // Logger.log("Charting new path to", worldX, worldY);
         
-        Logger.log("Charting new path to", worldX, worldY);
-        
-        pathCharted = true;
-        
-        currentDestinationX = worldX;
-        currentDestinationY = worldY;
+        pathCharted = false;
 
-        const worldXGridIndex = getGridCellIndex(worldX);
-        const worldYGridIndex = getGridCellIndex(worldY);
+        const worldXGridIndex = getGridCellIndex_X(worldX);
+        const worldYGridIndex = getGridCellIndex_Y(worldY);
 
-        const currentPositionGridX = getGridCellIndex(ourCurrentPositionX);
-        const currentPositionGridY = getGridCellIndex(ourCurrentPositionY);
+        const currentPositionGridX = getGridCellIndex_X(ourCurrentPositionX);
+        const currentPositionGridY = getGridCellIndex_Y(ourCurrentPositionY);
 
         const pfGridClone = pfGrid.clone();
-        currentPath = pfFinder.findPath(
+        const randomPathFinderIndex = Math.floor(Math.random()*pathFinders.length);
+        console.log("Pathfinder index:", randomPathFinderIndex);
+        const pfFinder = pathFinders[randomPathFinderIndex]; // Fetch a random path finder
+        // currentPath = pfFinder.findPath(
+        const newPath = pfFinder.findPath(
             currentPositionGridX,
             currentPositionGridY,
             worldXGridIndex,
             worldYGridIndex,
             pfGridClone);
+        
+        // Make sure that a path is found because this can happen if the destination is out of reach and a path is not possible to it
+        if (newPath.length === 0) {
+            // Logger.error("No path found");
+            return false;
+        }
+        
+        currentPath = newPath;
+        
         //currentPath = PF.Util.smoothenPath(pfGridClone.clone(), currentPath);
         //currentPath = PF.Util.expandPath(pfGridClone, currentPath);
-        currentPathNodeIndex = 1; // Reset the index and skip the first node
+        
+        // currentPathNodeIndex = 1; // Reset the index and skip the first node
+        currentPathNodeIndex = Math.min(1, currentPath.length - 1); // Reset the index and skip the first node
         //Logger.log("New path", currentPath);
 
         // Draw a circle at each point in the path
-        currentPathVisualizationGraphics.clear();
-        currentPath.forEach(point => {
-            currentPathVisualizationGraphics.fillCircle(
-                point[0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
-                point[1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
-                10); // 5 is the radius of the circle
-        });
+        if (DRAW_PATHFINDING_NODES) {
+            currentPathVisualizationGraphics.clear();
+            currentPath.forEach(point => {
+                currentPathVisualizationGraphics.fillCircle(
+                    // point[0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5),
+                    // point[1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5),
+                    point[0] * gridCellSizePixels_X + (gridCellSizePixels_X * 0.5),
+                    point[1] * gridCellSizePixels_Y + (gridCellSizePixels_Y * 0.5),
+                    10); // 5 is the radius of the circle
+            });
 
-        // Color the first node in the path
-        currentPathNodeGraphics.clear();
-        currentPathNodeGraphics.fillCircle(
-            currentPath[currentPathNodeIndex][0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
-            currentPath[currentPathNodeIndex][1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS*0.5),
-            10); // 5 is the radius of the circle
-        // Logger.log(pointer.x, pointer.y);       
+            // Color the first node in the path
+            currentPathNodeGraphics.clear();
+            currentPathNodeGraphics.fillCircle(
+                // currentPath[currentPathNodeIndex][0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5),
+                // currentPath[currentPathNodeIndex][1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5),
+                currentPath[currentPathNodeIndex][0] * gridCellSizePixels_X + (gridCellSizePixels_X * 0.5),
+                currentPath[currentPathNodeIndex][1] * gridCellSizePixels_Y + (gridCellSizePixels_Y * 0.5),
+                10); // 5 is the radius of the circle
+            // Logger.log(pointer.x, pointer.y);       
+        }
+        
+        currentDestinationX = worldX;
+        currentDestinationY = worldY;
+        
+        pathCharted = true;
+        
+        return true;
     };
     
     const pointerDown = function(pointer){
         const pointerX = pointer.x;
         const pointerY = pointer.y;
-        chartNewPathTo(pointerX, pointerY);
+        const pathCharted = chartNewPathTo(pointerX, pointerY);
     };
 
     // TODO: Get this function outta here
@@ -105,18 +139,78 @@ const astarBot = function() {
             currentTriesTotal++;
         } while(!isWalkableAtRandomGridCell || currentTriesTotal >= 100);
         
-        const worldPositionX = randomGridCellIndexX * GRID_CELL_SIZE_PIXELS;
-        const worldPositionY = randomGridCellIndexY * GRID_CELL_SIZE_PIXELS;
+        const worldPositionX = randomGridCellIndexX * gridCellSizePixels_X;
+        const worldPositionY = randomGridCellIndexY * gridCellSizePixels_Y;
         
         chartNewPathTo(worldPositionX, worldPositionY);
     }
-
+    
+    const pathFinders = [];
+    const createPathfinders = function(){
+        pathFinders.push(
+            new PF.AStarFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            }),
+            new PF.BestFirstFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            }),
+            new PF.BreadthFirstFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            }),
+            new PF.DijkstraFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            }),
+            // Andreas: The IDAStarFinder finder was sometimes hanging the entire game.
+            // new PF.IDAStarFinder({
+            //     allowDiagonal: true,
+            //     dontCrossCorners: true,
+            // }),
+            // Andreas: The JumpPointFinder finder doesn't support dontCrossCorners so it's a bit problematic here
+            // new PF.JumpPointFinder({
+            //     allowDiagonal: true,
+            //     // dontCrossCorners: true,
+            // }),
+            new PF.OrthogonalJumpPointFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            }),
+            new PF.BiAStarFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            }),
+            new PF.BiBestFirstFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            }),
+            new PF.BiBreadthFirstFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            }),
+            new PF.BiDijkstraFinder({
+                allowDiagonal: true,
+                dontCrossCorners: true,
+            })
+        );
+    };
+    
     return {
         name: 'astarBot',
+        /**
+         * 
+         * @param robotSetup
+         * @param gameOptions {GameSetup}
+         */
         create: function(robotSetup, gameOptions) {
             gameContext = GameContextHolder.scene;
-            currentPathVisualizationGraphics = gameContext.add.graphics({ fillStyle: { color: 0xff0000 } }); // Red color
-            currentPathNodeGraphics = gameContext.add.graphics({ fillStyle: { color: 0x00ff00 } }); // Red color
+            
+            if (DRAW_PATHFINDING_NODES) {
+                currentPathVisualizationGraphics = gameContext.add.graphics({fillStyle: {color: 0xff0000}});
+                currentPathNodeGraphics = gameContext.add.graphics({fillStyle: {color: 0x00ff00}});
+            }
 
             const hullSetup = robotSetup.hull;
             //hullSetup.hullType = RobotHullTypes.Eight;
@@ -146,19 +240,22 @@ const astarBot = function() {
             
             const gameWidth = gameOptions.width;
             const gameHeight = gameOptions.height;
+            gridCellSizePixels_X = gameOptions.tileWidth;
+            gridCellSizePixels_Y = gameOptions.tileHeight;
             
-            const gridWidth = gameWidth / GRID_CELL_SIZE_PIXELS;
-            const gridHeight = gameHeight / GRID_CELL_SIZE_PIXELS;
+            const gridWidth = gameWidth / gridCellSizePixels_X;
+            const gridHeight = gameHeight / gridCellSizePixels_Y;
             pfGrid = new PF.Grid(gridWidth, gridHeight);
             // Logger.log(pfGrid);
             
-            pfFinder = new PF.BiAStarFinder({
-            //pfFinder = new PF.AStarFinder({
-                    allowDiagonal: true,
-                    dontCrossCorners: true,
-                    //heuristic: PF.Heuristic.chebyshev
-                }
-            );
+            // pfFinder = new PF.BiAStarFinder({
+            // //pfFinder = new PF.AStarFinder({
+            //         allowDiagonal: true,
+            //         dontCrossCorners: true,
+            //         //heuristic: PF.Heuristic.chebyshev
+            //     }
+            // );
+            createPathfinders();
         },
         onSpawned: function(api, time_seconds) {
             const radar = api.radar;
@@ -178,26 +275,26 @@ const astarBot = function() {
 
                 // Check if we're currently not moving
                 if (!currentlyMoving) {
-                    timeNotMoving += delta_seconds;
+                    timeNotMoving_seconds += delta_seconds;
 
                     // If we've been stuck for some time, recalculate the path
-                    if (timeNotMoving > 0.5) {
+                    if (timeNotMoving_seconds > 0.5) {
                         //console.log("stuck, so charting new path");
                         chartNewPathTo(currentDestinationX, currentDestinationY);
-                        timeNotMoving = 0;
+                        timeNotMoving_seconds = 0;
                     }
                 } else {
-                    timeNotMoving = 0;
+                    timeNotMoving_seconds = 0;
                 }
 
                 const currentPathNode = currentPath[currentPathNodeIndex];
-                const currentPathNodeX = currentPathNode[0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5);
-                const currentPathNodeY = currentPathNode[1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5);
+                const currentPathNodeX = currentPathNode[0] * gridCellSizePixels_X + (gridCellSizePixels_X * 0.5);
+                const currentPathNodeY = currentPathNode[1] * gridCellSizePixels_Y + (gridCellSizePixels_Y * 0.5);
 
-                const currentPathNodeXCellIndex = getGridCellIndex(currentPathNodeX);
-                const currentPathNodeYCellIndex = getGridCellIndex(currentPathNodeY);
-                const ourCurrentPositionXCellIndex = getGridCellIndex(ourCurrentPositionX);
-                const ourCurrentPositionYCellIndex = getGridCellIndex(ourCurrentPositionY);
+                const currentPathNodeXCellIndex = getGridCellIndex_X(currentPathNodeX);
+                const currentPathNodeYCellIndex = getGridCellIndex_Y(currentPathNodeY);
+                const ourCurrentPositionXCellIndex = getGridCellIndex_X(ourCurrentPositionX);
+                const ourCurrentPositionYCellIndex = getGridCellIndex_Y(ourCurrentPositionY);
                 // console.log(currentPathNodeXCellIndex, currentPathNodeYCellIndex, ourCurrentPositionXCellIndex, ourCurrentPositionYCellIndex);
 
                 const areWeInsideCurrentPathNodeGridCell = currentPathNodeXCellIndex === ourCurrentPositionXCellIndex && currentPathNodeYCellIndex === ourCurrentPositionYCellIndex;
@@ -216,7 +313,6 @@ const astarBot = function() {
                         }
                     }
                 } else {
-                    // TODO: The problem here is that rotateTowardsPosition keeps rotating
                     const rotatedTowardsPosition = api.rotateTowardsPosition(currentPathNodeX, currentPathNodeY);
                     if (rotatedTowardsPosition) {
                         api.move();
@@ -245,19 +341,19 @@ const astarBot = function() {
                // }
             }
 
-            const collisionsWithArena = collisions.arena;
-            if (collisionsWithArena.length > 0) {
-                // Recalculate the path to our current destination to get an improved path
-                if (pathCharted) {
-                    chartNewPathTo(currentDestinationX, currentDestinationY);
-                }
-                // Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
-                // for (let i = 0; i < collisionsWithArena.length; i++) {
-                //     const collisionWithArena = collisionsWithArena[i];
-                //     //Logger.log('firing!');
-                //     // api.fire(ProjectileTypes.Medium);
-                // }
-            }
+            // const collisionsWithArena = collisions.arena;
+            // if (collisionsWithArena.length > 0) {
+            //     // Recalculate the path to our current destination to get an improved path
+            //     if (pathCharted) {
+            //         chartNewPathTo(currentDestinationX, currentDestinationY);
+            //     }
+            //     // Logger.log(`KeyBot arena collisions: ${collisionsWithArena.length}: `, collisionsWithArena);
+            //     // for (let i = 0; i < collisionsWithArena.length; i++) {
+            //     //     const collisionWithArena = collisionsWithArena[i];
+            //     //     //Logger.log('firing!');
+            //     //     // api.fire(ProjectileTypes.Medium);
+            //     // }
+            // }
 
             //const collisionsWithProjectiles = collisions.projectiles;
             //if (collisionsWithProjectiles.length > 0) {
@@ -293,8 +389,8 @@ const astarBot = function() {
 
                     // Mark the grid cell where this arena obstacle resides in as non-walkable
                     pfGrid.setWalkableAt(
-                        getGridCellIndex(scannedArenaElement.positionX),
-                        getGridCellIndex(scannedArenaElement.positionY),
+                        getGridCellIndex_X(scannedArenaElement.positionX),
+                        getGridCellIndex_Y(scannedArenaElement.positionY),
                         false);
                     
                     // Mark this obstacle as mapped so we don't process it again

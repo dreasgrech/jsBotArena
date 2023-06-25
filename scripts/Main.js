@@ -97,8 +97,12 @@ const GameManager = (function() {
         const map = gameContext.make.tilemap({ key: 'arena_json' });
         const mapWidthInPixels = map.widthInPixels;
         const mapHeightInPixels = map.heightInPixels;
-        GameSetup.Width = mapWidthInPixels;
-        GameSetup.Height = mapHeightInPixels;
+        const mapTileHeightInPixels = map.tileHeight;
+        const mapTileWidthInPixels = map.tileWidth;
+        GameSetup.width = mapWidthInPixels;
+        GameSetup.height = mapHeightInPixels;
+        GameSetup.tileWidth = mapTileWidthInPixels;
+        GameSetup.tileHeight = mapTileHeightInPixels;
         Logger.log(map);
 
         const floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
@@ -234,8 +238,8 @@ window.onload = function(event) {
 
     GameContextHolder.game = new Phaser.Game({
         type: Phaser.AUTO,
-        width: GameSetup.Width,
-        height: GameSetup.Height,
+        width: GameSetup.width,
+        height: GameSetup.height,
         //antialias: true,
         scene: {
             preload: GameManager.preload,
