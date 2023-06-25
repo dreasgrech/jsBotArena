@@ -13,8 +13,8 @@ const astarBot = function() {
     let currentPath;
     let currentPathNodeIndex;
     
-    let gridCellSizePixels_X = 64;
-    let gridCellSizePixels_Y = 64;
+    let gridCellSizePixels_X;
+    let gridCellSizePixels_Y;
     let pfGrid;
     // let pfFinder;
     
@@ -29,10 +29,8 @@ const astarBot = function() {
     
     let timeNotMoving_seconds = 0;
     
-    const cornersGridCellIndices = [
-        [0, 0], // top left
-        [0, 1], // top right
-    ];
+    let currentCornersGridCellIndex = 0;
+    const cornersGridCellIndices = [];
     
     const getGridCellIndex_X = function(worldPosition){
         return Math.floor(worldPosition / gridCellSizePixels_X);
@@ -114,7 +112,7 @@ const astarBot = function() {
     const pointerDown = function(pointer){
         const pointerX = pointer.x;
         const pointerY = pointer.y;
-        const pathCharted = chartNewPathTo(pointerX, pointerY);
+        chartNewPathTo(pointerX, pointerY);
     };
 
     // TODO: Get this function outta here
@@ -143,7 +141,19 @@ const astarBot = function() {
         const worldPositionY = randomGridCellIndexY * gridCellSizePixels_Y;
         
         chartNewPathTo(worldPositionX, worldPositionY);
-    }
+    };
+    
+    const chartPathToNextCorner = function(){
+        currentCornersGridCellIndex = (currentCornersGridCellIndex + 1) % cornersGridCellIndices.length;
+        const nextCornerGridCellIndex = cornersGridCellIndices[currentCornersGridCellIndex];
+        const nextCornerGridCellIndexX = nextCornerGridCellIndex[0];
+        const nextCornerGridCellIndexY = nextCornerGridCellIndex[1];
+        
+        const worldPositionX = nextCornerGridCellIndexX * gridCellSizePixels_X;
+        const worldPositionY = nextCornerGridCellIndexY * gridCellSizePixels_Y;
+        
+        chartNewPathTo(worldPositionX, worldPositionY);
+    };
     
     const pathFinders = [];
     const createPathfinders = function(){
@@ -243,10 +253,15 @@ const astarBot = function() {
             gridCellSizePixels_X = gameOptions.tileWidth;
             gridCellSizePixels_Y = gameOptions.tileHeight;
             
-            const gridWidth = gameWidth / gridCellSizePixels_X;
-            const gridHeight = gameHeight / gridCellSizePixels_Y;
-            pfGrid = new PF.Grid(gridWidth, gridHeight);
-            // Logger.log(pfGrid);
+            const gridWidth_numberOfCells = Math.floor(gameWidth / gridCellSizePixels_X);
+            const gridHeight_numberOfCells = Math.floor(gameHeight / gridCellSizePixels_Y);
+            pfGrid = new PF.Grid(gridWidth_numberOfCells, gridHeight_numberOfCells);
+            Logger.log(pfGrid, gridCellSizePixels_X, gridCellSizePixels_Y, gridWidth_numberOfCells, gridHeight_numberOfCells);
+            
+            cornersGridCellIndices.push([1, 1]); // top-left
+            cornersGridCellIndices.push([gridWidth_numberOfCells - 2, 1]); // top-right
+            cornersGridCellIndices.push([gridWidth_numberOfCells - 2, gridHeight_numberOfCells - 2]); // bottom-right
+            cornersGridCellIndices.push([1, gridHeight_numberOfCells - 2]); // bottom-left
             
             // pfFinder = new PF.BiAStarFinder({
             // //pfFinder = new PF.AStarFinder({
@@ -259,9 +274,9 @@ const astarBot = function() {
         },
         onSpawned: function(api, time_seconds) {
             const radar = api.radar;
-            //radar.radarFollowTurret = true;
-            // radar.rotateLeft();
-            radar.setFOVAngle_degrees(45);
+            radar.radarFollowTurret = true;
+            // radar.setFOVAngle_degrees(45);
+            radar.setFOVAngle_degrees(5);
         },
         update: function(api, time_seconds, delta_seconds) {
             const data = api.data;
@@ -366,10 +381,10 @@ const astarBot = function() {
             //}
 
             const turret = api.turret;
-            //turret.rotateLeft();
+            turret.rotateLeft();
 
             const radar = api.radar;
-            radar.rotateLeft();
+            //radar.rotateLeft();
             //const scannedAliveRobots = radar.scannedAliveRobots;
             //const totalScannedAliveRobots = scannedAliveRobots.length;
             //if (totalScannedAliveRobots > 0) {
@@ -378,32 +393,42 @@ const astarBot = function() {
 
             const scannedArenaElements = radar.scannedArenaElements;
             const scannedArenaElementsLength = scannedArenaElements.length;
-                for (let i = 0; i < scannedArenaElementsLength; i++) {
-                    const scannedArenaElement = scannedArenaElements[i];
-                    const scannedArenaElementIndex = scannedArenaElement.index;
-                    
-                    // Skip this arena obstacle if we've already mapped it
-                    if (scannedArenaObstacles[scannedArenaElementIndex]) {
-                        continue;
-                    }
-
-                    // Mark the grid cell where this arena obstacle resides in as non-walkable
-                    pfGrid.setWalkableAt(
-                        getGridCellIndex_X(scannedArenaElement.positionX),
-                        getGridCellIndex_Y(scannedArenaElement.positionY),
-                        false);
-                    
-                    // Mark this obstacle as mapped so we don't process it again
-                    scannedArenaObstacles[scannedArenaElementIndex] = true;
+            for (let i = 0; i < scannedArenaElementsLength; i++) {
+                const scannedArenaElement = scannedArenaElements[i];
+                const scannedArenaElementIndex = scannedArenaElement.index;
+                
+                // Skip this arena obstacle if we've already mapped it
+                if (scannedArenaObstacles[scannedArenaElementIndex]) {
+                    continue;
                 }
-                //Logger.log(scannedArenaElements.length, "scanned arena elements");
+
+                // Mark the grid cell where this arena obstacle resides in as non-walkable
+                pfGrid.setWalkableAt(
+                    getGridCellIndex_X(scannedArenaElement.positionX),
+                    getGridCellIndex_Y(scannedArenaElement.positionY),
+                    false);
+                
+                // Mark this obstacle as mapped so we don't process it again
+                scannedArenaObstacles[scannedArenaElementIndex] = true;
+            }
+            //Logger.log(scannedArenaElements.length, "scanned arena elements");
+            
+            const scannedAliveRobots = radar.scannedAliveRobots;
+            const scannedAliveRobotsLength = scannedAliveRobots.length;
+            if (scannedAliveRobotsLength > 0) {
+                api.fire(ProjectileTypes.Medium);
+            }
+            // for (let i = 0; i < scannedAliveRobotsLength; i++) {
+            //     const scannedAliveRobot = scannedAliveRobots[i];
+            // }
             
             previousFrameOurPositionX = ourCurrentPositionX;
             previousFrameOurPositionY = ourCurrentPositionY;
             
             // If we don't have a charted path atm, create a new one
             if (!pathCharted){
-                chartPathToRandomPosition();
+                // chartPathToRandomPosition();
+                chartPathToNextCorner();
             }
         }
     };
