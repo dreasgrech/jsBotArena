@@ -150,7 +150,7 @@ const astarBot = function() {
             const gridWidth = gameWidth / GRID_CELL_SIZE_PIXELS;
             const gridHeight = gameHeight / GRID_CELL_SIZE_PIXELS;
             pfGrid = new PF.Grid(gridWidth, gridHeight);
-            Logger.log(pfGrid);
+            // Logger.log(pfGrid);
             
             pfFinder = new PF.BiAStarFinder({
             //pfFinder = new PF.AStarFinder({
@@ -167,7 +167,6 @@ const astarBot = function() {
             radar.setFOVAngle_degrees(45);
         },
         update: function(api, time_seconds, delta_seconds) {
-            //const x = api.rotateTowardsPosition( )
             const data = api.data;
             ourCurrentPositionX = data.positionX;
             ourCurrentPositionY = data.positionY;
@@ -227,7 +226,7 @@ const astarBot = function() {
 
             //api.turretFollowHull = true;
 
-            const ourAngle_degrees = data.angle_degrees;
+            // const ourAngle_degrees = data.angle_degrees;
             //console.log(ourAngle_degrees);
 
             const collisions = api.collisions;
@@ -282,27 +281,31 @@ const astarBot = function() {
             //}
 
             const scannedArenaElements = radar.scannedArenaElements;
-            if (scannedArenaElements.length > 0) {
-                for (let i = 0; i < scannedArenaElements.length; i++) {
+            const scannedArenaElementsLength = scannedArenaElements.length;
+                for (let i = 0; i < scannedArenaElementsLength; i++) {
                     const scannedArenaElement = scannedArenaElements[i];
                     const scannedArenaElementIndex = scannedArenaElement.index;
+                    
+                    // Skip this arena obstacle if we've already mapped it
                     if (scannedArenaObstacles[scannedArenaElementIndex]) {
                         continue;
                     }
 
+                    // Mark the grid cell where this arena obstacle resides in as non-walkable
                     pfGrid.setWalkableAt(
-                        Math.floor(scannedArenaElement.positionX / GRID_CELL_SIZE_PIXELS),
-                        Math.floor(scannedArenaElement.positionY / GRID_CELL_SIZE_PIXELS)
-                        , false);
+                        getGridCellIndex(scannedArenaElement.positionX),
+                        getGridCellIndex(scannedArenaElement.positionY),
+                        false);
+                    
+                    // Mark this obstacle as mapped so we don't process it again
                     scannedArenaObstacles[scannedArenaElementIndex] = true;
-                    //Logger.log(pfGrid);
                 }
                 //Logger.log(scannedArenaElements.length, "scanned arena elements");
-            }
             
             previousFrameOurPositionX = ourCurrentPositionX;
             previousFrameOurPositionY = ourCurrentPositionY;
             
+            // If we don't have a charted path atm, create a new one
             if (!pathCharted){
                 chartPathToRandomPosition();
             }
