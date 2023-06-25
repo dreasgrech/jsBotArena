@@ -1,3 +1,4 @@
+/*
 "use strict";
 
 const StealthBot = function() {
@@ -127,3 +128,4 @@ const StealthBot = function() {
         }
     };
 };
+ */

@@ -207,6 +207,8 @@ const astarBot = function() {
         );
     };
     
+    let turretTurningLeft = true;
+    
     return {
         name: 'astarBot',
         /**
@@ -275,13 +277,12 @@ const astarBot = function() {
         onSpawned: function(api, time_seconds) {
             const radar = api.radar;
             radar.radarFollowTurret = true;
-            // radar.setFOVAngle_degrees(45);
-            radar.setFOVAngle_degrees(5);
+            radar.setFOVAngle_degrees(45);
+            //radar.setFOVAngle_degrees(5);
         },
         update: function(api, time_seconds, delta_seconds) {
-            const data = api.data;
-            ourCurrentPositionX = data.positionX;
-            ourCurrentPositionY = data.positionY;
+            ourCurrentPositionX = api.positionX;
+            ourCurrentPositionY = api.positionY;
 
             if (pathCharted) {
                 const deltaOurPositionX = ourCurrentPositionX - previousFrameOurPositionX;
@@ -381,7 +382,24 @@ const astarBot = function() {
             //}
 
             const turret = api.turret;
+            // const hullAngle = api.angle_degrees;
+            // // const turretAngle = turret.angle_degrees;
+            // const turretAngle = turret.angle_degrees - hullAngle;
+            // const turretTurningRight = !turretTurningLeft;
+            // if (turretTurningRight && turretAngle > 0){
+            //     turretTurningLeft = true;
+            // } else if (turretTurningLeft && turretAngle > 0) {
+            //     turretTurningLeft = false;
+            // }
+            //    
+            // if (turretTurningLeft){
+            //     turret.rotateLeft();
+            // } else {
+            //     turret.rotateRight();
+            // }
+            // console.log(turretAngle);
             turret.rotateLeft();
+            
 
             const radar = api.radar;
             //radar.rotateLeft();

@@ -191,6 +191,7 @@ const GameManager = (function() {
              //const ROBOT_CREATION_ITERATIONS = 2;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
                 RobotManager.addRobot(astarBot());
+                //RobotManager.addRobot(keyBot());
 /*
                 RobotManager.addRobot(keyBot());
                 RobotManager.addRobot(doNothingBot());

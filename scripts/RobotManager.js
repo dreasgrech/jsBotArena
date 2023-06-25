@@ -217,11 +217,6 @@ const RobotManager = (function() {
 
                 const api = RobotsData_Instance_robotAPIs[robotIndex];
 
-                const data = api.data;
-                data.positionX = robotPositionX;
-                data.positionY = robotPositionY;
-                data.angle_degrees = hullAngle_degrees;
-
                 // Set the radar scanned robots to the api
                 const radar = api.radar;
                 radar.scannedAliveRobots = RobotsRadar.scanForRobots(robotIndex);

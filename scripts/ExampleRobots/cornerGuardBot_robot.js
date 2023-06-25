@@ -1,3 +1,4 @@
+/*
 "use strict";
 
 // chat-gpt
@@ -141,3 +142,4 @@ const CornerGuardBot = function() {
         }
     };
 };
+*/

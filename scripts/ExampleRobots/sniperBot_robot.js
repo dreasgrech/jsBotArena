@@ -1,3 +1,4 @@
+/*
 "use strict";
 
 // chat-gpt
@@ -69,4 +70,4 @@ const SniperBot = function () {
         }
     };
 };
-
+ */

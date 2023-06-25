@@ -56,6 +56,24 @@ const RobotAPIFactory = (function() {
 
             const api = {
                 /**
+                 * The robot's current absolute world x-position
+                 */
+                get positionX () {
+                    return RobotsData_CurrentData_positionXs[robotIndex];
+                },
+                /**
+                 * The robot's current absolute world y-position
+                 */
+                get positionY () {
+                    return RobotsData_CurrentData_positionYs[robotIndex];
+                },
+                /**
+                 * The robot's current angle (degrees)
+                 */
+                get angle_degrees () {
+                    return RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
+                },
+                /**
                  * Moves the robot forward in the direction it's currently facing.
                  */
                 move: function() {
@@ -159,6 +177,9 @@ const RobotAPIFactory = (function() {
                      * If set to true, the turret's rotation will be locked to the rotation of the hull.
                      */
                     turretFollowHull: false,
+                    get angle_degrees () {
+                        return RobotsData_CurrentData_currentTurretAngles[robotIndex];
+                    },
                     /**
                      * Rotates the turret to the left.
                      */
@@ -317,23 +338,6 @@ const RobotAPIFactory = (function() {
                      * @type {RobotToProjectileCollisionInfo[]}
                      */
                     projectiles: []
-                },
-                /**
-                 * Data about our own robot
-                 */
-                data: {
-                    /**
-                     * The robot's current absolute world x-position
-                     */
-                    positionX: 0,
-                    /**
-                     * The robot's current absolute world y-position
-                     */
-                    positionY: 0,
-                    /**
-                     * The robot's current angle (degrees)
-                     */
-                    angle_degrees: 0
                 }
             };
 
