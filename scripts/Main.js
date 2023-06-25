@@ -13,7 +13,9 @@ const GameManager = (function() {
         ProjectilesDatabase,
         AnimationSpritesDatabase,
         RobotPartsDatabase,
-        AnimationManager
+        AnimationManager,
+        RobotMatterFactory,
+        ProjectileManager
     ];
 
     const objectsWith_create = [
@@ -69,17 +71,9 @@ const GameManager = (function() {
         //    PhaserPluginInspector.Install(this.plugins);
         //});
 
-
-
         //gameContext.matter.set60Hz();
 
-        // ImageDatabase.loadAllImages();
-
         gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
-
-        gameContext.load.json('Hulls_CollisionData', './CollisionData/Hulls_CollisionData.json');
-        gameContext.load.json('Projectiles_CollisionData', './CollisionData/Projectiles_CollisionData.json');
-        //ProjectileManager.preload();
 
         for (let i = 0; i < objectsWith_preload.length; i++) {
             const toLoad = objectsWith_preload[i];

@@ -46,8 +46,7 @@ const apiUsageExampleBot = function() {
 
             //api.turretFollowHull = true;
 
-            const data = api.data;
-            const ourAngle_degrees = data.angle_degrees;
+            const ourAngle_degrees = api.angle_degrees;
             //console.log(ourAngle_degrees);
 
             const collisions = api.collisions;

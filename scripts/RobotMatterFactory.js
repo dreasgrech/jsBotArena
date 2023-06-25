@@ -1,6 +1,8 @@
 "use strict";
 
 const RobotMatterFactory = (function() {
+    const HULLS_COLLISION_DATA_PATH = './CollisionData/Hulls_CollisionData.json';
+    
     const robotsTrackLeftAnimationSpriteIndex = [];
     const robotsTrackRightAnimationSpriteIndex = [];
 
@@ -207,6 +209,11 @@ const RobotMatterFactory = (function() {
         //        //console.log('afterupdate');
         //    });
         //},
+        system_preload: function(){
+            const scene = GameContextHolder.scene;
+            
+            scene.load.json('Hulls_CollisionData', HULLS_COLLISION_DATA_PATH);
+        },
         createRobot: createRobot,
         updateParts: function(robotIndex) {
             // Match the projectile sensor's angle to the robot hull's angle

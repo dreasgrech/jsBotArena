@@ -2,6 +2,8 @@
 
 const ProjectileManager = (function() {
 
+    const PROJECTILES_COLLISION_DATA_PATH = './CollisionData/Projectiles_CollisionData.json';
+
     // The minimum time between firing projectiles
     const BASE_PROJECTILE_INTERVAL_DELAY_SECONDS = 1;
 
@@ -58,8 +60,12 @@ const ProjectileManager = (function() {
     });
 
     const projectileManager = {
-        system_create: function() {
+        system_preload: function() {
             gameContext = GameContextHolder.scene;
+            
+            gameContext.load.json('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH);
+        },
+        system_create: function() {
 
             projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
             // console.log("projectilesCollisionData", projectilesCollisionData);
