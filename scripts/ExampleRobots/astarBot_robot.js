@@ -53,7 +53,7 @@ const astarBot = function() {
 
         const pfGridClone = pfGrid.clone();
         const randomPathFinderIndex = Math.floor(Math.random()*pathFinders.length);
-        console.log("Pathfinder index:", randomPathFinderIndex);
+        //console.log("Pathfinder index:", randomPathFinderIndex);
         const pfFinder = pathFinders[randomPathFinderIndex]; // Fetch a random path finder
         // currentPath = pfFinder.findPath(
         const newPath = pfFinder.findPath(
@@ -83,8 +83,6 @@ const astarBot = function() {
             currentPathVisualizationGraphics.clear();
             currentPath.forEach(point => {
                 currentPathVisualizationGraphics.fillCircle(
-                    // point[0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5),
-                    // point[1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5),
                     point[0] * gridCellSizePixels_X + (gridCellSizePixels_X * 0.5),
                     point[1] * gridCellSizePixels_Y + (gridCellSizePixels_Y * 0.5),
                     10); // 5 is the radius of the circle
@@ -93,8 +91,6 @@ const astarBot = function() {
             // Color the first node in the path
             currentPathNodeGraphics.clear();
             currentPathNodeGraphics.fillCircle(
-                // currentPath[currentPathNodeIndex][0] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5),
-                // currentPath[currentPathNodeIndex][1] * GRID_CELL_SIZE_PIXELS + (GRID_CELL_SIZE_PIXELS * 0.5),
                 currentPath[currentPathNodeIndex][0] * gridCellSizePixels_X + (gridCellSizePixels_X * 0.5),
                 currentPath[currentPathNodeIndex][1] * gridCellSizePixels_Y + (gridCellSizePixels_Y * 0.5),
                 10); // 5 is the radius of the circle
@@ -158,6 +154,7 @@ const astarBot = function() {
     const pathFinders = [];
     const createPathfinders = function(){
         pathFinders.push(
+            /*
             new PF.AStarFinder({
                 allowDiagonal: true,
                 dontCrossCorners: true,
@@ -174,20 +171,11 @@ const astarBot = function() {
                 allowDiagonal: true,
                 dontCrossCorners: true,
             }),
-            // Andreas: The IDAStarFinder finder was sometimes hanging the entire game.
-            // new PF.IDAStarFinder({
-            //     allowDiagonal: true,
-            //     dontCrossCorners: true,
-            // }),
-            // Andreas: The JumpPointFinder finder doesn't support dontCrossCorners so it's a bit problematic here
-            // new PF.JumpPointFinder({
-            //     allowDiagonal: true,
-            //     // dontCrossCorners: true,
-            // }),
             new PF.OrthogonalJumpPointFinder({
                 allowDiagonal: true,
                 dontCrossCorners: true,
             }),
+            */
             new PF.BiAStarFinder({
                 allowDiagonal: true,
                 dontCrossCorners: true,
@@ -204,6 +192,16 @@ const astarBot = function() {
                 allowDiagonal: true,
                 dontCrossCorners: true,
             })
+            // Andreas: The IDAStarFinder finder was sometimes hanging the entire game.
+            // new PF.IDAStarFinder({
+            //     allowDiagonal: true,
+            //     dontCrossCorners: true,
+            // }),
+            // Andreas: The JumpPointFinder finder doesn't support dontCrossCorners so it's a bit problematic here
+            // new PF.JumpPointFinder({
+            //     allowDiagonal: true,
+            //     // dontCrossCorners: true,
+            // }),
         );
     };
     
