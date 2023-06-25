@@ -33,6 +33,9 @@ const astarBot = function() {
     };
     
     const chartNewPathTo = function(worldX, worldY){
+        
+        Logger.log("Charting new path to", worldX, worldY);
+        
         pathCharted = true;
         
         currentDestinationX = worldX;
@@ -79,6 +82,34 @@ const astarBot = function() {
         const pointerY = pointer.y;
         chartNewPathTo(pointerX, pointerY);
     };
+
+    // TODO: Get this function outta here
+    const getRandomIntInclusive = function (min, max) {
+        min = Math.ceil(min);
+        max = Math.floor(max);
+        return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+    };
+    
+    const chartPathToRandomPosition = function(){
+        let randomGridCellIndexX;
+        let randomGridCellIndexY;
+        let isWalkableAtRandomGridCell;
+        
+        let currentTriesTotal = 0;
+        
+        do {
+            randomGridCellIndexX = getRandomIntInclusive(1, 14);
+            randomGridCellIndexY = getRandomIntInclusive(1, 14);
+            
+            isWalkableAtRandomGridCell = pfGrid.isWalkableAt(randomGridCellIndexX, randomGridCellIndexY);
+            currentTriesTotal++;
+        } while(!isWalkableAtRandomGridCell || currentTriesTotal >= 100);
+        
+        const worldPositionX = randomGridCellIndexX * GRID_CELL_SIZE_PIXELS;
+        const worldPositionY = randomGridCellIndexY * GRID_CELL_SIZE_PIXELS;
+        
+        chartNewPathTo(worldPositionX, worldPositionY);
+    }
 
     return {
         name: 'astarBot',
@@ -170,10 +201,11 @@ const astarBot = function() {
                 const ourCurrentPositionYCellIndex = getGridCellIndex(ourCurrentPositionY);
                 // console.log(currentPathNodeXCellIndex, currentPathNodeYCellIndex, ourCurrentPositionXCellIndex, ourCurrentPositionYCellIndex);
 
-                if (currentPathNodeXCellIndex === ourCurrentPositionXCellIndex && currentPathNodeYCellIndex === ourCurrentPositionYCellIndex) {
-                    const haveWeArrived = currentPathNodeIndex === currentPath.length - 1;
+                const areWeInsideCurrentPathNodeGridCell = currentPathNodeXCellIndex === ourCurrentPositionXCellIndex && currentPathNodeYCellIndex === ourCurrentPositionYCellIndex;
+                if (areWeInsideCurrentPathNodeGridCell) {
+                    const haveWeArrivedAtFinalNode = currentPathNodeIndex === currentPath.length - 1;
                     //console.log(haveWeArrived, currentPathNodeIndex, currentPath.length);
-                    if (haveWeArrived) {
+                    if (haveWeArrivedAtFinalNode) {
                         pathCharted = false;
                     } else {
                         if (currentPathNodeIndex < currentPath.length - 1) {
@@ -270,6 +302,10 @@ const astarBot = function() {
             
             previousFrameOurPositionX = ourCurrentPositionX;
             previousFrameOurPositionY = ourCurrentPositionY;
+            
+            if (!pathCharted){
+                chartPathToRandomPosition();
+            }
         }
     };
 };
