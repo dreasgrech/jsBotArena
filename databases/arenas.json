@@ -6,7 +6,7 @@
     "Floors Layers": [
       {
         "TiledLayerName": "Floor Layer",
-        "UsedTilesets": ["Floor", "Walls", "Glass", "Grass"]
+        "UsedTilesets": ["Floor", "Walls", "Glass", "Grass", "Water"]
       }
     ],
     "Solid-Obstacles Layers": [
