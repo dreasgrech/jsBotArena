@@ -29,10 +29,6 @@ const ImageDatabase = (function() {
 
     const loadAllImages = function() {
 
-        // Load arena images
-        loadImage('floor_image', 'images/Arena/Floor - Dirt 2 64x64.png');
-        loadImage('wall_image', 'images/Arena/Wall - Brick 2 64x64.png');
-
         //Load the game elements spritesheet
         const gameContext = GameContextHolder.scene;
         //gameContext.load.on(`filecomplete-multiatlas-${GameElementsSpritesheetKey}`, function (key, type, data) {

@@ -10,6 +10,12 @@ const ArenaManager = (function() {
         onDatabaseLoaded: function(definitions) {
             const scene = GameContextHolder.scene;
             
+            // TODO: fix these
+            // TODO: fix these
+            // TODO: fix these
+            scene.load.image('floor_image', 'images/Arena/TopDownDungeonPack/Floors/Floor - Dirt 2 64x64.png');
+            scene.load.image('wall_image', 'images/Arena/TopDownDungeonPack/Walls/Wall - Brick 2 64x64.png');
+            
             for (let i = 0; i < definitions.length; i++) {
                 const arenaDefinition = definitions[i];
                 const tiledJSONFileKey = arenaDefinition.TiledJSONFileKey;
