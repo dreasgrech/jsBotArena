@@ -200,14 +200,14 @@ const GameManager = (function() {
              //const ROBOT_CREATION_ITERATIONS = 2;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
                 RobotManager.addRobot(astarBot());
-                // //RobotManager.addRobot(keyBot());
-                // RobotManager.addRobot(keyBot());
-                // RobotManager.addRobot(doNothingBot());
-                // RobotManager.addRobot(shredder());
-                // RobotManager.addRobot(circleBot());
-                // RobotManager.addRobot(sittingBot());
-                // RobotManager.addRobot(followBot_followAngle());
-                // RobotManager.addRobot(followBot_followPosition());
+                //RobotManager.addRobot(keyBot());
+                RobotManager.addRobot(keyBot());
+                RobotManager.addRobot(doNothingBot());
+                RobotManager.addRobot(shredder());
+                RobotManager.addRobot(circleBot());
+                RobotManager.addRobot(sittingBot());
+                RobotManager.addRobot(followBot_followAngle());
+                RobotManager.addRobot(followBot_followPosition());
                 
 /*
                 RobotManager.addRobot(keyBot());

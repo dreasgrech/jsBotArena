@@ -134,6 +134,7 @@ const ArenaManager = (function() {
                         });
 
                         allSolidObstaclesMatterBodies.push(...matterBodies);
+                        console.log(matterBodies);
                     }
 
                     // Add all the solid-obstacles bodies to the arena bodies collection
