@@ -256,7 +256,7 @@ const astarBot = function() {
             const gridWidth_numberOfCells = Math.floor(gameWidth / gridCellSizePixels_X);
             const gridHeight_numberOfCells = Math.floor(gameHeight / gridCellSizePixels_Y);
             pfGrid = new PF.Grid(gridWidth_numberOfCells, gridHeight_numberOfCells);
-            Logger.log(pfGrid, gridCellSizePixels_X, gridCellSizePixels_Y, gridWidth_numberOfCells, gridHeight_numberOfCells);
+            // Logger.log(pfGrid, gridCellSizePixels_X, gridCellSizePixels_Y, gridWidth_numberOfCells, gridHeight_numberOfCells);
             
             cornersGridCellIndices.push([1, 1]); // top-left
             cornersGridCellIndices.push([gridWidth_numberOfCells - 2, 1]); // top-right
