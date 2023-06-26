@@ -90,7 +90,14 @@ const GameManager = (function() {
         // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
         //gameContext.matter.world.setBounds();
 
-        ArenaManager.loadArena(Arenas.BrownLevel);
+        ArenaManager.loadArena(Arenas.BrownLevel, function(){
+            for (let i = 0; i < objectsWith_create.length; i++) {
+                const toLoad = objectsWith_create[i];
+                toLoad.system_create();
+            }
+
+            gameManager.startRound();
+        });
         
         /*
         const map = gameContext.make.tilemap({ key: 'arena_json' });
@@ -128,12 +135,14 @@ const GameManager = (function() {
         //    console.log('anim complete!');
         //});
 
+/*
         for (let i = 0; i < objectsWith_create.length; i++) {
             const toLoad = objectsWith_create[i];
             toLoad.system_create();
         }
 
         gameManager.startRound();
+*/
     };
 
     //const FIXED_DELTA_TIME = 0.02; //50hz
@@ -191,18 +200,14 @@ const GameManager = (function() {
              //const ROBOT_CREATION_ITERATIONS = 2;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
                 RobotManager.addRobot(astarBot());
-                //RobotManager.addRobot(keyBot());
-/*
-                RobotManager.addRobot(keyBot());
-                RobotManager.addRobot(doNothingBot());
-                RobotManager.addRobot(shredder());
-                RobotManager.addRobot(circleBot());
-                RobotManager.addRobot(sittingBot());
-                RobotManager.addRobot(followBot_followAngle());
-                RobotManager.addRobot(followBot_followPosition());
-                RobotManager.addRobot(CornerGuardBot());
-                //RobotManager.addRobot(astarBot());
-*/
+                // //RobotManager.addRobot(keyBot());
+                // RobotManager.addRobot(keyBot());
+                // RobotManager.addRobot(doNothingBot());
+                // RobotManager.addRobot(shredder());
+                // RobotManager.addRobot(circleBot());
+                // RobotManager.addRobot(sittingBot());
+                // RobotManager.addRobot(followBot_followAngle());
+                // RobotManager.addRobot(followBot_followPosition());
                 
 /*
                 RobotManager.addRobot(keyBot());
