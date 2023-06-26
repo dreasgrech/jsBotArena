@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.10.1" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="64" tileheight="64" infinite="0" nextlayerid="3" nextobjectid="1">
  <editorsettings>
-  <export target="arena_map.json" format="json"/>
+  <export target="TiledArenas/arena_map.json" format="json"/>
  </editorsettings>
  <tileset firstgid="1" name="Walls" tilewidth="64" tileheight="64" tilecount="48" columns="8">
-  <image source="images/Wall - Brick 2 64x64.png" width="512" height="384"/>
+  <image source="../../images/Arena/Wall - Brick 2 64x64.png" width="512" height="384"/>
   <tile id="0">
    <properties>
     <property name="collides" type="bool" value="true"/>
@@ -247,7 +247,7 @@
   </tile>
  </tileset>
  <tileset firstgid="49" name="Floor" tilewidth="64" tileheight="64" tilecount="48" columns="8">
-  <image source="images/Floor - Dirt 2 64x64.png" width="512" height="384"/>
+  <image source="../../images/Arena/Floor - Dirt 2 64x64.png" width="512" height="384"/>
  </tileset>
  <layer id="1" name="Walls Layer" width="16" height="16">
   <data encoding="csv">

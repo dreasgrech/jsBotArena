@@ -2,8 +2,8 @@
   {
     "Name": "Brown Level",
     "EnumKey": "BrownLevel",
-    "TiledJSONFileKey": "arena_json",
-    "TiledJSONFile": "arena_map.json",
+    "TiledJSONFileKey": "brown_arena_json",
+    "TiledJSONFile": "TiledArenas/brown_arena.json",
     "TiledJSONFilePhaserKey": "arena_map",
     "Floors Layers": [
       {
