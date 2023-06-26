@@ -1,0 +1,24 @@
+﻿[
+  {
+    "Name": "Brown Level",
+    "EnumKey": "BrownLevel",
+    "TiledJSONFileKey": "arena_json",
+    "TiledJSONFile": "arena_map.json",
+    "TiledJSONFilePhaserKey": "arena_map",
+    "Floors Layers": [
+      {
+        "TilesetName": "Floor",
+        "TilesetKey": "floor_image",
+        "TilesetLayerID": "Floor Layer"
+      }
+    ],
+    "Solid-Obstacles Layers": [
+      {
+        "TilesetName": "Walls",
+        "TilesetKey": "wall_image",
+        "TilesetLayerID": "Walls Layer"
+      }
+    ],
+    "Pit-Obstacles Layers": [ ]
+  }
+]

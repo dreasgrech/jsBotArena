@@ -8,11 +8,14 @@ const GameManager = (function() {
     let roundRunning = false;
 
     const objectsWith_preload = [
-        RaycastManager,
+        // Load the databases first so that their resources are available to the managers
         ImageDatabase,
         ProjectilesDatabase,
         AnimationSpritesDatabase,
         RobotPartsDatabase,
+        ArenasDatabase,
+        
+        RaycastManager,
         AnimationManager,
         RobotMatterFactory,
         ProjectileManager
@@ -20,7 +23,6 @@ const GameManager = (function() {
 
     const objectsWith_create = [
         TweakPaneManager,
-        AnimationSpritesDatabase,
         ProjectileManager,
         AnimationManager,
         //RobotMatterFactory,
@@ -73,7 +75,7 @@ const GameManager = (function() {
 
         //gameContext.matter.set60Hz();
 
-        gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
+        //gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
 
         for (let i = 0; i < objectsWith_preload.length; i++) {
             const toLoad = objectsWith_preload[i];
@@ -88,16 +90,19 @@ const GameManager = (function() {
         // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
         //gameContext.matter.world.setBounds();
 
+        ArenaManager.loadArena(Arenas.BrownLevel);
+        
+        /*
         const map = gameContext.make.tilemap({ key: 'arena_json' });
         const mapWidthInPixels = map.widthInPixels;
         const mapHeightInPixels = map.heightInPixels;
         const mapTileHeightInPixels = map.tileHeight;
         const mapTileWidthInPixels = map.tileWidth;
+        
         GameSetup.width = mapWidthInPixels;
         GameSetup.height = mapHeightInPixels;
         GameSetup.tileWidth = mapTileWidthInPixels;
         GameSetup.tileHeight = mapTileHeightInPixels;
-        Logger.log(map);
 
         const floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
         const wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
@@ -114,6 +119,7 @@ const GameManager = (function() {
         });
 
         PhysicsBodiesManager.addArenaPhysicsBodies(CollisionCategories.Arena, matterBodies, false); // Add all the bodies from the arena to the arena bodies collection
+        */
 
         // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
 
