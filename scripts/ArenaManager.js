@@ -60,25 +60,17 @@ const ArenaManager = (function() {
             const tiledJSONFile = arenaDefinition.TiledJSONFile;
             const tiledJSONFileKey = tiledJSONFile;
             
-            scene.load.once(`filecomplete-tilemapJSON-${tiledJSONFileKey}`, function(key, type, data) {
-                
-                // const tilesetsDefinitionFromCache = scene.cache.tilemap.get(tiledJSONFileKey).data.tilesets;
-                // console.log(tilesetsDefinitionFromCache);
-
+            scene.load.once(`${Phaser.Loader.Events.FILE_COMPLETE}-tilemapJSON-${tiledJSONFileKey}`, function(key, type, data) {
+                // Create the tilemap
                 const map = scene.make.tilemap({ key: tiledJSONFileKey });
-                //console.log(map);
-                const mapWidthInPixels = map.widthInPixels;
-                const mapHeightInPixels = map.heightInPixels;
-                const mapTileHeightInPixels = map.tileHeight;
-                const mapTileWidthInPixels = map.tileWidth;
-
-                // TODO: Remove these from here
-                GameSetup.width = mapWidthInPixels;
-                GameSetup.height = mapHeightInPixels;
-                GameSetup.tileWidth = mapTileWidthInPixels;
-                GameSetup.tileHeight = mapTileHeightInPixels;
-
                 
+                // TODO: Remove these from here
+                GameSetup.width = map.widthInPixels;
+                GameSetup.height = map.heightInPixels;
+                GameSetup.tileWidth = map.tileHeight;
+                GameSetup.tileHeight = map.tileWidth;
+
+                // Queue up all the images for all the tilesets needed for this arena's tilemap
                 const tilesetDefinitions = data.tilesets;
                 const tilesetDefinitionsLength = tilesetDefinitions.length;
                 for (let i = 0; i < tilesetDefinitionsLength; i++) {
@@ -95,7 +87,7 @@ const ArenaManager = (function() {
                  */
                 const onAllTilesetsImagesFinishedLoading = function() {
                     // Remove the listener since we're done with it now
-                    scene.load.removeListener('complete', onAllTilesetsImagesFinishedLoading);
+                    scene.load.removeListener(Phaser.Loader.Events.COMPLETE, onAllTilesetsImagesFinishedLoading);
                     
                     // Create the tileset images so that they can be used by the layers
                     const loadedTilesets = {};
@@ -140,11 +132,12 @@ const ArenaManager = (function() {
                     // Add all the solid-obstacles bodies to the arena bodies collection
                     PhysicsBodiesManager.addArenaPhysicsBodies(CollisionCategories.Arena, allSolidObstaclesMatterBodies, false); // Add all the bodies from the arena to the arena bodies collection
                     
+                    // We're now completely done loading the arena
                     arenaFinishedLoadingCallback();
                 };
 
                 // Hook up the callback for when all the tilesets images have finished loading
-                scene.load.on('complete', onAllTilesetsImagesFinishedLoading);
+                scene.load.on(Phaser.Loader.Events.COMPLETE, onAllTilesetsImagesFinishedLoading);
                 
                 // Start the loader so that it loads the tileset images
                 scene.load.start();
