@@ -12,6 +12,7 @@ const PhysicsHelperFunctions = (function() {
         // Andreas: Matter physics does not support tilemap collisions (which is what the arena is made up of).
         // So I created this method with the help of ChatGPT4 which converts the tiles into matter bodies.
         createMatterBodiesFromTilemapLayer: function({ layer, collisionCategory, collidesWith }) {
+            const scene = GameContextHolder.scene;
             const matterBodies = [];
             layer.forEachTile(tile => {
                 if (tile.properties.collides) {
@@ -19,7 +20,7 @@ const PhysicsHelperFunctions = (function() {
                     const y = tile.getCenterY();
                     const w = tile.width;
                     const h = tile.height;
-                    const body = GameContextHolder.scene.matter.add.rectangle(x, y, w, h, { isStatic: true });
+                    const body = scene.matter.add.rectangle(x, y, w, h, { isStatic: true });
                     setCollisionProperties({
                         physicsObject: body,
                         group: 0,
