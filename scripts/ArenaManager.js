@@ -12,9 +12,10 @@ const ArenaManager = (function() {
      * @param tilemap {Phaser.Tilemaps.Tilemap}
      * @return {Phaser.Tilemaps.TilemapLayer}
      */
-    const createTiledLayer = function(layerDefinition, loadedTilesets, tilemap) {
-        const tilesetName = layerDefinition.TiledLayerName;
-        const usedTilesetsNames = layerDefinition.UsedTilesets;
+    //const createTiledLayer = function(layerDefinition, loadedTilesets, tilemap) {
+    const createTiledLayer = function(tiledLayerName, usedTilesetsNames, loadedTilesets, tilemap) {
+        // const tilesetName = layerDefinition.TiledLayerName;
+        // const usedTilesetsNames = layerDefinition.UsedTilesets;
         const usedTilesets = [];
         for (let j = 0; j < usedTilesetsNames.length; j++) {
             const usedTilesetName = usedTilesetsNames[j];
@@ -23,9 +24,10 @@ const ArenaManager = (function() {
             usedTilesets.push(tilesetImage);
         }
 
-        const tilemapLayer = tilemap.createLayer(tilesetName, usedTilesets);
+        // const tilemapLayer = tilemap.createLayer(tilesetName, usedTilesets);
+        const tilemapLayer = tilemap.createLayer(tiledLayerName, usedTilesets);
         return tilemapLayer;
-    }
+    };
     
     const arenaManager = {
         system_preload: function() {
@@ -67,9 +69,9 @@ const ArenaManager = (function() {
                 // TODO: Remove these from here
                 GameSetup.width = map.widthInPixels;
                 GameSetup.height = map.heightInPixels;
-                GameSetup.tileWidth = map.tileHeight;
-                GameSetup.tileHeight = map.tileWidth;
-
+                GameSetup.tileWidth = map.tileWidth;
+                GameSetup.tileHeight = map.tileHeight;
+                
                 // Queue up all the images for all the tilesets needed for this arena's tilemap
                 const tilesetDefinitions = data.tilesets;
                 const tilesetDefinitionsLength = tilesetDefinitions.length;
@@ -89,7 +91,7 @@ const ArenaManager = (function() {
                     // Remove the listener since we're done with it now
                     scene.load.removeListener(Phaser.Loader.Events.COMPLETE, onAllTilesetsImagesFinishedLoading);
                     
-                    // Create the tileset images so that they can be used by the layers
+                    // First create the tileset images so that they can be used by the layers
                     const loadedTilesets = {};
                     for (let i = 0; i < tilesetDefinitionsLength; i++) {
                         const tilesetDefinition = tilesetDefinitions[i];
@@ -103,12 +105,26 @@ const ArenaManager = (function() {
                             tilesetImage: tilesetImage
                         };
                     }
+                    
+                    /*New file format parsing**********************************/
+                    // const layersDefinitions = arenaDefinition["Layers"];
+                    // for (let i = 0; i < layersDefinitions.length; i++) {
+                    //     const layerDefinition = layersDefinitions[i];
+                    // }
+                    
+                    /**********************************************************/
 
                     // Create the floors layers
                     const floorsLayersDefinitions = arenaDefinition["Floors Layers"];
                     for (let i = 0; i < floorsLayersDefinitions.length; i++) {
                         const layerDefinition = floorsLayersDefinitions[i];
-                        createTiledLayer(layerDefinition, loadedTilesets, map);
+                        // createTiledLayer(layerDefinition, loadedTilesets, map);
+                        createTiledLayer(
+                            layerDefinition.TiledLayerName, 
+                            layerDefinition.UsedTilesetsNames,
+                            loadedTilesets, 
+                            map
+                        );
                     }
 
                     // Create the solid-obstacles layers
@@ -116,7 +132,12 @@ const ArenaManager = (function() {
                     const solidObstaclesLayersDefinitions = arenaDefinition["Solid-Obstacles Layers"];
                     for (let i = 0; i < solidObstaclesLayersDefinitions.length; i++) {
                         const layerDefinition = solidObstaclesLayersDefinitions[i];
-                        const solidObstaclesLayer = createTiledLayer(layerDefinition, loadedTilesets, map);
+                        // const solidObstaclesLayer = createTiledLayer(layerDefinition, loadedTilesets, map);
+                        const solidObstaclesLayer = createTiledLayer(
+                            layerDefinition.TiledLayerName,
+                            layerDefinition.UsedTilesetsNames,
+                            loadedTilesets, 
+                            map);
 
                         // Create matter bodies from the solid-obstacles layer
                         const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({

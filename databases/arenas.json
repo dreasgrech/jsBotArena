@@ -6,17 +6,17 @@
     "Floors Layers": [
       {
         "TiledLayerName": "Floor Layer",
-        "UsedTilesets": ["Floor", "Walls", "Glass", "Grass", "Water"]
+        "UsedTilesetsNames": ["Floor", "Walls", "Glass", "Grass", "Water"]
       }
     ],
     "Solid-Obstacles Layers": [
       {
         "TiledLayerName": "Walls Layer",
-        "UsedTilesets": ["Walls"]
+        "UsedTilesetsNames": ["Walls"]
       },
       {
         "TiledLayerName": "Rooms Layer",
-        "UsedTilesets": ["Brick"]
+        "UsedTilesetsNames": ["Brick"]
       }
     ],
     "Pit-Obstacles Layers": [ ]
@@ -28,17 +28,17 @@
     "Floors Layers": [
       {
         "TiledLayerName": "Floor Layer",
-        "UsedTilesets": ["Floor", "Walls", "Glass", "Grass", "Water"]
+        "UsedTilesetsNames": ["Floor", "Walls", "Glass", "Grass", "Water"]
       }
     ],
     "Solid-Obstacles Layers": [
       {
         "TiledLayerName": "Walls Layer",
-        "UsedTilesets": ["Walls"]
+        "UsedTilesetsNames": ["Walls"]
       },
       {
         "TiledLayerName": "Rooms Layer",
-        "UsedTilesets": ["Brick"]
+        "UsedTilesetsNames": ["Brick"]
       }
     ],
     "Pit-Obstacles Layers": [ ]

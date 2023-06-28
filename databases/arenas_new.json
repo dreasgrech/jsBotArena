@@ -1,0 +1,21 @@
+﻿[
+  {
+    "Name": "Brown Level",
+    "EnumKey": "BrownLevel",
+    "TiledJSONFile": "TiledArenas/brown_arena.json",
+    "Layers": [
+      {
+        "TiledLayerName": "Floor Layer",
+        "UsedTilesetsNames": ["Floor", "Walls", "Glass", "Grass", "Water"]
+      },
+      {
+        "TiledLayerName": "Walls Layer",
+        "UsedTilesetsNames": ["Walls"]
+      },
+      {
+        "TiledLayerName": "Rooms Layer",
+        "UsedTilesetsNames": ["Brick"]
+      }
+    ]
+  }
+]
