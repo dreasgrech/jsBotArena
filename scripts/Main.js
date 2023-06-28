@@ -90,7 +90,7 @@ const GameManager = (function() {
         // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
         //gameContext.matter.world.setBounds();
 
-        // const arenaToLoad = Arenas.BrownLevel;
+        //const arenaToLoad = Arenas.BrownLevel;
         const arenaToLoad = Arenas.BridgeLevel;
         ArenaManager.loadArena(arenaToLoad, function(){
             for (let i = 0; i < objectsWith_create.length; i++) {
