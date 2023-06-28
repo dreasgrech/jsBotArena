@@ -15,11 +15,11 @@ const PhysicsHelperFunctions = (function() {
          * @param layer
          * @param collisionCategory
          * @param collidesWith
-         * @return {*[]}
+         * @return {MatterJS.BodyType[]}
          */
         createMatterBodiesFromTilemapLayer: function({ layer, collisionCategory, collidesWith }) {
             const scene = GameContextHolder.scene;
-            const matterBodies = [];
+            /** @type {MatterJS.BodyType[]} */const matterBodies = [];
             layer.forEachTile(tile => {
                 if (!tile.properties.collides) {
                     return;

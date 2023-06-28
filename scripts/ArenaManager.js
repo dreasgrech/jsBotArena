@@ -32,7 +32,7 @@ const ArenaManager = (function() {
         return tilemapLayer;
     };
 
-    const identifyTilesetsUsed = function(mapDataFromJSONFile) {
+    const getLayersWithUsedTilesetsNamesFromTiledJSONData = function(mapDataFromJSONFile) {
         // Sort the tilesets by firstgid
         let tilesets = mapDataFromJSONFile.tilesets.sort((a, b) => a.firstgid - b.firstgid);
 
@@ -128,7 +128,7 @@ const ArenaManager = (function() {
                     scene.load.image(tilesetName, tilesetImageRelativeUrl);
                 }
                 
-                    /**
+                /**
                  * Callback for when all the tilesets images have finished loading
                  */
                 const onAllTilesetsImagesFinishedLoading = function() {
@@ -143,7 +143,6 @@ const ArenaManager = (function() {
 
                         // Create the tileset image
                         const tilesetImage = map.addTilesetImage(tilesetName);
-                        // console.log(tilesetImage.tileProperties);
 
                         // Save a reference to the tileset image so that it can be used by the layers
                         loadedTilesets[tilesetName] = {
@@ -152,32 +151,31 @@ const ArenaManager = (function() {
                     }
                     
                     console.log("All loaded tilesets:", loadedTilesets);
-                    
-                    const layersWithUsedTilesetsNames = identifyTilesetsUsed(dataFromJSONFile);
-                    console.log(layersWithUsedTilesetsNames);
 
                     const allArenaObstaclesMatterBodies = [];
-                    const layersDefinitions = arenaDefinitionFromDB["Layers"];
-                    for (let i = 0; i < layersDefinitions.length; i++) {
-                        const layerDefinition = layersDefinitions[i];
-                        const tiledLayerName = layerDefinition.TiledLayerName;
-                        const usedTilesetsNames = layerDefinition.UsedTilesetsNames;
-                        // Create the Tiled layer
-                        //console.log("Creating tile layer", tiledLayerName, usedTilesetsNames);
-                        const tiledLayer = createTiledLayer(tiledLayerName, usedTilesetsNames, loadedTilesets, map);
-                        //console.log(tiledLayer);
+                        
+                    // TODO: Need to make sure that the layers are iterated in the correct order
+                    const layersWithUsedTilesetsNames = getLayersWithUsedTilesetsNamesFromTiledJSONData(dataFromJSONFile);
+                    console.log(layersWithUsedTilesetsNames);
+                    for(let layerName in layersWithUsedTilesetsNames) {
+                        if (!layersWithUsedTilesetsNames.hasOwnProperty(layerName)) {
+                            continue;
+                        }
+                        
+                        const usedTilesetsNames = layersWithUsedTilesetsNames[layerName];
+                        const tiledLayer = createTiledLayer(layerName, usedTilesetsNames, loadedTilesets, map);
+                        console.log(tiledLayer);
                         
                         // Create matter bodies for any collidable tiles
-                        // tiledLayer.forEachTile(tile =>{ });
                         const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
                             layer: tiledLayer,
                             collisionCategory: CollisionCategories.Arena,
                             collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
                         });
-                        
+
                         allArenaObstaclesMatterBodies.push(...matterBodies);
                     }
-                    
+
                     // Add all the arena obstacles bodies to the arena bodies collection
                     PhysicsBodiesManager.addArenaPhysicsBodies(
                         CollisionCategories.Arena, 
