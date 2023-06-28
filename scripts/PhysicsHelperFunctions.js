@@ -1,14 +1,13 @@
 "use strict";
 
 const PhysicsHelperFunctions = (function() {
-    const setCollisionProperties = function({ physicsObject, group, category, collidesWithCategories }) {
-        const collisionFilter = physicsObject.collisionFilter;
-        collisionFilter.group = group;
-        collisionFilter.category = category;
-        collisionFilter.mask = collidesWithCategories;
-    };
-
-    return {
+    const physicsHelperFunctions = {
+        setCollisionProperties : function({ physicsObject, group, category, collidesWithCategories }) {
+            const collisionFilter = physicsObject.collisionFilter;
+            collisionFilter.group = group;
+            collisionFilter.category = category;
+            collisionFilter.mask = collidesWithCategories;
+        },
         /**
          * Andreas: Matter physics does not support tilemap collisions (which is what the arena is made up of).
          * So I created this method with the help of ChatGPT4 which converts the tiles into matter bodies.
@@ -31,7 +30,7 @@ const PhysicsHelperFunctions = (function() {
                 const w = tile.width;
                 const h = tile.height;
                 const body = scene.matter.add.rectangle(x, y, w, h, { isStatic: true });
-                setCollisionProperties({
+                physicsHelperFunctions.setCollisionProperties({
                     physicsObject: body,
                     group: 0,
                     category: collisionCategory,
@@ -55,6 +54,7 @@ const PhysicsHelperFunctions = (function() {
                     faceColor: new Phaser.Display.Color(40, 39, 37, 255) // Color of colliding face edges
                 });
         },
-        setCollisionProperties: setCollisionProperties
     };
+    
+    return physicsHelperFunctions;
 }());

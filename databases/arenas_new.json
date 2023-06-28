@@ -6,7 +6,7 @@
     "Layers": [
       {
         "TiledLayerName": "Floor Layer",
-        "UsedTilesetsNames": ["Floor", "Walls", "Glass", "Grass", "Water"]
+        "UsedTilesetsNames": ["Floor", "Walls", "Glass", "Grass", "Water", "Brick"]
       },
       {
         "TiledLayerName": "Walls Layer",
@@ -17,5 +17,31 @@
         "UsedTilesetsNames": ["Brick"]
       }
     ]
-  }
+  },
+  {
+    "Name": "Bridge Level",
+    "EnumKey": "BridgeLevel",
+    "TiledJSONFile": "TiledArenas/bridge_arena.json",
+    "Layers": [
+      {
+        "TiledLayerName": "Walls Layer",
+        "UsedTilesetsNames": ["SmallTrees", "Brick", "Dirt", "Grass", "Walls", "Water"]
+      },
+      {
+        "TiledLayerName": "Trees Layer",
+        "UsedTilesetsNames": ["SmallTrees", "Brick", "Dirt", "Grass", "Walls", "Water"]
+      },
+      {
+        "TiledLayerName": "Grass Layer",
+        "UsedTilesetsNames": ["SmallTrees", "Brick", "Dirt", "Grass", "Walls", "Water"]
+      },{
+        "TiledLayerName": "Water Layer",
+        "UsedTilesetsNames": ["SmallTrees", "Brick", "Dirt", "Grass", "Walls", "Water"]
+      },
+      {
+        "TiledLayerName": "Bridge Layer",
+        "UsedTilesetsNames": ["Brick", "Dirt"]
+      }
+    ]
+  } 
 ]

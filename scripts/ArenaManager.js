@@ -14,12 +14,15 @@ const ArenaManager = (function() {
      */
     //const createTiledLayer = function(layerDefinition, loadedTilesets, tilemap) {
     const createTiledLayer = function(tiledLayerName, usedTilesetsNames, loadedTilesets, tilemap) {
-        // const tilesetName = layerDefinition.TiledLayerName;
-        // const usedTilesetsNames = layerDefinition.UsedTilesets;
         const usedTilesets = [];
         for (let j = 0; j < usedTilesetsNames.length; j++) {
             const usedTilesetName = usedTilesetsNames[j];
             const tilesetData = loadedTilesets[usedTilesetName];
+            if (tilesetData == null){
+                Logger.error(`Tileset "${usedTilesetName}" not found in loaded tilesets`, loadedTilesets);
+                throw "Please fix the tileset problem";
+            }
+            
             const tilesetImage = tilesetData.tilesetImage;
             usedTilesets.push(tilesetImage);
         }
@@ -99,6 +102,7 @@ const ArenaManager = (function() {
 
                         // Create the tileset image
                         const tilesetImage = map.addTilesetImage(tilesetName);
+                        // console.log(tilesetImage.tileProperties);
 
                         // Save a reference to the tileset image so that it can be used by the layers
                         loadedTilesets[tilesetName] = {
@@ -106,19 +110,43 @@ const ArenaManager = (function() {
                         };
                     }
                     
+                    console.log("All loaded tilesets:", loadedTilesets);
+                    
                     /*New file format parsing**********************************/
-                    // const layersDefinitions = arenaDefinition["Layers"];
-                    // for (let i = 0; i < layersDefinitions.length; i++) {
-                    //     const layerDefinition = layersDefinitions[i];
-                    // }
+                    const allArenaObstaclesMatterBodies = [];
+                    const layersDefinitions = arenaDefinition["Layers"];
+                    for (let i = 0; i < layersDefinitions.length; i++) {
+                        const layerDefinition = layersDefinitions[i];
+                        const tiledLayerName = layerDefinition.TiledLayerName;
+                        const usedTilesetsNames = layerDefinition.UsedTilesetsNames;
+                        // Create the Tiled layer
+                        console.log("Creating tile layer", tiledLayerName, usedTilesetsNames);
+                        const tiledLayer = createTiledLayer(tiledLayerName, usedTilesetsNames, loadedTilesets, map);
+                        
+                        // Create matter bodies for any collidable tiles
+                        // tiledLayer.forEachTile(tile =>{ });
+                        const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
+                            layer: tiledLayer,
+                            collisionCategory: CollisionCategories.Arena,
+                            collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
+                        });
+                        
+                        allArenaObstaclesMatterBodies.push(...matterBodies);
+                    }
+                    
+                    // Add all the arena obstacles bodies to the arena bodies collection
+                    PhysicsBodiesManager.addArenaPhysicsBodies(
+                        CollisionCategories.Arena, 
+                        allArenaObstaclesMatterBodies, 
+                        false);
                     
                     /**********************************************************/
 
+                    /*
                     // Create the floors layers
                     const floorsLayersDefinitions = arenaDefinition["Floors Layers"];
                     for (let i = 0; i < floorsLayersDefinitions.length; i++) {
                         const layerDefinition = floorsLayersDefinitions[i];
-                        // createTiledLayer(layerDefinition, loadedTilesets, map);
                         createTiledLayer(
                             layerDefinition.TiledLayerName, 
                             layerDefinition.UsedTilesetsNames,
@@ -132,7 +160,6 @@ const ArenaManager = (function() {
                     const solidObstaclesLayersDefinitions = arenaDefinition["Solid-Obstacles Layers"];
                     for (let i = 0; i < solidObstaclesLayersDefinitions.length; i++) {
                         const layerDefinition = solidObstaclesLayersDefinitions[i];
-                        // const solidObstaclesLayer = createTiledLayer(layerDefinition, loadedTilesets, map);
                         const solidObstaclesLayer = createTiledLayer(
                             layerDefinition.TiledLayerName,
                             layerDefinition.UsedTilesetsNames,
@@ -152,6 +179,7 @@ const ArenaManager = (function() {
 
                     // Add all the solid-obstacles bodies to the arena bodies collection
                     PhysicsBodiesManager.addArenaPhysicsBodies(CollisionCategories.Arena, allSolidObstaclesMatterBodies, false); // Add all the bodies from the arena to the arena bodies collection
+                    */
                     
                     // We're now completely done loading the arena
                     arenaFinishedLoadingCallback();

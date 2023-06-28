@@ -497,8 +497,13 @@
  </tileset>
  <tileset firstgid="193" name="Water" tilewidth="64" tileheight="64" tilecount="25" columns="5">
   <image source="../../images/Arena/fang/fang_spritesheet.png" width="320" height="320"/>
+  <tile id="23">
+   <properties>
+    <property name="collides" type="bool" value="true"/>
+   </properties>
+  </tile>
  </tileset>
- <tileset firstgid="218" name="CraftPix_FreeTopDownTreesPixelArt_Spritesheet" tilewidth="64" tileheight="64" tilecount="25" columns="5">
+ <tileset firstgid="218" name="SmallTrees" tilewidth="64" tileheight="64" tilecount="25" columns="5">
   <image source="../../images/Arena/CraftPix_FreeTopDownTreesPixelArt/CraftPix_FreeTopDownTreesPixelArt_Spritesheet.png" width="320" height="320"/>
  </tileset>
  <layer id="4" name="Water Layer" width="16" height="16">
@@ -509,10 +514,10 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,216,216,216,216,216,216,216,216,216,216,216,216,216,216,0,
-0,216,216,216,216,216,216,216,216,216,216,216,216,216,216,0,
-0,216,216,216,216,216,216,216,216,216,216,216,216,216,216,0,
-0,216,216,216,216,216,216,216,216,216,216,216,216,216,216,0,
+0,216,216,216,216,216,0,0,0,0,216,216,216,216,216,0,
+0,216,216,216,216,216,0,0,0,0,216,216,216,216,216,0,
+0,216,216,216,216,216,0,0,0,0,216,216,216,216,216,0,
+0,216,216,216,216,216,0,0,0,0,216,216,216,216,216,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
