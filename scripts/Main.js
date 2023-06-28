@@ -90,61 +90,24 @@ const GameManager = (function() {
         // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
         //gameContext.matter.world.setBounds();
 
+        // Load the arena asynchronously
         //const arenaToLoad = Arenas.BrownLevel;
         const arenaToLoad = Arenas.BridgeLevel;
         ArenaManager.loadArena(arenaToLoad, function(){
+            // Call all the system_create functions that are hooked
             for (let i = 0; i < objectsWith_create.length; i++) {
                 const toLoad = objectsWith_create[i];
                 toLoad.system_create();
             }
 
+            // Start the round
             gameManager.startRound();
         });
         
-        /*
-        const map = gameContext.make.tilemap({ key: 'arena_json' });
-        const mapWidthInPixels = map.widthInPixels;
-        const mapHeightInPixels = map.heightInPixels;
-        const mapTileHeightInPixels = map.tileHeight;
-        const mapTileWidthInPixels = map.tileWidth;
-        
-        GameSetup.width = mapWidthInPixels;
-        GameSetup.height = mapHeightInPixels;
-        GameSetup.tileWidth = mapTileWidthInPixels;
-        GameSetup.tileHeight = mapTileHeightInPixels;
-
-        const floorTilesetImage = map.addTilesetImage('Floor', 'floor_image');
-        const wallTilesetImage = map.addTilesetImage('Walls', 'wall_image');
-
-        const floorLayer = map.createLayer('Floor Layer', floorTilesetImage);
-        const wallsLayer = map.createLayer('Walls Layer', wallTilesetImage);
-
-        // Set collision on the walls
-        // wallsLayer.setCollisionByProperty({ collides: true });
-        const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
-            layer: wallsLayer,
-            collisionCategory: CollisionCategories.Arena,
-            collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
-        });
-
-        PhysicsBodiesManager.addArenaPhysicsBodies(CollisionCategories.Arena, matterBodies, false); // Add all the bodies from the arena to the arena bodies collection
-        */
-
-        // PhysicsHelperFunctions.showDebugLayerCollisions(wallsLayer);
-
         gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
         //gameContext.anims.on('stop', function() { // doesnt work
         //    console.log('anim complete!');
         //});
-
-/*
-        for (let i = 0; i < objectsWith_create.length; i++) {
-            const toLoad = objectsWith_create[i];
-            toLoad.system_create();
-        }
-
-        gameManager.startRound();
-*/
     };
 
     //const FIXED_DELTA_TIME = 0.02; //50hz
