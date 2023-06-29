@@ -4,12 +4,16 @@
         "."
     ],
     "fileStates": {
+        "": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "bridge_arena.tmx": {
             "scale": 1.1689453125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 512.4277360066834,
-                "y": 512.4277360066833
+                "x": 505.5839598997494,
+                "y": 505.58395989974935
             }
         },
         "bridge_arena.tmx#Brick": {
@@ -34,8 +38,8 @@
             "scale": 1.1689453125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 512.4277360066834,
-                "y": 512.4277360066833
+                "x": 511.57226399331654,
+                "y": 511.5722639933166
             }
         },
         "brown_arena_tiledmap.tmx#Brick": {
@@ -60,8 +64,8 @@
             "scale": 1.1689453125,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 512.4277360066834,
-                "y": 512.4277360066833
+                "x": 511.57226399331654,
+                "y": 511.5722639933166
             }
         },
         "green_arena_tiledmap.tmx#Floor": {
@@ -71,15 +75,19 @@
             "scaleInDock": 1
         }
     },
+    "last.imagePath": "C:/Users/Administrator/Documents/jsBotArena/images/Arena/fang",
     "openFiles": [
-        "bridge_arena.tmx",
-        "brown_arena_tiledmap.tmx",
-        "green_arena_tiledmap.tmx"
+        "bridge_arena.tmx"
     ],
     "project": "jsBotArena-TiledProject.tiled-project",
+    "property.type": "CollisionType",
     "recentFiles": [
+        "bridge_arena.tmx",
         "green_arena_tiledmap.tmx",
-        "brown_arena_tiledmap.tmx",
-        "bridge_arena.tmx"
-    ]
+        "brown_arena_tiledmap.tmx"
+    ],
+    "tileset.tileSize": {
+        "height": 64,
+        "width": 64
+    }
 }

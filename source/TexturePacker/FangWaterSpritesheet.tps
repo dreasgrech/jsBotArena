@@ -34,7 +34,7 @@
         <key>dataFormat</key>
         <string>phaser</string>
         <key>textureFileName</key>
-        <filename>../../images/Arena/fang/fang_spritesheet.png</filename>
+        <filename>../../images/Arena/fang/fang_water_spritesheet.png</filename>
         <key>flipPVR</key>
         <false/>
         <key>pvrQualityLevel</key>
@@ -124,7 +124,7 @@
             <key>json</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>../../images/Arena/fang/fang_spritesheet.json</filename>
+                <filename>../../images/Arena/fang/fang_water_spritesheet.json</filename>
             </struct>
         </map>
         <key>multiPackMode</key>
@@ -173,18 +173,6 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
-            <key type="filename">images/Arena/fang/Grass_1.png</key>
-            <key type="filename">images/Arena/fang/Grass_2.png</key>
-            <key type="filename">images/Arena/fang/Ground_1.png</key>
-            <key type="filename">images/Arena/fang/Ground_2.png</key>
-            <key type="filename">images/Arena/fang/Ground_3.png</key>
-            <key type="filename">images/Arena/fang/Ground_4.png</key>
-            <key type="filename">images/Arena/fang/Ground_5.png</key>
-            <key type="filename">images/Arena/fang/Ground_6.png</key>
-            <key type="filename">images/Arena/fang/Ground_7.png</key>
-            <key type="filename">images/Arena/fang/Rocks_1.png</key>
-            <key type="filename">images/Arena/fang/Rocks_2.png</key>
-            <key type="filename">images/Arena/fang/Rocks_3.png</key>
             <key type="filename">images/Arena/fang/Water_1.png</key>
             <key type="filename">images/Arena/fang/Water_10.png</key>
             <key type="filename">images/Arena/fang/Water_11.png</key>
@@ -218,18 +206,6 @@
             <struct type="SpriteSheet">
                 <key>files</key>
                 <array>
-                    <filename>images/Arena/fang/Grass_1.png</filename>
-                    <filename>images/Arena/fang/Grass_2.png</filename>
-                    <filename>images/Arena/fang/Ground_1.png</filename>
-                    <filename>images/Arena/fang/Ground_2.png</filename>
-                    <filename>images/Arena/fang/Ground_3.png</filename>
-                    <filename>images/Arena/fang/Ground_4.png</filename>
-                    <filename>images/Arena/fang/Ground_5.png</filename>
-                    <filename>images/Arena/fang/Ground_6.png</filename>
-                    <filename>images/Arena/fang/Ground_7.png</filename>
-                    <filename>images/Arena/fang/Rocks_1.png</filename>
-                    <filename>images/Arena/fang/Rocks_2.png</filename>
-                    <filename>images/Arena/fang/Rocks_3.png</filename>
                     <filename>images/Arena/fang/Water_1.png</filename>
                     <filename>images/Arena/fang/Water_10.png</filename>
                     <filename>images/Arena/fang/Water_11.png</filename>

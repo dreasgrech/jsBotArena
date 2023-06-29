@@ -2,6 +2,20 @@
 
 const Arenas = { };
 
+/**
+ * These fields must match the Enum custom property defined in the Tiled project
+ * @type {{
+ * Nothing: number,
+ * Water: number, 
+ * HighOpaqueObstacle: number
+ * }}
+ */
+const TileCollisionTypes = {
+    Nothing: 0,
+    HighOpaqueObstacle: 1,
+    Water: 2,
+};
+
 const ArenaManager = (function() {
     let arenaDefinitionsFromDB = {};
 
@@ -217,6 +231,9 @@ const ArenaManager = (function() {
                         // });
 
                         tiledLayer.forEachTile(tile => {
+                            
+                            const tileCollisionType = tile.properties.collision;
+                            console.log("Tile collision type:", tileCollisionType);
                             
                             const tileRequiresCollision = tile.properties.collides;
                             if (!tileRequiresCollision) {

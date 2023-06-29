@@ -9,10 +9,10 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 216, 216, 216, 216, 216, 0, 0, 0, 0, 216, 216, 216, 216, 216, 0,
-            0, 216, 216, 216, 216, 216, 0, 0, 0, 0, 216, 216, 216, 216, 216, 0,
-            0, 216, 216, 216, 216, 216, 0, 0, 0, 0, 216, 216, 216, 216, 216, 0,
-            0, 216, 216, 216, 216, 216, 0, 0, 0, 0, 216, 216, 216, 216, 216, 0,
+            0, 203, 203, 203, 203, 203, 0, 0, 0, 0, 199, 199, 199, 199, 199, 0,
+            0, 203, 203, 203, 203, 203, 0, 0, 0, 0, 199, 199, 199, 199, 199, 0,
+            0, 203, 203, 203, 203, 203, 0, 0, 0, 0, 199, 199, 199, 199, 199, 0,
+            0, 203, 203, 203, 203, 203, 0, 0, 0, 0, 199, 199, 199, 199, 199, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -59,16 +59,16 @@
         {
          "data":[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 224, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 223, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 233, 0, 0, 0, 0, 0, 0, 0, 0, 226, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 232, 0, 0, 0, 0, 0, 0, 0, 0, 225, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 240, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 239, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -624,6 +624,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -633,6 +639,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -642,6 +654,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -651,6 +669,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -660,6 +684,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -669,6 +699,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -678,6 +714,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -687,6 +729,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -696,6 +744,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -705,6 +759,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -714,6 +774,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -723,6 +789,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -732,6 +804,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -741,6 +819,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -750,6 +834,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -759,6 +849,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 },
             
@@ -769,6 +865,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -778,6 +880,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -787,6 +895,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -796,6 +910,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -805,6 +925,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -814,6 +940,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -823,6 +955,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -832,6 +970,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -841,6 +985,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -850,6 +1000,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -859,6 +1015,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -868,6 +1030,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -877,6 +1045,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -886,6 +1060,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -895,6 +1075,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -904,6 +1090,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 },
             
@@ -914,6 +1106,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -923,6 +1121,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -932,6 +1136,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -941,6 +1151,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -950,6 +1166,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -959,6 +1181,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -968,6 +1196,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -977,6 +1211,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -986,6 +1226,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -995,6 +1241,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -1004,6 +1256,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -1013,6 +1271,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -1022,6 +1286,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -1031,6 +1301,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -1040,6 +1316,12 @@
                          "name":"collides",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":1
                         }]
                 }, 
                 {
@@ -1067,31 +1349,158 @@
          "tilewidth":64
         }, 
         {
-         "columns":5,
+         "columns":4,
          "firstgid":193,
-         "image":"..\/images\/Arena\/fang\/fang_spritesheet.png",
-         "imageheight":320,
-         "imagewidth":320,
+         "image":"..\/images\/Arena\/fang\/fang_water_spritesheet.png",
+         "imageheight":256,
+         "imagewidth":256,
          "margin":0,
          "name":"Water",
          "spacing":0,
-         "tilecount":25,
+         "tilecount":17,
          "tileheight":64,
          "tiles":[
                 {
-                 "id":23,
+                 "id":0,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
                         }]
+                }, 
+                {
+                 "id":1,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":2,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":3
+                }, 
+                {
+                 "id":4,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":5,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":6,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":7
+                }, 
+                {
+                 "id":8,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":9,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":10,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":11
+                }, 
+                {
+                 "id":12,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":13,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":14,
+                 "properties":[
+                        {
+                         "name":"collision",
+                         "propertytype":"CollisionType",
+                         "type":"int",
+                         "value":2
+                        }]
+                }, 
+                {
+                 "id":15
+                },
+            
+                {
+                 "id":23
                 }],
          "tilewidth":64
         }, 
         {
          "columns":5,
-         "firstgid":218,
+         "firstgid":217,
          "image":"..\/images\/Arena\/CraftPix_FreeTopDownTreesPixelArt\/CraftPix_FreeTopDownTreesPixelArt_Spritesheet.png",
          "imageheight":320,
          "imagewidth":320,

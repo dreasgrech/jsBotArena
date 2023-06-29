@@ -8,5 +8,17 @@
         "."
     ],
     "propertyTypes": [
+        {
+            "id": 1,
+            "name": "CollisionType",
+            "storageType": "int",
+            "type": "enum",
+            "values": [
+                "Nothing",
+                "HighOpaqueObstacle",
+                "Water"
+            ],
+            "valuesAsFlags": false
+        }
     ]
 }
