@@ -32,58 +32,58 @@ const ArenaManager = (function() {
         return tilemapLayer;
     };
 
-    const getLayersWithUsedTilesetsNamesFromTiledJSONData = function(mapDataFromJSONFile) {
-        // Sort the tilesets by firstgid
-        let tilesets = mapDataFromJSONFile.tilesets.sort((a, b) => a.firstgid - b.firstgid);
-
-        // Calculate the maximum tile ID once
-        let maxTileId = Math.max(...mapDataFromJSONFile.layers.flatMap(layer => layer.data));
-
-        // Create a lookup table that maps each tile ID to its tileset
-        let tilesetLookup = {};
-        const tilesetsLengthMinusOne = tilesets.length - 1;
-        for (let i = 0; i < tilesetsLengthMinusOne; i++) {
-            for (let j = tilesets[i].firstgid; j < tilesets[i+1].firstgid; j++) {
-                tilesetLookup[j] = tilesets[i].name;
-            }
-        }
-        // The last tileset goes up to the maximum tile ID
-        for (let j = tilesets[tilesetsLengthMinusOne].firstgid; j <= maxTileId; j++) {
-            tilesetLookup[j] = tilesets[tilesetsLengthMinusOne].name;
-        }
-
-        /**
-         * An object mapping each layer's name to an array of its used tileset names.
-         * @type {Object.<string, string[]>}
-         */
-        const layersWithTilesets = {};
-        const layersWithTilesets_flat = [];
-        /** @type {Set<string>} */ 
-        const layerTilesetNamesSet = new Set();
-        const mapDataLayers = mapDataFromJSONFile.layers;
-        const mapDataLayersLength = mapDataLayers.length;
-        console.log(mapDataLayers);
-        for (let i = 0; i < mapDataLayersLength; i++) {
-            const layer = mapDataLayers[i];
-            
-            // Go through each tile in the layer
-            layerTilesetNamesSet.clear();
-            for (/** @type {number} */ let tileId of layer.data) {
-                // Ignore empty tiles (ID 0)
-                if (tileId === 0) {
-                    continue;
-                }
-
-                // Find the tileset this tile belongs to using the lookup table
-                layerTilesetNamesSet.add(tilesetLookup[tileId]);
-            }
-
-            const layerTilesetNames = Array.from(layerTilesetNamesSet);
-            layersWithTilesets[layer.name] = layerTilesetNames;
-        }
-        
-        return layersWithTilesets;
-    };
+    // const getLayersWithUsedTilesetsNamesFromTiledJSONData = function(mapDataFromJSONFile) {
+    //     // Sort the tilesets by firstgid
+    //     let tilesets = mapDataFromJSONFile.tilesets.sort((a, b) => a.firstgid - b.firstgid);
+    //
+    //     // Calculate the maximum tile ID once
+    //     let maxTileId = Math.max(...mapDataFromJSONFile.layers.flatMap(layer => layer.data));
+    //
+    //     // Create a lookup table that maps each tile ID to its tileset
+    //     let tilesetLookup = {};
+    //     const tilesetsLengthMinusOne = tilesets.length - 1;
+    //     for (let i = 0; i < tilesetsLengthMinusOne; i++) {
+    //         for (let j = tilesets[i].firstgid; j < tilesets[i+1].firstgid; j++) {
+    //             tilesetLookup[j] = tilesets[i].name;
+    //         }
+    //     }
+    //     // The last tileset goes up to the maximum tile ID
+    //     for (let j = tilesets[tilesetsLengthMinusOne].firstgid; j <= maxTileId; j++) {
+    //         tilesetLookup[j] = tilesets[tilesetsLengthMinusOne].name;
+    //     }
+    //
+    //     /**
+    //      * An object mapping each layer's name to an array of its used tileset names.
+    //      * @type {Object.<string, string[]>}
+    //      */
+    //     const layersWithTilesets = {};
+    //     const layersWithTilesets_flat = [];
+    //     /** @type {Set<string>} */ 
+    //     const layerTilesetNamesSet = new Set();
+    //     const mapDataLayers = mapDataFromJSONFile.layers;
+    //     const mapDataLayersLength = mapDataLayers.length;
+    //     console.log(mapDataLayers);
+    //     for (let i = 0; i < mapDataLayersLength; i++) {
+    //         const layer = mapDataLayers[i];
+    //        
+    //         // Go through each tile in the layer
+    //         layerTilesetNamesSet.clear();
+    //         for (/** @type {number} */ let tileId of layer.data) {
+    //             // Ignore empty tiles (ID 0)
+    //             if (tileId === 0) {
+    //                 continue;
+    //             }
+    //
+    //             // Find the tileset this tile belongs to using the lookup table
+    //             layerTilesetNamesSet.add(tilesetLookup[tileId]);
+    //         }
+    //
+    //         const layerTilesetNames = Array.from(layerTilesetNamesSet);
+    //         layersWithTilesets[layer.name] = layerTilesetNames;
+    //     }
+    //    
+    //     return layersWithTilesets;
+    // };
     
     const arenaManager = {
         system_preload: function() {
@@ -154,22 +154,60 @@ const ArenaManager = (function() {
                         };
                     }
                     
-                    console.log("All loaded tilesets:", loadedTilesets);
-
-                    const allArenaObstaclesMatterBodies = [];
+                    // console.log("All loaded tilesets:", loadedTilesets);
                         
                     // TODO: Need to make sure that the layers are iterated in the correct order
-                    const layersWithUsedTilesetsNames = getLayersWithUsedTilesetsNamesFromTiledJSONData(dataFromJSONFile);
-                    console.log(layersWithUsedTilesetsNames);
-                    for(let layerName in layersWithUsedTilesetsNames) {
-                        if (!layersWithUsedTilesetsNames.hasOwnProperty(layerName)) {
-                            continue;
+                    // Sort the tilesets by firstgid
+                    let tilesets = dataFromJSONFile.tilesets.sort((a, b) => a.firstgid - b.firstgid);
+
+                    // Calculate the maximum tile ID once
+                    let maxTileId = Math.max(...dataFromJSONFile.layers.flatMap(layer => layer.data));
+
+                    // Create a lookup table that maps each tile ID to its tileset
+                    let tilesetLookup = {};
+                    const tilesetsLengthMinusOne = tilesets.length - 1;
+                    for (let i = 0; i < tilesetsLengthMinusOne; i++) {
+                        for (let j = tilesets[i].firstgid; j < tilesets[i+1].firstgid; j++) {
+                            tilesetLookup[j] = tilesets[i].name;
                         }
-                        
-                        const usedTilesetsNames = layersWithUsedTilesetsNames[layerName];
-                        const tiledLayer = createTiledLayer(layerName, usedTilesetsNames, loadedTilesets, map);
+                    }
+                    // The last tileset goes up to the maximum tile ID
+                    for (let j = tilesets[tilesetsLengthMinusOne].firstgid; j <= maxTileId; j++) {
+                        tilesetLookup[j] = tilesets[tilesetsLengthMinusOne].name;
+                    }
+                    
+                    const allArenaObstaclesMatterBodies = [];
+
+                    /** @type {Set<string>} */
+                    const layerTilesetNamesSet = new Set();
+                    const layersDefinitionsFromJSONFile = dataFromJSONFile.layers;
+                    const layersDefinitionsFromJSONFileLength = layersDefinitionsFromJSONFile.length;
+                    // console.log(layersDefinitionsFromJSONFile);
+                    for (let i = 0; i < layersDefinitionsFromJSONFileLength; i++) {
+                        const layerDefinitionFromJSONFile = layersDefinitionsFromJSONFile[i];
+
+                        // Go through each tile in the layer
+                        layerTilesetNamesSet.clear();
+                        /** @type {number[]} */
+                        const layerDefinitionFromJSONFileData = layerDefinitionFromJSONFile.data;
+                        const layerDefinitionFromJSONFileDataLength = layerDefinitionFromJSONFileData.length;
+                        for (let j = 0; j < layerDefinitionFromJSONFileDataLength; j++) {
+                            const tileId = layerDefinitionFromJSONFileData[j];
+                            
+                            // Ignore empty tiles (ID 0)
+                            if (tileId === 0) {
+                                continue;
+                            }
+
+                            // Find the tileset this tile belongs to using the lookup table
+                            layerTilesetNamesSet.add(tilesetLookup[tileId]);
+                        }
+
+                        const layerName = layerDefinitionFromJSONFile.name;
+                        const layerTilesetNames = Array.from(layerTilesetNamesSet);
+                        const tiledLayer = createTiledLayer(layerName, layerTilesetNames, loadedTilesets, map);
                         // console.log(tiledLayer);
-                        
+
                         // Create matter bodies for any collidable tiles
                         const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
                             layer: tiledLayer,
