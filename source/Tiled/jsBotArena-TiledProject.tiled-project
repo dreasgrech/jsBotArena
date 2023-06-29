@@ -10,12 +10,13 @@
     "propertyTypes": [
         {
             "id": 1,
-            "name": "CollisionType",
+            "name": "TileType",
             "storageType": "int",
             "type": "enum",
             "values": [
                 "Nothing",
-                "HighOpaqueObstacle",
+                "GenericWall",
+                "GenericFloor",
                 "Water"
             ],
             "valuesAsFlags": false

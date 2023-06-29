@@ -3,10 +3,20 @@
 const EnumHelpers = (function() {
     const enumHelpers = {
         // Usage: const directions = EnumHelpers.createEnum(['Up', 'Down', 'Left', 'Right']);
-        createEnum: function(values) {
+        createEnumWithStringValues: function(values) {
             const enumObject = {};
             for (const val of values) {
                 enumObject[val] = val;
+            }
+
+            return Object.freeze(enumObject);
+        },
+        // Usage: const directions = EnumHelpers.createEnum(['Up', 'Down', 'Left', 'Right']);
+        createEnumWithNumberValues: function(values) {
+            let currentValue = 0;
+            const enumObject = {};
+            for (const val of values) {
+                enumObject[val] = currentValue++;
             }
 
             return Object.freeze(enumObject);

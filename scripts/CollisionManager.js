@@ -135,6 +135,17 @@ const CollisionManager = (function() {
         // Save the collision so that the robots have access to it via their api
         saveCollision_RobotToArena(robotMatterBody, arenaMatterBody);
     };
+    
+    const handleCollision_RobotToArenaWater = function(matterBodyA, matterBodyB) {
+        const isBodyA_ArenaWater = matterBodyA.collisionFilter.category & CollisionCategories.Arena_Water;
+        const robotMatterBody = isBodyA_ArenaWater ? matterBodyB : matterBodyA;
+        const arenaWaterMatterBody = isBodyA_ArenaWater ? matterBodyA : matterBodyB;
+
+        // Logger.log("robot", robotMatterBody, "arena", arenaMatterBody);
+
+        // Save the collision so that the robots have access to it via their api
+        saveCollision_RobotToArena(robotMatterBody, arenaWaterMatterBody);
+    };
 
     // Projectile to Projectile
     const handleCollision_ProjectileToProjectile = function(projectileMatterBodyA, projectileMatterBodyB) {
@@ -178,6 +189,7 @@ const CollisionManager = (function() {
             // collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectileSensor, CollisionCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.Arena)] = handleCollision_RobotToArena;
+            collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.Arena_Water)] = handleCollision_RobotToArenaWater;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectile, CollisionCategories.RobotProjectile)] = handleCollision_ProjectileToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectile, CollisionCategories.Arena)] = handleCollision_ProjectileToArena;
 

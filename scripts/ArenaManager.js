@@ -2,19 +2,11 @@
 
 const Arenas = { };
 
-/**
- * These fields must match the Enum custom property defined in the Tiled project
- * @type {{
- * Nothing: number,
- * Water: number, 
- * HighOpaqueObstacle: number
- * }}
- */
-const TileCollisionTypes = {
-    Nothing: 0,
-    HighOpaqueObstacle: 1,
-    Water: 2,
-};
+// const TileTypes = {
+//     Nothing: 0,
+//     Wall: 1,
+//     Water: 2,
+// };
 
 const ArenaManager = (function() {
     let arenaDefinitionsFromDB = {};
@@ -201,8 +193,9 @@ const ArenaManager = (function() {
                     for (let i = 0; i < layersDefinitionsFromJSONFileLength; i++) {
                         const layerDefinitionFromJSONFile = layersDefinitionsFromJSONFile[i];
 
-                        // Go through each tile in the layer
                         layerTilesetNamesSet.clear();
+                        
+                        // Go through each tile in the layer
                         /** @type {number[]} */
                         const layerDefinitionFromJSONFileData = layerDefinitionFromJSONFile.data;
                         const layerDefinitionFromJSONFileDataLength = layerDefinitionFromJSONFileData.length;
@@ -229,14 +222,41 @@ const ArenaManager = (function() {
                         //     collisionCategory: CollisionCategories.Arena,
                         //     collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
                         // });
+                        let totalTilesMissingTileTypes = 0;
 
                         tiledLayer.forEachTile(tile => {
                             
-                            const tileCollisionType = tile.properties.collision;
-                            console.log("Tile collision type:", tileCollisionType);
+                            // Skip tiles which don't have a tile assigned to them
+                            const tileIndex = tile.index;
+                            if (tileIndex < 0){
+                                return;
+                            }
                             
-                            const tileRequiresCollision = tile.properties.collides;
-                            if (!tileRequiresCollision) {
+                            let tileCollisionTypeName = "";
+                            const tileType = tile.properties.tiletype;
+                            
+                            // Don't do anything if the tile doesn't have a tile type
+                            if (tileType == null || tileType === TileTypes.Nothing) {
+                                totalTilesMissingTileTypes++;
+                                return;
+                            }
+                            
+                            if (tileType === TileTypes.GenericWall) {
+                                tileCollisionTypeName = "Wall";
+                            } else if (tileType === TileTypes.Water) {
+                                tileCollisionTypeName = "Water";
+                            }
+                            // console.log("Tile collision type:", tileType, tileCollisionTypeName);
+                            
+                            // const tileRequiresCollision = tile.properties.collides;
+                            // if (!tileRequiresCollision) {
+                            //     return;
+                            // }
+                            
+                            const collisionCategory = TileTypesCollisionCategories[tileType];
+                            
+                            // Skip tiles which have a 0 assigned as a collision category because that means that they don't collide with anything
+                            if (collisionCategory === 0){
                                 return;
                             }
 
@@ -245,7 +265,7 @@ const ArenaManager = (function() {
                             const w = tile.width;
                             const h = tile.height;
                             const body = scene.matter.add.rectangle(x, y, w, h, {isStatic: true});
-                            const collisionCategory = CollisionCategories.Arena;
+                            // const collisionCategory = CollisionCategories.Arena;
                             PhysicsHelperFunctions.setCollisionProperties({
                                 physicsObject: body,
                                 group: 0,
@@ -254,12 +274,12 @@ const ArenaManager = (function() {
                                 collidesWithCategories: CollisionCategoriesCollidesWith[collisionCategory]
                             });
                             
-                            // TODO: Something that maps category => collidesWithCategories
-                            
                             allArenaObstaclesMatterBodies.push(body);
                         });
-
-                        // allArenaObstaclesMatterBodies.push(...matterBodies);
+                        
+                        if (totalTilesMissingTileTypes > 0){
+                            Logger.warn("Total tiles missing tile types in layer", layerName, ":", totalTilesMissingTileTypes);
+                        }
                     }
 
                     // Add all the arena obstacles bodies to the arena bodies collection
