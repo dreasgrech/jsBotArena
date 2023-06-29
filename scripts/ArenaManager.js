@@ -57,13 +57,17 @@ const ArenaManager = (function() {
          * @type {Object.<string, string[]>}
          */
         const layersWithTilesets = {};
-        /** @type {Set<string>} */ const layerTilesetNamesSet = new Set();
+        const layersWithTilesets_flat = [];
+        /** @type {Set<string>} */ 
+        const layerTilesetNamesSet = new Set();
         const mapDataLayers = mapDataFromJSONFile.layers;
-        for (let layer of mapDataLayers) {
-            
-            layerTilesetNamesSet.clear();
+        const mapDataLayersLength = mapDataLayers.length;
+        console.log(mapDataLayers);
+        for (let i = 0; i < mapDataLayersLength; i++) {
+            const layer = mapDataLayers[i];
             
             // Go through each tile in the layer
+            layerTilesetNamesSet.clear();
             for (/** @type {number} */ let tileId of layer.data) {
                 // Ignore empty tiles (ID 0)
                 if (tileId === 0) {
@@ -73,7 +77,7 @@ const ArenaManager = (function() {
                 // Find the tileset this tile belongs to using the lookup table
                 layerTilesetNamesSet.add(tilesetLookup[tileId]);
             }
-            
+
             const layerTilesetNames = Array.from(layerTilesetNamesSet);
             layersWithTilesets[layer.name] = layerTilesetNames;
         }
@@ -164,7 +168,7 @@ const ArenaManager = (function() {
                         
                         const usedTilesetsNames = layersWithUsedTilesetsNames[layerName];
                         const tiledLayer = createTiledLayer(layerName, usedTilesetsNames, loadedTilesets, map);
-                        console.log(tiledLayer);
+                        // console.log(tiledLayer);
                         
                         // Create matter bodies for any collidable tiles
                         const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
