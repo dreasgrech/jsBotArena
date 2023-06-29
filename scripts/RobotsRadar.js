@@ -82,7 +82,9 @@ const RobotsRadar = (function() {
         const endY = turretPositionY + radarMaxScanDistance * Math.sin(radarEndAngle_radians);
 
         // Update the bounding box
-        // TODO: Can we update the existing object instead of creating a new one every time
+        // TODO: Can we update the existing object instead of creating a new one every time.
+        // TODO: Even better: Instead of storing an object, store each number in the flat array 
+        // TODO: sequentially and then use the index to access the values.
         const radarArcBoundingBox = {
             minX: Math.min(turretPositionX, startX, endX),
             minY: Math.min(turretPositionY, startY, endY),

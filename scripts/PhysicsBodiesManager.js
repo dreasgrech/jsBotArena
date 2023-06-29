@@ -130,6 +130,9 @@ const PhysicsBodiesManager = (function() {
             // Add all the bodies to the allBodies collection
             addBodiesToCollection(bodies);
 
+            // TODO: This array is used by the scanner to determine which
+            // TODO: arena bodies to raycast against.
+            // TODO: This means that not all bodies need to be pushed to it
             staticArenaBodies = bodies;
 
             const arenaBodiesElementsForSpatialHash = [];
@@ -139,6 +142,7 @@ const PhysicsBodiesManager = (function() {
                 const arenaBody = bodies[i];
                 arenaStaticObstacleBodiesIDs[arenaBodyIndex] = arenaBody.id;
 
+                // Create the bounds that will be handed to the spatial hash
                 const arenaBodyBounds = arenaBody.bounds;
                 const arenaBodyBoundsMin = arenaBodyBounds.min;
                 const arenaBodyBoundsMinX = arenaBodyBoundsMin.x;
@@ -146,7 +150,6 @@ const PhysicsBodiesManager = (function() {
                 const arenaBodyBoundsMax = arenaBodyBounds.max;
                 const arenaBodyBoundsMaxX = arenaBodyBoundsMax.x;
                 const arenaBodyBoundsMaxY = arenaBodyBoundsMax.y;
-                // Create the bounds that will be handed to the spatial hash
                 const boundsForSpatialHash = {
                     minX: arenaBodyBoundsMinX,
                     minY: arenaBodyBoundsMinY,
@@ -202,7 +205,9 @@ const PhysicsBodiesManager = (function() {
             // Register the bodies with the RaycastManager
             RaycastManager.mapGameObjects(bodies, false);
 
+            // Load the arena bodies into the spatial hash
             arenaBodySpatialHash.load(arenaBodiesElementsForSpatialHash);
+            
             arenaBodiesAdded = true;
         },
         addDynamicArenaPhysicsBodies: function(bodies) {
@@ -222,12 +227,13 @@ const PhysicsBodiesManager = (function() {
             const arenaBodiesTotalAfterRemoval = allBodies.length;
             console.assert(arenaBodiesTotalAfterRemoval === arenaBodiesTotalBeforeRemoval - 1);
 
+            const bodyID = body.id;
             // Remove the body's mapping from matterBodyToCollisionCategory
-            delete matterBodyToCollisionCategory[body.id];
+            delete matterBodyToCollisionCategory[bodyID];
 
             // If the body is also associated with a robot, remove its mapping from matterObjectIDToRobotIndex
-            if (matterBodyIDToRobotIndex.hasOwnProperty(body.id)) {
-                delete matterBodyIDToRobotIndex[body.id];
+            if (matterBodyIDToRobotIndex.hasOwnProperty(bodyID)) {
+                delete matterBodyIDToRobotIndex[bodyID];
             }
 
             RaycastManager.removeMappedGameObjects(body);
