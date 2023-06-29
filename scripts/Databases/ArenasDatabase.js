@@ -3,7 +3,7 @@
 const ArenasDatabase = (function() {
     const ARENAS_DB_FILE_KEY = 'ArenasDatabase',
     //    ARENAS_DB_FILEPATH = './databases/arenas.json';
-    ARENAS_DB_FILEPATH = './databases/arenas_new.json';
+    ARENAS_DB_FILEPATH = './databases/arenas.json';
 
     const arenasDatabase = {
         // loadedDatabasesFromJSON: [],
