@@ -232,7 +232,6 @@ const ArenaManager = (function() {
                                 return;
                             }
                             
-                            let tileCollisionTypeName = "";
                             const tileType = tile.properties.tiletype;
                             
                             // Don't do anything if the tile doesn't have a tile type
@@ -240,12 +239,13 @@ const ArenaManager = (function() {
                                 totalTilesMissingTileTypes++;
                                 return;
                             }
-                            
-                            if (tileType === TileTypes.GenericWall) {
-                                tileCollisionTypeName = "Wall";
-                            } else if (tileType === TileTypes.Water) {
-                                tileCollisionTypeName = "Water";
-                            }
+
+                            // let tileCollisionTypeName = "";
+                            // if (tileType === TileTypes.GenericWall) {
+                            //     tileCollisionTypeName = "Wall";
+                            // } else if (tileType === TileTypes.Water) {
+                            //     tileCollisionTypeName = "Water";
+                            // }
                             // console.log("Tile collision type:", tileType, tileCollisionTypeName);
                             
                             // const tileRequiresCollision = tile.properties.collides;
@@ -253,6 +253,7 @@ const ArenaManager = (function() {
                             //     return;
                             // }
                             
+                            // Resolve the Matter collision category for this tile type
                             const collisionCategory = TileTypesCollisionCategories[tileType];
                             
                             // Skip tiles which have a 0 assigned as a collision category because that means that they don't collide with anything
@@ -265,12 +266,10 @@ const ArenaManager = (function() {
                             const w = tile.width;
                             const h = tile.height;
                             const body = scene.matter.add.rectangle(x, y, w, h, {isStatic: true});
-                            // const collisionCategory = CollisionCategories.Arena;
                             PhysicsHelperFunctions.setCollisionProperties({
                                 physicsObject: body,
                                 group: 0,
                                 category: collisionCategory,
-                                // collidesWithCategories: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
                                 collidesWithCategories: CollisionCategoriesCollidesWith[collisionCategory]
                             });
                             

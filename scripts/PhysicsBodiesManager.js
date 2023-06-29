@@ -100,12 +100,12 @@ const PhysicsBodiesManager = (function() {
         // TODO: also need to make sure not to have duplicates in arenaBodies
         // TODO: maybe using Set is an option
         addArenaPhysicsBodies: function(collisionCategory, bodies, dynamic) {
+            // Add all the bodies to the allBodies collection
             const arenaBodiesTotalBeforeAdd = allBodies.length;
-            allBodies = allBodies.concat(bodies);
+            allBodies.push(...bodies);
             const bodiesLength = bodies.length;
             console.assert(allBodies.length === arenaBodiesTotalBeforeAdd + bodiesLength,
                 "Make sure that all the elements were added");
-
 
             for (let i = 0; i < bodiesLength; i++) {
                 let body = bodies[i];
@@ -161,6 +161,7 @@ const PhysicsBodiesManager = (function() {
                     const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMaxX - arenaBodyBoundsMinX) * 0.5;
                     const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMaxY - arenaBodyBoundsMinY) * 0.5;
                     
+                    // Calculate the corner points world positions of the arena obstacle
                     const leftX= arenaBodyPositionX - arenaBodyBoundsHalfWidth;
                     const rightX = arenaBodyPositionX + arenaBodyBoundsHalfWidth;
                     const topY = arenaBodyPositionY - arenaBodyBoundsHalfHeight;
@@ -168,7 +169,7 @@ const PhysicsBodiesManager = (function() {
                     
                     // Save the 8 absolute world bound points of the arena obstacle
                     const boundsPointsIndex = arenaBodyIndex * ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex] = leftX;
+                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 0] = leftX;
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex + 1] = topY;
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex + 2] = rightX;
                     arenaStaticObstacleBodiesBounds[boundsPointsIndex + 3] = topY;

@@ -4,7 +4,7 @@
  * @type {{
     RobotBody: number,
     Arena: number,
-    Arena_Water: number,
+    ArenaWater: number,
     RobotProjectile: number,
     RobotProjectileSensor: number
 }}
@@ -12,7 +12,7 @@
 const CollisionCategories = BitmaskableObjectOperations.populateBitmaskableObject({
     RobotBody: 0,
     Arena: 0,
-    Arena_Water: 0,
+    ArenaWater: 0,
     RobotProjectile: 0,
     RobotProjectileSensor: 0
 });
@@ -21,9 +21,9 @@ const CollisionCategories = BitmaskableObjectOperations.populateBitmaskableObjec
  * Holds the collision categories which each collision-category collides with
  */
 const CollisionCategoriesCollidesWith = {};
-CollisionCategoriesCollidesWith[CollisionCategories.RobotBody] = CollisionCategories.RobotBody | CollisionCategories.Arena | CollisionCategories.Arena_Water;
+CollisionCategoriesCollidesWith[CollisionCategories.RobotBody] = CollisionCategories.RobotBody | CollisionCategories.Arena | CollisionCategories.ArenaWater;
 CollisionCategoriesCollidesWith[CollisionCategories.Arena] = CollisionCategories.RobotBody | CollisionCategories.RobotProjectile;
-CollisionCategoriesCollidesWith[CollisionCategories.Arena_Water] = CollisionCategories.RobotBody;
+CollisionCategoriesCollidesWith[CollisionCategories.ArenaWater] = CollisionCategories.RobotBody;
 CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectile] = CollisionCategories.RobotProjectileSensor | CollisionCategories.Arena | CollisionCategories.RobotProjectile;
 CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectileSensor] = CollisionCategories.RobotProjectile;
 
@@ -48,5 +48,7 @@ const TileTypes = EnumHelpers.createEnumWithNumberValues([
  */
 const TileTypesCollisionCategories = {};
 TileTypesCollisionCategories[TileTypes.GenericWall] = CollisionCategories.Arena;
-TileTypesCollisionCategories[TileTypes.GenericFloor] = 0;
-TileTypesCollisionCategories[TileTypes.Water] = CollisionCategories.Arena_Water;
+TileTypesCollisionCategories[TileTypes.GenericFloor] = 0; // GenericFloor doesn't require a collision category because it doesn't collide with anything
+TileTypesCollisionCategories[TileTypes.Water] = CollisionCategories.ArenaWater;
+
+// todo: need a new object for mapping which collision categories robots can see through with the radar

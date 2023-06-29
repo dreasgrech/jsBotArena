@@ -137,7 +137,7 @@ const CollisionManager = (function() {
     };
     
     const handleCollision_RobotToArenaWater = function(matterBodyA, matterBodyB) {
-        const isBodyA_ArenaWater = matterBodyA.collisionFilter.category & CollisionCategories.Arena_Water;
+        const isBodyA_ArenaWater = matterBodyA.collisionFilter.category & CollisionCategories.ArenaWater;
         const robotMatterBody = isBodyA_ArenaWater ? matterBodyB : matterBodyA;
         const arenaWaterMatterBody = isBodyA_ArenaWater ? matterBodyA : matterBodyB;
 
@@ -189,7 +189,7 @@ const CollisionManager = (function() {
             // collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectileSensor, CollisionCategories.RobotProjectile)] = handleCollision_RobotToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.Arena)] = handleCollision_RobotToArena;
-            collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.Arena_Water)] = handleCollision_RobotToArenaWater;
+            collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.ArenaWater)] = handleCollision_RobotToArenaWater;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectile, CollisionCategories.RobotProjectile)] = handleCollision_ProjectileToProjectile;
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotProjectile, CollisionCategories.Arena)] = handleCollision_ProjectileToArena;
 
