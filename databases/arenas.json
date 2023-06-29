@@ -8,5 +8,10 @@
     "Name": "Bridge Level",
     "EnumKey": "BridgeLevel",
     "TiledJSONFile": "TiledArenas/bridge_arena.json"
-  } 
+  },
+  {
+    "Name": "Green Level",
+    "EnumKey": "GreenLevel",
+    "TiledJSONFile": "TiledArenas/green_arena.json"
+  }
 ]

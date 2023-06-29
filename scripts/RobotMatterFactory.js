@@ -29,7 +29,7 @@ const RobotMatterFactory = (function() {
             group: -robotHullMatterGroup, // -robotHullMatterGroup so that it doesn't collide with the firing robot
             category: CollisionCategories.RobotProjectileSensor,
             collidesWithCategories:
-                CollisionCategories.RobotProjectile
+                CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectileSensor]
         });
 
         // Store the sensor in your RobotsData for future reference or updates
@@ -91,10 +91,7 @@ const RobotMatterFactory = (function() {
             //group: -robotID,
             group: -robotHullMatterGroup,
             category: CollisionCategories.RobotBody,
-            collidesWithCategories:
-                CollisionCategories.RobotBody
-                    | CollisionCategories.Arena
-                    //| CollisionCategories.RobotProjectile
+            collidesWithCategories: CollisionCategoriesCollidesWith[CollisionCategories.RobotBody]
         });
 
         const hullImagePhysicsBodyID = hullImagePhysicsBody.id;

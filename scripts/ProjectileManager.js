@@ -217,10 +217,7 @@ const ProjectileManager = (function() {
                 //group: -robotID, // -robotID so that it doesn't collide with the robot that fired it
                 group: -robotHullMatterGroup, // -robotHullMatterGroup so that it doesn't collide with the robot that fired it
                 category: CollisionCategories.RobotProjectile,
-                // collidesWithCategories: CollisionCategories.RobotBody |
-                collidesWithCategories: CollisionCategories.RobotProjectileSensor |
-                    CollisionCategories.Arena |
-                    CollisionCategories.RobotProjectile
+                collidesWithCategories: CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectile]
             });
 
             // Add the projectile as part of the arena bodies collection

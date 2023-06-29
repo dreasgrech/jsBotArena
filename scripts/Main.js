@@ -91,7 +91,6 @@ const GameManager = (function() {
         //gameContext.matter.world.setBounds();
 
         // Load the arena asynchronously
-        //const arenaToLoad = Arenas.BrownLevel;
         const arenaToLoad = Arenas.BridgeLevel;
         ArenaManager.loadArena(arenaToLoad, function(){
             // Call all the system_create functions that are hooked

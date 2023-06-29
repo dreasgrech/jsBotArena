@@ -7,7 +7,8 @@ const ArenaManager = (function() {
 
     /**
      * Creates a Tilemap layer from the provided layer definition (from JSON database)
-     * @param layerDefinition {Object}
+     * @param tiledLayerName {string}
+     * @param usedTilesetsNames {string[]}
      * @param loadedTilesets {Object}
      * @param tilemap {Phaser.Tilemaps.Tilemap}
      * @return {Phaser.Tilemaps.TilemapLayer}
@@ -27,7 +28,7 @@ const ArenaManager = (function() {
             usedTilesets.push(tilesetImage);
         }
 
-        // const tilemapLayer = tilemap.createLayer(tilesetName, usedTilesets);
+        // Create the TilemapLayer
         const tilemapLayer = tilemap.createLayer(tiledLayerName, usedTilesets);
         return tilemapLayer;
     };
@@ -57,7 +58,6 @@ const ArenaManager = (function() {
     //      * @type {Object.<string, string[]>}
     //      */
     //     const layersWithTilesets = {};
-    //     const layersWithTilesets_flat = [];
     //     /** @type {Set<string>} */ 
     //     const layerTilesetNamesSet = new Set();
     //     const mapDataLayers = mapDataFromJSONFile.layers;
@@ -156,31 +156,32 @@ const ArenaManager = (function() {
                     
                     // console.log("All loaded tilesets:", loadedTilesets);
                         
-                    // TODO: Need to make sure that the layers are iterated in the correct order
                     // Sort the tilesets by firstgid
-                    let tilesets = dataFromJSONFile.tilesets.sort((a, b) => a.firstgid - b.firstgid);
+                    const sortedTilesetDefinitionsFromJSONFile = tilesetDefinitionsFromJSONFile.sort((a, b) => a.firstgid - b.firstgid);
 
+                    const layersDefinitionsFromJSONFile = dataFromJSONFile.layers;
+                    
                     // Calculate the maximum tile ID once
-                    let maxTileId = Math.max(...dataFromJSONFile.layers.flatMap(layer => layer.data));
+                    const maxTileId = Math.max(...layersDefinitionsFromJSONFile.flatMap(layer => layer.data));
 
                     // Create a lookup table that maps each tile ID to its tileset
-                    let tilesetLookup = {};
-                    const tilesetsLengthMinusOne = tilesets.length - 1;
+                    const tilesetLookup = {};
+                    const tilesetsLengthMinusOne = sortedTilesetDefinitionsFromJSONFile.length - 1;
                     for (let i = 0; i < tilesetsLengthMinusOne; i++) {
-                        for (let j = tilesets[i].firstgid; j < tilesets[i+1].firstgid; j++) {
-                            tilesetLookup[j] = tilesets[i].name;
+                        for (let j = sortedTilesetDefinitionsFromJSONFile[i].firstgid; j < sortedTilesetDefinitionsFromJSONFile[i+1].firstgid; j++) {
+                            tilesetLookup[j] = sortedTilesetDefinitionsFromJSONFile[i].name;
                         }
                     }
                     // The last tileset goes up to the maximum tile ID
-                    for (let j = tilesets[tilesetsLengthMinusOne].firstgid; j <= maxTileId; j++) {
-                        tilesetLookup[j] = tilesets[tilesetsLengthMinusOne].name;
+                    for (let j = sortedTilesetDefinitionsFromJSONFile[tilesetsLengthMinusOne].firstgid; j <= maxTileId; j++) {
+                        tilesetLookup[j] = sortedTilesetDefinitionsFromJSONFile[tilesetsLengthMinusOne].name;
                     }
-                    
+
+                    /** @type {MatterJS.BodyType[]} */
                     const allArenaObstaclesMatterBodies = [];
 
                     /** @type {Set<string>} */
                     const layerTilesetNamesSet = new Set();
-                    const layersDefinitionsFromJSONFile = dataFromJSONFile.layers;
                     const layersDefinitionsFromJSONFileLength = layersDefinitionsFromJSONFile.length;
                     // console.log(layersDefinitionsFromJSONFile);
                     for (let i = 0; i < layersDefinitionsFromJSONFileLength; i++) {
@@ -193,7 +194,7 @@ const ArenaManager = (function() {
                         const layerDefinitionFromJSONFileDataLength = layerDefinitionFromJSONFileData.length;
                         for (let j = 0; j < layerDefinitionFromJSONFileDataLength; j++) {
                             const tileId = layerDefinitionFromJSONFileData[j];
-                            
+
                             // Ignore empty tiles (ID 0)
                             if (tileId === 0) {
                                 continue;
@@ -209,13 +210,39 @@ const ArenaManager = (function() {
                         // console.log(tiledLayer);
 
                         // Create matter bodies for any collidable tiles
-                        const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
-                            layer: tiledLayer,
-                            collisionCategory: CollisionCategories.Arena,
-                            collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
+                        // const matterBodies = PhysicsHelperFunctions.createMatterBodiesFromTilemapLayer({
+                        //     layer: tiledLayer,
+                        //     collisionCategory: CollisionCategories.Arena,
+                        //     collidesWith: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
+                        // });
+
+                        tiledLayer.forEachTile(tile => {
+                            
+                            const tileRequiresCollision = tile.properties.collides;
+                            if (!tileRequiresCollision) {
+                                return;
+                            }
+
+                            const x = tile.getCenterX();
+                            const y = tile.getCenterY();
+                            const w = tile.width;
+                            const h = tile.height;
+                            const body = scene.matter.add.rectangle(x, y, w, h, {isStatic: true});
+                            const collisionCategory = CollisionCategories.Arena;
+                            PhysicsHelperFunctions.setCollisionProperties({
+                                physicsObject: body,
+                                group: 0,
+                                category: collisionCategory,
+                                // collidesWithCategories: CollisionCategories.RobotBody | CollisionCategories.RobotProjectile
+                                collidesWithCategories: CollisionCategoriesCollidesWith[collisionCategory]
+                            });
+                            
+                            // TODO: Something that maps category => collidesWithCategories
+                            
+                            allArenaObstaclesMatterBodies.push(body);
                         });
 
-                        allArenaObstaclesMatterBodies.push(...matterBodies);
+                        // allArenaObstaclesMatterBodies.push(...matterBodies);
                     }
 
                     // Add all the arena obstacles bodies to the arena bodies collection
