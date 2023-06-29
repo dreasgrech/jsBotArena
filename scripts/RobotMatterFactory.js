@@ -103,7 +103,7 @@ const RobotMatterFactory = (function() {
         RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex] = hullsDB.TurretHoleOffsetsY[hullType];
 
         // Add the robot's body to the arena bodies collection
-        PhysicsBodiesManager.addArenaPhysicsBodies(CollisionCategories.RobotBody, [hullImagePhysicsBody], true); // Add all the bodies from the arena to the arena bodies collection
+        PhysicsBodiesManager.addDynamicArenaPhysicsBodies([hullImagePhysicsBody]); 
 
         // Make a reference to the current robot index from the matter object id
         PhysicsBodiesManager.mapHullImageBodyIDToRobotIndex(hullImagePhysicsBodyID, currentRobotIndex);

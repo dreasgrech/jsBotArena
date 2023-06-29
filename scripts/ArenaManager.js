@@ -282,10 +282,7 @@ const ArenaManager = (function() {
                     }
 
                     // Add all the arena obstacles bodies to the arena bodies collection
-                    PhysicsBodiesManager.addArenaPhysicsBodies(
-                        CollisionCategories.Arena, 
-                        allArenaObstaclesMatterBodies, 
-                        false);
+                    PhysicsBodiesManager.addStaticArenaPhysicsBodies(allArenaObstaclesMatterBodies);
                     
                     // We're now completely done loading the arena
                     arenaFinishedLoadingCallback();

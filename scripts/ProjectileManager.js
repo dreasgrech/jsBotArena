@@ -221,7 +221,7 @@ const ProjectileManager = (function() {
             });
 
             // Add the projectile as part of the arena bodies collection
-            PhysicsBodiesManager.addArenaPhysicsBodies(CollisionCategories.RobotProjectile, [projectileMatterBody], true); // Add all the bodies from the arena to the arena bodies collection
+            PhysicsBodiesManager.addDynamicArenaPhysicsBodies([projectileMatterBody]);
 
             ProjectilesData_matterBody[currentProjectileIndex] = projectileMatterGameObject;
             ProjectilesData_projectileType[currentProjectileIndex] = projectileType;

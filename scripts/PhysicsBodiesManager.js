@@ -76,6 +76,30 @@ const PhysicsBodiesManager = (function() {
     //  */
     // const arenaStaticObstacleBodiesBoundsY = [];
 
+    // TODO: also need to make sure not to have duplicates in arenaBodies
+    // TODO: maybe using Set is an option
+    const addBodiesToCollection = function(bodies){
+        // Add all the bodies to the allBodies collection
+        const arenaBodiesTotalBeforeAdd = allBodies.length;
+        allBodies.push(...bodies);
+        const bodiesLength = bodies.length;
+        console.assert(allBodies.length === arenaBodiesTotalBeforeAdd + bodiesLength,
+            "Make sure that all the elements were added");
+
+        // Map each body to its collision category
+        for (let i = 0; i < bodiesLength; i++) {
+            let body = bodies[i];
+            // console.log(body);
+            const collisionCategory = body.collisionFilter.category;
+            matterBodyToCollisionCategory[body.id] =
+                {
+                    type: collisionCategory
+                };
+
+            // Logger.log("Setting", body.id, "to", collisionCategory);
+        }
+    };
+
     const physicsBodiesManager = {
         get staticArenaBodies() {
             return staticArenaBodies;
@@ -97,110 +121,96 @@ const PhysicsBodiesManager = (function() {
         // getEveryOtherArenaBodyExceptThis: function(arenaBodyIndex) {
         //     return arenaBodyMappingToEveryOtherArenaBody[arenaBodyIndex];
         // },
-        // TODO: also need to make sure not to have duplicates in arenaBodies
-        // TODO: maybe using Set is an option
-        addArenaPhysicsBodies: function(collisionCategory, bodies, dynamic) {
-            // Add all the bodies to the allBodies collection
-            const arenaBodiesTotalBeforeAdd = allBodies.length;
-            allBodies.push(...bodies);
-            const bodiesLength = bodies.length;
-            console.assert(allBodies.length === arenaBodiesTotalBeforeAdd + bodiesLength,
-                "Make sure that all the elements were added");
-
-            for (let i = 0; i < bodiesLength; i++) {
-                let body = bodies[i];
-                matterBodyToCollisionCategory[body.id] =
-                {
-                    type: collisionCategory
-                };
-
-                // Logger.log("Setting", body.id, "to", collisionCategory);
-            }
-
+        addStaticArenaPhysicsBodies: function(bodies) {
             // If these are arena collider bodies, add them to their own collection too
-            if (collisionCategory === CollisionCategories.Arena) {
-                if (arenaBodiesAdded) {
-                    throw "Arena bodies already added and cannot be re-added";
-                }
-
-                // arenaBodies = arenaBodies.concat(bodies);
-                staticArenaBodies = bodies;
-
-                const arenaBodiesElementsForSpatialHash = [];
-                for (let i = 0; i < bodiesLength; i++) {
-                    const arenaBodyIndex = i;
-                    const arenaBody = bodies[i];
-                    arenaStaticObstacleBodiesIDs[arenaBodyIndex] = arenaBody.id;
-                    
-                    const arenaBodyBounds = arenaBody.bounds;
-                    const arenaBodyBoundsMin = arenaBodyBounds.min;
-                    const arenaBodyBoundsMinX = arenaBodyBoundsMin.x;
-                    const arenaBodyBoundsMinY = arenaBodyBoundsMin.y;
-                    const arenaBodyBoundsMax = arenaBodyBounds.max;
-                    const arenaBodyBoundsMaxX = arenaBodyBoundsMax.x;
-                    const arenaBodyBoundsMaxY = arenaBodyBoundsMax.y;
-                    // Create the bounds that will be handed to the spatial hash
-                    const boundsForSpatialHash = {
-                        minX: arenaBodyBoundsMinX,
-                        minY: arenaBodyBoundsMinY,
-                        maxX: arenaBodyBoundsMaxX,
-                        maxY: arenaBodyBoundsMaxY,
-                        arenaBodyIndex: arenaBodyIndex
-                    };
-                    arenaBodiesElementsForSpatialHash.push(boundsForSpatialHash);
-
-                    const arenaBodyPosition = arenaBody.position;
-                    const arenaBodyPositionX = arenaBodyPosition.x;
-                    const arenaBodyPositionY = arenaBodyPosition.y;
-                    
-                    // Save the arena obstacle's position
-                    const positionIndex = arenaBodyIndex * 2;
-                    arenaStaticObstacleBodiesPositions[positionIndex] = arenaBodyPositionX;
-                    arenaStaticObstacleBodiesPositions[positionIndex + 1] = arenaBodyPositionY;
-                    
-                    const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMaxX - arenaBodyBoundsMinX) * 0.5;
-                    const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMaxY - arenaBodyBoundsMinY) * 0.5;
-                    
-                    // Calculate the corner points world positions of the arena obstacle
-                    const leftX= arenaBodyPositionX - arenaBodyBoundsHalfWidth;
-                    const rightX = arenaBodyPositionX + arenaBodyBoundsHalfWidth;
-                    const topY = arenaBodyPositionY - arenaBodyBoundsHalfHeight;
-                    const bottomY = arenaBodyPositionY + arenaBodyBoundsHalfHeight;
-                    
-                    // Save the 8 absolute world bound points of the arena obstacle
-                    const boundsPointsIndex = arenaBodyIndex * ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 0] = leftX;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 1] = topY;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 2] = rightX;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 3] = topY;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 4] = leftX;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 5] = bottomY;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 6] = rightX;
-                    arenaStaticObstacleBodiesBounds[boundsPointsIndex + 7] = bottomY;
-                    
-/*
-                    const everyOtherArenaBodyExceptThis = [];
-                    for (let j = 0; j < bodiesLength; j++) {
-                        // Skip this particular body
-                        if (j === i) {
-                            continue;
-                        }
-                        everyOtherArenaBodyExceptThis.push(bodies[j]);
-                    }
-
-                    arenaBodyMappingToEveryOtherArenaBody[i] = everyOtherArenaBodyExceptThis;
-*/
-                }
-
-                arenaBodySpatialHash.load(arenaBodiesElementsForSpatialHash);
-                arenaBodiesAdded = true;
+            if (arenaBodiesAdded) {
+                throw "Arena bodies already added and cannot be re-added";
             }
+
+            // Add all the bodies to the allBodies collection
+            addBodiesToCollection(bodies);
+
+            staticArenaBodies = bodies;
+
+            const arenaBodiesElementsForSpatialHash = [];
+            const bodiesLength = bodies.length;
+            for (let i = 0; i < bodiesLength; i++) {
+                const arenaBodyIndex = i;
+                const arenaBody = bodies[i];
+                arenaStaticObstacleBodiesIDs[arenaBodyIndex] = arenaBody.id;
+
+                const arenaBodyBounds = arenaBody.bounds;
+                const arenaBodyBoundsMin = arenaBodyBounds.min;
+                const arenaBodyBoundsMinX = arenaBodyBoundsMin.x;
+                const arenaBodyBoundsMinY = arenaBodyBoundsMin.y;
+                const arenaBodyBoundsMax = arenaBodyBounds.max;
+                const arenaBodyBoundsMaxX = arenaBodyBoundsMax.x;
+                const arenaBodyBoundsMaxY = arenaBodyBoundsMax.y;
+                // Create the bounds that will be handed to the spatial hash
+                const boundsForSpatialHash = {
+                    minX: arenaBodyBoundsMinX,
+                    minY: arenaBodyBoundsMinY,
+                    maxX: arenaBodyBoundsMaxX,
+                    maxY: arenaBodyBoundsMaxY,
+                    arenaBodyIndex: arenaBodyIndex
+                };
+                arenaBodiesElementsForSpatialHash.push(boundsForSpatialHash);
+
+                const arenaBodyPosition = arenaBody.position;
+                const arenaBodyPositionX = arenaBodyPosition.x;
+                const arenaBodyPositionY = arenaBodyPosition.y;
+
+                // Save the arena obstacle's position
+                const positionIndex = arenaBodyIndex * 2;
+                arenaStaticObstacleBodiesPositions[positionIndex] = arenaBodyPositionX;
+                arenaStaticObstacleBodiesPositions[positionIndex + 1] = arenaBodyPositionY;
+
+                const arenaBodyBoundsHalfWidth = (arenaBodyBoundsMaxX - arenaBodyBoundsMinX) * 0.5;
+                const arenaBodyBoundsHalfHeight = (arenaBodyBoundsMaxY - arenaBodyBoundsMinY) * 0.5;
+
+                // Calculate the corner points world positions of the arena obstacle
+                const leftX = arenaBodyPositionX - arenaBodyBoundsHalfWidth;
+                const rightX = arenaBodyPositionX + arenaBodyBoundsHalfWidth;
+                const topY = arenaBodyPositionY - arenaBodyBoundsHalfHeight;
+                const bottomY = arenaBodyPositionY + arenaBodyBoundsHalfHeight;
+
+                // Save the 8 absolute world bound points of the arena obstacle
+                const boundsPointsIndex = arenaBodyIndex * ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS;
+                arenaStaticObstacleBodiesBounds[boundsPointsIndex + 0] = leftX;
+                arenaStaticObstacleBodiesBounds[boundsPointsIndex + 1] = topY;
+                arenaStaticObstacleBodiesBounds[boundsPointsIndex + 2] = rightX;
+                arenaStaticObstacleBodiesBounds[boundsPointsIndex + 3] = topY;
+                arenaStaticObstacleBodiesBounds[boundsPointsIndex + 4] = leftX;
+                arenaStaticObstacleBodiesBounds[boundsPointsIndex + 5] = bottomY;
+                arenaStaticObstacleBodiesBounds[boundsPointsIndex + 6] = rightX;
+                arenaStaticObstacleBodiesBounds[boundsPointsIndex + 7] = bottomY;
+
+                /*
+                                    const everyOtherArenaBodyExceptThis = [];
+                                    for (let j = 0; j < bodiesLength; j++) {
+                                        // Skip this particular body
+                                        if (j === i) {
+                                            continue;
+                                        }
+                                        everyOtherArenaBodyExceptThis.push(bodies[j]);
+                                    }
+                
+                                    arenaBodyMappingToEveryOtherArenaBody[i] = everyOtherArenaBodyExceptThis;
+                */
+            }
+            
+            // Register the bodies with the RaycastManager
+            RaycastManager.mapGameObjects(bodies, false);
+
+            arenaBodySpatialHash.load(arenaBodiesElementsForSpatialHash);
+            arenaBodiesAdded = true;
+        },
+        addDynamicArenaPhysicsBodies: function(bodies) {
+            // Add all the bodies to the allBodies collection
+            addBodiesToCollection(bodies);
 
             // Register the bodies with the RaycastManager
-            RaycastManager.mapGameObjects(bodies, dynamic);
-
-            //Logger.log("Added arena bodies:", ...bodies);
-
+            RaycastManager.mapGameObjects(bodies, true);
         },
         removeArenaPhysicsBody: function(body) {
             // Logger.log("Starting removal of arena body:", body, allBodies);
