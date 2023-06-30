@@ -103,6 +103,8 @@ const RobotsRadar = (function() {
         const arenaBodiesBoundsFromSpatialHash = PhysicsBodiesManager.queryArenaBodiesSpatialHash(radarArcBoundingBox);
         const arenaBodiesBoundsFromSpatialHashLength = arenaBodiesBoundsFromSpatialHash.length;
         //Logger.log(arenaBodiesBoundsFromSpatialHashLength, "arena bodies found");
+        
+        // Go through each arena body in the spatial hash
         for (let i = 0; i < arenaBodiesBoundsFromSpatialHashLength; i++) {
             const arenaBodyBoundsFromSpatialHash = arenaBodiesBoundsFromSpatialHash[i];
             const arenaBodyIndex = arenaBodyBoundsFromSpatialHash.arenaBodyIndex;
@@ -112,6 +114,8 @@ const RobotsRadar = (function() {
             let distanceBetweenRobotAndObstacle = false;
             // Check each point in the arena obstacle's bounds to determine whether this arena obstacle is truly in the radar's field-of-view
             const boundsPointIndex = arenaBodyIndex * ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS;
+            
+            // Go through each corner point of the arena obstacle's bounding box
             for (let boundsPointNumber = 0; boundsPointNumber < ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS; boundsPointNumber+=2) {
                 const arenaObstacleCornerPointX = arenaStaticObstacleBodiesBounds[boundsPointIndex + boundsPointNumber];
                 const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBounds[boundsPointIndex + boundsPointNumber + 1];
@@ -177,7 +181,7 @@ const RobotsRadar = (function() {
                 const positionIndex = arenaBodyIndex * 2;
                 const arenaBodyPositionX = arenaStaticObstacleBodiesPositions[positionIndex];
                 const arenaBodyPositionY = arenaStaticObstacleBodiesPositions[positionIndex + 1];
-                
+
                 const arenaObstacleScannedEventInfo = ArenaObstacleScannedInfo();
                 arenaObstacleScannedEventInfo.index = arenaBodyIndex;
                 // arenaObstacleScannedEventInfo.distance = distanceBetweenRobotAndArenaBody;
