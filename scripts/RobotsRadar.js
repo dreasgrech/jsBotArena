@@ -83,7 +83,7 @@ const RobotsRadar = (function() {
 
         // Update the bounding box
         // TODO: Can we update the existing object instead of creating a new one every time.
-        // TODO: Even better: Instead of storing an object, store each number in the flat array 
+        // TODO: EVEN BETTER: Instead of storing an object, store each number in the flat array 
         // TODO: sequentially and then use the index to access the values.
         const radarArcBoundingBox = {
             minX: Math.min(turretPositionX, startX, endX),
@@ -234,7 +234,8 @@ const RobotsRadar = (function() {
         // Construct an array of the bodies for the ray to intersect with
         const bodiesToIntersectWith = [
             robotHullBody,
-            ...PhysicsBodiesManager.staticArenaBodies // the ... operator expands the array into arguments for the function
+            // ...PhysicsBodiesManager.staticArenaBodies // the ... operator expands the array into arguments for the function
+            ...PhysicsBodiesManager.radarBlockingArenaBodies // the ... operator expands the array into arguments for the function
         ];
 
         //Logger.log("Scanning for robots", robotIndex, bodiesToIntersectWith);

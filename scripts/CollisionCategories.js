@@ -52,3 +52,5 @@ TileTypesCollisionCategories[TileTypes.GenericFloor] = 0; // GenericFloor doesn'
 TileTypesCollisionCategories[TileTypes.Water] = CollisionCategories.ArenaWater;
 
 // todo: need a new object for mapping which collision categories robots can see through with the radar
+const RadarBlockingCollisionCategories = {};
+RadarBlockingCollisionCategories[CollisionCategories.Arena] = true;

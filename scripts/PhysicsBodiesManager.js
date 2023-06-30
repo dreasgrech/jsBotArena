@@ -47,8 +47,14 @@ const PhysicsBodiesManager = (function() {
      * Contains the arena bodies (walls, obstacles, etc..)
      * @type {Phaser.Types.Physics.Matter.MatterBody[]}
      */
-    let staticArenaBodies = []; 
-    
+    let staticArenaBodies = [];
+
+    /**
+     * Contains the arena bodies (walls, obstacles, etc..) that the radar can't see through
+     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
+     */
+    let radarBlockingArenaBodies = [];
+
     // let arenaBodyMappingToEveryOtherArenaBody = {};
 
     // const matterBodyToObjectType = {};
@@ -57,7 +63,6 @@ const PhysicsBodiesManager = (function() {
 
     const projectileSensorBodyIDToRobotIndex = {};
 
-    //let arenaBodySpatialHash = new rbush();
     let arenaBodySpatialHash = new RBush();
 
     // contains all the bodies except the body of the specific robot index
@@ -104,6 +109,9 @@ const PhysicsBodiesManager = (function() {
         get staticArenaBodies() {
             return staticArenaBodies;
         },
+        get radarBlockingArenaBodies() {
+            return radarBlockingArenaBodies;
+        },
         system_create: function() {
             // Create the Tweak pane data
             const dataForTweakPane = {
@@ -134,7 +142,7 @@ const PhysicsBodiesManager = (function() {
             // TODO: arena bodies to raycast against.
             // TODO: This means that not all bodies need to be pushed to it
             staticArenaBodies = bodies;
-
+            
             const arenaBodiesElementsForSpatialHash = [];
             const bodiesLength = bodies.length;
             for (let i = 0; i < bodiesLength; i++) {
@@ -200,7 +208,16 @@ const PhysicsBodiesManager = (function() {
                 
                                     arenaBodyMappingToEveryOtherArenaBody[i] = everyOtherArenaBodyExceptThis;
                 */
+                
+                const arenaBodyCollisionFilter = arenaBody.collisionFilter;
+                const arenaBodyCollisionCategory = arenaBodyCollisionFilter.category;
+                const isBodyRadarBlocking = RadarBlockingCollisionCategories[arenaBodyCollisionCategory];
+                if (isBodyRadarBlocking){
+                    radarBlockingArenaBodies.push(arenaBody);
+                }
             }
+            
+            console.log(radarBlockingArenaBodies);
             
             // Register the bodies with the RaycastManager
             RaycastManager.mapGameObjects(bodies, false);
