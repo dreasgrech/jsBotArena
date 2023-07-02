@@ -5,8 +5,8 @@ const RobotsRadar = (function() {
 
     const DEFAULT_RADAR_FOV_ANGLES_DEGREES = 45;
     const DEFAULT_RADAR_FOV_ANGLES_RADIANS = Phaser.Math.DegToRad(DEFAULT_RADAR_FOV_ANGLES_DEGREES);
-    const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 1000;
-    //const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 200;
+    //const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 1000;
+    const DEFAULT_RADAR_MAX_SCAN_DISTANCE = 200;
 
     const MIN_ALLOWED_RADAR_FOV_ANGLE = 1;
     const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
@@ -18,6 +18,7 @@ const RobotsRadar = (function() {
 
     /**The ray that's used for all the radar work */
     let ray;
+    let coneRay;
 
     const RobotsData_Radar_radarGraphics = [];
     const RobotsData_Radar_radarFOVAngles_degrees = [];
@@ -72,8 +73,9 @@ const RobotsRadar = (function() {
             ...PhysicsBodies.getArenaBodies() // the ... operator expands the array into arguments for the function
         ];
         */
-        // const bodiesToIntersectWith = PhysicsBodies.getStaticArenaBodies();
-        const bodiesToIntersectWith = PhysicsBodiesManager.staticArenaBodies;
+        
+        // dataForRaycast.objects = PhysicsBodiesManager.getStaticArenaBodies();
+        dataForRaycast.objects = PhysicsBodiesManager.staticArenaBodies;
 
         // Calculate the coordinates of the bounding box endpoints
         const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
@@ -98,6 +100,24 @@ const RobotsRadar = (function() {
          * @type {ArenaObstacleScannedInfo[]}
          */
         const arenaObstaclesScannedInfo = [];
+
+        /*
+        coneRay.setOrigin(turretPositionX, turretPositionY);
+        coneRay.setAngle(currentRadarAngle_radians); // radians
+        coneRay.setCone(radarFOVAngle_radians); // radians
+        coneRay.detectionRange = radarMaxScanDistance;
+        //coneRay.range = radarMaxScanDistance;
+        const coneIntersections = coneRay.castCone(dataForRaycast);
+        const coneIntersectionsLength = coneIntersections.length;
+        for (let i = 0; i < coneIntersectionsLength; i++) {
+            const coneIntersection = coneIntersections[i];
+            const intersectionObject = coneIntersection.object;
+            
+        }
+        if (coneIntersections.length){
+            //Logger.log(coneIntersections);
+        }
+        */
 
         // Query the spatial hash for all the arena bodies in the radar's AABB
         const arenaBodiesBoundsFromSpatialHash = PhysicsBodiesManager.queryArenaBodiesSpatialHash(radarArcBoundingBox);
@@ -153,7 +173,6 @@ const RobotsRadar = (function() {
                     ray.setAngle(angleBetweenPoints_radians); // radians
 
                     //Logger.log(ray,"Checking for index", arenaBodyIndex, bodiesToIntersectWith);
-                    dataForRaycast.objects = bodiesToIntersectWith;
                     const intersection = ray.cast(dataForRaycast);
                     //ray.destroy();
                     if (intersection) {
@@ -367,6 +386,7 @@ const RobotsRadar = (function() {
     const robotsRadar = {
         system_create: function() {
             ray = RaycastManager.createRay();
+            coneRay = RaycastManager.createRay();
             //console.log(ray);
         },
         update: function() { },
