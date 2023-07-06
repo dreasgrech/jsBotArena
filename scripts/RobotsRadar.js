@@ -21,6 +21,7 @@ const RobotsRadar = (function() {
     const RobotsData_ArenaObstaclesScannedInfos = [];
 
     const radarArcBoundingBoxes = [];
+    // const radarArcBoundingBoxes_flat = [];
     const radarArcBoundingBoxes_graphics = [];
 
     /**The ray that's used for all the radar work */
@@ -80,21 +81,6 @@ const RobotsRadar = (function() {
         // dataForRaycast.objects = PhysicsBodiesManager.getStaticArenaBodies();
         dataForRaycast.objects = PhysicsBodiesManager.staticArenaBodies;
 
-        // Calculate the coordinates of the bounding box endpoints
-        const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
-        const startY = turretPositionY + radarMaxScanDistance * Math.sin(radarStartAngle_radians);
-        const endX = turretPositionX + radarMaxScanDistance * Math.cos(radarEndAngle_radians);
-        const endY = turretPositionY + radarMaxScanDistance * Math.sin(radarEndAngle_radians);
-
-        // Update the bounding box
-        // TODO: Instead of storing an object, store each number in the flat array 
-        // TODO: sequentially and then use the index to access the values.
-        const radarArcBoundingBox = radarArcBoundingBoxes[robotIndex];
-        radarArcBoundingBox.minX = Math.min(turretPositionX, startX, endX);
-        radarArcBoundingBox.minY = Math.min(turretPositionY, startY, endY);
-        radarArcBoundingBox.maxX = Math.max(turretPositionX, startX, endX);
-        radarArcBoundingBox.maxY = Math.max(turretPositionY, startY, endY);
-
         /**
          * Holds the 
          * @type {ArenaObstacleScannedInfo[]}
@@ -119,6 +105,31 @@ const RobotsRadar = (function() {
             //Logger.log(coneIntersections);
         }
         */
+        
+        // Calculate the coordinates of the bounding box endpoints
+        const startX = turretPositionX + radarMaxScanDistance * Math.cos(radarStartAngle_radians);
+        const startY = turretPositionY + radarMaxScanDistance * Math.sin(radarStartAngle_radians);
+        const endX = turretPositionX + radarMaxScanDistance * Math.cos(radarEndAngle_radians);
+        const endY = turretPositionY + radarMaxScanDistance * Math.sin(radarEndAngle_radians);
+
+        // Update the bounding box
+        const minX = Math.min(turretPositionX, startX, endX);
+        const minY = Math.min(turretPositionY, startY, endY);
+        const maxX = Math.max(turretPositionX, startX, endX);
+        const maxY = Math.max(turretPositionY, startY, endY);
+        // TODO: Instead of storing an object, store each number in the flat array 
+        // TODO: sequentially and then use the index to access the values.
+        // TODO: Problem is, the rbush spatial hash requires a bounding box object when calling search()...so, fuck.
+        const radarArcBoundingBox = radarArcBoundingBoxes[robotIndex];
+        radarArcBoundingBox.minX = minX;
+        radarArcBoundingBox.minY = minY;
+        radarArcBoundingBox.maxX = maxX;
+        radarArcBoundingBox.maxY = maxY;
+
+        // radarArcBoundingBoxes_flat[robotIndex * 4 + 0] = minX;
+        // radarArcBoundingBoxes_flat[robotIndex * 4 + 1] = minY;
+        // radarArcBoundingBoxes_flat[robotIndex * 4 + 2] = maxX;
+        // radarArcBoundingBoxes_flat[robotIndex * 4 + 3] = maxY;
 
         // Query the spatial hash for all the arena bodies in the radar's AABB
         const arenaBodiesBoundsFromSpatialHash = PhysicsBodiesManager.queryArenaBodiesSpatialHash(radarArcBoundingBox);
@@ -434,7 +445,13 @@ const RobotsRadar = (function() {
             }
 
             // Fill the radarArcBoundingBox with initial values
+            // Andreas: The bounding boxes are currently stored as objects because the spatial hash requires a 
+            //          bounds object to be passed 
             radarArcBoundingBoxes[robotIndex] = { minX: 0, minY: 0, maxX: 0, maxY: 0 };
+            // radarArcBoundingBoxes_flat[robotIndex * 4 + 0] = 0;
+            // radarArcBoundingBoxes_flat[robotIndex * 4 + 1] = 0;
+            // radarArcBoundingBoxes_flat[robotIndex * 4 + 2] = 0;
+            // radarArcBoundingBoxes_flat[robotIndex * 4 + 3] = 0;
             
             RobotsData_ArenaObstaclesScannedInfos[robotIndex] = [];
         },
@@ -490,14 +507,24 @@ const RobotsRadar = (function() {
             // Draw the bounding box around the radar arc
             if (GAME_DEBUG_MODE) {
                 const radarArcBoundingBox = radarArcBoundingBoxes[robotIndex];
+                const minX = radarArcBoundingBox.minX;
+                const minY = radarArcBoundingBox.minY;
+                const maxX = radarArcBoundingBox.maxX;
+                const maxY = radarArcBoundingBox.maxY;
+                
+                // const minX = radarArcBoundingBoxes_flat[robotIndex * 4 + 0];
+                // const minY = radarArcBoundingBoxes_flat[robotIndex * 4 + 1];
+                // const maxX = radarArcBoundingBoxes_flat[robotIndex * 4 + 2];
+                // const maxY = radarArcBoundingBoxes_flat[robotIndex * 4 + 3];
+                
                 const radarArcBoundingBoxGraphics = radarArcBoundingBoxes_graphics[robotIndex];
                 radarArcBoundingBoxGraphics.clear();
                 radarArcBoundingBoxGraphics.lineStyle(1, 0xff0000, 1); // Line style: 1 pixel wide, red, full opacity
                 radarArcBoundingBoxGraphics.strokeRect(
-                    radarArcBoundingBox.minX,
-                    radarArcBoundingBox.minY,
-                    radarArcBoundingBox.maxX - radarArcBoundingBox.minX,
-                    radarArcBoundingBox.maxY - radarArcBoundingBox.minY);
+                    minX,
+                    minY,
+                    maxX - minX,
+                    maxY - minY);
             }
         },
         system_newRoundReset: function() {
