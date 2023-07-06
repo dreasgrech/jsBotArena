@@ -13,6 +13,13 @@ const RobotsRadar = (function() {
 
     const RADAR_ROTATION_INCREMENT = 120;
 
+
+    /**
+     * 
+     * @type {ArenaObstacleScannedInfo[][]}
+     */
+    const RobotsData_ArenaObstaclesScannedInfos = [];
+
     const radarArcBoundingBoxes = [];
     const radarArcBoundingBoxes_graphics = [];
 
@@ -49,15 +56,11 @@ const RobotsRadar = (function() {
 
         const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
         const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
-        // const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
         const currentRadarAngle_radians = RobotsData_CurrentData_currentRadarAngles_radians[robotIndex];
 
         const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
-        // const radarFOVAngle_degrees = RobotsData_Radar_radarFOVAngles_degrees[robotIndex];
         const radarFOVAngle_radians = RobotsData_Radar_radarFOVAngles_radians[robotIndex];
 
-        // const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
-        // const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
         const radarStartAngle_radians = currentRadarAngle_radians - radarFOVAngle_radians * 0.5;
         const radarEndAngle_radians = currentRadarAngle_radians + radarFOVAngle_radians * 0.5;
 
@@ -84,22 +87,20 @@ const RobotsRadar = (function() {
         const endY = turretPositionY + radarMaxScanDistance * Math.sin(radarEndAngle_radians);
 
         // Update the bounding box
-        // TODO: Can we update the existing object instead of creating a new one every time.
-        // TODO: EVEN BETTER: Instead of storing an object, store each number in the flat array 
+        // TODO: Instead of storing an object, store each number in the flat array 
         // TODO: sequentially and then use the index to access the values.
-        const radarArcBoundingBox = {
-            minX: Math.min(turretPositionX, startX, endX),
-            minY: Math.min(turretPositionY, startY, endY),
-            maxX: Math.max(turretPositionX, startX, endX),
-            maxY: Math.max(turretPositionY, startY, endY)
-        };
-        radarArcBoundingBoxes[robotIndex] = radarArcBoundingBox;
+        const radarArcBoundingBox = radarArcBoundingBoxes[robotIndex];
+        radarArcBoundingBox.minX = Math.min(turretPositionX, startX, endX);
+        radarArcBoundingBox.minY = Math.min(turretPositionY, startY, endY);
+        radarArcBoundingBox.maxX = Math.max(turretPositionX, startX, endX);
+        radarArcBoundingBox.maxY = Math.max(turretPositionY, startY, endY);
 
         /**
          * Holds the 
          * @type {ArenaObstacleScannedInfo[]}
          */
-        const arenaObstaclesScannedInfo = [];
+        const arenaObstaclesScannedInfo = RobotsData_ArenaObstaclesScannedInfos[robotIndex];
+        arenaObstaclesScannedInfo.length = 0;
 
         /*
         coneRay.setOrigin(turretPositionX, turretPositionY);
@@ -131,7 +132,7 @@ const RobotsRadar = (function() {
             const arenaBodyID = arenaStaticObstacleBodiesIDs[arenaBodyIndex];
 
             let arenaObstacleFoundInRadar = false;
-            let distanceBetweenRobotAndObstacle = false;
+            let distanceBetweenRobotAndObstacle = 0;
             // Check each point in the arena obstacle's bounds to determine whether this arena obstacle is truly in the radar's field-of-view
             const boundsPointIndex = arenaBodyIndex * ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS;
             
@@ -141,10 +142,10 @@ const RobotsRadar = (function() {
                 const arenaObstacleCornerPointY = arenaStaticObstacleBodiesBounds[boundsPointIndex + boundsPointNumber + 1];
                 
                 // Calculate the angle in radians between the robot and the arena obstacle point
-                const angleBetween_radians = Math.atan2(arenaObstacleCornerPointY - turretPositionY, arenaObstacleCornerPointX - turretPositionX );
+                const angleBetweenCornerPointAndTurret_radians = Math.atan2(arenaObstacleCornerPointY - turretPositionY, arenaObstacleCornerPointX - turretPositionX );
 
                 // Adjust the angle to account for Phaser's inverted y-axis
-                const adjustedAngleBetween_radians = angleBetween_radians < 0 ? 2 * PI + angleBetween_radians : angleBetween_radians;
+                const adjustedAngleBetweenCornerPointAndTurret_radians = angleBetweenCornerPointAndTurret_radians < 0 ? 2 * PI + angleBetweenCornerPointAndTurret_radians : angleBetweenCornerPointAndTurret_radians;
 
                 // Check if the angle between the robot and the arena obstacle falls within the radar angles.
                 // If radar angles do not cross the 0-crossover point, we use the same condition as before.
@@ -156,10 +157,10 @@ const RobotsRadar = (function() {
                 // Check if the radar angles cross the 0-crossover point or not
                 if (adjustedRadarStartAngle_radians <= adjustedRadarEndAngle_radians) {
                     // If they don't cross the 0-crossover point, check if the angle between robots is within the radar range
-                    pointWithinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians && adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
+                    pointWithinRadarAngles = adjustedAngleBetweenCornerPointAndTurret_radians >= adjustedRadarStartAngle_radians && adjustedAngleBetweenCornerPointAndTurret_radians <= adjustedRadarEndAngle_radians;
                 } else {
                     // If they cross the 0-crossover point, check if the angle between robots is within the radar range
-                    pointWithinRadarAngles = adjustedAngleBetween_radians >= adjustedRadarStartAngle_radians || adjustedAngleBetween_radians <= adjustedRadarEndAngle_radians;
+                    pointWithinRadarAngles = adjustedAngleBetweenCornerPointAndTurret_radians >= adjustedRadarStartAngle_radians || adjustedAngleBetweenCornerPointAndTurret_radians <= adjustedRadarEndAngle_radians;
                 }
 
                 if (pointWithinRadarAngles) {
@@ -169,8 +170,9 @@ const RobotsRadar = (function() {
                     //const ray = RaycastManager.createRay();
                     ray.setOrigin(rayOriginX, rayOriginY);
                     // Calculate the angle in radians between the radar origin and the obstacle corner point
-                    const angleBetweenPoints_radians = Math.atan2(arenaObstacleCornerPointY - turretPositionY, arenaObstacleCornerPointX - turretPositionX);
-                    ray.setAngle(angleBetweenPoints_radians); // radians
+                    // const angleBetweenPoints_radians = Math.atan2(arenaObstacleCornerPointY - turretPositionY, arenaObstacleCornerPointX - turretPositionX);
+                    // ray.setAngle(angleBetweenPoints_radians); // radians
+                    ray.setAngle(angleBetweenCornerPointAndTurret_radians); // radians
 
                     //Logger.log(ray,"Checking for index", arenaBodyIndex, bodiesToIntersectWith);
                     const intersection = ray.cast(dataForRaycast);
@@ -236,16 +238,11 @@ const RobotsRadar = (function() {
         const robotHullBodyID = RobotsData_PhysicsBodies_robotHullMatterBodyIDs[robotIndex];
         const radarOriginX = RobotsData_CurrentData_turretPositionXs[robotIndex];
         const radarOriginY = RobotsData_CurrentData_turretPositionYs[robotIndex];
-        //const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
         const currentRadarAngle_radians = RobotsData_CurrentData_currentRadarAngles_radians[robotIndex];
 
         const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
-        //const radarFOVAngle_degrees = RobotsData_Radar_radarFOVAngles_degrees[robotIndex];
         const radarFOVAngle_radians = RobotsData_Radar_radarFOVAngles_radians[robotIndex];
 
-        // TODO: Find a way to use radians directly instead of calling Phaser.Math.DegToRad() here.
-        // const radarStartAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees - radarFOVAngle_degrees * 0.5);
-        // const radarEndAngle_radians = Phaser.Math.DegToRad(currentRadarAngle_degrees + radarFOVAngle_degrees * 0.5);
         const radarStartAngle_radians = currentRadarAngle_radians - radarFOVAngle_radians * 0.5;
         const radarEndAngle_radians = currentRadarAngle_radians + radarFOVAngle_radians * 0.5;
 
@@ -438,6 +435,8 @@ const RobotsRadar = (function() {
 
             // Fill the radarArcBoundingBox with initial values
             radarArcBoundingBoxes[robotIndex] = { minX: 0, minY: 0, maxX: 0, maxY: 0 };
+            
+            RobotsData_ArenaObstaclesScannedInfos[robotIndex] = [];
         },
         removeRadarArc: function(robotIndex) {
             const radarGraphics = RobotsData_Radar_radarGraphics[robotIndex];
