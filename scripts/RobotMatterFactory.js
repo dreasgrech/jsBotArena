@@ -99,8 +99,8 @@ const RobotMatterFactory = (function() {
         RobotsData_PhysicsBodies_robotHullGameObjects[currentRobotIndex] = hullImage;
         RobotsData_PhysicsBodies_robotHullMatterBodyIDs[currentRobotIndex] = hullImagePhysicsBodyID;
 
-        RobotsData_Instance_hullTurretHoleOffsetX[currentRobotIndex] = hullsDB.TurretHoleOffsetsX[hullType];
-        RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex] = hullsDB.TurretHoleOffsetsY[hullType];
+        RobotsData_Instance_hullTurretHoleOffset[currentRobotIndex * 2 + 0] = hullsDB.TurretHoleOffsetsX[hullType];
+        RobotsData_Instance_hullTurretHoleOffset[currentRobotIndex * 2 + 1] = hullsDB.TurretHoleOffsetsY[hullType];
 
         // Add the robot's body to the arena bodies collection
         PhysicsBodiesManager.addDynamicArenaPhysicsBodies([hullImagePhysicsBody]); 
@@ -143,8 +143,9 @@ const RobotMatterFactory = (function() {
         const anchorageIndex = ObjectAnchorManager.anchorToGameObject(
             turretImage,
             hullImage,
-            RobotsData_Instance_hullTurretHoleOffsetX[currentRobotIndex],
-            RobotsData_Instance_hullTurretHoleOffsetY[currentRobotIndex]);
+            RobotsData_Instance_hullTurretHoleOffset[currentRobotIndex * 2 + 0],
+            RobotsData_Instance_hullTurretHoleOffset[currentRobotIndex * 2 + 1]
+        );
         RobotsData_Instance_hullTurretAnchorageIndex[currentRobotIndex] = anchorageIndex;
 
 

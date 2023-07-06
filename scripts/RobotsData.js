@@ -35,8 +35,7 @@ const RobotsData_Instance_names = [];
 const RobotsData_Instance_updateFunctions = [];
 const RobotsData_Instance_robotAPIs = [];
 const RobotsData_Instance_robotSpeeds = [];
-const RobotsData_Instance_hullTurretHoleOffsetX = [];
-const RobotsData_Instance_hullTurretHoleOffsetY = [];
+const RobotsData_Instance_hullTurretHoleOffset = [];
 const RobotsData_Instance_hullTurretAnchorageIndex = [];
 const RobotsData_Instance_hullMatterGroup = [];
 
