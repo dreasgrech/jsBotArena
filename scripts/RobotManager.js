@@ -208,8 +208,8 @@ const RobotManager = (function() {
                 const turretPositionY = turretImage.y;
                 const turretAngle_degrees = turretImage.angle;
                 RobotsData_CurrentData_currentTurretAngles[robotIndex] = turretAngle_degrees;
-                RobotsData_CurrentData_turretPositionXs[robotIndex] = turretPositionX;
-                RobotsData_CurrentData_turretPositionYs[robotIndex] = turretPositionY;
+                RobotsData_CurrentData_turretPositions[robotIndex * 2 + 0] = turretPositionX;
+                RobotsData_CurrentData_turretPositions[robotIndex * 2 + 1] = turretPositionY;
 
                 RobotMatterFactory.updateParts(robotIndex);
 

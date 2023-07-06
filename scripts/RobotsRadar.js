@@ -55,8 +55,8 @@ const RobotsRadar = (function() {
             return scanForRobotsEmptyResult;
         }
 
-        const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
-        const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
+        const turretPositionX = RobotsData_CurrentData_turretPositions[robotIndex * 2 + 0];
+        const turretPositionY = RobotsData_CurrentData_turretPositions[robotIndex * 2 + 1];
         const currentRadarAngle_radians = RobotsData_CurrentData_currentRadarAngles_radians[robotIndex];
 
         const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
@@ -247,8 +247,8 @@ const RobotsRadar = (function() {
 
         const robotHullBody = RobotsData_PhysicsBodies_robotHullMatterBodies[robotIndex];
         const robotHullBodyID = RobotsData_PhysicsBodies_robotHullMatterBodyIDs[robotIndex];
-        const radarOriginX = RobotsData_CurrentData_turretPositionXs[robotIndex];
-        const radarOriginY = RobotsData_CurrentData_turretPositionYs[robotIndex];
+        const radarOriginX = RobotsData_CurrentData_turretPositions[robotIndex * 2 + 0];
+        const radarOriginY = RobotsData_CurrentData_turretPositions[robotIndex * 2 + 1];
         const currentRadarAngle_radians = RobotsData_CurrentData_currentRadarAngles_radians[robotIndex];
 
         const radarMaxScanDistance = RobotsData_Radar_radarMaxScanDistance[robotIndex];
@@ -486,8 +486,8 @@ const RobotsRadar = (function() {
 
             //const robotPositionX = RobotsData_CurrentData_positionXs[robotIndex];
             //const robotPositionY = RobotsData_CurrentData_positionYs[robotIndex];
-            const turretPositionX = RobotsData_CurrentData_turretPositionXs[robotIndex];
-            const turretPositionY = RobotsData_CurrentData_turretPositionYs[robotIndex];
+            const turretPositionX = RobotsData_CurrentData_turretPositions[robotIndex * 2 + 0];
+            const turretPositionY = RobotsData_CurrentData_turretPositions[robotIndex * 2 + 1];
 
             radarGraphics.lineStyle(1, 0x00ff00, 0.5);
             radarGraphics.fillStyle(0x00ff00, 0.2);
