@@ -382,7 +382,7 @@ const RobotsRadar = (function() {
                 robotScannedEventInfo.positionY = otherRobotPositionY;
                 robotScannedEventInfo.angle_degrees = RobotsData_CurrentData_currentRobotAngles_degrees[otherRobotIndex]; 
                 robotScannedEventInfo.bearing_degrees = AngleOperations.getBearing_degrees(radarOriginX, radarOriginY, otherRobotPositionX, otherRobotPositionY); 
-                robotScannedEventInfo.turret_angle = RobotsData_CurrentData_currentTurretAngles[otherRobotIndex]; 
+                robotScannedEventInfo.turret_angle = RobotsData_CurrentData_currentTurretAngles_degrees[otherRobotIndex]; 
                 robotScannedEventInfo.radar_angle = RobotsData_CurrentData_currentRadarAngles_degrees[otherRobotIndex];
 
                 scannedRobotsInfo.push(robotScannedEventInfo);

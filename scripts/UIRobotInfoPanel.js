@@ -66,7 +66,7 @@ const UIRobotInfoPanel = (function() {
                 const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
                 const projectileSensorAngle = Phaser.Math.RadToDeg(projectileSensor.angle);
                 const radarAngle = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
-                const turretRotation = RobotsData_CurrentData_currentTurretAngles[robotIndex];
+                const turretRotation = RobotsData_CurrentData_currentTurretAngles_degrees[robotIndex];
                 const robotHealth = RobotsData_CurrentData_health[robotIndex];
 
                 const infoText = `

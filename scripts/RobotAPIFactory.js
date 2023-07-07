@@ -178,7 +178,7 @@ const RobotAPIFactory = (function() {
                      */
                     turretFollowHull: false,
                     get angle_degrees () {
-                        return RobotsData_CurrentData_currentTurretAngles[robotIndex];
+                        return RobotsData_CurrentData_currentTurretAngles_degrees[robotIndex];
                     },
                     /**
                      * Rotates the turret to the left.
