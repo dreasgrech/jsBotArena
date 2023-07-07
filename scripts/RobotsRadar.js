@@ -401,7 +401,7 @@ const RobotsRadar = (function() {
         scanForRobots: scanForRobots,
         scanForArenaObstacles: scanForArenaObstacles,
         setRadarAngle_degrees: function(robotIndex, angle_degrees) {
-            const normalizedAngle_degrees = AngleOperations.normalizeAngleDegrees(angle_degrees);
+            const normalizedAngle_degrees = AngleOperations.normalizeAngle_degrees(angle_degrees);
             const normalizedAngle_radians = Phaser.Math.DegToRad(normalizedAngle_degrees);
             RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = normalizedAngle_degrees;
             RobotsData_CurrentData_currentRadarAngles_radians[robotIndex] = normalizedAngle_radians;
@@ -415,7 +415,7 @@ const RobotsRadar = (function() {
             return robotsRadar.setRadarAngle_degrees(robotIndex, newRadarAngle_degrees);
         },
         setRadarFOVAngle_degrees: function(robotIndex, angle_degrees) {
-            const normalizedAngle_degrees = AngleOperations.normalizeAngleDegrees(MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE));
+            const normalizedAngle_degrees = AngleOperations.normalizeAngle_degrees(MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE));
             const normalizedAngle_radians = Phaser.Math.DegToRad(normalizedAngle_degrees);
             RobotsData_Radar_radarFOVAngles_degrees[robotIndex] = normalizedAngle_degrees;
             RobotsData_Radar_radarFOVAngles_radians[robotIndex] = normalizedAngle_radians;

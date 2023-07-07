@@ -161,7 +161,7 @@ const RobotOperations_Turret = (function() {
             const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
             // const currentTurretImageAngle_degrees = turretImage.angle;
             // todo: here i was working on trying to reduce the jitter when the turret is changing rotation direction very fast (every frame)
-            const currentTurretImageAngle_degrees = AngleOperations.normalizeAngleDegrees(turretImage.angle);
+            const currentTurretImageAngle_degrees = AngleOperations.normalizeAngle_degrees(turretImage.angle);
             const newTurretImageAngle_degrees = AngleOperations.incrementAngle_degrees(currentTurretImageAngle_degrees, angle_degrees);
             //const newTurretImageAngle_degrees = AngleOperations.lerp_incrementAngle_degrees(currentTurretImageAngle_degrees, angle_degrees);
             if (robotIndex === 1) {
