@@ -11,7 +11,9 @@ const RobotsRadar = (function() {
     const MIN_ALLOWED_RADAR_FOV_ANGLE = 1;
     const MAX_ALLOWED_RADAR_FOV_ANGLE = 45;
 
-    const RADAR_ROTATION_INCREMENT = 120;
+    // const RADAR_ROTATION_INCREMENT = 120;
+    const RADAR_ROTATION_INCREMENT_RADIANS  = 120 * Math.PI / 180; // Convert to radians
+
 
 
     /**
@@ -407,12 +409,25 @@ const RobotsRadar = (function() {
             RobotsData_CurrentData_currentRadarAngles_radians[robotIndex] = normalizedAngle_radians;
             return normalizedAngle_degrees;
         },
+        setRadarAngle_radians: function(robotIndex, angle_radians) {
+            const normalizedAngle_radians = AngleOperations.normalizeAngle_radians(angle_radians);
+            const normalizedAngle_degrees = Phaser.Math.RadToDeg(normalizedAngle_radians);
+            RobotsData_CurrentData_currentRadarAngles_radians[robotIndex] = normalizedAngle_radians;
+            RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex] = normalizedAngle_degrees;
+            return normalizedAngle_radians;
+        },
+        // rotateRadar: function(robotIndex, direction) {
+        //     const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
+        //     const multiplier = RADAR_ROTATION_INCREMENT * direction * GameContextHolder.deltaTime;
+        //     const newRadarAngle_degrees = AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, multiplier);
+        //     //const newRadarAngle_degrees = AngleOperations.lerp_incrementAngle_degrees(currentRadarAngle_degrees, multiplier);
+        //     return robotsRadar.setRadarAngle_degrees(robotIndex, newRadarAngle_degrees);
+        // },
         rotateRadar: function(robotIndex, direction) {
-            const currentRadarAngle_degrees = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
-            const multiplier = RADAR_ROTATION_INCREMENT * direction * GameContextHolder.deltaTime;
-            const newRadarAngle_degrees = AngleOperations.incrementAngle_degrees(currentRadarAngle_degrees, multiplier);
-            //const newRadarAngle_degrees = AngleOperations.lerp_incrementAngle_degrees(currentRadarAngle_degrees, multiplier);
-            return robotsRadar.setRadarAngle_degrees(robotIndex, newRadarAngle_degrees);
+            const currentRadarAngle_radians = RobotsData_CurrentData_currentRadarAngles_radians[robotIndex];
+            const multiplier = RADAR_ROTATION_INCREMENT_RADIANS * direction * GameContextHolder.deltaTime;
+            const newRadarAngle_radians = AngleOperations.incrementAngle_radians(currentRadarAngle_radians, multiplier);
+            return robotsRadar.setRadarAngle_radians(robotIndex, newRadarAngle_radians);
         },
         setRadarFOVAngle_degrees: function(robotIndex, angle_degrees) {
             const normalizedAngle_degrees = AngleOperations.normalizeAngle_degrees(MathOperations.clampBetween(angle_degrees, MIN_ALLOWED_RADAR_FOV_ANGLE, MAX_ALLOWED_RADAR_FOV_ANGLE));
