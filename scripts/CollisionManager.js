@@ -33,8 +33,8 @@ const CollisionManager = (function() {
         data.name = RobotsData_Instance_names[collidedWithBody_RobotIndex];
         data.angle = RobotsData_CurrentData_currentRobotAngles_degrees[collidedWithBody_RobotIndex];
         data.velocity = RobotsData_CurrentData_currentRobotVelocities[collidedWithBody_RobotIndex];
-        data.positionX = RobotsData_CurrentData_positionXs[collidedWithBody_RobotIndex];
-        data.positionY = RobotsData_CurrentData_positionYs[collidedWithBody_RobotIndex];
+        data.positionX = RobotsData_CurrentData_positions[collidedWithBody_RobotIndex * 2 + 0];
+        data.positionY = RobotsData_CurrentData_positions[collidedWithBody_RobotIndex * 2 + 1];
 
         // Save the collisions in the colliding robot's data
         const collidingBodyID = collidingBody.parent.id;
@@ -99,8 +99,8 @@ const CollisionManager = (function() {
 
             const damageApplied = robotHealthBeforeDamage - newRobotHealth;
 
-            const robotX = RobotsData_CurrentData_positionXs[robotIndex];
-            const robotY = RobotsData_CurrentData_positionYs[robotIndex];
+            const robotX = RobotsData_CurrentData_positions[robotIndex * 2 + 0];
+            const robotY = RobotsData_CurrentData_positions[robotIndex * 2 + 1];
 
             const projectileX = projectileMatterGameObject.x;
             const projectileY = projectileMatterGameObject.y;

@@ -285,8 +285,8 @@ const RobotsRadar = (function() {
             //     continue;
             // }
 
-            const otherRobotPositionX = RobotsData_CurrentData_positionXs[otherRobotIndex];
-            const otherRobotPositionY = RobotsData_CurrentData_positionYs[otherRobotIndex];
+            const otherRobotPositionX = RobotsData_CurrentData_positions[otherRobotIndex * 2 + 0];
+            const otherRobotPositionY = RobotsData_CurrentData_positions[otherRobotIndex * 2 + 1];
             // TODO: Change to check against distanceSqr instead of distance to avoid the sqrt.
             // TODO: But then this distance is needed for the event info for the API.  Maybe you can sqrt down there when it's needed.
             const distanceBetweenRadarAndOtherRobot = Phaser.Math.Distance.Between(radarOriginX, radarOriginY, otherRobotPositionX, otherRobotPositionY);

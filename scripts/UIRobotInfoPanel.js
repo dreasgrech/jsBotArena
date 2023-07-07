@@ -60,8 +60,8 @@ const UIRobotInfoPanel = (function() {
 
                 const id = RobotsData_Instance_ids[robotIndex];
                 const name = RobotsData_Instance_names[robotIndex];
-                const positionX = RobotsData_CurrentData_positionXs[robotIndex];
-                const positionY = RobotsData_CurrentData_positionYs[robotIndex];
+                const positionX = RobotsData_CurrentData_positions[robotIndex * 2 + 0];
+                const positionY = RobotsData_CurrentData_positions[robotIndex * 2 + 1];
                 const angle = RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
                 const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
                 const projectileSensorAngle = Phaser.Math.RadToDeg(projectileSensor.angle);
@@ -73,12 +73,12 @@ const UIRobotInfoPanel = (function() {
 Robot ${id}: ${name}
 Health: ${robotHealth}
 Position: (${positionX.toFixed(2)}, ${positionY.toFixed(2)})
-Angle: ${angle.toFixed(2)}°
-Sensor Angle: ${projectileSensorAngle.toFixed(2)}°
-Radar Angle: ${radarAngle.toFixed(2)}°
-Turret Rotation: ${turretRotation.toFixed(2)}°
+Angle: ${angle.toFixed(2)}ï¿½
+Sensor Angle: ${projectileSensorAngle.toFixed(2)}ï¿½
+Radar Angle: ${radarAngle.toFixed(2)}ï¿½
+Turret Rotation: ${turretRotation.toFixed(2)}ï¿½
 `;
-//Turret Rotation: ${Phaser.Math.RadToDeg(turretRotation).toFixed(2)}°
+//Turret Rotation: ${Phaser.Math.RadToDeg(turretRotation).toFixed(2)}ï¿½
                 robotInfoTexts[robotIndex].setText(infoText);
                 if (robotHealth === 0) {
                     robotInfoTexts[robotIndex].setColor('#ff0000');

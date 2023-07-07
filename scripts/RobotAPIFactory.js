@@ -59,13 +59,13 @@ const RobotAPIFactory = (function() {
                  * The robot's current absolute world x-position
                  */
                 get positionX () {
-                    return RobotsData_CurrentData_positionXs[robotIndex];
+                    return RobotsData_CurrentData_positions[robotIndex * 2 + 0];
                 },
                 /**
                  * The robot's current absolute world y-position
                  */
                 get positionY () {
-                    return RobotsData_CurrentData_positionYs[robotIndex];
+                    return RobotsData_CurrentData_positions[robotIndex * 2 + 1];
                 },
                 /**
                  * The robot's current angle (degrees)

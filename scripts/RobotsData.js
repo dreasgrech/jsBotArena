@@ -9,8 +9,7 @@ const RobotsData_PhysicsBodies_robotProjectileSensorBodies = [];
 const RobotsData_PhysicsBodies_robotProjectileSensorConstraints = [];
 
 // Data that is updated per frame or on a frequent basis
-const RobotsData_CurrentData_positionXs = [];
-const RobotsData_CurrentData_positionYs = [];
+const RobotsData_CurrentData_positions = [];
 const RobotsData_CurrentData_turretPositions = [];
 const RobotsData_CurrentData_currentRobotAngles_degrees = [];
 const RobotsData_CurrentData_currentRobotAngles_radians = [];

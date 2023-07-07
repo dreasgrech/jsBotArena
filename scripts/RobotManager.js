@@ -191,8 +191,8 @@ const RobotManager = (function() {
                 // const robotPositionY = robotCenterPosition.y;
                 const robotPositionX = robotHullGameObject.x;
                 const robotPositionY = robotHullGameObject.y;
-                RobotsData_CurrentData_positionXs[robotIndex] = robotPositionX;
-                RobotsData_CurrentData_positionYs[robotIndex] = robotPositionY;
+                RobotsData_CurrentData_positions[robotIndex * 2 + 0] = robotPositionX;
+                RobotsData_CurrentData_positions[robotIndex * 2 + 1] = robotPositionY;
 
                 const hullAngle_degrees = robotHullGameObject.angle;
                 RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex] = hullAngle_degrees;
@@ -298,8 +298,8 @@ const RobotManager = (function() {
             // Play the explosion animation
             AnimationManager.playNewAnimation(
                 AnimationEffects.TankAnimationEffects.Explosion,
-                RobotsData_CurrentData_positionXs[robotIndex],
-                RobotsData_CurrentData_positionYs[robotIndex],
+                RobotsData_CurrentData_positions[robotIndex * 2 + 0],
+                RobotsData_CurrentData_positions[robotIndex * 2 + 1],
                 -90,
                 GameObjectDepths.ImpactAnimation,
                 1);

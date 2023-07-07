@@ -90,8 +90,8 @@ const RobotsBoundsHelpers = (function() {
             drawPoints(graphics, bounds, boundsVisualizer_color, boundsVisualizer_radius);
 
             // Draw the origin
-            const robotPositionX = RobotsData_CurrentData_positionXs[index];
-            const robotPositionY = RobotsData_CurrentData_positionYs[index];
+            const robotPositionX = RobotsData_CurrentData_positions[index * 2 + 0];
+            const robotPositionY = RobotsData_CurrentData_positions[index * 2 + 1];
             drawPointWithNewColor(graphics, robotPositionX, robotPositionY, hullOriginVisualizer_color, hullOriginVisualizer_radius);
         },
         drawTurretBounds: function(index) {
