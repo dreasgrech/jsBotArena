@@ -178,6 +178,9 @@ const RobotManager = (function() {
             //currentRobotIndex++;
         },
         update: function() {
+            const time = GameContextHolder.gameTime;
+            const deltaTime = GameContextHolder.deltaTime;
+            
             for (let robotIndex = 0; robotIndex < totalRobots; robotIndex++) {
                 const robotAlive = RobotsData_CurrentData_alive[robotIndex];
                 // TODO: We can avoid this check here if we iterate over alive robots instead of all of them
@@ -245,8 +248,6 @@ const RobotManager = (function() {
                 }
 
                 // Call the robot's update function
-                const time = GameContextHolder.gameTime;
-                const deltaTime = GameContextHolder.deltaTime;
                 const updateFunction = RobotsData_Instance_updateFunctions[robotIndex];
                 updateFunction(api, time, deltaTime);
 
