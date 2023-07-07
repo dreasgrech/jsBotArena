@@ -186,9 +186,6 @@ const RobotManager = (function() {
                 }
                 
                 const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
-                // const robotCenterPosition = RobotsBoundsHelpers.getHullCenter(robotIndex);
-                // const robotPositionX = robotCenterPosition.x;
-                // const robotPositionY = robotCenterPosition.y;
                 const robotPositionX = robotHullGameObject.x;
                 const robotPositionY = robotHullGameObject.y;
                 RobotsData_CurrentData_positions[robotIndex * 2 + 0] = robotPositionX;
@@ -200,8 +197,11 @@ const RobotManager = (function() {
                 RobotsData_CurrentData_currentRobotAngles_radians[robotIndex] = hullAngle_radians;
                 const robotHullMatterBody = RobotsData_PhysicsBodies_robotHullMatterBodies[robotIndex];
                 const robotVelocity = robotHullMatterBody.velocity;
-                RobotsData_CurrentData_currentRobotVelocities[robotIndex] = robotVelocity;
-                RobotsData_CurrentData_currentRobotSpeedSqr[robotIndex] = MathOperations.sqrMagnitude(robotVelocity.x, robotVelocity.y);
+                const robotVelocityX = robotVelocity.x;
+                const robotVelocityY = robotVelocity.y;
+                RobotsData_CurrentData_currentRobotVelocities[robotIndex * 2 + 0] = robotVelocityX;
+                RobotsData_CurrentData_currentRobotVelocities[robotIndex * 2 + 1] = robotVelocityY;
+                RobotsData_CurrentData_currentRobotSpeedSqr[robotIndex] = MathOperations.sqrMagnitude(robotVelocityX, robotVelocityY);
 
                 const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
                 const turretPositionX = turretImage.x;

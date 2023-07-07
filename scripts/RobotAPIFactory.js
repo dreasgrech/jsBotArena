@@ -364,8 +364,10 @@ const RobotToRobotCollisionInfo = function () {
             name: 0,
             /** The angle of the other robot involved in the collision */
             angle: 0,
-            /** The velocity of the other robot involved in the collision */
-            velocity: 0,
+            /** The x-velocity of the other robot involved in the collision */
+            velocityX: 0,
+            /** The y-velocity of the other robot involved in the collision */
+            velocityY: 0,
             /** The x-position of the other robot involved in the collision */
             positionX: 0,
             /** The y-position of the other robot involved in the collision */

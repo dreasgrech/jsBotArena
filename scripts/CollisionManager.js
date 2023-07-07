@@ -32,7 +32,8 @@ const CollisionManager = (function() {
         data.robotIndex = collidedWithBody_RobotIndex;
         data.name = RobotsData_Instance_names[collidedWithBody_RobotIndex];
         data.angle = RobotsData_CurrentData_currentRobotAngles_degrees[collidedWithBody_RobotIndex];
-        data.velocity = RobotsData_CurrentData_currentRobotVelocities[collidedWithBody_RobotIndex];
+        data.velocityX = RobotsData_CurrentData_currentRobotVelocities[collidedWithBody_RobotIndex * 2 + 0];
+        data.velocityY = RobotsData_CurrentData_currentRobotVelocities[collidedWithBody_RobotIndex * 2 + 1];
         data.positionX = RobotsData_CurrentData_positions[collidedWithBody_RobotIndex * 2 + 0];
         data.positionY = RobotsData_CurrentData_positions[collidedWithBody_RobotIndex * 2 + 1];
 
