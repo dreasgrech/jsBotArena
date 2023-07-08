@@ -1,7 +1,5 @@
 "use strict";
 
-// TODO: Create a json database which contains all the spritesheets which need to be loaded
-
 const ImageDatabase = (function() {
 
     // TODO: Replace with a json database which contains all the spritesheets which need to be loaded
@@ -43,15 +41,6 @@ const ImageDatabase = (function() {
 
     return {
         system_preload: loadAllImages,
-        //loadProjectileImages: function(filenames, keys) {
-        //    loadImageList(filenames, keys, projectileImagesDirectory);
-        //},
-        ////loadHullImages: function(filenames, keys) {
-        ////    loadImageList(filenames, keys, hullsImagesDirectory);
-        ////},
-        //loadTurretImages: function(filenames, keys) {
-        //    //loadImageList(filenames, keys, turretsImagesDirectory);
-        //},
         get GameElementsSpritesheetKey() {
             return GameElementsSpritesheetKey;
         }

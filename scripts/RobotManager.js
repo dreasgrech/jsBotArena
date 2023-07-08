@@ -115,9 +115,6 @@ const RobotManager = (function() {
 
             // Call the robot's create() method
             const robotSetup = RobotSetupFactory.createRobotSetup();
-            // TODO: Pass also an arenaData (or something like that) to robot.create()
-            // TODO: so that it provides them with info about the arena, like dimensions.
-            // newRobot.create(robotSetup, gameOptionsForRobots);
             newRobot.create(robotSetup, GameSetup);
 
             RobotMatterFactory.createRobot({

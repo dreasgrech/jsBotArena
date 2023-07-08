@@ -224,6 +224,7 @@ const ArenaManager = (function() {
                         // });
                         let totalTilesMissingTileTypes = 0;
 
+                        // Logger.log("Layer", tiledLayer);
                         tiledLayer.forEachTile(tile => {
                             
                             // Skip tiles which don't have a tile assigned to them
@@ -232,11 +233,20 @@ const ArenaManager = (function() {
                                 return;
                             }
                             
+                            const tileProperties = tile.properties;
+                            
                             const tileType = tile.properties.tiletype;
                             
                             // Don't do anything if the tile doesn't have a tile type
                             if (tileType == null || tileType === TileTypes.Nothing) {
                                 totalTilesMissingTileTypes++;
+                                // Logger.warn("Tile missing tile type:", tileType, tile);
+                                
+                                // Make sure we didn't spell the tile type property name wrong in the Tiled application
+                                if (tileProperties["tileType"] || tileProperties["TileType"]) {
+                                    Logger.error("WARNING: The correct case is 'tiletyp' (NO CAPITAL LETTERS)");
+                                }
+                                
                                 return;
                             }
 
@@ -255,6 +265,8 @@ const ArenaManager = (function() {
                             
                             // Resolve the Matter collision category for this tile type
                             const collisionCategory = TileTypesCollisionCategories[tileType];
+                            
+                            // Logger.log(tile, tileType, collisionCategory);
                             
                             // Skip tiles which have a 0 assigned as a collision category because that means that they don't collide with anything
                             if (collisionCategory === 0){

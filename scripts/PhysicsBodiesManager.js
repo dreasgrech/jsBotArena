@@ -143,6 +143,8 @@ const PhysicsBodiesManager = (function() {
             // TODO: This means that not all bodies need to be pushed to it
             staticArenaBodies = bodies;
             
+            // Logger.log(staticArenaBodies);
+            
             const arenaBodiesElementsForSpatialHash = [];
             const bodiesLength = bodies.length;
             for (let i = 0; i < bodiesLength; i++) {
@@ -211,13 +213,14 @@ const PhysicsBodiesManager = (function() {
                 
                 const arenaBodyCollisionFilter = arenaBody.collisionFilter;
                 const arenaBodyCollisionCategory = arenaBodyCollisionFilter.category;
+                // Logger.log(arenaBody, arenaBodyCollisionFilter, arenaBodyCollisionCategory);
                 const isBodyRadarBlocking = RadarBlockingCollisionCategories[arenaBodyCollisionCategory];
                 if (isBodyRadarBlocking){
                     radarBlockingArenaBodies.push(arenaBody);
                 }
             }
             
-            console.log(radarBlockingArenaBodies);
+            // console.log(radarBlockingArenaBodies);
             
             // Register the bodies with the RaycastManager
             RaycastManager.mapGameObjects(bodies, false);

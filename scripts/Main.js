@@ -91,7 +91,9 @@ const GameManager = (function() {
         //gameContext.matter.world.setBounds();
 
         // Load the arena asynchronously
-        const arenaToLoad = Arenas.BridgeLevel;
+        //const arenaToLoad = Arenas.BridgeLevel;
+        const arenaToLoad = Arenas.GreenLevel;
+        //const arenaToLoad = Arenas.BrownLevel;
         ArenaManager.loadArena(arenaToLoad, function(){
             // Call all the system_create functions that are hooked
             for (let i = 0; i < objectsWith_create.length; i++) {
@@ -164,14 +166,13 @@ const GameManager = (function() {
              //const ROBOT_CREATION_ITERATIONS = 2;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
                 RobotManager.addRobot(astarBot());
-                //RobotManager.addRobot(keyBot());
-                RobotManager.addRobot(keyBot());
-                RobotManager.addRobot(doNothingBot());
-                RobotManager.addRobot(shredder());
-                RobotManager.addRobot(circleBot());
-                RobotManager.addRobot(sittingBot());
-                RobotManager.addRobot(followBot_followAngle());
-                RobotManager.addRobot(followBot_followPosition());
+                // RobotManager.addRobot(keyBot());
+                // RobotManager.addRobot(doNothingBot());
+                // RobotManager.addRobot(shredder());
+                // RobotManager.addRobot(circleBot());
+                // RobotManager.addRobot(sittingBot());
+                // RobotManager.addRobot(followBot_followAngle());
+                // RobotManager.addRobot(followBot_followPosition());
                 
 /*
                 RobotManager.addRobot(keyBot());

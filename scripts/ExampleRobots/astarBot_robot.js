@@ -441,11 +441,13 @@ const astarBot = function() {
             previousFrameOurPositionX = ourCurrentPositionX;
             previousFrameOurPositionY = ourCurrentPositionY;
             
+/*
             // If we don't have a charted path atm, create a new one
             if (!pathCharted){
                 // chartPathToRandomPosition();
                 chartPathToNextCorner();
             }
+*/
         }
     };
 };
