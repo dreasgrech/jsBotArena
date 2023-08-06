@@ -35,9 +35,15 @@ const MatterGameObjectPoolManager = (function() {
         },
         fetchMatterGameObjectFromPool: poolIndex => {
             const matterGameObject = GameObjectPoolsManager.fetchGameObjectFromPool(poolIndex);
-
+            
             // Enable the matter game object
             PhysicsBodiesManager.enableMatterBody(matterGameObject);
+            
+            // PoolsManager.log(poolIndex,
+            //     "Fetched a matter game object", matterGameObject,
+            //     `Pool: ${matterGameObject.pool}`,
+            //     `Body: ${matterGameObject.body.id}`,
+            // );
 
             return matterGameObject;
         },
@@ -47,13 +53,21 @@ const MatterGameObjectPoolManager = (function() {
                 return;
             }
 
+            // PoolsManager.log(poolIndex,
+            //     "Returned a matter game object", matterGameObject,
+            //     `Pool: ${matterGameObject.pool}`,
+            //     `Body: ${matterGameObject.body.id}`,
+            // );
+
             // Disable and hide the matter gameObject
             PhysicsBodiesManager.disableMatterGameObject(matterGameObject);
 
+            // Return the matter gameObject to the gameObject pool
             GameObjectPoolsManager.returnGameObjectToPool(poolIndex, matterGameObject);
         },
         createNewMatterGameObject: function(poolIndex) {
             const matterGameObject = GameObjectPoolsManager.createNewGameObject(poolIndex);
+            // PoolsManager.log(poolIndex, "Created a new matter game object", matterGameObject);
             return matterGameObject;
         }
     };
