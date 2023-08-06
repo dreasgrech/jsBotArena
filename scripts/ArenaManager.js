@@ -234,8 +234,7 @@ const ArenaManager = (function() {
                             }
                             
                             const tileProperties = tile.properties;
-                            
-                            const tileType = tile.properties.tiletype;
+                            const tileType = tileProperties.tiletype;
                             
                             // Don't do anything if the tile doesn't have a tile type
                             if (tileType == null || tileType === TileTypes.Nothing) {

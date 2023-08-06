@@ -160,11 +160,6 @@
                  "id":0,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -174,11 +169,6 @@
                 {
                  "id":1,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -190,11 +180,6 @@
                  "id":2,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -204,11 +189,6 @@
                 {
                  "id":3,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -220,11 +200,6 @@
                  "id":4,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -234,11 +209,6 @@
                 {
                  "id":5,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -250,11 +220,6 @@
                  "id":6,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -264,11 +229,6 @@
                 {
                  "id":7,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -280,11 +240,6 @@
                  "id":8,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -294,11 +249,6 @@
                 {
                  "id":9,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -310,11 +260,6 @@
                  "id":10,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -324,11 +269,6 @@
                 {
                  "id":11,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -340,11 +280,6 @@
                  "id":12,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -354,11 +289,6 @@
                 {
                  "id":13,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -370,11 +300,6 @@
                  "id":14,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -384,11 +309,6 @@
                 {
                  "id":15,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -401,11 +321,6 @@
                  "id":16,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -415,11 +330,6 @@
                 {
                  "id":17,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -431,11 +341,6 @@
                  "id":18,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -445,11 +350,6 @@
                 {
                  "id":19,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -461,11 +361,6 @@
                  "id":20,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -475,11 +370,6 @@
                 {
                  "id":21,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -491,11 +381,6 @@
                  "id":22,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -505,11 +390,6 @@
                 {
                  "id":23,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -521,11 +401,6 @@
                  "id":24,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -535,11 +410,6 @@
                 {
                  "id":25,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -551,11 +421,6 @@
                  "id":26,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -565,11 +430,6 @@
                 {
                  "id":27,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -581,11 +441,6 @@
                  "id":28,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -595,11 +450,6 @@
                 {
                  "id":29,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -611,11 +461,6 @@
                  "id":30,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -625,11 +470,6 @@
                 {
                  "id":31,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -642,11 +482,6 @@
                  "id":32,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -656,11 +491,6 @@
                 {
                  "id":33,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -672,11 +502,6 @@
                  "id":34,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -686,11 +511,6 @@
                 {
                  "id":35,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -702,11 +522,6 @@
                  "id":36,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -716,11 +531,6 @@
                 {
                  "id":37,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -732,11 +542,6 @@
                  "id":38,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -746,11 +551,6 @@
                 {
                  "id":39,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -762,11 +562,6 @@
                  "id":40,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -776,11 +571,6 @@
                 {
                  "id":41,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -792,11 +582,6 @@
                  "id":42,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -806,11 +591,6 @@
                 {
                  "id":43,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -822,11 +602,6 @@
                  "id":44,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -836,11 +611,6 @@
                 {
                  "id":45,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -852,24 +622,10 @@
                  "id":46,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
                          "value":1
-                        }]
-                }, 
-                {
-                 "id":47,
-                 "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":false
                         }]
                 }],
          "tilewidth":64
@@ -903,11 +659,6 @@
                  "id":0,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -917,11 +668,6 @@
                 {
                  "id":1,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -933,11 +679,6 @@
                  "id":2,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -947,11 +688,6 @@
                 {
                  "id":3,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -963,11 +699,6 @@
                  "id":4,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -977,11 +708,6 @@
                 {
                  "id":5,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -993,11 +719,6 @@
                  "id":6,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1007,11 +728,6 @@
                 {
                  "id":7,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1023,11 +739,6 @@
                  "id":8,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1037,11 +748,6 @@
                 {
                  "id":9,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1053,11 +759,6 @@
                  "id":10,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1067,11 +768,6 @@
                 {
                  "id":11,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1083,11 +779,6 @@
                  "id":12,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1097,11 +788,6 @@
                 {
                  "id":13,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1113,11 +799,6 @@
                  "id":14,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1127,11 +808,6 @@
                 {
                  "id":15,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1144,11 +820,6 @@
                  "id":16,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1158,11 +829,6 @@
                 {
                  "id":17,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1174,11 +840,6 @@
                  "id":18,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1188,11 +849,6 @@
                 {
                  "id":19,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1204,11 +860,6 @@
                  "id":20,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1218,11 +869,6 @@
                 {
                  "id":21,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1234,11 +880,6 @@
                  "id":22,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1248,11 +889,6 @@
                 {
                  "id":23,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1264,11 +900,6 @@
                  "id":24,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1278,11 +909,6 @@
                 {
                  "id":25,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1294,11 +920,6 @@
                  "id":26,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1308,11 +929,6 @@
                 {
                  "id":27,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1324,11 +940,6 @@
                  "id":28,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1338,11 +949,6 @@
                 {
                  "id":29,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1354,11 +960,6 @@
                  "id":30,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1368,11 +969,6 @@
                 {
                  "id":31,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1385,11 +981,6 @@
                  "id":32,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1399,11 +990,6 @@
                 {
                  "id":33,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1415,11 +1001,6 @@
                  "id":34,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1429,11 +1010,6 @@
                 {
                  "id":35,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1445,11 +1021,6 @@
                  "id":36,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1459,11 +1030,6 @@
                 {
                  "id":37,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1475,11 +1041,6 @@
                  "id":38,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1489,11 +1050,6 @@
                 {
                  "id":39,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1505,11 +1061,6 @@
                  "id":40,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1519,11 +1070,6 @@
                 {
                  "id":41,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1535,11 +1081,6 @@
                  "id":42,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1549,11 +1090,6 @@
                 {
                  "id":43,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1565,11 +1101,6 @@
                  "id":44,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1580,11 +1111,6 @@
                  "id":45,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1594,11 +1120,6 @@
                 {
                  "id":46,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"bool",
-                         "value":true
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1787,11 +1308,6 @@
                  "id":0,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1801,11 +1317,6 @@
                 {
                  "id":1,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1817,11 +1328,6 @@
                  "id":2,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1831,11 +1337,6 @@
                 {
                  "id":3,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1847,11 +1348,6 @@
                  "id":4,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1861,11 +1357,6 @@
                 {
                  "id":5,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1877,11 +1368,6 @@
                  "id":6,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1891,11 +1377,6 @@
                 {
                  "id":7,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1907,11 +1388,6 @@
                  "id":8,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1921,11 +1397,6 @@
                 {
                  "id":9,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1937,11 +1408,6 @@
                  "id":10,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1951,11 +1417,6 @@
                 {
                  "id":11,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1967,11 +1428,6 @@
                  "id":12,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -1981,11 +1437,6 @@
                 {
                  "id":13,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -1997,11 +1448,6 @@
                  "id":15,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -2011,11 +1457,6 @@
                 {
                  "id":16,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -2028,11 +1469,6 @@
                  "id":17,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -2042,11 +1478,6 @@
                 {
                  "id":20,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",
@@ -2058,11 +1489,6 @@
                  "id":21,
                  "properties":[
                         {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
-                        {
                          "name":"tiletype",
                          "propertytype":"TileType",
                          "type":"int",
@@ -2072,11 +1498,6 @@
                 {
                  "id":22,
                  "properties":[
-                        {
-                         "name":"collides",
-                         "type":"string",
-                         "value":"true"
-                        }, 
                         {
                          "name":"tiletype",
                          "propertytype":"TileType",

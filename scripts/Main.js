@@ -92,8 +92,8 @@ const GameManager = (function() {
 
         // Load the arena asynchronously
         //const arenaToLoad = Arenas.BridgeLevel;
-        const arenaToLoad = Arenas.GreenLevel;
-        //const arenaToLoad = Arenas.BrownLevel;
+        //const arenaToLoad = Arenas.GreenLevel;
+        const arenaToLoad = Arenas.BrownLevel;
         ArenaManager.loadArena(arenaToLoad, function(){
             // Call all the system_create functions that are hooked
             for (let i = 0; i < objectsWith_create.length; i++) {
@@ -162,11 +162,11 @@ const GameManager = (function() {
             }
             
             Logger.log("Starting new round");
-            const ROBOT_CREATION_ITERATIONS = 1;
-             //const ROBOT_CREATION_ITERATIONS = 2;
+            //const ROBOT_CREATION_ITERATIONS = 3;
+            const ROBOT_CREATION_ITERATIONS = 2;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
                 RobotManager.addRobot(astarBot());
-                // RobotManager.addRobot(keyBot());
+                RobotManager.addRobot(keyBot());
                 // RobotManager.addRobot(doNothingBot());
                 // RobotManager.addRobot(shredder());
                 // RobotManager.addRobot(circleBot());
