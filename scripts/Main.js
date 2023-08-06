@@ -163,9 +163,9 @@ const GameManager = (function() {
             
             Logger.log("Starting new round");
             //const ROBOT_CREATION_ITERATIONS = 3;
-            const ROBOT_CREATION_ITERATIONS = 2;
+            const ROBOT_CREATION_ITERATIONS = 1;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
-                RobotManager.addRobot(astarBot());
+                // RobotManager.addRobot(astarBot());
                 RobotManager.addRobot(keyBot());
                 // RobotManager.addRobot(doNothingBot());
                 // RobotManager.addRobot(shredder());
