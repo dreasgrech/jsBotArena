@@ -84,8 +84,14 @@ const ProjectileManager = (function() {
                             0,
                             0,
                             ImageDatabase.GameElementsSpritesheetKey,
-                            projectilePhaserImageKey
+                            projectilePhaserImageKey,
                         );
+                        
+                        // Set the body of the projectile.
+                        // Note that this creates a new body for the matter gameObject
+                        const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileTypeIndex];
+                        projectileMatterGameObject.setBody(projectilesCollisionData[projectileCollisionDataName], null);
+                        
                         return projectileMatterGameObject;
                     },
                     //    beforePush: function(){},
@@ -191,11 +197,14 @@ const ProjectileManager = (function() {
 
             const poolIndex = pools[projectileType];
             const projectileMatterGameObject = MatterGameObjectPoolManager.fetchMatterGameObjectFromPool(poolIndex);
+            // Logger.log(projectileMatterGameObject.body.id, projectileMatterGameObject.body.isSensor);
             projectileMatterGameObject.setPosition(turretTipPositionX, turretTipPositionY);
             PhysicsBodiesManager.enableMatterBody(projectileMatterGameObject);
 
-            const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileType];
-            projectileMatterGameObject.setBody(projectilesCollisionData[projectileCollisionDataName], null);
+            //Logger.log("Matter object id before setBody:", projectileMatterGameObject.body.id);
+            //const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileType];
+            //projectileMatterGameObject.setBody(projectilesCollisionData[projectileCollisionDataName], null);
+            //Logger.log("Matter object id after setBody:", projectileMatterGameObject.body.id);
             projectileMatterGameObject.depth = GameObjectDepths.Projectile;
             // projectileMatterGameObject.setDensity(5); 
             projectileMatterGameObject.setDensity(0.1); 
