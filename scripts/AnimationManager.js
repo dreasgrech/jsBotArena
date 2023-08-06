@@ -17,12 +17,6 @@ const AnimationEffects = {
     }
 };
 
-/** The values of how many elements are pre-populated */
-const PoolsPrepopulateValues = {
-    Projectiles: 50,
-    Animations: 50, // TODO: this needs to be split into different values
-};
-
 const AnimationManager = (function() {
     /*
      * animationcomplete parameters:https://newdocs.phaser.io/docs/3.52.0/Phaser.Animations.Events.ANIMATION_COMPLETE

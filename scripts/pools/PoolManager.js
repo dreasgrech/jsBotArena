@@ -7,6 +7,14 @@ const PoolType = BitmaskableObjectOperations.populateBitmaskableObject({
     MatterGameObject: 0
 });
 
+/** The values of how many elements are pre-populated */
+const PoolsPrepopulateValues = {
+    // Projectiles: 50,
+    Projectiles: 0,
+    // Animations: 50, // TODO: this needs to be split into different values
+    Animations: 0, // TODO: this needs to be split into different values
+};
+
 /*
  * Pools that serves any time of JavaScript object
  */
@@ -20,6 +28,9 @@ const PoolsManager = (function() {
     const pool_createElementHooks = [];
     const pool_beforePushHooks = [];
     const pool_afterPopHooks = [];
+    
+    // const poolsTweakpaneFolders = [];
+    let poolsTweakpaneFolderID;
 
     const handleAfterPop = function(poolIndex, element) {
         pool_afterPopHooks[poolIndex](element);
@@ -29,6 +40,9 @@ const PoolsManager = (function() {
     };
 
     const poolManager = {
+        system_create: function(){
+            poolsTweakpaneFolderID = TweakPaneManager.createFolder("Pools");
+        },
         createElementsPool: function({ poolName, createElement, beforePush, afterPop }) {
             const formattedPoolName = `[${poolName} Pool]`;
 
@@ -56,6 +70,25 @@ const PoolsManager = (function() {
             // poolManager.log(poolIndex, "creating pool", pool_createElementHooks);
 
             nextPoolIndex++;
+            
+            // // Create the tweakpane folder for this pool
+            // const tweakpaneFolderID = TweakPaneManager.createFolder(formattedPoolName)
+            // poolsTweakpaneFolders[poolIndex] = tweakpaneFolderID;
+            const dataForTweakPane = {
+                get poolIndex(){
+                    return poolIndex;
+                },
+                get poolName(){
+                    return poolName;
+                },
+                get elementsTotal(){
+                    return pool_elements[poolIndex].length;
+                }
+            };
+            TweakPaneManager.createMonitorInFolder(poolsTweakpaneFolderID, dataForTweakPane, 'poolName');
+            TweakPaneManager.createMonitorInFolder(poolsTweakpaneFolderID, dataForTweakPane, 'poolIndex');
+            TweakPaneManager.createMonitorInFolder(poolsTweakpaneFolderID, dataForTweakPane, 'elementsTotal');
+            TweakPaneManager.createSeparatorFolder(poolsTweakpaneFolderID);
 
             return poolIndex;
         },
@@ -82,6 +115,8 @@ const PoolsManager = (function() {
 
             pool_beforePushHooks[poolIndex](element);
             pool_elements[poolIndex].push(element);
+            
+            // poolManager.log(poolIndex, "Returned element to pool", element, pool_elements[poolIndex]);
         },
         fetchElementFromPool: function(poolIndex) {
             if (pool_elements[poolIndex].length <= 0) {
@@ -92,6 +127,7 @@ const PoolsManager = (function() {
             }
 
             const element = pool_elements[poolIndex].pop();
+            // poolManager.log(poolIndex, "Fetched element from pool", element, pool_elements[poolIndex]);
             return handleAfterPop(poolIndex, element);
         },
         createNewElement: function(poolIndex) {
