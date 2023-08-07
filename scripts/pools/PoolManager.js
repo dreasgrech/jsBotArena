@@ -9,10 +9,10 @@ const PoolType = BitmaskableObjectOperations.populateBitmaskableObject({
 
 /** The values of how many elements are pre-populated */
 const PoolsPrepopulateValues = {
-    // Projectiles: 50,
-    Projectiles: 0,
-    // Animations: 50, // TODO: this needs to be split into different values
-    Animations: 0, // TODO: this needs to be split into different values
+    Projectiles: 50,
+    //Projectiles: 0,
+    Animations: 50, // TODO: this needs to be split into different values
+    //Animations: 0, // TODO: this needs to be split into different values
 };
 
 /*

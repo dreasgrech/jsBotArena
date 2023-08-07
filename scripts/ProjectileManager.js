@@ -80,17 +80,18 @@ const ProjectileManager = (function() {
                 const poolIndex = MatterGameObjectPoolManager.createMatterGameObjectPool({
                     poolName: `Projectiles (${projectilePhaserImageKey})`,
                     createElement: function() {
+                        const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileTypeIndex];
                         const projectileMatterGameObject = gameContext.matter.add.sprite(
                             0,
                             0,
                             ImageDatabase.GameElementsSpritesheetKey,
                             projectilePhaserImageKey,
+                            {
+                                shape: projectilesCollisionData[projectileCollisionDataName],
+                            }
                         );
                         
-                        // Set the body of the projectile.
-                        // Note that this creates a new body for the matter gameObject
-                        const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileTypeIndex];
-                        projectileMatterGameObject.setBody(projectilesCollisionData[projectileCollisionDataName], null);
+                        // Logger.log(projectileMatterGameObject, projectileMatterGameObject.body.isSensor);
                         
                         return projectileMatterGameObject;
                     },
@@ -248,6 +249,8 @@ const ProjectileManager = (function() {
             //projectileMatterGameObject.setVelocity(Math.cos(angle_radians) * speed * dt, Math.sin(angle_radians) * speed * dt);
 
             // Logger.log("mapping", projectileMatterGameObject.body.id, "to", currentProjectileIndex);
+            
+            // Logger.log(projectileMatterGameObject, projectileMatterGameObject.isSensor(), projectileMatterGameObject.body.id, projectileMatterGameObject.body.isSensor);
 
             const fireShotAnimationSpriteIndex = AnimationManager.playNewAnimation(
                 AnimationEffects.TankAnimationEffects.Fire_Shots_A,
@@ -288,7 +291,7 @@ const ProjectileManager = (function() {
         },
         /**
          * Resolves the projectile index from the projectile Matter GameObject
-         * @param {Phaser.GameObjects.GameObject} projectileMatterGameObject
+         * @param {Phaser.Physics.Matter.Sprite} projectileMatterGameObject
          * @returns {number}
          */
         resolveProjectileIndex_from_Projectile: function(projectileMatterGameObject) {

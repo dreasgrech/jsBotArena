@@ -62,12 +62,14 @@ const RobotMatterFactory = (function() {
             x,
             y,
             ImageDatabase.GameElementsSpritesheetKey,
-            hullPhaserImageKey
+            hullPhaserImageKey,
+            {
+                shape: shapes[hullPhysicsShapeName],
+            }
         );
-        const hullColors = hullSetup.colors;
-        // hullImage.setBody(shapes[`Hull_${hullType}`], null);
-        hullImage.setBody(shapes[hullPhysicsShapeName], null);
+        
         hullImage.setScale(scale);
+        const hullColors = hullSetup.colors;
         //hullImage.setTint(hullColors.topLeft, hullColors.topRight, hullColors.bottomLeft, hullColors.bottomRight);
         //hullImage.setTint(hullColors.topRight, hullColors.bottomRight, hullColors.topLeft, hullColors.bottomLeft);
         hullImage.setTint(hullColors.bottomLeft, hullColors.topLeft, hullColors.bottomRight, hullColors.topRight);
@@ -107,10 +109,10 @@ const RobotMatterFactory = (function() {
 
         // Make a reference to the current robot index from the matter object id
         PhysicsBodiesManager.mapHullImageBodyIDToRobotIndex(hullImagePhysicsBodyID, currentRobotIndex);
-        // Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
+        //Logger.log(`Mapping hullImage.id ${hullImagePhysicsBodyID} to currentRobotIndex ${currentRobotIndex}`);
 
         // Create the Projectile Sensor for the robot which detects which projectiles hit this robot
-        createProjectileSensor(currentRobotIndex);
+        // createProjectileSensor(currentRobotIndex);
 
         const turretsDB = RobotPartsDatabase.turrets;
         const turretPhaserImageKey = turretsDB.phaserImageKeys[turretType];
@@ -214,9 +216,9 @@ const RobotMatterFactory = (function() {
         },
         createRobot: createRobot,
         updateParts: function(robotIndex) {
-            // Match the projectile sensor's angle to the robot hull's angle
-            const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
-            projectileSensor.angle = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
+            // // Match the projectile sensor's angle to the robot hull's angle
+            // const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
+            // projectileSensor.angle = RobotsData_CurrentData_currentRobotAngles_radians[robotIndex];
 
             // Adjust the tracks animations based on the robot's speed
             const isRobotMoving = RobotQueries.isRobotMoving(robotIndex);
@@ -237,10 +239,12 @@ const RobotMatterFactory = (function() {
 
             const gameContext = GameContextHolder.scene;
 
+            /*
             // Remove the projectile sensor
             gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
             // Remove the projectile sensor constraint that ties it with the hull body
             gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex]);
+            */
 
             // Hide the turret image
             const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];

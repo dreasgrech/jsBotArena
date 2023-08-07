@@ -21,11 +21,13 @@ const CollisionCategories = BitmaskableObjectOperations.populateBitmaskableObjec
  * Holds the collision categories which each collision-category collides with
  */
 const CollisionCategoriesCollidesWith = {};
-CollisionCategoriesCollidesWith[CollisionCategories.RobotBody] = CollisionCategories.RobotBody | CollisionCategories.Arena | CollisionCategories.ArenaWater;
+// CollisionCategoriesCollidesWith[CollisionCategories.RobotBody] = CollisionCategories.RobotBody | CollisionCategories.Arena | CollisionCategories.ArenaWater;
+CollisionCategoriesCollidesWith[CollisionCategories.RobotBody] = CollisionCategories.RobotBody | CollisionCategories.Arena | CollisionCategories.ArenaWater | CollisionCategories.RobotProjectile;
 CollisionCategoriesCollidesWith[CollisionCategories.Arena] = CollisionCategories.RobotBody | CollisionCategories.RobotProjectile;
 CollisionCategoriesCollidesWith[CollisionCategories.ArenaWater] = CollisionCategories.RobotBody;
-CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectile] = CollisionCategories.RobotProjectileSensor | CollisionCategories.Arena | CollisionCategories.RobotProjectile;
-CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectileSensor] = CollisionCategories.RobotProjectile;
+// CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectile] = CollisionCategories.RobotProjectileSensor | CollisionCategories.Arena | CollisionCategories.RobotProjectile;
+CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectile] = CollisionCategories.RobotBody | CollisionCategories.Arena | CollisionCategories.RobotProjectile;
+// CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectileSensor] = CollisionCategories.RobotProjectile;
 
 /**
  * These fields must match the Enum custom property defined in the Tiled project

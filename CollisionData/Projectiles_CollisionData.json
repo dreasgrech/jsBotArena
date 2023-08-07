@@ -17,7 +17,7 @@
 		"fixtures": [
 			{
 				"label": "",
-				"isSensor": false,
+				"isSensor": true,
 				"vertices": [
 					[ { "x":82, "y":74 }, { "x":82, "y":54 }, { "x":44, "y":56 }, { "x":46, "y":74 } ]
 				]
@@ -41,7 +41,7 @@
 		"fixtures": [
 			{
 				"label": "",
-				"isSensor": false,
+				"isSensor": true,
 				"vertices": [
 					[ { "x":96, "y":64 }, { "x":85, "y":58 }, { "x":67, "y":54 }, { "x":49, "y":54 }, { "x":33, "y":60 }, { "x":47, "y":74 }, { "x":67, "y":74 }, { "x":88, "y":70 } ],
 					[ { "x":34, "y":68 }, { "x":47, "y":74 }, { "x":33, "y":60 } ]
@@ -66,7 +66,7 @@
 		"fixtures": [
 			{
 				"label": "",
-				"isSensor": false,
+				"isSensor": true,
 				"vertices": [
 					[ { "x":52, "y":69 }, { "x":70, "y":69 }, { "x":75, "y":61 }, { "x":52, "y":59 } ]
 				]
@@ -90,7 +90,7 @@
 		"fixtures": [
 			{
 				"label": "",
-				"isSensor": false,
+				"isSensor": true,
 				"vertices": [
 					[ { "x":83, "y":62 }, { "x":75, "y":56 }, { "x":45, "y":59 }, { "x":48, "y":72 }, { "x":75, "y":72 } ]
 				]
@@ -114,7 +114,7 @@
 		"fixtures": [
 			{
 				"label": "",
-				"isSensor": false,
+				"isSensor": true,
 				"vertices": [
 					[ { "x":57, "y":37 }, { "x":48, "y":67 }, { "x":62, "y":98 }, { "x":87, "y":53 } ]
 				]
@@ -138,7 +138,7 @@
 		"fixtures": [
 			{
 				"label": "",
-				"isSensor": false,
+				"isSensor": true,
 				"vertices": [
 					[ { "x":26, "y":70 }, { "x":102, "y":70 }, { "x":102, "y":58 }, { "x":26, "y":58 } ]
 				]
@@ -162,7 +162,7 @@
 		"fixtures": [
 			{
 				"label": "",
-				"isSensor": false,
+				"isSensor": true,
 				"vertices": [
 					[ { "x":102, "y":63 }, { "x":72, "y":56 }, { "x":27, "y":65 }, { "x":60, "y":72 }, { "x":87, "y":72 } ]
 				]
@@ -186,7 +186,7 @@
 		"fixtures": [
 			{
 				"label": "",
-				"isSensor": false,
+				"isSensor": true,
 				"vertices": [
 					[ { "x":89, "y":64 }, { "x":74, "y":59 }, { "x":39, "y":63 }, { "x":48, "y":69 }, { "x":74, "y":69 } ]
 				]

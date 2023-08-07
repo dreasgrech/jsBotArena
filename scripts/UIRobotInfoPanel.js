@@ -64,17 +64,25 @@ const UIRobotInfoPanel = (function() {
                 const positionY = RobotsData_CurrentData_positions[robotIndex * 2 + 1];
                 const angle = RobotsData_CurrentData_currentRobotAngles_degrees[robotIndex];
                 const projectileSensor = RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex];
-                const projectileSensorAngle = Phaser.Math.RadToDeg(projectileSensor.angle);
+                // const projectileSensorAngle = Phaser.Math.RadToDeg(projectileSensor.angle);
                 const radarAngle = RobotsData_CurrentData_currentRadarAngles_degrees[robotIndex];
                 const turretRotation = RobotsData_CurrentData_currentTurretAngles_degrees[robotIndex];
                 const robotHealth = RobotsData_CurrentData_health[robotIndex];
 
+//                 const infoText = `
+// Robot ${id}: ${name}
+// Health: ${robotHealth}
+// Position: (${positionX.toFixed(2)}, ${positionY.toFixed(2)})
+// Angle: ${angle.toFixed(2)}�
+// Sensor Angle: ${projectileSensorAngle.toFixed(2)}�
+// Radar Angle: ${radarAngle.toFixed(2)}�
+// Turret Rotation: ${turretRotation.toFixed(2)}�
+// `;
                 const infoText = `
 Robot ${id}: ${name}
 Health: ${robotHealth}
 Position: (${positionX.toFixed(2)}, ${positionY.toFixed(2)})
 Angle: ${angle.toFixed(2)}�
-Sensor Angle: ${projectileSensorAngle.toFixed(2)}�
 Radar Angle: ${radarAngle.toFixed(2)}�
 Turret Rotation: ${turretRotation.toFixed(2)}�
 `;
