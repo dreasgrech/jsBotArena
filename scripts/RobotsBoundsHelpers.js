@@ -2,7 +2,7 @@
 
 const RobotsBoundsHelpers = (function() {
     const boundsVisualizer_radius = 2, boundsVisualizer_color = 0xff0000;
-    const turretVisualizer_radius = 2, turretVisualizer_color = 0x0000ff;
+    const turretVisualizer_radius = 2, turretVisualizer_color = 0xff00ae;
     const hullOriginVisualizer_radius = 3, hullOriginVisualizer_color = 0x00ff00;
     const turretOriginVisualizer_radius = 3, turretOriginVisualizer_color = 0x00ff00;
     const robotsBounds = [];
