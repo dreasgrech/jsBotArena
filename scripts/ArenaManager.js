@@ -243,7 +243,7 @@ const ArenaManager = (function() {
                                 
                                 // Make sure we didn't spell the tile type property name wrong in the Tiled application
                                 if (tileProperties["tileType"] || tileProperties["TileType"]) {
-                                    Logger.error("WARNING: The correct case is 'tiletyp' (NO CAPITAL LETTERS)");
+                                    Logger.error("WARNING: The correct case is 'tiletype' (NO CAPITAL LETTERS)");
                                 }
                                 
                                 return;
