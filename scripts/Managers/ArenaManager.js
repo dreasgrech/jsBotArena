@@ -92,7 +92,7 @@ const ArenaManager = (function() {
     // };
     
     const arenaManager = {
-        system_preload: function() {
+        system_preloadOnce: function() {
         },
         onDatabaseLoaded: function(definitionsFromDB) {
             

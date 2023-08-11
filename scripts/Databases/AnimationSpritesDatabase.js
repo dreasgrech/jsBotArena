@@ -7,7 +7,7 @@ const AnimationSpritesDatabase = (function() {
 
     const animationSpritesDatabase = {
         loadedDatabasesFromJSON: [],
-        system_preload: function() {
+        system_preloadOnce: function() {
             JSONDatabaseReader.loadDatabase(ANIMATIONS_DEFINITIONS_DB_FILE_KEY,
                 ANIMATIONS_DEFINITIONS_DB_FILEPATH,
                 function(definitions) {

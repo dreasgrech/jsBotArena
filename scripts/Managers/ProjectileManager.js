@@ -60,7 +60,7 @@ const ProjectileManager = (function() {
     });
 
     const projectileManager = {
-        system_preload: function() {
+        system_preloadOnce: function() {
             gameContext = GameContextHolder.scene;
             
             gameContext.load.json('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH);

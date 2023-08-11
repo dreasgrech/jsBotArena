@@ -7,7 +7,7 @@ const ArenasDatabase = (function() {
 
     const arenasDatabase = {
         // loadedDatabasesFromJSON: [],
-        system_preload: function() {
+        system_preloadOnce: function() {
             JSONDatabaseReader.loadDatabase(ARENAS_DB_FILE_KEY, ARENAS_DB_FILEPATH,
                 function(arenaDefinitions) {
                     //console.log(arenaDefinitions);

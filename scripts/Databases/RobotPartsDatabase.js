@@ -89,7 +89,7 @@ const RobotPartsDatabase = (function() {
     const robotPartsDatabase = {
         hulls: hulls,
         turrets: turrets,
-        system_preload: function() {
+        system_preloadOnce: function() {
             // Load the databases and the images
             loadHullsDatabase();
             loadTurretsDatabase();

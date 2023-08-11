@@ -40,7 +40,7 @@ const ImageDatabase = (function() {
     };
 
     return {
-        system_preload: loadAllImages,
+        system_preloadOnce: loadAllImages,
         get GameElementsSpritesheetKey() {
             return GameElementsSpritesheetKey;
         }

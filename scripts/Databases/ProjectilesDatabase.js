@@ -10,7 +10,7 @@ const ProjectilesDatabase = (function() {
         physicsEditorSpriteNames : [],
         baseDamages : [],
         speeds : [],
-        system_preload: function() {
+        system_preloadOnce: function() {
             JSONDatabaseReader.loadDatabase(PROJECTILE_DB_FILE_KEY, PROJECTILE_DB_FILEPATH,
                 function(projectileDefinitions) {
 

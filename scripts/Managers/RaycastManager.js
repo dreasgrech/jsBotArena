@@ -7,7 +7,7 @@ const RaycastManager = (function () {
     const createdRays = {};
 
     const raycastManager = {
-        system_preload: function() {
+        system_preloadOnce: function() {
             const gameContext = GameContextHolder.scene;
 
             const raycasterOptions = {

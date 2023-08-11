@@ -213,7 +213,7 @@ const RobotMatterFactory = (function() {
         //        //console.log('afterupdate');
         //    });
         //},
-        system_preload: function(){
+        system_preloadOnce: function(){
             const scene = GameContextHolder.scene;
             
             scene.load.json('Hulls_CollisionData', HULLS_COLLISION_DATA_PATH);
