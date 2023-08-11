@@ -228,7 +228,6 @@ const RobotAPIFactory = (function() {
 
                         return RobotOperations_Turret.rotateTurretTowardsAngle_degrees(robotIndex, angle_degrees);
                     },
-                    // 
                     /**
                      * Rotates the turret towards the specified absolute world position.
                      * Returns true if we're at the requested angle.

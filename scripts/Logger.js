@@ -44,6 +44,7 @@ const Logger = (function() {
         //    Array.prototype.unshift.call(logArgs, callerInfo);
         //}
 
+        // Add some info to the start of the arguments array
         Array.prototype.unshift.call(logArgs, getFrameCount());
         Array.prototype.unshift.call(logArgs, getTimestamp());
 
@@ -65,6 +66,9 @@ const Logger = (function() {
         },
         error: function() {
             callConsole('error', arguments);
+        },
+        assert: function(assertion, message) {
+            console.assert(assertion, message);
         }
     };
 

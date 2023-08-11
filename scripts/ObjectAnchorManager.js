@@ -48,6 +48,14 @@ const ObjectAnchorManager = (function () {
             objectsAnchoredToGameObjects_originOffsetX.delete(anchorageIndex);
             objectsAnchoredToGameObjects_originOffsetY.delete(anchorageIndex);
             objectsAnchoredToGameObjects_copyRotation.delete(anchorageIndex);
+        },
+        system_newRoundReset: function(){
+            // Make sure that there's no remaining anchored objects because these should have cleaned by now
+            Logger.assert(objectsAnchoredToGameObjects_anchoredGameObjects.size === 0, "objectsAnchoredToGameObjects_anchoredGameObjects.size === 0");
+            Logger.assert(objectsAnchoredToGameObjects_anchorGameObjects.size === 0, "objectsAnchoredToGameObjects_anchorGameObjects.size === 0");
+            Logger.assert(objectsAnchoredToGameObjects_originOffsetX.size === 0, "objectsAnchoredToGameObjects_originOffsetX.size === 0");
+            Logger.assert(objectsAnchoredToGameObjects_originOffsetY.size === 0, "objectsAnchoredToGameObjects_originOffsetY.size === 0");
+            Logger.assert(objectsAnchoredToGameObjects_copyRotation.size === 0, "objectsAnchoredToGameObjects_copyRotation.size === 0");
         }
     };
 

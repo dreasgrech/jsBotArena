@@ -325,7 +325,16 @@ const PhysicsBodiesManager = (function() {
         system_newRoundReset: function(){
             // arenaStaticObstacleBodiesBoundsX.length = 0;
             // arenaStaticObstacleBodiesBoundsY.length = 0;
-            
+            Logger.log("Resetting PhysicsBodiesManager");
+            Logger.log("allBodies", allBodies);
+            Logger.log("staticArenaBodies", staticArenaBodies);
+            Logger.log("radarBlockingArenaBodies", radarBlockingArenaBodies);
+            Logger.log("matterBodyToCollisionCategory", matterBodyToCollisionCategory);
+            Logger.log("matterBodyIDToRobotIndex", matterBodyIDToRobotIndex);
+            Logger.log("projectileSensorBodyIDToRobotIndex", projectileSensorBodyIDToRobotIndex);
+            Logger.log("arenaBodySpatialHash", arenaBodySpatialHash);
+            Logger.log("arenaBodiesAdded", arenaBodiesAdded);
+
         }
     };
 

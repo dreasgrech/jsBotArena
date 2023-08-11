@@ -304,6 +304,8 @@ const ProjectileManager = (function() {
         },
         system_newRoundReset: function() {
             // TODO: Keep track of all projectiles and remove them here
+            Logger.log("Resetting ProjectileManager. TODO: Needs more work here");
+            
             robotsLastFiredTime.length = 0;
         }
     };

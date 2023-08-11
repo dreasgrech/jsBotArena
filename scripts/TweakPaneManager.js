@@ -31,5 +31,8 @@ const TweakPaneManager = (function(){
             const folder = tweakPaneFolders[folderID];
             folder.addButton({title: text}).on('click', onClick);
         },
+        system_newRoundReset: function() {
+            Logger.log("Resetting TweakPaneManager. TODO: Needs more work here");
+        }
     };
 }());
