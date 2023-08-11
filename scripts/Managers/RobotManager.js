@@ -53,7 +53,7 @@ const RobotManager = (function() {
         RobotMatterFactory.destroyRobot(robotIndex);
 
         // Remove the radar arc
-        RobotsRadar.removeRadarArc(robotIndex);
+        RobotsRadarManager.removeRadarArc(robotIndex);
 
         // Remove the robot bounds debug-graphics
         RobotsBoundsHelpers.removeRobotBoundsGraphics(robotIndex);
@@ -150,7 +150,7 @@ const RobotManager = (function() {
             RobotsData_Instance_robotSpeeds[currentRobotIndex] = 600;
 
             // Create the radar
-            RobotsRadar.createRadar(currentRobotIndex);
+            RobotsRadarManager.createRadar(currentRobotIndex);
 
             // Inform the UI information panel about the new robot
             UIRobotInfoPanel.add(currentRobotIndex);
@@ -213,14 +213,14 @@ const RobotManager = (function() {
 
                 RobotMatterFactory.updateParts(robotIndex);
 
-                RobotsRadar.drawRadarArc(robotIndex);
+                RobotsRadarManager.drawRadarArc(robotIndex);
 
                 const api = RobotsData_Instance_robotAPIs[robotIndex];
 
                 // Set the radar scanned robots to the api
                 const radar = api.radar;
-                radar.scannedAliveRobots = RobotsRadar.scanForRobots(robotIndex);
-                radar.scannedArenaElements = RobotsRadar.scanForArenaObstacles(robotIndex);
+                radar.scannedAliveRobots = RobotsRadarManager.scanForRobots(robotIndex);
+                radar.scannedArenaElements = RobotsRadarManager.scanForArenaObstacles(robotIndex);
 
                 // Set the robot collisions to the api
                 const api_collisions = api.collisions;
@@ -235,7 +235,7 @@ const RobotManager = (function() {
                 }
                 const radarFollowTurret = radar.radarFollowTurret;
                 if (radarFollowTurret) {
-                    RobotsRadar.setRadarAngle_degrees(robotIndex, turretAngle_degrees);
+                    RobotsRadarManager.setRadarAngle_degrees(robotIndex, turretAngle_degrees);
                 }
 
                 // Draw the bounds of the hull and turret

@@ -1,6 +1,6 @@
 "use strict";
 
-const RobotsRadar = (function() {
+const RobotsRadarManager = (function() {
     const PI = Math.PI;
 
     const DEFAULT_RADAR_FOV_ANGLES_DEGREES = 45;

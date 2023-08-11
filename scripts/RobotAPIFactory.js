@@ -276,7 +276,7 @@ const RobotAPIFactory = (function() {
                      * @returns {number}
                      */
                     setFOVAngle_degrees: function(angle_degrees) {
-                        return RobotsRadar.setRadarFOVAngle_degrees(robotIndex, angle_degrees);
+                        return RobotsRadarManager.setRadarFOVAngle_degrees(robotIndex, angle_degrees);
                     },
                     /**
                      * Rotates the radar to the left
@@ -289,7 +289,7 @@ const RobotAPIFactory = (function() {
                             return;
                         }
 
-                        RobotsRadar.rotateRadar(robotIndex, -1);
+                        RobotsRadarManager.rotateRadar(robotIndex, -1);
 
                         RobotsDataAPI_FrameOperations_Radar[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     },
@@ -304,7 +304,7 @@ const RobotAPIFactory = (function() {
                             return;
                         }
 
-                        RobotsRadar.rotateRadar(robotIndex, 1);
+                        RobotsRadarManager.rotateRadar(robotIndex, 1);
 
                         RobotsDataAPI_FrameOperations_Radar[robotIndex] = BitmaskableObjectOperations.add(operationsState, operationType);
                     }
