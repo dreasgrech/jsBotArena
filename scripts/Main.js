@@ -7,7 +7,10 @@ const GameManager = (function() {
     // TODO: Create a statemachine to keep track of whether the round is happening
     let roundRunning = false;
 
-    const objectsWith_preload = [
+    /**
+     * The system_preloadOnce function is called only once and is not called again during the lifetime of the game.
+     */
+    const objectsWith_preloadOnce = [
         // Load the databases first so that their resources are available to the managers
         ImageDatabase,
         ProjectilesDatabase,
@@ -29,7 +32,7 @@ const GameManager = (function() {
         //RobotMatterFactory,
         CollisionManager,
         UIManager,
-        RobotsRadar,
+        RobotsRadarManager,
         RobotManager,
         PhysicsBodiesManager
     ];
@@ -43,21 +46,27 @@ const GameManager = (function() {
 
     const objectsWith_update = [
         RobotManager,
-        RobotsRadar,
+        RobotsRadarManager,
         ProjectileManager,
         ObjectAnchorManager,
         UIManager
     ];
     const totalObjectsWith_update = objectsWith_update.length;
 
+    // TODO: I think that all the scripts included in this list should only be Managers.
+    // TODO: Check why this isn't case.
     const objectsWith_newRoundReset = [
         RaycastManager,
         RobotManager,
-        RobotsRadar,
+        RobotsRadarManager,
         ProjectileManager,
         AnimationManager,
         UIRobotInfoPanel,
-        PhysicsBodiesManager
+        PhysicsBodiesManager,
+        ArenaManager,
+        ObjectAnchorManager,
+        TweakPaneManager,
+        UIManager
     ];
 
     const preload = function() {
@@ -78,9 +87,9 @@ const GameManager = (function() {
 
         //gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
 
-        for (let i = 0; i < objectsWith_preload.length; i++) {
-            const toLoad = objectsWith_preload[i];
-            toLoad.system_preload();
+        for (let i = 0; i < objectsWith_preloadOnce.length; i++) {
+            const toLoad = objectsWith_preloadOnce[i];
+            toLoad.system_preloadOnce();
         }
     };
 
@@ -166,9 +175,9 @@ const GameManager = (function() {
             //const ROBOT_CREATION_ITERATIONS = 3;
             const ROBOT_CREATION_ITERATIONS = 1;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
-                RobotManager.addRobot(keyBot());
                 RobotManager.addRobot(doNothingBot());
-                RobotManager.addRobot(astarBot());
+                RobotManager.addRobot(keyBot());
+                 RobotManager.addRobot(astarBot());
                 RobotManager.addRobot(shredder());
                 RobotManager.addRobot(circleBot());
                 RobotManager.addRobot(sittingBot());
