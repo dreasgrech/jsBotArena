@@ -10,6 +10,7 @@ const UIManager = (function() {
         },
         system_newRoundReset: function() {
             Logger.log("Resetting UIManager. TODO: Needs more work here");
+            UIRobotInfoPanel.clearPanel();
         },
     };
 

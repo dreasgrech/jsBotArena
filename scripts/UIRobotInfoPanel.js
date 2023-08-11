@@ -95,12 +95,13 @@ Turret Rotation: ${turretRotation.toFixed(2)}�
 
             }
         },
-        system_newRoundReset: function(){
-            for (let i = 0; i < robotInfoTexts.length; i++) {
+        //system_newRoundReset: function(){
+        clearPanel: function(){
+            const robotInfoTextsLength = robotInfoTexts.length;
+            for (let i = 0; i < robotInfoTextsLength; i++) {
                 const robotInfoText = robotInfoTexts[i];
                 robotInfoText.destroy();
             }
-            
         }
     };
 

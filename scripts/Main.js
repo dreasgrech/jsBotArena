@@ -53,15 +53,16 @@ const GameManager = (function() {
     ];
     const totalObjectsWith_update = objectsWith_update.length;
 
-    // TODO: I think that all the scripts included in this list should only be Managers.
-    // TODO: Check why this isn't case.
+    /**
+     * The system function that's called when unloading a level.
+     * All of these scripts should be MANAGERS. 
+     */
     const objectsWith_newRoundReset = [
         RaycastManager,
         RobotManager,
         RobotsRadarManager,
         ProjectileManager,
         AnimationManager,
-        UIRobotInfoPanel,
         PhysicsBodiesManager,
         ArenaManager,
         ObjectAnchorManager,
