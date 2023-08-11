@@ -29,6 +29,7 @@ const RaycastManager = (function () {
             raycaster = gameContext.raycasterPlugin.createRaycaster(raycasterOptions);
         },
         mapGameObjects: function(gameObjects, dynamic) {
+            // Logger.log("Mapping game objects to raycast. Dynamic: ", dynamic, gameObjects);
             raycaster.mapGameObjects(gameObjects, dynamic);
         },
         removeMappedGameObjects: function(gameObjects) {

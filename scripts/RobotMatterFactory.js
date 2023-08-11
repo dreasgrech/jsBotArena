@@ -68,6 +68,10 @@ const RobotMatterFactory = (function() {
             }
         );
         
+        // Logger.log(shapes[hullPhysicsShapeName]);
+        // console.log(JSON.stringify(shapes[hullPhysicsShapeName]));
+        // console.log(ImageDatabase.GameElementsSpritesheetKey, hullPhaserImageKey);
+        
         hullImage.setScale(scale);
         const hullColors = hullSetup.colors;
         //hullImage.setTint(hullColors.topLeft, hullColors.topRight, hullColors.bottomLeft, hullColors.bottomRight);
