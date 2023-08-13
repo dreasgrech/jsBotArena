@@ -220,10 +220,19 @@ window.onload = function(event) {
     const { InspectorGlobalPlugin, InspectorScenePlugin } = PhaserPluginInspector;
 
     GameContextHolder.game = new Phaser.Game({
+        title: "jsBotArena",
+        url: "http://dreasgrech.com/upload/jsBotArena/index.html",
         type: Phaser.AUTO,
-        parent: 'game_container',
-        width: GameSetup.width,
-        height: GameSetup.height,
+        backgroundColor: "#4c3585",
+        scale: {
+            parent: 'game_container',
+            mode: Phaser.Scale.ScaleModes.WIDTH_CONTROLS_HEIGHT,
+            autoCenter: Phaser.Scale.CENTER_BOTH,
+            width: GameSetup.width,
+            maxWidth: GameSetup.width,
+            height: GameSetup.height,
+            maxHeight: GameSetup.height,
+        },
         //antialias: true,
         scene: {
             preload: GameManager.preload,
