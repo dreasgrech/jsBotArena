@@ -132,9 +132,16 @@ const ArenaManager = (function() {
                 for (let i = 0; i < tilesetDefinitionsFromJSONFileLength; i++) {
                     const tilesetDefinitionFromJSONFile = tilesetDefinitionsFromJSONFile[i];
                     const tilesetName = tilesetDefinitionFromJSONFile.name;
-                    const tilesetImageRelativeUrl = tilesetDefinitionFromJSONFile.image;
+                    let tilesetImageRelativeUrl = tilesetDefinitionFromJSONFile.image;
                     
+                    // If the relative URL starts with "..", remove the first dot so that it becomes relative to the current directory.
+                    const tilesetImageRelativeUrlStartsWithDotDot = tilesetImageRelativeUrl.startsWith("..");
+                    if (tilesetImageRelativeUrlStartsWithDotDot){
+                        tilesetImageRelativeUrl = tilesetImageRelativeUrl.substring(1);
+                    }
+
                     // Queue up the loading of the tileset image
+                    // Logger.log("Loading tileset image", tilesetName, tilesetImageRelativeUrl, tilesetImageRelativeUrlStartsWithDotDot);
                     scene.load.image(tilesetName, tilesetImageRelativeUrl);
                 }
                 
