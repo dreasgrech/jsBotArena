@@ -21,6 +21,7 @@ const RobotsData_CurrentData_currentRadarAngles_radians = [];
 const RobotsData_CurrentData_health = [];
 const RobotsData_CurrentData_alive = [];
 
+// Collisions data
 const RobotsData_CollisionsThisFrame_robot = []; // [[{,,}], [{,,}], [{,,}]]
 const RobotsData_CollisionsThisFrame_arena = []; // [[{,,}], [{,,}], [{,,}]]
 const RobotsData_CollisionsThisFrame_projectile = []; // [[{,,}], [{,,}], [{,,}]]
@@ -39,6 +40,18 @@ const RobotsData_Instance_hullMatterGroup = [];
 const ProjectilesData_projectileType = [];
 
 // API-specific data
+/**
+ * Used to make sure that some of the hull's operations are not used more than once per frame
+ * @type {number[]}
+ */
 const RobotsDataAPI_FrameOperations_Hull = [];
+/**
+ * Used to make sure that some of the turret's operations are not used more than once per frame
+ * @type {number[]}
+ */
 const RobotsDataAPI_FrameOperations_Turret = [];
+/**
+ * Used to make sure that some of the radar's operations are not used more than once per frame
+ * @type {number[]}
+ */
 const RobotsDataAPI_FrameOperations_Radar = [];
