@@ -333,7 +333,7 @@ const CollisionManager = (function() {
             }
             //}
         },
-        onEndOfFrame: function() {
+        system_onEndOfFrame: function() {
             // Clear all the collisions
             const totalRobots = RobotManager.totalRobots;
             for (let i = 0; i < totalRobots; i++) {

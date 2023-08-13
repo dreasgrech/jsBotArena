@@ -145,7 +145,7 @@ const GameManager = (function() {
 
         // Since we're now at the end of frame, clear any per-frame data
         for (let i = 0; i < totalObjectsWith_onEndOfFrame; i++) {
-            objectsWith_onEndOfFrame[i].onEndOfFrame();
+            objectsWith_onEndOfFrame[i].system_onEndOfFrame();
         }
 
         // Increase the frame counter

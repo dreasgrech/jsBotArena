@@ -153,7 +153,7 @@ const ProjectileManager = (function() {
         onRobotAdded: function(robotIndex) {
             robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
         },
-        onEndOfFrame: function() {
+        system_onEndOfFrame: function() {
             for (const projectileMatterGameObject of queuedProjectilesForRemoval) {
                 destroyProjectile(projectileMatterGameObject);
             }

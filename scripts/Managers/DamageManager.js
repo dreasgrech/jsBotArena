@@ -38,7 +38,7 @@ const DamageManager = (function () {
 
             return newRobotHealth;
         },
-        onEndOfFrame: function() {
+        system_onEndOfFrame: function() {
             robotsIndexesHitThisFrame.clear();
         },
     };
