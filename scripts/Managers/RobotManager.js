@@ -304,7 +304,7 @@ const RobotManager = (function() {
 
             //Logger.log("marking bot for removal", robotIndex);
         },
-        system_newRoundReset: function() {
+        system_unloadLevel: function() {
             // Remove all the robots
             for (const robotIndex of aliveRobotsIndexes) {
                 removeAndHideRobot(robotIndex);

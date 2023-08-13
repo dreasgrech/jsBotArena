@@ -55,7 +55,7 @@ const RaycastManager = (function () {
             const stats = raycaster.getStats();
             Logger.log(stats);
         },
-        system_newRoundReset: function() {
+        system_unloadLevel: function() {
 /*
             for (let rayIndex in createdRays) {
                 if (!createdRays.hasOwnProperty(rayIndex)) {

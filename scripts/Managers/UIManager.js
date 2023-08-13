@@ -8,7 +8,7 @@ const UIManager = (function() {
         update: function() {
             UIRobotInfoPanel.update();
         },
-        system_newRoundReset: function() {
+        system_unloadLevel: function() {
             Logger.log("Resetting UIManager. TODO: Needs more work here");
             UIRobotInfoPanel.clearPanel();
         },

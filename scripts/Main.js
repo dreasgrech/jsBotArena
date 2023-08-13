@@ -57,7 +57,7 @@ const GameManager = (function() {
      * The system function that's called when unloading a level.
      * All of these scripts should be MANAGERS. 
      */
-    const objectsWith_newRoundReset = [
+    const objectsWith_unloadLevel = [
         RaycastManager,
         RobotManager,
         RobotsRadarManager,
@@ -204,9 +204,9 @@ const GameManager = (function() {
             }
             
             Logger.log("Resetting round");
-            for (let i = 0; i < objectsWith_newRoundReset.length; i++) {
-                const toLoad = objectsWith_newRoundReset[i];
-                toLoad.system_newRoundReset();
+            for (let i = 0; i < objectsWith_unloadLevel.length; i++) {
+                const toLoad = objectsWith_unloadLevel[i];
+                toLoad.system_unloadLevel();
             }
             roundRunning = false;
         }

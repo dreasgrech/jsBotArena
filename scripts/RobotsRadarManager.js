@@ -542,7 +542,7 @@ const RobotsRadarManager = (function() {
                     maxY - minY);
             }
         },
-        system_newRoundReset: function() {
+        system_unloadLevel: function() {
             //RaycastManager.destroyRay(ray);
 
             // Destroy all the radar arc graphics

@@ -302,7 +302,7 @@ const ProjectileManager = (function() {
 
             return projectileIndex;
         },
-        system_newRoundReset: function() {
+        system_unloadLevel: function() {
             // TODO: Keep track of all projectiles and remove them here
             Logger.log("Resetting ProjectileManager. TODO: Needs more work here");
             

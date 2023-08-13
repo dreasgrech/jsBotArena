@@ -322,7 +322,7 @@ const PhysicsBodiesManager = (function() {
             //     'queryArenaBodiesSpatialHash:end');
             return result;
         },
-        system_newRoundReset: function(){
+        system_unloadLevel: function(){
             // arenaStaticObstacleBodiesBoundsX.length = 0;
             // arenaStaticObstacleBodiesBoundsY.length = 0;
             Logger.log("Resetting PhysicsBodiesManager");

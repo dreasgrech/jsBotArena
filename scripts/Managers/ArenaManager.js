@@ -312,7 +312,7 @@ const ArenaManager = (function() {
             // Start the loader so that it loads the Tiled JSON file
             scene.load.start();
         },
-        system_newRoundReset: function(){
+        system_unloadLevel: function(){
             
         }
     };

@@ -95,7 +95,7 @@ Turret Rotation: ${turretRotation.toFixed(2)}�
 
             }
         },
-        //system_newRoundReset: function(){
+        //system_unloadLevel: function(){
         clearPanel: function(){
             const robotInfoTextsLength = robotInfoTexts.length;
             for (let i = 0; i < robotInfoTextsLength; i++) {
