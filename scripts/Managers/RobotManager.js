@@ -133,9 +133,9 @@ const RobotManager = (function() {
             RobotsData_CurrentData_alive[currentRobotIndex] = true;
 
             // Add the entry for the robot in the per-frame collisions arrays
-            RobotsData_CurrentData_robotCollisions[currentRobotIndex] = [];
-            RobotsData_CurrentData_arenaCollisions[currentRobotIndex] = [];
-            RobotsData_CurrentData_projectileCollisions[currentRobotIndex] = [];
+            RobotsData_CollisionsThisFrame_robot[currentRobotIndex] = [];
+            RobotsData_CollisionsThisFrame_arena[currentRobotIndex] = [];
+            RobotsData_CollisionsThisFrame_projectile[currentRobotIndex] = [];
 
             // Create the API for the robot
             const api = RobotAPIFactory.createAPI(currentRobotIndex);
@@ -224,9 +224,9 @@ const RobotManager = (function() {
 
                 // Set the robot collisions to the api
                 const api_collisions = api.collisions;
-                api_collisions.otherRobots = RobotsData_CurrentData_robotCollisions[robotIndex];
-                api_collisions.arena = RobotsData_CurrentData_arenaCollisions[robotIndex];
-                api_collisions.projectiles = RobotsData_CurrentData_projectileCollisions[robotIndex];
+                api_collisions.otherRobots = RobotsData_CollisionsThisFrame_robot[robotIndex];
+                api_collisions.arena = RobotsData_CollisionsThisFrame_arena[robotIndex];
+                api_collisions.projectiles = RobotsData_CollisionsThisFrame_projectile[robotIndex];
 
                 const turret = api.turret;
                 const turretFollowHull = turret.turretFollowHull;

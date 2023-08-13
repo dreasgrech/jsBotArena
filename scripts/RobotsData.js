@@ -18,11 +18,12 @@ const RobotsData_CurrentData_currentRobotSpeedSqr = [];
 const RobotsData_CurrentData_currentTurretAngles_degrees = [];
 const RobotsData_CurrentData_currentRadarAngles_degrees = [];
 const RobotsData_CurrentData_currentRadarAngles_radians = [];
-const RobotsData_CurrentData_robotCollisions = []; // [[{,,}], [{,,}], [{,,}]]
-const RobotsData_CurrentData_arenaCollisions = []; // [[{,,}], [{,,}], [{,,}]]
-const RobotsData_CurrentData_projectileCollisions = []; // [[{,,}], [{,,}], [{,,}]]
 const RobotsData_CurrentData_health = [];
 const RobotsData_CurrentData_alive = [];
+
+const RobotsData_CollisionsThisFrame_robot = []; // [[{,,}], [{,,}], [{,,}]]
+const RobotsData_CollisionsThisFrame_arena = []; // [[{,,}], [{,,}], [{,,}]]
+const RobotsData_CollisionsThisFrame_projectile = []; // [[{,,}], [{,,}], [{,,}]]
 
 // Robots instance data, doesn't change once created or changes infrequently
 const RobotsData_Instance_ids = [];

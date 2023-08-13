@@ -43,9 +43,9 @@ const CollisionManager = (function() {
         // Save the collisions in the colliding robot's data
         const collidingBodyID = collidingBody.parent.id;
         const collidingBodyRobotIndex = PhysicsBodiesManager.resolveRobotIndexFromMatterBodyID(collidingBodyID);
-        const collidingBodyRobotCollisions = RobotsData_CurrentData_robotCollisions[collidingBodyRobotIndex];
+        const collidingBodyRobotCollisions = RobotsData_CollisionsThisFrame_robot[collidingBodyRobotIndex];
         collidingBodyRobotCollisions.push(eventInfo);
-        RobotsData_CurrentData_robotCollisions[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
+        RobotsData_CollisionsThisFrame_robot[collidingBodyRobotIndex] = collidingBodyRobotCollisions;
         // Logger.log(`Saved RobotsData_CurrentData.robotCollisions[${collidingBodyRobotIndex}] = ${collidingBodyRobotCollisions.length}`);
     };
 
@@ -56,7 +56,7 @@ const CollisionManager = (function() {
         const eventInfo = RobotToArenaCollisionInfo();
         eventInfo.type = CollisionCategories.Arena;
 
-        RobotsData_CurrentData_arenaCollisions[robotIndex].push(eventInfo);
+        RobotsData_CollisionsThisFrame_arena[robotIndex].push(eventInfo);
     };
 
     /**
@@ -189,7 +189,7 @@ const CollisionManager = (function() {
             robotToProjectileCollisionInfo.damageApplied = damageApplied;
 
             // save the event info so that the robot receives it in the api
-            RobotsData_CurrentData_projectileCollisions[robotIndex].push(robotToProjectileCollisionInfo);
+            RobotsData_CollisionsThisFrame_projectile[robotIndex].push(robotToProjectileCollisionInfo);
         }
 
         // Mark the projectile for removal
@@ -337,9 +337,9 @@ const CollisionManager = (function() {
             // Clear all the collisions
             const totalRobots = RobotManager.totalRobots;
             for (let i = 0; i < totalRobots; i++) {
-                RobotsData_CurrentData_robotCollisions[i] = [];
-                RobotsData_CurrentData_arenaCollisions[i] = [];
-                RobotsData_CurrentData_projectileCollisions[i] = [];
+                RobotsData_CollisionsThisFrame_robot[i] = [];
+                RobotsData_CollisionsThisFrame_arena[i] = [];
+                RobotsData_CollisionsThisFrame_projectile[i] = [];
             }
 
             // RobotsData_CurrentData.totalCollisions = 0;
