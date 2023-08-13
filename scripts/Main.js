@@ -67,7 +67,8 @@ const GameManager = (function() {
         ArenaManager,
         ObjectAnchorManager,
         TweakPaneManager,
-        UIManager
+        UIManager,
+        CollisionManager
     ];
 
     const preload = function() {

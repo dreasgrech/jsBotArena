@@ -343,6 +343,9 @@ const CollisionManager = (function() {
             }
 
             // RobotsData_CurrentData.totalCollisions = 0;
+        },
+        system_unloadLevel: function(){
+            
         }
     };
 
