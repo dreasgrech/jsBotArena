@@ -7,10 +7,10 @@ const ImageDatabase = (function() {
         GameElementsSpritesheetAtlasFilePath = "./images/Spritesheets/GameSpritesheet.json",
         GameElementsSpritesheetTextureDirectory = "./images/Spritesheets/";
 
-    const loadImage = function(identifier, filePath) {
-        GameContextHolder.scene.load.image(identifier, filePath);
-        // console.log(identifier, filePath);
-    };
+    // const loadImage = function(identifier, filePath) {
+    //     GameContextHolder.scene.load.image(identifier, filePath);
+    //     // console.log(identifier, filePath);
+    // };
 
     // Loads all the filenames in the directory
     //const loadImageList = function(filenames, imagesKeys, directory) {
@@ -25,22 +25,20 @@ const ImageDatabase = (function() {
     //    }
     //};
 
-    const loadAllImages = function() {
-
-        //Load the game elements spritesheet
-        const gameContext = GameContextHolder.scene;
-        //gameContext.load.on(`filecomplete-multiatlas-${GameElementsSpritesheetKey}`, function (key, type, data) {
-        //    //console.log("finished loading", key, type, data, savedThis.textures.get(pt.Tiles).frames);
-        //    console.log("finished loading", key, type, data);
-        //});
-        gameContext.load.multiatlas(
-            GameElementsSpritesheetKey,
-            GameElementsSpritesheetAtlasFilePath,
-            GameElementsSpritesheetTextureDirectory);
-    };
-
     return {
-        system_preloadOnce: loadAllImages,
+        system_preloadOnce: function(){
+            //Load the game elements spritesheet
+            const gameContext = GameContextHolder.scene;
+            //gameContext.load.on(`filecomplete-multiatlas-${GameElementsSpritesheetKey}`, function (key, type, data) {
+            //    //console.log("finished loading", key, type, data, savedThis.textures.get(pt.Tiles).frames);
+            //    console.log("finished loading", key, type, data);
+            //});
+            gameContext.load.multiatlas(
+                GameElementsSpritesheetKey,
+                GameElementsSpritesheetAtlasFilePath,
+                GameElementsSpritesheetTextureDirectory);
+            
+        },
         get GameElementsSpritesheetKey() {
             return GameElementsSpritesheetKey;
         }
