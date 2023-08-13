@@ -3,11 +3,16 @@
 const TweakPaneManager = (function(){
     const tweakPaneFolders = {};
     let lastTweakPaneFolderIDCreated = -1;
+
+    /**
+     * @type {Tweakpane.TabPageApi}
+     */
     let pane;
     return {
         system_create:function(){
             const gameContext = GameContextHolder.scene;
             pane = gameContext.inspectorGame.pane;
+            pane.expanded = false;
         },
         createFolder: function(title, {expanded= true} = {}) {
             const tweakPaneFolderID = lastTweakPaneFolderIDCreated + 1;
