@@ -221,6 +221,7 @@ window.onload = function(event) {
 
     GameContextHolder.game = new Phaser.Game({
         type: Phaser.AUTO,
+        parent: 'game_container',
         width: GameSetup.width,
         height: GameSetup.height,
         //antialias: true,

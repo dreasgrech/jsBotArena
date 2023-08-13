@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    
+    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/phaser@3.60.0/dist/phaser.min.js"></script>-->
+    <script type="text/javascript" src="./scripts/lib/phaser@3.60.0.js"></script>
+    <!-- WARNING: Do not use the phaser-raycaster script from the cdn because it contains a bug: https://github.com/wiserim/phaser-raycaster/issues/39 -->
+    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/phaser-raycaster@0.10.6/dist/phaser-raycaster.min.js"></script>-->
+    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/phaser-raycaster@0.10.7/dist/phaser-raycaster.min.js"></script>-->
+    <script type="text/javascript" src="./scripts/lib/phaser-raycaster@0.10.6.js"></script>
+    <!--<script type="text/javascript" src="./scripts/lib/phaser-raycaster@0.10.8.js"></script>-->
+
+    <!--<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/rbush@3.0.1/rbush.min.js"></script>-->
+    <script type="text/javascript" src="./scripts/lib/rbush@3.0.1.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/tweakpane@3.1.9/dist/tweakpane.js"></script>-->
+    <script src="./scripts/lib/tweakpane@3.1.9.js"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/phaser-plugin-inspector@2.0.0-2/dist/phaser-plugin-inspector.umd.js"></script>-->
+    <script src="./scripts/lib/phaser-plugin-inspector@2.0.0-2.umd.js"></script>
+    
+    <!-- Pathfinding is currently used by the pathfinding robot -->
+    <script src="https://cdn.jsdelivr.net/npm/pathfinding@0.4.18/visual/lib/pathfinding-browser.min.js"></script>
+    <!-- Pathfinding is currently used by the pathfinding robot -->
+    
+    <!--<script type="text/javascript" src="./scripts/lib/xxhash.min.js"></script>-->
+
+    <script type="text/javascript" src="./scripts/Managers/TweakPaneManager.js"></script>
+    <script type="text/javascript" src="./scripts/EnumOperations.js"></script>
+    <script type="text/javascript" src="./scripts/BitmaskableObjectOperations.js"></script>
+    <script type="text/javascript" src="./scripts/JSObjectOperations.js"></script>
+    <script type="text/javascript" src="./scripts/JSONDatabaseReader.js"></script>
+    <script type="text/javascript" src="./scripts/Enums.js"></script>
+    <script type="text/javascript" src="./scripts/Logger.js"></script>
+    <script type="text/javascript" src="./scripts/MathOperations.js"></script>
+    <script type="text/javascript" src="./scripts/NumberOperations.js"></script>
+    <script type="text/javascript" src="./scripts/FrameCounter.js"></script>
+    <script type="text/javascript" src="./scripts/FilePathOperations.js"></script>
+    <script type="text/javascript" src="./scripts/CollisionCategories.js"></script>
+    <script type="text/javascript" src="./scripts/PhysicsHelperFunctions.js"></script>
+    <script type="text/javascript" src="./scripts/AngleOperations.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/RaycastManager.js"></script>
+    <script type="text/javascript" src="./scripts/RobotOperationsTypes.js"></script>
+
+    <script type="text/javascript" src="./scripts/GameContextHolder.js"></script>
+    <script type="text/javascript" src="./scripts/GameObjectDepths.js"></script>
+
+    <script type="text/javascript" src="./scripts/pools/PoolManager.js"></script>
+    <script type="text/javascript" src="./scripts/pools/GameObjectPoolsManager.js"></script>
+    <script type="text/javascript" src="./scripts/pools/MatterGameObjectPoolManager.js"></script>
+
+    <script type="text/javascript" src="./scripts/Databases/ImageDatabase.js"></script>
+    <script type="text/javascript" src="./scripts/Databases/AnimationSpritesDatabase.js"></script>
+    <script type="text/javascript" src="./scripts/Databases/RobotPartsDatabase.js"></script>
+    <script type="text/javascript" src="./scripts/Databases/ProjectilesDatabase.js"></script>
+    <script type="text/javascript" src="./scripts/Databases/ArenasDatabase.js"></script>
+    <script type="text/javascript" src="./scripts/RobotQueries.js"></script>
+    <script type="text/javascript" src="./scripts/MatterPhysicsOperations.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/PhysicsBodiesManager.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/ArenaManager.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/AnimationManager.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/ObjectAnchorManager.js"></script>
+    <script type="text/javascript" src="./scripts/RobotsData.js"></script>
+    <script type="text/javascript" src="./scripts/RobotOperations.js"></script>
+    <script type="text/javascript" src="./scripts/RobotAPIFactory.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/RobotManager.js"></script>
+    <script type="text/javascript" src="./scripts/RobotsBoundsOperations.js"></script>
+    <script type="text/javascript" src="scripts/RobotsRadarManager.js"></script>
+    <script type="text/javascript" src="./scripts/UIRobotInfoPanel.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/UIManager.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/DamageManager.js"></script>
+    <script type="text/javascript" src="./scripts/RobotMatterFactory.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/ProjectileManager.js"></script>
+    <script type="text/javascript" src="./scripts/Managers/CollisionManager.js"></script>
+    <script type="text/javascript" src="./scripts/GameSetup.js"></script>
+    <script type="text/javascript" src="./scripts/RobotSetup.js"></script>
+
+    <script type="text/javascript" src="./scripts/Main.js"></script>
+
+    <script type="text/javascript" src="./scripts/ExampleRobots/circleBot_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/cornerGuardBot_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/doNothingBot_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/followBot_followAngle_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/followBot_followPosition_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/keyBot_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/shredder_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/sittingBot_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/sniperBot_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/stealthBot_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/apiUsageExampleBot_robot.js"></script>
+    <script type="text/javascript" src="./scripts/ExampleRobots/astarBot_robot.js"></script>
+    
+    <title>jsBotArena</title>
+</head>
+<body>
+</body>
+</html>
