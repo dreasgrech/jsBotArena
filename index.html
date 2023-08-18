@@ -15,6 +15,106 @@
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+		
+		<!--<script type="module" src="./scripts/lib/browser-fs-access@0.34.1/index.js"></script>-->
+		<script type="module">
+			import {
+				fileOpen,
+				// directoryOpen,
+				// fileSave,
+				// supported
+			} from './scripts/lib/browser-fs-access@0.34.1/index.js';
+			
+			$(function(){
+				$("#addRobot").click(async function(){
+					let filesHandles;
+					try {
+						filesHandles = await fileOpen([
+						{
+							description: 'JavaScript files',
+							// mimeTypes: ['text/*'],
+							mimeTypes: ['text/javascript', 'text/plain'],
+							extensions: ['.js'],
+							multiple: true,
+						}
+						]);
+					}
+					catch (err) {
+						Logger.error(err);
+						// if (err.name !== 'AbortError') {
+						// 	return console.error(err);
+						// }
+						//console.log(ABORT_MESSAGE);
+					}
+					
+					for (const filesHandle of filesHandles) {
+						const filename = filesHandle.name;
+						const fileSize = filesHandle.size;
+						Logger.log("Reading file:", filename, `(${fileSize}) bytes`);
+						
+						let text;
+						try {
+							// Read the text from the file
+							text = await filesHandle.text();
+						} catch (err) {
+							Logger.error("Unable to read text. Error:", err);
+							continue;
+						}
+						
+						
+						//const evalResult = eval(text);
+						//const evalResult = new Function("return " + text);
+						//eval(text);
+						//const evalResult = eval?.(text);
+
+						// Create a function around the robot script so that it has it's own scope.
+						const robotDefinitionClosureFunction = new Function(text);
+						
+						// Execute this function so that the robot script is evaluated.
+						robotDefinitionClosureFunction();
+						
+						// console.log(fDefinition);
+						// console.log(fResult);
+
+						// The robot script should have added it's type definition function to the RobotLoader.
+						// So check if it's there.
+						const robotDefinitionFunction = RobotLoader.lastAddedRobotDefinitionFunction;
+						if (robotDefinitionFunction === undefined) {
+							Logger.error("Robot script did not add its type definition function to the RobotLoader:", filename);
+							continue;
+						}
+						
+						// Reset the loader so that it can be used again since now we have a reference to the robot type definition function.
+						RobotLoader.resetLoader();
+						
+						// console.log(robotDefinitionFunction);
+						// console.log(robotDefinitionFunction());
+						
+						try {
+							// Create an instance of the robot so that we make sure that it's a valid robot type
+							const robotInstance = robotDefinitionFunction();
+							const robotName = robotInstance.name;
+							if (!robotName){
+								Logger.error("Robot instance must have a .name field defined:", filename);
+								continue;
+							}
+
+							Logger.log("Successfully created robot instance", robotInstance);
+						} catch (err){
+							Logger.error("Robot script did not return a valid robot instance:", filename);
+							continue;
+						}
+
+						//document.body.append(text);
+						// Logger.log("eval result:", evalResult);
+						// Logger.log("doNothingBot:", doNothingBot);
+						//window.evalText = text;
+					}
+				});
+			});
+		</script>
+		
+		
 
 		<!-- Template Scripts -->
 		<script src="assets/js/jquery.scrollex.min.js"></script>
@@ -85,6 +185,7 @@
 		<script type="text/javascript" src="./scripts/RobotOperations.js"></script>
 		<script type="text/javascript" src="./scripts/RobotAPIFactory.js"></script>
 		<script type="text/javascript" src="./scripts/Managers/RobotManager.js"></script>
+		<script type="text/javascript" src="scripts/Managers/RobotLoader.js"></script>
 		<script type="text/javascript" src="./scripts/RobotsBoundsOperations.js"></script>
 		<script type="text/javascript" src="./scripts/RobotsRadarManager.js"></script>
 		<script type="text/javascript" src="./scripts/UIRobotInfoPanel.js"></script>
@@ -100,7 +201,7 @@
 
 		<script type="text/javascript" src="./scripts/ExampleRobots/circleBot_robot.js"></script>
 		<script type="text/javascript" src="./scripts/ExampleRobots/cornerGuardBot_robot.js"></script>
-		<script type="text/javascript" src="./scripts/ExampleRobots/doNothingBot_robot.js"></script>
+		<!--<script type="text/javascript" src="./scripts/ExampleRobots/doNothingBot_robot.js"></script>-->
 		<script type="text/javascript" src="./scripts/ExampleRobots/followBot_followAngle_robot.js"></script>
 		<script type="text/javascript" src="./scripts/ExampleRobots/followBot_followPosition_robot.js"></script>
 		<script type="text/javascript" src="./scripts/ExampleRobots/keyBot_robot.js"></script>
@@ -141,7 +242,7 @@
 								
 							</div>
 							<ul class="actions">
-								<li><a href="#one" class="button scrolly">Learn more</a></li>
+								<li><a id="addRobot" href="#one" class="button scrolly">Add robot</a></li>
 							</ul>
 						</div>
 					</section>
