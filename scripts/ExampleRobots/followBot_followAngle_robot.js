@@ -61,3 +61,5 @@ const followBot_followAngle = function() {
         }
     };
 };
+
+RobotLoader.loadMyRobot(followBot_followAngle);

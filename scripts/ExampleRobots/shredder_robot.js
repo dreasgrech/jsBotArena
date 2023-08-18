@@ -119,3 +119,5 @@ const shredder = function() {
         update: update
     };
 };
+
+RobotLoader.loadMyRobot(shredder);

@@ -32,3 +32,5 @@ const circleBot = function() {
         update: update
     };
 };
+
+RobotLoader.loadMyRobot(circleBot);

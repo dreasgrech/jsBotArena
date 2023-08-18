@@ -451,3 +451,5 @@ const astarBot = function() {
         }
     };
 };
+
+RobotLoader.loadMyRobot(astarBot);

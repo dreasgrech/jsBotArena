@@ -47,3 +47,5 @@ const sittingBot = function() {
         }
     };
 };
+
+RobotLoader.loadMyRobot(sittingBot);

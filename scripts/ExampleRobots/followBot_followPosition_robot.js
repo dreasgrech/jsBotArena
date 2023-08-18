@@ -65,3 +65,5 @@ const followBot_followPosition = function() {
         }
     };
 };
+
+RobotLoader.loadMyRobot(followBot_followPosition);
