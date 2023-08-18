@@ -2,7 +2,7 @@
 
 const doNothingBot = function() {
     return {
-        //name: 'doNothing',
+        name: 'doNothing',
         create: function() {},
         onSpawned: function(api, time_seconds) {
             api.radar.radarEnabled = false;

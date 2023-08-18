@@ -41,7 +41,7 @@ const keyBot = function() {
         const firingKeyDown = cursors.space.isDown;
         if (firingKeyDown && !firingKeyPressedLastFrame) {
             api.fire(EnumHelpers.getRandomValue(ProjectileTypes));
-        //    api.fire(ProjectileTypes.Light);
+            //api.fire(ProjectileTypes.Light);
         //    api.fire(ProjectileTypes.Medium);
             //api.fire(ProjectileTypes.Heavy);
         //    api.fire(ProjectileTypes.Granade);
@@ -60,7 +60,7 @@ const keyBot = function() {
             qeKeys = gameContext.input.keyboard.addKeys('Q,E');
 
             const hullSetup = robotSetup.hull;
-            // hullSetup.hullType = RobotHullTypes.One;
+            //hullSetup.hullType = RobotHullTypes.One;
             hullSetup.hullType = RobotHullTypes.AngelicaBot_Hull;
 
             const turretSetup = robotSetup.turret;
