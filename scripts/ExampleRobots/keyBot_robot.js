@@ -139,3 +139,5 @@ const keyBot = function() {
         }
     };
 };
+
+RobotLoader.loadMyRobot(keyBot);
