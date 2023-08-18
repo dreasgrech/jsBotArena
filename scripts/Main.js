@@ -103,8 +103,8 @@ const GameManager = (function() {
         //gameContext.matter.world.setBounds();
 
         // Load the arena asynchronously
-        const arenaToLoad = Arenas.BridgeLevel;
-        //const arenaToLoad = Arenas.GreenLevel;
+        //const arenaToLoad = Arenas.BridgeLevel;
+        const arenaToLoad = Arenas.GreenLevel;
         //const arenaToLoad = Arenas.BrownLevel;
         ArenaManager.loadArena(arenaToLoad, function(){
             // Call all the system_create functions that are hooked
@@ -174,27 +174,22 @@ const GameManager = (function() {
             }
             
             Logger.log("Starting new round");
+/*
             //const ROBOT_CREATION_ITERATIONS = 3;
             const ROBOT_CREATION_ITERATIONS = 1;
             for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
-                RobotManager.addRobot(doNothingBot());
                 RobotManager.addRobot(keyBot());
-                 RobotManager.addRobot(astarBot());
-                RobotManager.addRobot(shredder());
-                RobotManager.addRobot(circleBot());
-                RobotManager.addRobot(sittingBot());
-                RobotManager.addRobot(followBot_followAngle());
-                RobotManager.addRobot(followBot_followPosition());
-                
-/*
-                RobotManager.addRobot(keyBot());
-                RobotManager.addRobot(shredder());
-                RobotManager.addRobot(circleBot());
-                RobotManager.addRobot(followBot_followAngle());
-                RobotManager.addRobot(followBot_followPosition());
-                RobotManager.addRobot(CornerGuardBot());
-*/
+                // RobotManager.addRobot(doNothingBot());
+                // RobotManager.addRobot(astarBot());
+                // RobotManager.addRobot(shredder());
+                // RobotManager.addRobot(circleBot());
+                // RobotManager.addRobot(sittingBot());
+                // RobotManager.addRobot(followBot_followAngle());
+                // RobotManager.addRobot(followBot_followPosition());
             }
+*/
+            // Allow robots to be added no the round is loaded
+            RobotLoader.openLoaderForScripts();
             
             roundRunning = true;
         },

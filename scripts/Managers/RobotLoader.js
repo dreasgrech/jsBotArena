@@ -6,6 +6,7 @@
 const RobotLoader = (function () {
     let lastAddedRobotDefinitionFunction;
     let robotCurrentlyAdded;
+    let canRobotsBeLoaded = false;
     
     return {
         /**
@@ -14,12 +15,20 @@ const RobotLoader = (function () {
         get lastAddedRobotDefinitionFunction () {
             return lastAddedRobotDefinitionFunction;
         },
+        openLoaderForScripts: function() {
+            canRobotsBeLoaded = true;
+        },
         /**
          * Queues the robot to be loaded into the game.
          * @param robotDefinitionFunction
          * @return {boolean}
          */
         loadMyRobot: function(robotDefinitionFunction){
+            if (!canRobotsBeLoaded){
+                Logger.error("Robots can't be loaded because the game has already started");
+                return false;
+            }
+            
             if (robotCurrentlyAdded) {
                 Logger.error("A robot definition function has already been added but not yet processed so we're not adding the new function", robotDefinitionFunction);
                 return false;
