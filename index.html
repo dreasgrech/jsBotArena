@@ -14,10 +14,19 @@
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 
+		<!-- The highlight.js library which is used for code syntax highlighting on the site -->
+		<!-- The css file name represents the theme and the names can be found from https://highlightjs.org/demo  -->
+		<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/a11y-dark.min.css">-->
+		<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark-reasonable.min.css">-->
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
 		
 		<script type="text/javascript">
 			$(function(){
+				hljs.highlightAll();
+				
 				$("#addRobot").click(function() {
 					// Open the file dialog so that the user can select robots scripts to load.
 					LocalFileLoader.openFileDialog(function(filename, fileSize, text){
@@ -241,8 +250,25 @@
 				<!-- Two -->
 					<section id="two" class="wrapper style3 fade-up">
 						<div class="inner">
-							<h2>What we do</h2>
+							<h2>Your first robot</h2>
 							<p>Phasellus convallis elit id ullamcorper pulvinar. Duis aliquam turpis mauris, eu ultricies erat malesuada quis. Aliquam dapibus, lacus eget hendrerit bibendum, urna est aliquam sem, sit amet imperdiet est velit quis lorem.</p>
+							<pre><code class="language-javascript">"use strict";
+
+const doNothingBot = function() {
+    return {
+        name: 'doNothing',
+        create: function() {},
+        onSpawned: function(api, time_seconds) {
+            api.radar.radarEnabled = false;
+        },
+        update: function(api, time_seconds, delta_seconds) {
+            api.rotateTowardsAngle_degrees(45);
+        }
+    };
+};
+
+RobotLoader.loadMyRobot(doNothingBot);
+</code></pre>
 							<div class="features">
 								<section>
 									<span class="icon solid major fa-code"></span>
