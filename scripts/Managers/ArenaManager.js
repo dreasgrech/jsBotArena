@@ -120,14 +120,22 @@ const ArenaManager = (function() {
                 // Create the tilemap
                 const map = scene.make.tilemap({ key: tiledJSONFileKey });
                 
-                // TODO: Remove these from here
-                GameSetup.width = map.widthInPixels;
-                GameSetup.height = map.heightInPixels;
+                const gameWidth = map.widthInPixels;
+                const gameHeight = map.heightInPixels;
+                
+                // TODO: These should probably be set from somewhere else
+                GameSetup.width = gameWidth;
+                GameSetup.height = gameHeight;
                 GameSetup.tileWidth = map.tileWidth;
                 GameSetup.tileHeight = map.tileHeight;
                 
                 const game = GameContextHolder.game;
-                game.scale.setGameSize(GameSetup.width, GameSetup.height);
+                // Resize the game to fit the arena
+                // First set the maximum size of the display to match the new arena's size
+                // This will set the maximum size that the game can be resized to determined by the style element of the canvas
+                game.scale.displaySize.setMax(gameWidth, gameHeight);
+                // Then set the actual size of the game to match the new arena's size
+                game.scale.setGameSize(gameWidth, gameHeight);
                 
                 // Queue up all the images for all the tilesets needed for this arena's tilemap
                 const tilesetDefinitionsFromJSONFile = dataFromJSONFile.tilesets;
