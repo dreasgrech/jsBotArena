@@ -126,6 +126,9 @@ const ArenaManager = (function() {
                 GameSetup.tileWidth = map.tileWidth;
                 GameSetup.tileHeight = map.tileHeight;
                 
+                const game = GameContextHolder.game;
+                game.scale.setGameSize(GameSetup.width, GameSetup.height);
+                
                 // Queue up all the images for all the tilesets needed for this arena's tilemap
                 const tilesetDefinitionsFromJSONFile = dataFromJSONFile.tilesets;
                 const tilesetDefinitionsFromJSONFileLength = tilesetDefinitionsFromJSONFile.length;
