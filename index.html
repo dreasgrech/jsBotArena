@@ -65,6 +65,7 @@
 						const robotDefinitionClosureFunction = new Function(text);
 						
 						// Execute this function so that the robot script is evaluated.
+						// The robot script should add it's type definition function to the RobotLoader.
 						robotDefinitionClosureFunction();
 						
 						// The robot script should have added it's type definition function to the RobotLoader.
