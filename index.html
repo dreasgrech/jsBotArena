@@ -16,92 +16,50 @@
 
 		<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
 		
-		<!--<script type="module" src="./scripts/lib/browser-fs-access@0.34.1/index.js"></script>-->
-		<script type="module">
-			import {
-				fileOpen,
-				// directoryOpen,
-				// fileSave,
-				// supported
-			} from './scripts/lib/browser-fs-access@0.34.1/index.js';
-			
+		<script type="text/javascript">
 			$(function(){
-				$("#addRobot").click(async function(){
-					let filesHandles;
-					try {
-						filesHandles = await fileOpen([
-							{
-								description: 'JavaScript files',
-								// mimeTypes: ['text/*'],
-								mimeTypes: ['text/javascript', 'text/plain'],
-								extensions: ['.js'],
-								multiple: true,
-							}
-						]);
-					}
-					catch (err) {
-						Logger.error(err);
-						// if (err.name !== 'AbortError') {
-						// 	return console.error(err);
-						// }
-						return;
-					}
-					
-					for (const filesHandle of filesHandles) {
-						const filename = filesHandle.name;
-						const fileSize = filesHandle.size;
-						Logger.log(`Reading file: ${filename} (${fileSize} bytes)`);
-						
-						let text;
-						try {
-							// Read the text from the file
-							text = await filesHandle.text();
-						} catch (err) {
-							Logger.log(`Unable to read text: ${filename} (${fileSize} bytes). Exception: ${err}`);
-							continue;
-						}
-
+				$("#addRobot").click(function() {
+					// Open the file dialog so that the user can select robots scripts to load.
+					LocalFileLoader.openFileDialog(function(filename, fileSize, text){
 						// Create a function around the robot script so that it has it's own scope.
 						const robotDefinitionClosureFunction = new Function(text);
-						
+
 						// Execute this function so that the robot script is evaluated.
 						// The robot script should add it's type definition function to the RobotLoader.
 						robotDefinitionClosureFunction();
-						
+
 						// The robot script should have added it's type definition function to the RobotLoader.
 						// So check if it's there.
 						const robotDefinitionFunction = RobotLoader.lastAddedRobotDefinitionFunction;
 						if (robotDefinitionFunction === undefined) {
 							Logger.error(`Robot script did not add its type definition function to the RobotLoader: ${filename}`);
-							continue;
+							return;
 						}
-						
+
 						// Reset the loader so that it can be used again since now we have a reference to the robot type definition function.
 						RobotLoader.resetLoader();
-						
+
 						try {
 							// Create an instance of the robot so that we make sure that it's a valid robot type
 							const robotInstance = robotDefinitionFunction();
 							const robotName = robotInstance.name;
 							if (!robotName){
 								Logger.error(`Robot instance must have a .name field defined: ${filename}`);
-								continue;
+								return;
 							}
-							
+
 							// Add the robot to the game
 							RobotManager.addRobot(robotInstance);
 
 							Logger.log("Successfully created robot instance", robotInstance);
 						} catch (err){
 							Logger.error(`Robot script did not return a valid robot instance: ${filename} (Exception: ${err})`);
-							continue;
+							return;
 						}
-					}
+					});
 				});
 			});
 		</script>
-		
-		
 
 		<!-- Template Scripts -->
 		<script src="assets/js/jquery.scrollex.min.js"></script>
@@ -184,6 +142,8 @@
 		<script type="text/javascript" src="./scripts/Managers/DamageManager.js"></script>
 		<script type="text/javascript" src="./scripts/Managers/ProjectileManager.js"></script>
 		<script type="text/javascript" src="./scripts/Managers/CollisionManager.js"></script>
+		
+		<script type="module" src="./scripts/LocalFileLoader.mjs"></script>
 
 		<!-- Starting point -->
 		<script type="text/javascript" src="./scripts/Main.js"></script>
