@@ -32,7 +32,7 @@
 						// So check if it's there.
 						const robotDefinitionFunction = RobotLoader.lastAddedRobotDefinitionFunction;
 						if (robotDefinitionFunction === undefined) {
-							Logger.error(`Robot script did not add its type definition function to the RobotLoader: ${filename}`);
+							Logger.error(`Script did not add its type definition function to the RobotLoader: ${filename}`);
 							return;
 						}
 
@@ -53,7 +53,7 @@
 
 							Logger.log("Successfully created robot instance", robotInstance);
 						} catch (err){
-							Logger.error(`Robot script did not return a valid robot instance: ${filename} (Exception: ${err})`);
+							Logger.error(`Script did not return a valid robot instance: ${filename} (Exception: ${err})`);
 							return;
 						}
 					});
