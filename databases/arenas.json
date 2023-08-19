@@ -13,5 +13,10 @@
     "Name": "Green Level",
     "EnumKey": "GreenLevel",
     "TiledJSONFile": "TiledArenas/green_arena.json"
-  }
+  },
+  {
+  "Name": "Metal Level",
+  "EnumKey": "MetalLevel",
+  "TiledJSONFile": "TiledArenas/metal_arena.json"
+}
 ]
