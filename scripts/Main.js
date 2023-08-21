@@ -13,8 +13,7 @@ const INITIAL_GAME_HEIGHT = 1024;
 const FPS_LIMIT = 144;
 
 $(function(){
-    const { InspectorGlobalPlugin, InspectorScenePlugin } = PhaserPluginInspector;
-
+    // Start the Phaser game
     GameContextHolder.game = new Phaser.Game({
         title: "jsBotArena",
         url: "http://dreasgrech.com/upload/jsBotArena/index.html",
@@ -52,7 +51,7 @@ $(function(){
             global: [
                 {
                     key: 'InspectorGlobalPlugin',
-                    plugin: InspectorGlobalPlugin,
+                    plugin: PhaserPluginInspector.InspectorGlobalPlugin,
                     mapping: 'inspectorGame'
                 }
             ],
@@ -64,7 +63,7 @@ $(function(){
                 },
                 //{
                 //    key: 'InspectorScenePlugin',
-                //    plugin: InspectorScenePlugin,
+                //    plugin: PhaserPluginInspector.InspectorScenePlugin,
                 //    mapping: 'inspectorScene'
                 //}
             ]
