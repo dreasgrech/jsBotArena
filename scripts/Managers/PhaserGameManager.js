@@ -92,22 +92,24 @@ const PhaserGameManager = (function() {
             // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
             //gameContext.matter.world.setBounds();
 
-            // gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
-
             // Call all the system_afterPreloadOnce functions that are hooked
             for (let i = 0; i < objectsWith_afterPreloadOnce.length; i++) {
                 const toLoad = objectsWith_afterPreloadOnce[i];
                 toLoad.system_afterPreloadOnce();
             }
 
-            // Load the arena asynchronously
             //const arenaToLoad = Arenas.BridgeLevel;
-            const arenaToLoad = Arenas.MetalLevel;
-            //const arenaToLoad = Arenas.BrownLevel;
+            //const arenaToLoad = Arenas.MetalLevel;
+            const arenaToLoad = Arenas.BrownLevel;
+            /*
+            // Load the arena asynchronously
             ArenaManager.loadArena(arenaToLoad, function(){
                 // Start the round
                 GameRoundManager.startRound();
             });
+            */
+            
+            GameRoundManager.startRound(arenaToLoad);
         },
         update: function(time, delta) {
             if (!GameRoundManager.roundRunning) {

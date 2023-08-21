@@ -22,31 +22,40 @@ const GameRoundManager = (function() {
     // TODO: Create a statemachine to keep track of whether the round is happening
     const gameRoundManager = {
         roundRunning: false,
-        startRound: function() {
+        startRound: function(arenaToLoad) {
             if (gameRoundManager.roundRunning) {
                 Logger.error("Round already running so not starting");
                 return;
             }
+            
+            if (arenaToLoad === undefined) {
+                Logger.error("No arena specified");
+                return;
+            }
 
-            Logger.log("Starting new round");
-            /*
-                        //const ROBOT_CREATION_ITERATIONS = 3;
-                        const ROBOT_CREATION_ITERATIONS = 1;
-                        for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
-                            RobotManager.addRobot(keyBot());
-                            // RobotManager.addRobot(doNothingBot());
-                            // RobotManager.addRobot(astarBot());
-                            // RobotManager.addRobot(shredder());
-                            // RobotManager.addRobot(circleBot());
-                            // RobotManager.addRobot(sittingBot());
-                            // RobotManager.addRobot(followBot_followAngle());
-                            // RobotManager.addRobot(followBot_followPosition());
-                        }
-            */
-            // Allow robots to be added no the round is loaded
-            RobotLoader.openLoaderForScripts();
+            // Load the arena asynchronously
+            ArenaManager.loadArena(arenaToLoad, function(){
+                // Start the round
+                Logger.log("Starting new round");
+                /*
+                            //const ROBOT_CREATION_ITERATIONS = 3;
+                            const ROBOT_CREATION_ITERATIONS = 1;
+                            for (let i = 0; i < ROBOT_CREATION_ITERATIONS; i++) {
+                                RobotManager.addRobot(keyBot());
+                                // RobotManager.addRobot(doNothingBot());
+                                // RobotManager.addRobot(astarBot());
+                                // RobotManager.addRobot(shredder());
+                                // RobotManager.addRobot(circleBot());
+                                // RobotManager.addRobot(sittingBot());
+                                // RobotManager.addRobot(followBot_followAngle());
+                                // RobotManager.addRobot(followBot_followPosition());
+                            }
+                */
+                // Allow robots to be added no the round is loaded
+                RobotLoader.openLoaderForScripts();
 
-            gameRoundManager.roundRunning = true;
+                gameRoundManager.roundRunning = true;
+            });
         },
         resetRound: function() {
             if (!gameRoundManager.roundRunning) {
