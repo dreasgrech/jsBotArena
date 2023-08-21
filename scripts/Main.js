@@ -107,6 +107,8 @@ const GameManager = (function() {
                 // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
                 //gameContext.matter.world.setBounds();
 
+                gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
+
                 // Load the arena asynchronously
                 const arenaToLoad = Arenas.BridgeLevel;
                 //const arenaToLoad = Arenas.MetalLevel;
@@ -121,11 +123,6 @@ const GameManager = (function() {
                     // Start the round
                     gameManager.startRound();
                 });
-                
-                gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
-                //gameContext.anims.on('stop', function() { // doesnt work
-                //    console.log('anim complete!');
-                //});
         },
             update: function(time, delta) {
                 if (!roundRunning) {
