@@ -74,35 +74,33 @@ const GameManager = (function() {
         CollisionManager
     ];
 
-    const preload = function() {
-        const gameContext = this;
-        GameContextHolder.scene = gameContext;
-
-        // gameContext.matter.world.autoUpdate = false;
-
-        //this.load.scripts('inspector', [
-        //    'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.js',
-        //    'https://cdn.jsdelivr.net/npm/phaser-plugin-inspector@1.9.1/dist/phaser-plugin-inspector.umd.js',
-        //]);
-        //this.load.once('complete', () => {
-        //    PhaserPluginInspector.Install(this.plugins);
-        //});
-
-        //gameContext.matter.set60Hz();
-
-        //gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
-
-        for (let i = 0; i < objectsWith_preloadOnce.length; i++) {
-            const toLoad = objectsWith_preloadOnce[i];
-            toLoad.system_preloadOnce();
-        }
-    };
-
     //const FIXED_DELTA_TIME = 0.02; //50hz
     // let stepTimer = 0;
 
     const gameManager = {
-        preload: preload,
+        preload: function() {
+            const gameContext = this;
+            GameContextHolder.scene = gameContext;
+
+            // gameContext.matter.world.autoUpdate = false;
+
+            //this.load.scripts('inspector', [
+            //    'https://cdn.jsdelivr.net/npm/tweakpane@3.1.0/dist/tweakpane.js',
+            //    'https://cdn.jsdelivr.net/npm/phaser-plugin-inspector@1.9.1/dist/phaser-plugin-inspector.umd.js',
+            //]);
+            //this.load.once('complete', () => {
+            //    PhaserPluginInspector.Install(this.plugins);
+            //});
+
+            //gameContext.matter.set60Hz();
+
+            //gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
+
+            for (let i = 0; i < objectsWith_preloadOnce.length; i++) {
+                const toLoad = objectsWith_preloadOnce[i];
+                toLoad.system_preloadOnce();
+            }
+        },
         create: function() {
             const gameContext = GameContextHolder.scene;
 
