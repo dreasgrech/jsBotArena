@@ -17,16 +17,16 @@ const GameManager = (function() {
         AnimationSpritesDatabase,
         RobotPartsDatabase,
         ArenasDatabase,
-        
+
+        TweakPaneManager,
         RaycastManager,
         AnimationManager,
         RobotMatterFactory,
-        ProjectileManager
+        ProjectileManager,
+        PoolsManager,
     ];
 
     const objectsWith_create = [
-        TweakPaneManager,
-        PoolsManager,
         ProjectileManager,
         AnimationManager,
         //RobotMatterFactory,

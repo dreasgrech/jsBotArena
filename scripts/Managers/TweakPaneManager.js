@@ -9,7 +9,7 @@ const TweakPaneManager = (function(){
      */
     let pane;
     return {
-        system_create:function(){
+        system_preloadOnce:function(){
             const gameContext = GameContextHolder.scene;
             pane = gameContext.inspectorGame.pane;
             pane.expanded = false;

@@ -40,7 +40,7 @@ const PoolsManager = (function() {
     };
 
     const poolManager = {
-        system_create: function(){
+        system_preloadOnce: function(){
             poolsTweakpaneFolderID = TweakPaneManager.createFolder("Pools");
         },
         createElementsPool: function({ poolName, createElement, beforePush, afterPop }) {
