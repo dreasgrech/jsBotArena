@@ -42,7 +42,6 @@ const AnimationManager = (function() {
 
     const animationManager = {
         sprites: [],
-        system_preloadOnce: function() {},
         system_afterPreloadOnce: function() {
             const gameContext = GameContextHolder.scene;
 

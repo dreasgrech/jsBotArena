@@ -20,7 +20,6 @@ const GameManager = (function() {
 
         TweakPaneManager,
         RaycastManager,
-        AnimationManager,
         RobotMatterFactory,
         ProjectileManager,
         PoolsManager,
@@ -104,65 +103,65 @@ const GameManager = (function() {
 
     const gameManager = {
         preload: preload,
-            create: function() {
-                const gameContext = GameContextHolder.scene;
+        create: function() {
+            const gameContext = GameContextHolder.scene;
 
-                // Enable Matter physics
-                // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
-                //gameContext.matter.world.setBounds();
+            // Enable Matter physics
+            // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
+            //gameContext.matter.world.setBounds();
 
-                gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
+            gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
 
-                // Load the arena asynchronously
-                const arenaToLoad = Arenas.BridgeLevel;
-                //const arenaToLoad = Arenas.MetalLevel;
-                //const arenaToLoad = Arenas.BrownLevel;
-                ArenaManager.loadArena(arenaToLoad, function(){
-                    // Call all the system_afterPreloadOnce functions that are hooked
-                    for (let i = 0; i < objectsWith_afterPreloadOnce.length; i++) {
-                        const toLoad = objectsWith_afterPreloadOnce[i];
-                        toLoad.system_afterPreloadOnce();
-                    }
+            // Load the arena asynchronously
+            const arenaToLoad = Arenas.BridgeLevel;
+            //const arenaToLoad = Arenas.MetalLevel;
+            //const arenaToLoad = Arenas.BrownLevel;
+            ArenaManager.loadArena(arenaToLoad, function(){
+                // Call all the system_afterPreloadOnce functions that are hooked
+                for (let i = 0; i < objectsWith_afterPreloadOnce.length; i++) {
+                    const toLoad = objectsWith_afterPreloadOnce[i];
+                    toLoad.system_afterPreloadOnce();
+                }
 
-                    // Start the round
-                    gameManager.startRound();
-                });
+                // Start the round
+                gameManager.startRound();
+            });
         },
-            update: function(time, delta) {
-                if (!roundRunning) {
-                    return;
-                }
+        update: function(time, delta) {
+            if (!roundRunning) {
+                return;
+            }
 
-                GameContextHolder.gameTime = time*0.001;
-                GameContextHolder.deltaTime = delta*0.001;
+            GameContextHolder.gameTime = time*0.001;
+            GameContextHolder.deltaTime = delta*0.001;
 
-                // performance.mark('mainupdate:start');
-                for (let i = 0; i < totalObjectsWith_update; i++) {
-                    objectsWith_update[i].update();
-                }
-                // performance.mark('mainupdate:end');
-                // performance.measure('Main Update',
-                //     'mainupdate:start',
-                //     'mainupdate:end');
+            // performance.mark('mainupdate:start');
+            for (let i = 0; i < totalObjectsWith_update; i++) {
+                objectsWith_update[i].update();
+            }
+            // performance.mark('mainupdate:end');
+            // performance.measure('Main Update',
+            //     'mainupdate:start',
+            //     'mainupdate:end');
 
-                // Since we're now at the end of frame, clear any per-frame data
-                for (let i = 0; i < totalObjectsWith_onEndOfFrame; i++) {
-                    objectsWith_onEndOfFrame[i].system_onEndOfFrame();
-                }
+            // Since we're now at the end of frame, clear any per-frame data
+            for (let i = 0; i < totalObjectsWith_onEndOfFrame; i++) {
+                objectsWith_onEndOfFrame[i].system_onEndOfFrame();
+            }
 
-                // Increase the frame counter
-                FrameCounter.current++;
+            // Increase the frame counter
+            FrameCounter.current++;
 
-                // stepTimer += delta * 0.001;
+            // stepTimer += delta * 0.001;
 
-                // Step the physics
-                //GameContextHolder.scene.matter.world.step();
-                
-            //    while (stepTimer >= FIXED_DELTA_TIME) {
-            //        stepTimer -= FIXED_DELTA_TIME;
-            //        //GameContextHolder.gameContext.matter.world.step(FIXED_DELTA_TIME);
-            //        GameContextHolder.gameContext.matter.world.step();
-            //    }
+            // Step the physics
+            //GameContextHolder.scene.matter.world.step();
+            
+        //    while (stepTimer >= FIXED_DELTA_TIME) {
+        //        stepTimer -= FIXED_DELTA_TIME;
+        //        //GameContextHolder.gameContext.matter.world.step(FIXED_DELTA_TIME);
+        //        GameContextHolder.gameContext.matter.world.step();
+        //    }
         },
         startRound: function() {
             if (roundRunning) {
