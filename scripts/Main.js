@@ -3,7 +3,7 @@
 //const GAME_DEBUG_MODE = true;
 const GAME_DEBUG_MODE = false;
 
-window.onload = function(event) {
+$(function(){
     const { InspectorGlobalPlugin, InspectorScenePlugin } = PhaserPluginInspector;
 
     GameContextHolder.game = new Phaser.Game({
@@ -61,10 +61,10 @@ window.onload = function(event) {
             ]
         },
         fps: {
-             limit: 144
+            limit: 144
             //limit: 60
             //limit: 40
             //limit: 15
         }
     });
-};
+});
