@@ -110,18 +110,18 @@ const GameManager = (function() {
             //gameContext.matter.world.setBounds();
 
             // gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
+            
+            // Call all the system_afterPreloadOnce functions that are hooked
+            for (let i = 0; i < objectsWith_afterPreloadOnce.length; i++) {
+                const toLoad = objectsWith_afterPreloadOnce[i];
+                toLoad.system_afterPreloadOnce();
+            }
 
             // Load the arena asynchronously
             const arenaToLoad = Arenas.BridgeLevel;
             //const arenaToLoad = Arenas.MetalLevel;
             //const arenaToLoad = Arenas.BrownLevel;
             ArenaManager.loadArena(arenaToLoad, function(){
-                // Call all the system_afterPreloadOnce functions that are hooked
-                for (let i = 0; i < objectsWith_afterPreloadOnce.length; i++) {
-                    const toLoad = objectsWith_afterPreloadOnce[i];
-                    toLoad.system_afterPreloadOnce();
-                }
-
                 // Start the round
                 gameManager.startRound();
             });
