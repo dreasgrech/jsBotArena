@@ -94,7 +94,8 @@ const GameManager = (function() {
 
             //gameContext.matter.set60Hz();
 
-            //gameContext.load.tilemapTiledJSON('arena_json', 'arena_map.json');
+            // Hook to the Matter 'collisionstart' event
+            gameContext.matter.world.on(Phaser.Physics.Matter.Events.COLLISION_START , CollisionManager.handleEvent_CollisionStart);
 
             for (let i = 0; i < objectsWith_preloadOnce.length; i++) {
                 const toLoad = objectsWith_preloadOnce[i];
@@ -108,7 +109,7 @@ const GameManager = (function() {
             // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds
             //gameContext.matter.world.setBounds();
 
-            gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
+            // gameContext.matter.world.on('collisionstart', CollisionManager.handleEvent_CollisionStart);
 
             // Load the arena asynchronously
             const arenaToLoad = Arenas.BridgeLevel;
