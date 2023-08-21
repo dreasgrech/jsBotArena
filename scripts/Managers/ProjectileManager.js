@@ -64,12 +64,14 @@ const ProjectileManager = (function() {
             gameContext = GameContextHolder.scene;
             
             gameContext.load.json('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH);
+            // JSONDatabaseReader.loadDatabase('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH, function (data){
+            //     console.log("from preloadOnce", data);
+            //     projectilesCollisionData = data;
+            // });
         },
         system_create: function() {
-
             projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
             // console.log("projectilesCollisionData", projectilesCollisionData);
-
             for (let projectileTypeField in ProjectileTypes) {
                 if (!ProjectileTypes.hasOwnProperty(projectileTypeField)) {
                     continue;
@@ -90,9 +92,9 @@ const ProjectileManager = (function() {
                                 shape: projectilesCollisionData[projectileCollisionDataName],
                             }
                         );
-                        
+
                         // Logger.log(projectileMatterGameObject, projectileMatterGameObject.body.isSensor);
-                        
+
                         return projectileMatterGameObject;
                     },
                     //    beforePush: function(){},
@@ -104,7 +106,7 @@ const ProjectileManager = (function() {
 
                 pools[projectileTypeIndex] = poolIndex;
             }
-            
+
             const tweakPaneFolderID = TweakPaneManager.createFolder("Projectile Manager");
             const dataForTweakPane = {
                 get totalSpawnedProjectiles() {
@@ -117,7 +119,7 @@ const ProjectileManager = (function() {
                     return robotsLastFiredTime.length;
                 }
             };
-            
+
             TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalSpawnedProjectiles');
             TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalQueuedProjectilesForRemoval');
             TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalRobotsLastFiredTime');
