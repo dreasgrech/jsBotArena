@@ -63,14 +63,31 @@ const ProjectileManager = (function() {
         system_preloadOnce: function() {
             gameContext = GameContextHolder.scene;
             
-            gameContext.load.json('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH);
-            // JSONDatabaseReader.loadDatabase('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH, function (data){
-            //     console.log("from preloadOnce", data);
-            //     projectilesCollisionData = data;
-            // });
+            // gameContext.load.json('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH);
+            JSONDatabaseReader.loadDatabase('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH, function (data){
+                // console.log("from preloadOnce", data);
+                projectilesCollisionData = data;
+            });
+
+            const tweakPaneFolderID = TweakPaneManager.createFolder("Projectile Manager");
+            const dataForTweakPane = {
+                get totalSpawnedProjectiles() {
+                    return totalSpawnedProjectiles;
+                },
+                get totalQueuedProjectilesForRemoval() {
+                    return queuedProjectilesForRemoval.size;
+                },
+                get totalRobotsLastFiredTime() {
+                    return robotsLastFiredTime.length;
+                }
+            };
+
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalSpawnedProjectiles');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalQueuedProjectilesForRemoval');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalRobotsLastFiredTime');
         },
         system_afterPreloadOnce: function() {
-            projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
+            // projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
             // console.log("projectilesCollisionData", projectilesCollisionData);
             for (let projectileTypeField in ProjectileTypes) {
                 if (!ProjectileTypes.hasOwnProperty(projectileTypeField)) {
@@ -106,23 +123,6 @@ const ProjectileManager = (function() {
 
                 pools[projectileTypeIndex] = poolIndex;
             }
-
-            const tweakPaneFolderID = TweakPaneManager.createFolder("Projectile Manager");
-            const dataForTweakPane = {
-                get totalSpawnedProjectiles() {
-                    return totalSpawnedProjectiles;
-                },
-                get totalQueuedProjectilesForRemoval() {
-                    return queuedProjectilesForRemoval.size;
-                },
-                get totalRobotsLastFiredTime() {
-                    return robotsLastFiredTime.length;
-                }
-            };
-
-            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalSpawnedProjectiles');
-            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalQueuedProjectilesForRemoval');
-            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalRobotsLastFiredTime');
         },
         update: function() {
             // Update all the currently active robot firing projectiles muzzle flash animations
@@ -152,15 +152,15 @@ const ProjectileManager = (function() {
                     turretAngle_degrees);
             }
         },
-        onRobotAdded: function(robotIndex) {
-            robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
-        },
         system_onEndOfFrame: function() {
             for (const projectileMatterGameObject of queuedProjectilesForRemoval) {
                 destroyProjectile(projectileMatterGameObject);
             }
 
             queuedProjectilesForRemoval.clear();
+        },
+        onRobotAdded: function(robotIndex) {
+            robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
         },
         /**
          * Returns a value indicating whether the specified robot can currently fire
