@@ -74,7 +74,7 @@ const RobotManager = (function() {
     const robotManager = {
         get totalRobots() { return totalRobots; },
         get aliveRobotsIndexes() { return aliveRobotsIndexes; },
-        system_create: function() {
+        system_afterPreloadOnce: function() {
             //    GameContextHolder.gameContext.matter.world.on('afterupdate',
             //        function() {
             //            for (let i = 0; i < totalRobots; i++) {

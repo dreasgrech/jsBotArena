@@ -394,7 +394,7 @@ const RobotsRadarManager = (function() {
     };
 
     const robotsRadar = {
-        system_create: function() {
+        system_afterPreloadOnce: function() {
             ray = RaycastManager.createRay();
             coneRay = RaycastManager.createRay();
             //console.log(ray);

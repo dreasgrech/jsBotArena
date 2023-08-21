@@ -2,7 +2,7 @@
 
 const UIManager = (function() {
     const obj = {
-        system_create: function() {
+        system_afterPreloadOnce: function() {
             UIRobotInfoPanel.create();
         },
         update: function() {

@@ -26,7 +26,11 @@ const GameManager = (function() {
         PoolsManager,
     ];
 
-    const objectsWith_create = [
+    /**
+     * The system_afterPreloadOnce function is called only once and is not called again during the lifetime of the game.
+     * It is called after the preloadOnce functions have finished processing and loading whatever they loaded
+     */
+    const objectsWith_afterPreloadOnce = [
         ProjectileManager,
         AnimationManager,
         //RobotMatterFactory,
@@ -114,10 +118,10 @@ const GameManager = (function() {
                 //const arenaToLoad = Arenas.MetalLevel;
                 //const arenaToLoad = Arenas.BrownLevel;
                 ArenaManager.loadArena(arenaToLoad, function(){
-                    // Call all the system_create functions that are hooked
-                    for (let i = 0; i < objectsWith_create.length; i++) {
-                        const toLoad = objectsWith_create[i];
-                        toLoad.system_create();
+                    // Call all the system_afterPreloadOnce functions that are hooked
+                    for (let i = 0; i < objectsWith_afterPreloadOnce.length; i++) {
+                        const toLoad = objectsWith_afterPreloadOnce[i];
+                        toLoad.system_afterPreloadOnce();
                     }
 
                     // Start the round

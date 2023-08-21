@@ -69,7 +69,7 @@ const ProjectileManager = (function() {
             //     projectilesCollisionData = data;
             // });
         },
-        system_create: function() {
+        system_afterPreloadOnce: function() {
             projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
             // console.log("projectilesCollisionData", projectilesCollisionData);
             for (let projectileTypeField in ProjectileTypes) {
