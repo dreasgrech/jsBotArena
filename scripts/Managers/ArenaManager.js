@@ -92,8 +92,6 @@ const ArenaManager = (function() {
     // };
     
     const arenaManager = {
-        system_preloadOnce: function() {
-        },
         onDatabaseLoaded: function(definitionsFromDB) {
             
             for (let i = 0; i < definitionsFromDB.length; i++) {
@@ -115,8 +113,8 @@ const ArenaManager = (function() {
             const tiledJSONFileKey = tiledJSONFile;
             
             scene.load.once(
-                `${Phaser.Loader.Events.FILE_COMPLETE}-tilemapJSON-${tiledJSONFileKey}`, 
-                function(key, type, dataFromJSONFile) {
+            `${Phaser.Loader.Events.FILE_COMPLETE}-tilemapJSON-${tiledJSONFileKey}`, 
+            function(key, type, dataFromJSONFile) {
                 // Create the tilemap
                 const map = scene.make.tilemap({ key: tiledJSONFileKey });
                 

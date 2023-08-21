@@ -1,7 +1,7 @@
 "use strict";
 
-//const GAME_DEBUG_MODE = true;
-const GAME_DEBUG_MODE = false;
+const GAME_DEBUG_MODE = true;
+//const GAME_DEBUG_MODE = false;
 
 // The initial game dimensions.  These are changed when a level is loaded
 const INITIAL_GAME_WIDTH = 1024;

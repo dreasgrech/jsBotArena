@@ -101,13 +101,6 @@ const PhaserGameManager = (function() {
             //const arenaToLoad = Arenas.BridgeLevel;
             //const arenaToLoad = Arenas.MetalLevel;
             const arenaToLoad = Arenas.BrownLevel;
-            /*
-            // Load the arena asynchronously
-            ArenaManager.loadArena(arenaToLoad, function(){
-                // Start the round
-                GameRoundManager.startRound();
-            });
-            */
             
             GameRoundManager.startRound(arenaToLoad);
         },

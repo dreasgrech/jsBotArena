@@ -334,7 +334,10 @@ const PhysicsBodiesManager = (function() {
             Logger.log("projectileSensorBodyIDToRobotIndex", projectileSensorBodyIDToRobotIndex);
             Logger.log("arenaBodySpatialHash", arenaBodySpatialHash);
             Logger.log("arenaBodiesAdded", arenaBodiesAdded);
-
+            
+            // TODO: THIS FUNCTION NEEDS MORE WORK SO CONTINUE HERE
+            
+            arenaBodiesAdded = false;
         }
     };
 
