@@ -1,8 +1,7 @@
 "use strict";
 
 const JSONDatabaseReader = (function() {
-
-    const jsonDatabaseReader = {
+    return {
         loadDatabase: function(fileKey, filePath, onFileLoadedCallback) {
             const gameContext = GameContextHolder.scene;
 
@@ -14,6 +13,4 @@ const JSONDatabaseReader = (function() {
             gameContext.load.json(fileKey, filePath);
         }
     };
-
-    return jsonDatabaseReader;
 }());
