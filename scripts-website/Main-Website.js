@@ -1,9 +1,10 @@
 ﻿"use strict";
 
 $(function(){
+    // Enable the syntax highlighting for the code snippets
     hljs.highlightAll();
 
-    $("#addRobot").click(function() {
+    $("#addRobots").click(function() {
         // Open the file dialog so that the user can select robots scripts to load.
         LocalFileLoader.openFileDialog(function(filename, fileSize, text){
             // Create a function around the robot script so that it has it's own scope.
@@ -42,5 +43,9 @@ $(function(){
                 return;
             }
         });
+    });
+    
+    $("#resetRound").click(function() {
+        GameManager.resetRound();
     });
 });
