@@ -46,6 +46,6 @@ $(function(){
     });
     
     $("#resetRound").click(function() {
-        PhaserGameManager.resetRound();
+        GameRoundManager.resetRound();
     });
 });

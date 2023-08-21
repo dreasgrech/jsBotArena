@@ -1,6 +1,24 @@
 ﻿"use strict";
 
 const GameRoundManager = (function() {
+    /**
+     * The system function that's called when unloading a level.
+     * All of these scripts should be MANAGERS.
+     */
+    const objectsWith_unloadLevel = [
+        RaycastManager,
+        RobotManager,
+        RobotsRadarManager,
+        ProjectileManager,
+        AnimationManager,
+        PhysicsBodiesManager,
+        ArenaManager,
+        ObjectAnchorManager,
+        TweakPaneManager,
+        UIManager,
+        CollisionManager
+    ];
+    
     // TODO: Create a statemachine to keep track of whether the round is happening
     const gameRoundManager = {
         roundRunning: false,

@@ -57,24 +57,6 @@ const PhaserGameManager = (function() {
     ];
     const totalObjectsWith_update = objectsWith_update.length;
 
-    /**
-     * The system function that's called when unloading a level.
-     * All of these scripts should be MANAGERS.
-     */
-    const objectsWith_unloadLevel = [
-        RaycastManager,
-        RobotManager,
-        RobotsRadarManager,
-        ProjectileManager,
-        AnimationManager,
-        PhysicsBodiesManager,
-        ArenaManager,
-        ObjectAnchorManager,
-        TweakPaneManager,
-        UIManager,
-        CollisionManager
-    ];
-
     //const FIXED_DELTA_TIME = 0.02; //50hz
     // let stepTimer = 0;
 
