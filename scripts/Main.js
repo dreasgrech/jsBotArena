@@ -7,6 +7,11 @@ const GAME_DEBUG_MODE = false;
 const INITIAL_GAME_WIDTH = 1024;
 const INITIAL_GAME_HEIGHT = 1024;
 
+ //const FPS_LIMIT = 15;
+// const FPS_LIMIT = 40;
+// const FPS_LIMIT = 60;
+const FPS_LIMIT = 144;
+
 $(function(){
     const { InspectorGlobalPlugin, InspectorScenePlugin } = PhaserPluginInspector;
 
@@ -65,10 +70,7 @@ $(function(){
             ]
         },
         fps: {
-            limit: 144
-            //limit: 60
-            //limit: 40
-            //limit: 15
+            limit: FPS_LIMIT
         }
     });
 });
