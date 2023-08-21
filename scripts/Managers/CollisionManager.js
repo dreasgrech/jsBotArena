@@ -271,7 +271,8 @@ const CollisionManager = (function() {
     };
 
     const collisionManager = {
-        system_afterPreloadOnce: function() {
+        //system_afterPreloadOnce: function() {
+        system_preloadOnce: function() {
 
             // Set up all the collision handlers lookups.  This is the matrix which allows for the collision handler resolution
             collisionHandlers[EnumHelpers.createLookupKey(CollisionCategories.RobotBody, CollisionCategories.RobotBody)] = handleCollision_RobotToRobot;

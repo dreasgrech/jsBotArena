@@ -74,17 +74,7 @@ const RobotManager = (function() {
     const robotManager = {
         get totalRobots() { return totalRobots; },
         get aliveRobotsIndexes() { return aliveRobotsIndexes; },
-        system_afterPreloadOnce: function() {
-            //    GameContextHolder.gameContext.matter.world.on('afterupdate',
-            //        function() {
-            //            for (let i = 0; i < totalRobots; i++) {
-            //                RobotMatterFactory.updateParts(i);
-            //            }
-            //        });
-            
-            // gameOptionsForRobots.width = GameSetup.Width;
-            // gameOptionsForRobots.height = GameSetup.Height;
-            
+        system_preloadOnce: function() {
             // Create the Tweak pane data
             const dataForTweakPane = {
                 get totalRobots() {

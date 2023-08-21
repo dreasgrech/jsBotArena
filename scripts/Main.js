@@ -24,6 +24,9 @@ const GameManager = (function() {
         RobotMatterFactory,
         ProjectileManager,
         PoolsManager,
+        CollisionManager,
+        RobotManager,
+        PhysicsBodiesManager
     ];
 
     /**
@@ -34,11 +37,8 @@ const GameManager = (function() {
         ProjectileManager,
         AnimationManager,
         //RobotMatterFactory,
-        CollisionManager,
         UIManager,
         RobotsRadarManager,
-        RobotManager,
-        PhysicsBodiesManager
     ];
 
     const objectsWith_onEndOfFrame = [

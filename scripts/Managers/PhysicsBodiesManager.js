@@ -112,7 +112,7 @@ const PhysicsBodiesManager = (function() {
         get radarBlockingArenaBodies() {
             return radarBlockingArenaBodies;
         },
-        system_afterPreloadOnce: function() {
+        system_preloadOnce: function() {
             // Create the Tweak pane data
             const dataForTweakPane = {
                 get allBodiesTotal() {
