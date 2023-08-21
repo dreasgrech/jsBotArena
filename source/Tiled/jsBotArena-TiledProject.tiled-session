@@ -1,5 +1,9 @@
 {
-    "activeFile": "green_arena_tiledmap.tmx",
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "metal_arena.tmx",
     "expandedProjectPaths": [
         "."
     ],
@@ -8,12 +12,52 @@
             "scaleInDock": 1,
             "scaleInEditor": 1
         },
+        "big_arena.tmx": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1030,
+                "y": 872
+            }
+        },
+        "big_arena.tmx#Floor - Metal 1 64x64": {
+            "scaleInDock": 1
+        },
+        "big_arena.tmx#Wall - Metal 1 64x64": {
+            "scaleInDock": 1
+        },
+        "big_arena_tiledmap.tmx": {
+            "scale": 1.1689453125,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 512.4277360066834,
+                "y": 512.4277360066833
+            }
+        },
+        "big_arena_tiledmap.tmx#Brick": {
+            "scaleInDock": 1
+        },
+        "big_arena_tiledmap.tmx#Dirt": {
+            "scaleInDock": 1
+        },
+        "big_arena_tiledmap.tmx#Grass": {
+            "scaleInDock": 1
+        },
+        "big_arena_tiledmap.tmx#SmallTrees": {
+            "scaleInDock": 1
+        },
+        "big_arena_tiledmap.tmx#Walls": {
+            "scaleInDock": 1
+        },
+        "big_arena_tiledmap.tmx#Water": {
+            "scaleInDock": 1
+        },
         "bridge_arena.tmx": {
             "scale": 1.1689453125,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 479.9197994987469,
-                "y": 531.2481203007519
+                "x": 474.7869674185464,
+                "y": 526.1152882205513
             }
         },
         "bridge_arena.tmx#Brick": {
@@ -42,8 +86,8 @@
             "scale": 1.1689453125,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 500.4511278195489,
-                "y": 462.81035923141184
+                "x": 511.9999999999999,
+                "y": 511.1445279866332
             }
         },
         "brown_arena_tiledmap.tmx#Brick": {
@@ -71,8 +115,8 @@
             "scale": 1.1689453125,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 501.30659983291554,
-                "y": 502.16207184628234
+                "x": 514.5664160401003,
+                "y": 511.99999999999994
             }
         },
         "green_arena_tiledmap.tmx#Floor": {
@@ -81,22 +125,47 @@
         "green_arena_tiledmap.tmx#Walls": {
             "scaleInDock": 1,
             "scaleInEditor": 1
+        },
+        "metal_arena.tmx": {
+            "scale": 0.58447265625,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 1021.4335839598996,
+                "y": 1021.4335839598997
+            }
+        },
+        "metal_arena.tmx#Floor - Metal 1 64x64": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "metal_arena.tmx#Wall - Metal 1 64x64": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
         }
     },
     "last.exportedFilePath": "C:/Users/Administrator/Documents/jsBotArena/TiledArenas",
-    "last.imagePath": "C:/Users/Administrator/Documents/jsBotArena/images/Arena/fang",
+    "last.imagePath": "C:/Users/Administrator/Documents/jsBotArena/images/Arena/TopDownDungeonPack/Floors",
+    "map.height": 32,
     "map.lastUsedExportFilter": "All Files (*)",
+    "map.lastUsedFormat": "tmx",
+    "map.tileHeight": 64,
+    "map.tileWidth": 64,
+    "map.width": 32,
     "openFiles": [
-        "brown_arena_tiledmap.tmx",
-        "green_arena_tiledmap.tmx"
+        "bridge_arena.tmx",
+        "metal_arena.tmx"
     ],
     "project": "jsBotArena-TiledProject.tiled-project",
     "property.type": "TileType",
     "recentFiles": [
-        "brown_arena_tiledmap.tmx",
+        "bridge_arena.tmx",
+        "metal_arena.tmx",
+        "big_arena.tmx",
+        "big_arena_tiledmap.tmx",
         "green_arena_tiledmap.tmx",
-        "bridge_arena.tmx"
+        "brown_arena_tiledmap.tmx"
     ],
+    "tileset.embedInMap": true,
     "tileset.tileSize": {
         "height": 64,
         "width": 64
