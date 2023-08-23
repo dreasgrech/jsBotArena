@@ -35,7 +35,11 @@ $(function(){
                 }
 
                 // Add the robot to the game
-                RobotManager.addRobot(robotInstance);
+                // Andreas: totalInstancesToCreate is used so I can create many instances for testing purposes
+                const totalInstancesToCreate = 4;
+                for (let i = 0; i < totalInstancesToCreate; i++){
+                    RobotManager.addRobot(robotInstance);
+                }
 
                 Logger.log("Successfully created robot instance", robotInstance);
             } catch (err){
