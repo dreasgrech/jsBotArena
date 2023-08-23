@@ -9,7 +9,9 @@ const Arenas = { };
 // };
 
 const ArenaManager = (function() {
-    let arenaDefinitionsFromDB = {};
+    const arenaDefinitionsFromDB = {};
+    
+    let currentlyLoadedTilemap;
 
     /**
      * Creates a Tilemap layer from the provided layer definition (from JSON database)
@@ -117,6 +119,7 @@ const ArenaManager = (function() {
             function(key, type, dataFromJSONFile) {
                 // Create the tilemap
                 const map = scene.make.tilemap({ key: tiledJSONFileKey });
+                currentlyLoadedTilemap = map;
                 
                 const gameWidth = map.widthInPixels;
                 const gameHeight = map.heightInPixels;
@@ -287,7 +290,7 @@ const ArenaManager = (function() {
                             if (collisionCategory === 0){
                                 return;
                             }
-
+                            
                             const x = tile.getCenterX();
                             const y = tile.getCenterY();
                             const w = tile.width;
@@ -329,7 +332,10 @@ const ArenaManager = (function() {
             scene.load.start();
         },
         system_unloadLevel: function(){
-            
+            // Destroy the tilemap so that the images are removed from the game
+            currentlyLoadedTilemap.removeAllLayers();
+            currentlyLoadedTilemap.destroy(); // TODO: I think destroy() already calls removeAllLayers() so check.
+            currentlyLoadedTilemap = null;
         }
     };
     

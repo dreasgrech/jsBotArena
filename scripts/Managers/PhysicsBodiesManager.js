@@ -57,7 +57,6 @@ const PhysicsBodiesManager = (function() {
 
     // let arenaBodyMappingToEveryOtherArenaBody = {};
 
-    // const matterBodyToObjectType = {};
     const matterBodyToCollisionCategory = {};
     const matterBodyIDToRobotIndex = {};
 
@@ -325,6 +324,7 @@ const PhysicsBodiesManager = (function() {
         system_unloadLevel: function(){
             // arenaStaticObstacleBodiesBoundsX.length = 0;
             // arenaStaticObstacleBodiesBoundsY.length = 0;
+            /*
             Logger.log("Resetting PhysicsBodiesManager");
             Logger.log("allBodies", allBodies);
             Logger.log("staticArenaBodies", staticArenaBodies);
@@ -334,8 +334,33 @@ const PhysicsBodiesManager = (function() {
             Logger.log("projectileSensorBodyIDToRobotIndex", projectileSensorBodyIDToRobotIndex);
             Logger.log("arenaBodySpatialHash", arenaBodySpatialHash);
             Logger.log("arenaBodiesAdded", arenaBodiesAdded);
+            */
             
             // TODO: THIS FUNCTION NEEDS MORE WORK SO CONTINUE HERE
+            
+            const scene = GameContextHolder.scene;
+            
+            // Remove the static arena bodies mappings from the RaycastManager
+            RaycastManager.removeMappedGameObjects(staticArenaBodies);
+            // Remove the actual static arena bodies from the world
+            scene.matter.world.remove(staticArenaBodies);
+            
+            arenaStaticObstacleBodiesBounds.length = 0;
+            arenaStaticObstacleBodiesIDs.length = 0;
+            arenaStaticObstacleBodiesPositions.length = 0;
+            
+            allBodies.length = 0;
+            staticArenaBodies.length = 0;
+            radarBlockingArenaBodies.length = 0;
+            for (const prop of Object.getOwnPropertyNames(matterBodyToCollisionCategory )) {
+                delete matterBodyToCollisionCategory[prop];
+            }
+            for (const prop of Object.getOwnPropertyNames(matterBodyIDToRobotIndex )) {
+                delete matterBodyIDToRobotIndex[prop];
+            }
+            for (const prop of Object.getOwnPropertyNames(projectileSensorBodyIDToRobotIndex )) {
+                delete projectileSensorBodyIDToRobotIndex[prop];
+            }
             
             arenaBodiesAdded = false;
         }
