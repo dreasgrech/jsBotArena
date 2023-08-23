@@ -13,10 +13,10 @@ const GameRoundManager = (function() {
         AnimationManager,
         PhysicsBodiesManager,
         ArenaManager,
-        ObjectAnchorManager,
         TweakPaneManager,
         UIManager,
-        CollisionManager
+        CollisionManager,
+        ObjectAnchorManager,
     ];
     
     // TODO: Create a statemachine to keep track of whether the round is happening
