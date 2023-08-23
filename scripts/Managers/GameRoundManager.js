@@ -1,6 +1,23 @@
 ﻿"use strict";
 
 const GameRoundManager = (function() {
+
+    const objectsWith_update = [
+        RobotManager,
+        RobotsRadarManager,
+        ProjectileManager,
+        ObjectAnchorManager,
+        UIManager
+    ];
+    const totalObjectsWith_update = objectsWith_update.length;
+    
+    const objectsWith_onEndOfFrame = [
+        CollisionManager,
+        ProjectileManager,
+        DamageManager
+    ];
+    const totalObjectsWith_onEndOfFrame = objectsWith_onEndOfFrame.length;
+
     /**
      * The system function that's called when unloading a level.
      * All of these scripts should be MANAGERS.
@@ -22,6 +39,7 @@ const GameRoundManager = (function() {
     // TODO: Create a statemachine to keep track of whether the round is happening
     const gameRoundManager = {
         roundRunning: false,
+        queuedRoundReset: false,
         startRound: function(arenaToLoad) {
             if (gameRoundManager.roundRunning) {
                 Logger.error("Round already running so not starting");
@@ -57,6 +75,47 @@ const GameRoundManager = (function() {
 
                 gameRoundManager.roundRunning = true;
             });
+        },
+        updateLoop: function(time, delta){
+            
+            // TODO: Bring code from PhaserGameManager here
+            
+            // TODO: check for queued round reset
+
+            if (!GameRoundManager.roundRunning) {
+                return;
+            }
+
+            GameContextHolder.gameTime = time*0.001;
+            GameContextHolder.deltaTime = delta*0.001;
+
+            // performance.mark('mainupdate:start');
+            for (let i = 0; i < totalObjectsWith_update; i++) {
+                objectsWith_update[i].update();
+            }
+            // performance.mark('mainupdate:end');
+            // performance.measure('Main Update',
+            //     'mainupdate:start',
+            //     'mainupdate:end');
+
+            // Since we're now at the end of frame, clear any per-frame data
+            for (let i = 0; i < totalObjectsWith_onEndOfFrame; i++) {
+                objectsWith_onEndOfFrame[i].system_onEndOfFrame();
+            }
+
+            // Increase the frame counter
+            FrameCounter.current++;
+
+            // stepTimer += delta * 0.001;
+
+            // Step the physics
+            //GameContextHolder.scene.matter.world.step();
+
+            //    while (stepTimer >= FIXED_DELTA_TIME) {
+            //        stepTimer -= FIXED_DELTA_TIME;
+            //        //GameContextHolder.gameContext.matter.world.step(FIXED_DELTA_TIME);
+            //        GameContextHolder.gameContext.matter.world.step();
+            //    }
         },
         resetRound: function() {
             if (!gameRoundManager.roundRunning) {

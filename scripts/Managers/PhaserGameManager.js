@@ -41,22 +41,6 @@ const PhaserGameManager = (function() {
         RobotsRadarManager,
     ];
 
-    const objectsWith_onEndOfFrame = [
-        CollisionManager,
-        ProjectileManager,
-        DamageManager
-    ];
-    const totalObjectsWith_onEndOfFrame = objectsWith_onEndOfFrame.length;
-
-    const objectsWith_update = [
-        RobotManager,
-        RobotsRadarManager,
-        ProjectileManager,
-        ObjectAnchorManager,
-        UIManager
-    ];
-    const totalObjectsWith_update = objectsWith_update.length;
-
     //const FIXED_DELTA_TIME = 0.02; //50hz
     // let stepTimer = 0;
 
@@ -105,40 +89,7 @@ const PhaserGameManager = (function() {
             GameRoundManager.startRound(arenaToLoad);
         },
         update: function(time, delta) {
-            if (!GameRoundManager.roundRunning) {
-                return;
-            }
-
-            GameContextHolder.gameTime = time*0.001;
-            GameContextHolder.deltaTime = delta*0.001;
-
-            // performance.mark('mainupdate:start');
-            for (let i = 0; i < totalObjectsWith_update; i++) {
-                objectsWith_update[i].update();
-            }
-            // performance.mark('mainupdate:end');
-            // performance.measure('Main Update',
-            //     'mainupdate:start',
-            //     'mainupdate:end');
-
-            // Since we're now at the end of frame, clear any per-frame data
-            for (let i = 0; i < totalObjectsWith_onEndOfFrame; i++) {
-                objectsWith_onEndOfFrame[i].system_onEndOfFrame();
-            }
-
-            // Increase the frame counter
-            FrameCounter.current++;
-
-            // stepTimer += delta * 0.001;
-
-            // Step the physics
-            //GameContextHolder.scene.matter.world.step();
-
-            //    while (stepTimer >= FIXED_DELTA_TIME) {
-            //        stepTimer -= FIXED_DELTA_TIME;
-            //        //GameContextHolder.gameContext.matter.world.step(FIXED_DELTA_TIME);
-            //        GameContextHolder.gameContext.matter.world.step();
-            //    }
+            GameRoundManager.updateLoop(time, delta);
         }
     };
 }());
