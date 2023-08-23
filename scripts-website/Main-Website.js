@@ -50,6 +50,6 @@ $(function(){
     });
     
     $("#resetRound").click(function() {
-        GameRoundManager.resetRound();
+        GameRoundManager.queueLevelUnload();
     });
 });

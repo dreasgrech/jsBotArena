@@ -36,6 +36,21 @@ const GameRoundManager = (function() {
         ObjectAnchorManager,
     ];
     
+    const unloadLevel = function() {
+        if (!gameRoundManager.roundRunning) {
+            Logger.error("Round not running so not stopping");
+            return;
+        }
+
+        Logger.log("Resetting round");
+        for (let i = 0; i < objectsWith_unloadLevel.length; i++) {
+            const toLoad = objectsWith_unloadLevel[i];
+            toLoad.system_unloadLevel();
+        }
+
+        gameRoundManager.roundRunning = false;
+    };
+    
     // TODO: Create a statemachine to keep track of whether the round is happening
     const gameRoundManager = {
         roundRunning: false,
@@ -82,7 +97,7 @@ const GameRoundManager = (function() {
             
             // TODO: check for queued round reset
 
-            if (!GameRoundManager.roundRunning) {
+            if (!gameRoundManager.roundRunning) {
                 return;
             }
 
@@ -116,20 +131,15 @@ const GameRoundManager = (function() {
             //        //GameContextHolder.gameContext.matter.world.step(FIXED_DELTA_TIME);
             //        GameContextHolder.gameContext.matter.world.step();
             //    }
-        },
-        resetRound: function() {
-            if (!gameRoundManager.roundRunning) {
-                Logger.error("Round not running so not stopping");
-                return;
-            }
-
-            Logger.log("Resetting round");
-            for (let i = 0; i < objectsWith_unloadLevel.length; i++) {
-                const toLoad = objectsWith_unloadLevel[i];
-                toLoad.system_unloadLevel();
-            }
             
-            gameRoundManager.roundRunning = false;
+            if (gameRoundManager.queuedRoundReset){
+                gameRoundManager.queuedRoundReset = false;
+                
+                unloadLevel();
+            }
+        },
+        queueLevelUnload: function() {
+            gameRoundManager.queuedRoundReset = true;
         }
     };
     
