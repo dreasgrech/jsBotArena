@@ -1,5 +1,7 @@
 "use strict";
 
+// TODO: Split this boolean into multiple booleans for more granular control.
+// TODO: Examples: GAME_DEBUG_MODE, GAME_DEBUG_MODE_SHOW_COLLISIONS, GAME_DEBUG_MODE_SHOW_RAYS, etc.
 const GAME_DEBUG_MODE = true;
 //const GAME_DEBUG_MODE = false;
 
