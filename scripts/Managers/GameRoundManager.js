@@ -97,9 +97,13 @@ const GameRoundManager = (function() {
             
             // TODO: check for queued round reset
 
+            /*
+            // TODO: This should probably not be commented but because 
+            // TODO: the managers keep running, it might help with debugging    
             if (!gameRoundManager.roundRunning) {
                 return;
             }
+             */
 
             GameContextHolder.gameTime = time*0.001;
             GameContextHolder.deltaTime = delta*0.001;
