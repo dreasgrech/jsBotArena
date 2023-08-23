@@ -34,6 +34,7 @@ const GameRoundManager = (function() {
             }
 
             // Load the arena asynchronously
+            Logger.log("Loading arena", arenaToLoad);
             ArenaManager.loadArena(arenaToLoad, function(){
                 // Start the round
                 Logger.log("Starting new round");
