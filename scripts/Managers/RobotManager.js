@@ -295,6 +295,10 @@ const RobotManager = (function() {
             //Logger.log("marking bot for removal", robotIndex);
         },
         system_unloadLevel: function() {
+            if (totalQueuedRobotsForRemovals > 0) {
+                Logger.warn("totalQueuedRobotsForRemovals > 0", queuedRobotsForRemoval);
+            }
+            
             // Remove all the robots
             for (const robotIndex of aliveRobotsIndexes) {
                 removeAndHideRobot(robotIndex);
