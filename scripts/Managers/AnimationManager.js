@@ -268,6 +268,8 @@ const AnimationManager = (function() {
         resolveSprite: (spriteIndex) => animationManager.sprites[spriteIndex],
         system_unloadLevel: function() {
             lastSpriteIndexCreated = -1;
+            
+            // TODO: Continue here.  This needs more work.
         }
     };
 
