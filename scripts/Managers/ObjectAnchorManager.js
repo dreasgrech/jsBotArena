@@ -56,6 +56,15 @@ const ObjectAnchorManager = (function () {
             Logger.assert(objectsAnchoredToGameObjects_originOffsetX.size === 0, "objectsAnchoredToGameObjects_originOffsetX.size === 0");
             Logger.assert(objectsAnchoredToGameObjects_originOffsetY.size === 0, "objectsAnchoredToGameObjects_originOffsetY.size === 0");
             Logger.assert(objectsAnchoredToGameObjects_copyRotation.size === 0, "objectsAnchoredToGameObjects_copyRotation.size === 0");
+            
+            if (objectsAnchoredToGameObjects_anchoredGameObjects.size > 0){
+                Logger.warn( "objectsAnchoredToGameObjects_anchoredGameObjects.size > 0", objectsAnchoredToGameObjects_anchoredGameObjects);
+                for (let index of objectsAnchoredToGameObjects_anchoredGameObjects.keys()) {
+                    const anchoredGameObject = objectsAnchoredToGameObjects_anchoredGameObjects.get(index);
+                    const anchorGameObject = objectsAnchoredToGameObjects_anchorGameObjects.get(index);
+                    Logger.log("Anchored GameObject", anchoredGameObject, "Anchor GameObject", anchorGameObject);
+                }
+            }
         }
     };
 
