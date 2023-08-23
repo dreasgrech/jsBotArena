@@ -60,6 +60,31 @@ const RobotManager = (function() {
 
         //Logger.log("finished removing", robotIndex);
     };
+    
+    const handleQueuedRobotsForRemoval = function(forceRemoveNow) {
+        // Check if there are any robots queued for removal
+        if (totalQueuedRobotsForRemovals > 0) {
+            // console.log("checking if there are removals", totalQueuedRobotsForRemovals, queuedRobotsForRemoval);
+            for (let queuedForRemovalRobotIndex in queuedRobotsForRemoval) {
+                if (!queuedRobotsForRemoval.hasOwnProperty(queuedForRemovalRobotIndex)) {
+                    continue;
+                }
+
+                const queuedRobotForRemoval = queuedRobotsForRemoval[queuedForRemovalRobotIndex];
+                const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
+                const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
+                // Logger.log("checking if we should remove now", queuedForRemovalRobotIndex, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
+                const removeNow = forceRemoveNow || timeSinceDestroyed_seconds > SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED;
+                if (removeNow) {
+                    //Logger.log("removing robot", queuedForRemovalRobotIndex);
+                    removeAndHideRobot(queuedForRemovalRobotIndex);
+                    delete queuedRobotsForRemoval[queuedForRemovalRobotIndex];
+                    totalQueuedRobotsForRemovals--;
+                    continue;
+                }
+            }
+        }
+    };
 
     // /**
     //  * Game Options for robots
@@ -244,27 +269,8 @@ const RobotManager = (function() {
                 RobotsDataAPI_FrameOperations_Radar[robotIndex] = 0;
             }
 
-            // Check if there are any robots queued for removal
-            if (totalQueuedRobotsForRemovals > 0) {
-                // console.log("checking if there are removals", totalQueuedRobotsForRemovals, queuedRobotsForRemoval);
-                for (let queuedForRemovalRobotIndex in queuedRobotsForRemoval) {
-                    if (!queuedRobotsForRemoval.hasOwnProperty(queuedForRemovalRobotIndex)) {
-                        continue;
-                    }
-
-                    const queuedRobotForRemoval = queuedRobotsForRemoval[queuedForRemovalRobotIndex];
-                    const destroyedTime_seconds = queuedRobotForRemoval.destroyedTime_seconds;
-                    const timeSinceDestroyed_seconds = GameContextHolder.gameTime - destroyedTime_seconds;
-                    // Logger.log("checking if we should remove now", queuedForRemovalRobotIndex, "destroyed time:", destroyedTime_seconds, "time since destroyed ", timeSinceDestroyed_seconds);
-                    if (timeSinceDestroyed_seconds > SECONDS_BETWEEN_ROBOT_MARKED_DESTROYED_AND_ACTUALLY_REMOVED) {
-                        //Logger.log("removing robot", queuedForRemovalRobotIndex);
-                        removeAndHideRobot(queuedForRemovalRobotIndex);
-                        delete queuedRobotsForRemoval[queuedForRemovalRobotIndex];
-                        totalQueuedRobotsForRemovals--;
-                        continue;
-                    }
-                }
-            }
+            // Check if there are any robots queued for removal and remove them if there are
+            handleQueuedRobotsForRemoval(false);
         },
         markRobotAsDestroyed: function(robotIndex) {
             // TODO: pool this
@@ -295,6 +301,9 @@ const RobotManager = (function() {
             //Logger.log("marking bot for removal", robotIndex);
         },
         system_unloadLevel: function() {
+            // Make sure to remove any robots that are queued for removal
+            handleQueuedRobotsForRemoval(true);
+            
             if (totalQueuedRobotsForRemovals > 0) {
                 Logger.warn("totalQueuedRobotsForRemovals > 0", queuedRobotsForRemoval);
             }
