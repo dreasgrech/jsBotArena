@@ -36,7 +36,6 @@ const RobotFiringManager = (function() {
     AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
         const robotIndex = robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
         if (robotIndex >= 0) {
-            console.log("firing animation complete", robotIndex);
             handleRobotFiringProjectileAnimationComplete(spriteIndex);
         }
     });

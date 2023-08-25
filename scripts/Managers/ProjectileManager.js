@@ -235,38 +235,22 @@ const ProjectileManager = (function() {
             return projectileIndex;
         },
         system_unloadLevel: function() {
-            // TODO: Keep track of all projectiles and remove them here
-            Logger.log("Resetting ProjectileManager. TODO: Needs more work here");
+            // Destroy all currently active projectiles
             for (const projectileIndex of currentlySpawnedProjectilesIndexes) {
                 const projectileGameObject = projectileIndex_to_ProjectileGameObject[projectileIndex];
                 destroyProjectile(projectileGameObject);
             }
             removeQueuedProjectiles();
             
+            // Make sure everything is cleaned up
             Logger.assert(Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject).length === 0, "projectileIndex_to_ProjectileGameObject.length should be 0: " + Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject).length);
             Logger.assert(Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex).length === 0, "projectileMatterBodyID_to_ProjectileIndex.length should be 0: " + Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex).length);
             Logger.assert(queuedProjectilesForRemoval.size === 0, "queuedProjectilesForRemoval.size should be 0: " + queuedProjectilesForRemoval.size);
             Logger.assert(currentlySpawnedProjectilesIndexes.size === 0, "currentlySpawnedProjectilesIndexes.size should be 0: " + currentlySpawnedProjectilesIndexes.size);
             Logger.assert(totalSpawnedProjectiles === 0, "totalSpawnedProjectiles should be 0: " + totalSpawnedProjectiles);
 
-
-            // TODO: CONTINUE CLEARING ALL THE STATE VARIABLES HERE
-            // TODO: ADD ASSERTS TO MAKE SURE EVERYTHING IS REMOVED
             // TODO: Angelica: stay cute <3. Be a mazz (just like you already are) <3
             currentProjectileIndex = 0;
-            totalSpawnedProjectiles = 0;
-
-            // for (const prop of Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject)) {
-            //     delete projectileIndex_to_ProjectileGameObject[prop];
-            // }
-            //
-            // for (const prop of Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex)) {
-            //     delete projectileMatterBodyID_to_ProjectileIndex[prop];
-            // }
-            //
-            // for (const prop of Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites)) {
-            //     delete robotFiringProjectilesActiveAnimationSprites[prop];
-            // }
         }
     };
 
