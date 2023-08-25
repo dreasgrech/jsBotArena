@@ -341,7 +341,7 @@ const ProjectileManager = (function() {
 
             // TODO: CONTINUE CLEARING ALL THE STATE VARIABLES HERE
             // TODO: ADD ASSERTS TO MAKE SURE EVERYTHING IS REMOVED
-            // TODO: Angelica: stay cute <3 
+            // TODO: Angelica: stay cute <3. Be a mazz (just like you already are) <3
             currentProjectileIndex = 0;
             totalSpawnedProjectiles = 0;
             robotsLastFiredTime.length = 0;
