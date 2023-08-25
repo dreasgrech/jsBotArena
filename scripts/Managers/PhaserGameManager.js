@@ -37,7 +37,6 @@ const PhaserGameManager = (function() {
         ProjectileManager,
         AnimationManager,
         //RobotMatterFactory,
-        UIManager,
         RobotsRadarManager,
     ];
 

@@ -12,6 +12,16 @@ const UIRobotInfoPanel = (function() {
     const robotsIndex = [];
     const robotInfoTexts = [];
 
+    /**
+     * @type {Phaser.GameObjects.Graphics}
+     */
+    let panelGraphics;
+
+    /**
+     * @type {Phaser.GameObjects.Text}
+     */
+    let titleText;
+
     const obj = {
         create: function() {
             const gameContext = GameContextHolder.scene;
@@ -19,13 +29,13 @@ const UIRobotInfoPanel = (function() {
             const panelX = gameContext.cameras.main.width - PANEL_WIDTH; // X position of the panel
 
             // Create a Graphics object for the panel background
-            const panelGraphics = gameContext.add.graphics();
+            panelGraphics = gameContext.add.graphics();
             panelGraphics.depth = PANEL_DEPTH;
             panelGraphics.fillStyle(0x333333, 0.3); // Set panel background color and alpha
             panelGraphics.fillRect(panelX, PANEL_Y, PANEL_WIDTH, PANEL_HEIGHT); // Draw the panel background
 
             // Create a Text object for the panel title
-            const titleText = gameContext.add.text(panelX + PANEL_WIDTH / 2,
+            titleText = gameContext.add.text(panelX + PANEL_WIDTH / 2,
                 PANEL_Y + 10,
                 'Robot Information',
                 {
@@ -100,6 +110,9 @@ Turret Rotation: ${turretRotation.toFixed(2)}�
                 const robotInfoText = robotInfoTexts[robotIndex];
                 robotInfoText.destroy();
             }
+
+            titleText.destroy();
+            panelGraphics.destroy();
             
             robotsIndex.length = 0;
             robotInfoTexts.length = 0;

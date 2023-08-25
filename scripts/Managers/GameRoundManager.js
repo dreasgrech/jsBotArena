@@ -86,6 +86,9 @@ const GameRoundManager = (function() {
                                 // RobotManager.addRobot(followBot_followPosition());
                             }
                 */
+                
+                UIManager.onArenaLoaded();
+                
                 // Allow robots to be added no the round is loaded
                 RobotLoader.openLoaderForScripts();
 
