@@ -176,6 +176,7 @@ const ProjectileManager = (function() {
             robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
         },
         /**
+         * TODO: This function should be moved to a different manager
          * Returns a value indicating whether the specified robot can currently fire
          * @param {number} robotIndex
          * @returns {boolean}
