@@ -53,17 +53,6 @@ const ProjectileManager = (function() {
         
         totalSpawnedProjectiles--;
     };
-
-    // TODO: This function needs to be unregistered
-    AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
-        const robotFiringProjectileAnimationSpriteIndex = robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
-        if (robotFiringProjectileAnimationSpriteIndex >= 0) {
-            // console.log("firing animation complete", robotFiringProjectileAnimationSpriteIndex);
-            const totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete = Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length;
-            delete robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
-            Logger.assert(Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length === totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete - 1, "robotFiringProjectilesActiveAnimationSprites.length should be 1 less than before: " + Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length + " vs " + totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete);
-        }
-    });
     
     const removeQueuedProjectiles = function (){
         for (const projectileMatterGameObject of queuedProjectilesForRemoval) {
@@ -81,6 +70,17 @@ const ProjectileManager = (function() {
             JSONDatabaseReader.loadDatabase('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH, function (data){
                 // console.log("from preloadOnce", data);
                 projectilesCollisionData = data;
+            });
+
+            // Hook to the animation complete callback so that we can remove the muzzle flash animation mapping
+            AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
+                const robotFiringProjectileAnimationSpriteIndex = robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
+                if (robotFiringProjectileAnimationSpriteIndex >= 0) {
+                    // console.log("firing animation complete", robotFiringProjectileAnimationSpriteIndex);
+                    const totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete = Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length;
+                    delete robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
+                    Logger.assert(Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length === totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete - 1, "robotFiringProjectilesActiveAnimationSprites.length should be 1 less than before: " + Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length + " vs " + totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete);
+                }
             });
 
             const tweakPaneFolderID = TweakPaneManager.createFolder("Projectile Manager");
@@ -139,9 +139,10 @@ const ProjectileManager = (function() {
             }
         },
         update: function() {
-            // Update all the currently active robot firing projectiles muzzle flash animations
-            // to stay attached to the turret tip
             // TODO: Can we simplify this for loop here to not check for hasOwnProperty?
+            // TODO: TBH I don't think this code that moves the muzzle-flash animation should even be in this manager,
+            // TODO: because it's not related to projectiles per se.
+            // Update all the currently active robot firing projectiles muzzle flash animations to stay attached to the turret tip
             for (let muzzleFlashAnimationSpriteIndex in robotMuzzleFlashAnimationSpriteIndex_to_robotIndex) {
                 if (!robotMuzzleFlashAnimationSpriteIndex_to_robotIndex.hasOwnProperty(muzzleFlashAnimationSpriteIndex)) {
                     continue;
