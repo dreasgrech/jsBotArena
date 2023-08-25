@@ -142,6 +142,7 @@ const ProjectileManager = (function() {
             // TODO: Can we simplify this for loop here to not check for hasOwnProperty?
             // TODO: TBH I don't think this code that moves the muzzle-flash animation should even be in this manager,
             // TODO: because it's not related to projectiles per se.
+            // TODO: In fact, I think the whole code around muzzle-flash animations should be moved to a different manager
             // Update all the currently active robot firing projectiles muzzle flash animations to stay attached to the turret tip
             for (let muzzleFlashAnimationSpriteIndex in robotMuzzleFlashAnimationSpriteIndex_to_robotIndex) {
                 if (!robotMuzzleFlashAnimationSpriteIndex_to_robotIndex.hasOwnProperty(muzzleFlashAnimationSpriteIndex)) {
@@ -267,6 +268,7 @@ const ProjectileManager = (function() {
             
             // Logger.log(projectileMatterGameObject, projectileMatterGameObject.isSensor(), projectileMatterGameObject.body.id, projectileMatterGameObject.body.isSensor);
 
+            // TODO: Take this muzzle flash animation spawning code out of this manager
             const muzzleFlashAnimationSpriteIndex = AnimationManager.playNewAnimation(
                 AnimationEffects.TankAnimationEffects.Fire_Shots_A,
                 turretTipPositionX,
