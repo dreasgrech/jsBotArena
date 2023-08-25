@@ -1,11 +1,10 @@
 "use script";
 
+/**
+ * In charge of creating and maintaining the projectiles
+ */
 const ProjectileManager = (function() {
-
     const PROJECTILES_COLLISION_DATA_PATH = './CollisionData/Projectiles_CollisionData.json';
-
-    // The minimum time between firing projectiles
-    const BASE_PROJECTILE_INTERVAL_DELAY_SECONDS = 1;
 
     let projectilesCollisionData;
     let gameContext;
@@ -19,8 +18,6 @@ const ProjectileManager = (function() {
 
     const projectileMatterBodyID_to_ProjectileIndex = {};
     const queuedProjectilesForRemoval = new Set();
-    const robotsLastFiredTime = []; // TODO: I think this array shouldn't be included in this manager because it's related more to robots as opposed to projectiles
-    const robotMuzzleFlashAnimationSpriteIndex_to_robotIndex = {};
     const currentlySpawnedProjectilesIndexes = new Set();
 
     // const resolveProjectileType_from_Projectile = function(projectileMatterGameObject) {
@@ -72,17 +69,6 @@ const ProjectileManager = (function() {
                 projectilesCollisionData = data;
             });
 
-            // Hook to the animation complete callback so that we can remove the muzzle flash animation mapping
-            AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
-                const robotFiringProjectileAnimationSpriteIndex = robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
-                if (robotFiringProjectileAnimationSpriteIndex >= 0) {
-                    // console.log("firing animation complete", robotFiringProjectileAnimationSpriteIndex);
-                    const totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete = Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length;
-                    delete robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
-                    Logger.assert(Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length === totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete - 1, "robotFiringProjectilesActiveAnimationSprites.length should be 1 less than before: " + Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length + " vs " + totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete);
-                }
-            });
-
             const tweakPaneFolderID = TweakPaneManager.createFolder("Projectile Manager");
             const dataForTweakPane = {
                 get totalSpawnedProjectiles() {
@@ -91,14 +77,14 @@ const ProjectileManager = (function() {
                 get totalQueuedProjectilesForRemoval() {
                     return queuedProjectilesForRemoval.size;
                 },
-                get totalRobotsLastFiredTime() {
-                    return robotsLastFiredTime.length;
-                }
+                // get totalRobotsLastFiredTime() {
+                //     return robotsLastFiredTime.length;
+                // }
             };
 
             TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalSpawnedProjectiles');
             TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalQueuedProjectilesForRemoval');
-            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalRobotsLastFiredTime');
+            // TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'totalRobotsLastFiredTime');
         },
         system_afterPreloadOnce: function() {
             // projectilesCollisionData = gameContext.cache.json.get('Projectiles_CollisionData');
@@ -138,54 +124,8 @@ const ProjectileManager = (function() {
                 pools[projectileTypeIndex] = poolIndex;
             }
         },
-        update: function() {
-            // TODO: Can we simplify this for loop here to not check for hasOwnProperty?
-            // TODO: TBH I don't think this code that moves the muzzle-flash animation should even be in this manager,
-            // TODO: because it's not related to projectiles per se.
-            // TODO: In fact, I think the whole code around muzzle-flash animations should be moved to a different manager
-            // Update all the currently active robot firing projectiles muzzle flash animations to stay attached to the turret tip
-            for (let muzzleFlashAnimationSpriteIndex in robotMuzzleFlashAnimationSpriteIndex_to_robotIndex) {
-                if (!robotMuzzleFlashAnimationSpriteIndex_to_robotIndex.hasOwnProperty(muzzleFlashAnimationSpriteIndex)) {
-                    continue;
-                }
-
-                const robotIndex = robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[muzzleFlashAnimationSpriteIndex];
-                //Logger.log(
-                //    'fireShotAnimationSpriteIndex',
-                //    fireShotAnimationSpriteIndex,
-                //    'robotIndex',
-                //    robotIndex);
-
-                const turretTipPosition = RobotsBoundsHelpers.getTurretTipPosition(robotIndex);
-                const turretTipPositionX = turretTipPosition.x;
-                const turretTipPositionY = turretTipPosition.y;
-                const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
-                const turretAngle_degrees = turretImage.angle;
-
-                AnimationManager.setSpritePositionAndAngle(
-                    muzzleFlashAnimationSpriteIndex,
-                    turretTipPositionX,
-                    turretTipPositionY,
-                    turretAngle_degrees);
-            }
-        },
         system_onEndOfFrame: function() {
             removeQueuedProjectiles();
-        },
-        onRobotAdded: function(robotIndex) {
-            robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
-        },
-        /**
-         * TODO: This function should be moved to a different manager
-         * Returns a value indicating whether the specified robot can currently fire
-         * @param {number} robotIndex
-         * @returns {boolean}
-         */
-        robotAllowedToFireNow: function(robotIndex) {
-            const now = GameContextHolder.gameTime;
-            const robotLastFiredTime = robotsLastFiredTime[robotIndex];
-            const allowedToFireNow = now - robotLastFiredTime > BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
-            return allowedToFireNow;
         },
         /**
          * Fires a projectile from the robot's turret.
@@ -194,21 +134,15 @@ const ProjectileManager = (function() {
          * @param {ProjectileTypes} projectileType
          * @returns {boolean}
          */
-        fireRobotProjectile: function(robotIndex, projectileType) {
-            const allowedToFireNow = projectileManager.robotAllowedToFireNow(robotIndex);
-            if (!allowedToFireNow) {
-                return false;
-            }
+        spawnRobotProjectile: function(robotIndex, projectileType) {
+            // const allowedToFireNow = projectileManager.robotAllowedToFireNow(robotIndex);
+            // if (!allowedToFireNow) {
+            //     return false;
+            // }
 
             const turretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[robotIndex];
             const turretAngle_degrees = turretImage.angle;
-
-            //const robotPositionX = RobotsData_CurrentData.positionXs[robotIndex];
-            //const robotPositionY = RobotsData_CurrentData.positionYs[robotIndex];
-            //const x = robotPositionX;
-            //const y = robotPositionY;
-
-            const turretTipPosition = RobotsBoundsHelpers.getTurretTipPosition(robotIndex);
+            const turretTipPosition = RobotsBoundsHelpers.getTurretTipPosition(turretImage);
             const turretTipPositionX = turretTipPosition.x;
             const turretTipPositionY = turretTipPosition.y;
 
@@ -269,30 +203,8 @@ const ProjectileManager = (function() {
             
             // Logger.log(projectileMatterGameObject, projectileMatterGameObject.isSensor(), projectileMatterGameObject.body.id, projectileMatterGameObject.body.isSensor);
 
-            // TODO: Take this muzzle flash animation spawning code out of this manager
-            const muzzleFlashAnimationSpriteIndex = AnimationManager.playNewAnimation(
-                AnimationEffects.TankAnimationEffects.Fire_Shots_A,
-                turretTipPositionX,
-                turretTipPositionY,
-                turretAngle_degrees,
-                GameObjectDepths.ImpactAnimation,
-                ROBOT_SCALE);
-
-            robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[muzzleFlashAnimationSpriteIndex] = robotIndex;
-            //robotFiringProjectilesActiveAnimationSprites[fireShotAnimationSpriteIndex] = true;
-
-            //ObjectAnchorManager.anchorToRobot(
-            //    AnimationManager.sprites[fireShotAnimationIndex],
-            //    robotIndex,
-            //    0,
-            //    0
-            //);
-
-            //AnimationManager.sprites[fireShotAnimationIndex].setScale(ROBOT_SCALE);
             
             currentlySpawnedProjectilesIndexes.add(currentProjectileIndex);
-
-            robotsLastFiredTime[robotIndex] = GameContextHolder.gameTime;
 
             // Prepare variables for the next projectile to be spawned
             currentProjectileIndex++;
@@ -334,7 +246,6 @@ const ProjectileManager = (function() {
             Logger.assert(Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject).length === 0, "projectileIndex_to_ProjectileGameObject.length should be 0: " + Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject).length);
             Logger.assert(Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex).length === 0, "projectileMatterBodyID_to_ProjectileIndex.length should be 0: " + Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex).length);
             Logger.assert(queuedProjectilesForRemoval.size === 0, "queuedProjectilesForRemoval.size should be 0: " + queuedProjectilesForRemoval.size);
-            Logger.assert(Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length === 0, "robotFiringProjectilesActiveAnimationSprites.length should be 0: " + Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length);
             Logger.assert(currentlySpawnedProjectilesIndexes.size === 0, "currentlySpawnedProjectilesIndexes.size should be 0: " + currentlySpawnedProjectilesIndexes.size);
             Logger.assert(totalSpawnedProjectiles === 0, "totalSpawnedProjectiles should be 0: " + totalSpawnedProjectiles);
 
@@ -344,7 +255,6 @@ const ProjectileManager = (function() {
             // TODO: Angelica: stay cute <3. Be a mazz (just like you already are) <3
             currentProjectileIndex = 0;
             totalSpawnedProjectiles = 0;
-            robotsLastFiredTime.length = 0;
 
             // for (const prop of Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject)) {
             //     delete projectileIndex_to_ProjectileGameObject[prop];

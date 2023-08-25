@@ -316,7 +316,7 @@ const RobotAPIFactory = (function() {
                  * @returns {boolean}
                  */
                 fire: function(projectileType) {
-                    return ProjectileManager.fireRobotProjectile(robotIndex, projectileType);
+                    return RobotFiringManager.fireRobotProjectile(robotIndex, projectileType);
                 },
                 /**
                  * Data about the collisions that have occurred this frame

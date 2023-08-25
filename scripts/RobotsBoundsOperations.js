@@ -71,8 +71,9 @@ const RobotsBoundsHelpers = (function() {
 
             return bounds;
         },
-        getTurretTipPosition: function(index) {
-            const robotTurretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[index];
+        //getTurretTipPosition: function(index) {
+        getTurretTipPosition: function(robotTurretImage) {
+            // const robotTurretImage = RobotsData_PhysicsBodies_robotTurretGameObjects[index];
             const turretTipPosition = robotTurretImage.getRightCenter(); // images are rotated to the right so we need the right-center point 
             return turretTipPosition;
         },

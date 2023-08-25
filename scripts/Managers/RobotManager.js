@@ -171,7 +171,7 @@ const RobotManager = (function() {
             UIRobotInfoPanel.add(currentRobotIndex);
 
             // Inform  the other objects that a new robot has been added
-            ProjectileManager.onRobotAdded(currentRobotIndex);
+            RobotFiringManager.onRobotAdded(currentRobotIndex);
 
             // Add the robot index to the collection of alive robot indexes
             aliveRobotsIndexes.add(currentRobotIndex);

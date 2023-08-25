@@ -5,7 +5,7 @@ const GameRoundManager = (function() {
     const objectsWith_update = [
         RobotManager,
         RobotsRadarManager,
-        ProjectileManager,
+        RobotFiringManager,
         ObjectAnchorManager,
         UIManager
     ];
@@ -27,6 +27,7 @@ const GameRoundManager = (function() {
         RobotManager,
         RobotsRadarManager,
         ProjectileManager,
+        RobotFiringManager,
         AnimationManager,
         PhysicsBodiesManager,
         ArenaManager,
