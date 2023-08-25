@@ -6,38 +6,38 @@ const RobotMatterFactory = (function() {
     const robotsTrackLeftAnimationSpriteIndex = [];
     const robotsTrackRightAnimationSpriteIndex = [];
 
-    const createProjectileSensor = function (robotIndex) {
-        const gameContext = GameContextHolder.scene;
-
-        // Get the robot's vertices
-        const vertices = RobotsBoundsHelpers.getHullBounds(robotIndex);
-
-        // Create a custom-shaped sensor using the vertices
-        const sensorBody = gameContext.matter.add.fromVertices(300, 300, vertices, {
-            isSensor: true // Set the body to be a sensor
-        });
-
-        // Add a constraint between the hull body and the sensor body so that the sensor moves with the hull
-        const constraint = gameContext.matter.add.constraint(RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex].body, sensorBody, 0, 1);
-        RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex] = constraint;
-
-        //const robotID = RobotsData_Instance_ids[robotIndex];
-        const robotHullMatterGroup = RobotsData_Instance_hullMatterGroup[robotIndex];
-        PhysicsHelperFunctions.setCollisionProperties({
-            physicsObject: sensorBody,
-            //group: -robotID, // -robotID so that it doesn't collide with the firing robot
-            group: -robotHullMatterGroup, // -robotHullMatterGroup so that it doesn't collide with the firing robot
-            category: CollisionCategories.RobotProjectileSensor,
-            collidesWithCategories:
-                CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectileSensor]
-        });
-
-        // Store the sensor in your RobotsData for future reference or updates
-        RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex] = sensorBody;
-
-        // Map the sensor body id to the robot index so that we can later resolve the robot index from it
-        PhysicsBodiesManager.mapProjectileSensorBodyIDToRobotIndex(sensorBody.id, robotIndex);
-    };
+    // const createProjectileSensor = function (robotIndex) {
+    //     const gameContext = GameContextHolder.scene;
+    //
+    //     // Get the robot's vertices
+    //     const vertices = RobotsBoundsHelpers.getHullBounds(robotIndex);
+    //
+    //     // Create a custom-shaped sensor using the vertices
+    //     const sensorBody = gameContext.matter.add.fromVertices(300, 300, vertices, {
+    //         isSensor: true // Set the body to be a sensor
+    //     });
+    //
+    //     // Add a constraint between the hull body and the sensor body so that the sensor moves with the hull
+    //     const constraint = gameContext.matter.add.constraint(RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex].body, sensorBody, 0, 1);
+    //     RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex] = constraint;
+    //
+    //     //const robotID = RobotsData_Instance_ids[robotIndex];
+    //     const robotHullMatterGroup = RobotsData_Instance_hullMatterGroup[robotIndex];
+    //     PhysicsHelperFunctions.setCollisionProperties({
+    //         physicsObject: sensorBody,
+    //         //group: -robotID, // -robotID so that it doesn't collide with the firing robot
+    //         group: -robotHullMatterGroup, // -robotHullMatterGroup so that it doesn't collide with the firing robot
+    //         category: CollisionCategories.RobotProjectileSensor,
+    //         collidesWithCategories:
+    //             CollisionCategoriesCollidesWith[CollisionCategories.RobotProjectileSensor]
+    //     });
+    //
+    //     // Store the sensor in your RobotsData for future reference or updates
+    //     RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex] = sensorBody;
+    //
+    //     // Map the sensor body id to the robot index so that we can later resolve the robot index from it
+    //     PhysicsBodiesManager.mapProjectileSensorBodyIDToRobotIndex(sensorBody.id, robotIndex);
+    // };
 
     const createRobot = function({ currentRobotIndex, x, y, scale, robotSetup }) {
         const gameContext = GameContextHolder.scene;

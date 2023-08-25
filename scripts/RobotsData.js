@@ -1,12 +1,14 @@
 "use strict";
 
+// TODO: MOST OF THESE ARRAYS STILL NEED TO BE CLEARED ON LEVEL UNLOAD
+
 // Physics bodies
 const RobotsData_PhysicsBodies_robotHullGameObjects = [];
 const RobotsData_PhysicsBodies_robotHullMatterBodies = [];
 const RobotsData_PhysicsBodies_robotHullMatterBodyIDs = [];
 const RobotsData_PhysicsBodies_robotTurretGameObjects = [];
-const RobotsData_PhysicsBodies_robotProjectileSensorBodies = [];
-const RobotsData_PhysicsBodies_robotProjectileSensorConstraints = [];
+// const RobotsData_PhysicsBodies_robotProjectileSensorBodies = [];
+// const RobotsData_PhysicsBodies_robotProjectileSensorConstraints = [];
 
 // Data that is updated per frame or on a frequent basis
 const RobotsData_CurrentData_positions = [];

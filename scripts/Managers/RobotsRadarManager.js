@@ -14,10 +14,8 @@ const RobotsRadarManager = (function() {
     // const RADAR_ROTATION_INCREMENT = 120;
     const RADAR_ROTATION_INCREMENT_RADIANS  = 120 * Math.PI / 180; // Convert to radians
 
-
-
     /**
-     * 
+     * Holds each robot's arena obstacle scanned info
      * @type {ArenaObstacleScannedInfo[][]}
      */
     const RobotsData_ArenaObstaclesScannedInfos = [];
@@ -470,10 +468,12 @@ const RobotsRadarManager = (function() {
             
             RobotsData_ArenaObstaclesScannedInfos[robotIndex] = [];
         },
-        removeRadarArc: function(robotIndex) {
+        removeRobotData: function(robotIndex) {
+            // Destroy the radar arc graphics
             const radarGraphics = RobotsData_Radar_radarGraphics[robotIndex];
             radarGraphics.destroy();
 
+            // Remove the radar bounding box
             if (GAME_DEBUG_MODE) {
                 const radarArcBoundingBoxGraphics = radarArcBoundingBoxes_graphics[robotIndex];
                 radarArcBoundingBoxGraphics.destroy();
@@ -548,15 +548,10 @@ const RobotsRadarManager = (function() {
             // Destroy all the radar arc graphics
             const totalRobots = RobotsData_Radar_radarGraphics.length;
             for (let robotIndex = 0; robotIndex < totalRobots; robotIndex++) {
-                const radarGraphics = RobotsData_Radar_radarGraphics[robotIndex];
-                radarGraphics.destroy();
-
-                // Remove the radar bounding box
-                if (GAME_DEBUG_MODE) {
-                    const radarArcBoundingBoxGraphics = radarArcBoundingBoxes_graphics[robotIndex];
-                    radarArcBoundingBoxGraphics.destroy();
-                }
+                robotsRadar.removeRobotData(robotIndex);
             }
+            
+            // TODO: Add asserts here to make sure everything is cleaned up
 
             RobotsData_Radar_radarGraphics.length = 0;
             RobotsData_Radar_radarFOVAngles_degrees.length = 0;

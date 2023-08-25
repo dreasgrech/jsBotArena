@@ -53,7 +53,7 @@ const RobotManager = (function() {
         RobotMatterFactory.destroyRobot(robotIndex);
 
         // Remove the radar arc
-        RobotsRadarManager.removeRadarArc(robotIndex);
+        RobotsRadarManager.removeRobotData(robotIndex);
 
         // Remove the robot bounds debug-graphics
         RobotsBoundsHelpers.removeRobotBoundsGraphics(robotIndex);

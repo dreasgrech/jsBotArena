@@ -336,6 +336,9 @@ const PhysicsBodiesManager = (function() {
             Logger.log("arenaBodiesAdded", arenaBodiesAdded);
             */
             
+            // Clear the spatial hash
+            arenaBodySpatialHash.clear();
+            
             // TODO: THIS FUNCTION NEEDS MORE WORK SO CONTINUE HERE
             
             const scene = GameContextHolder.scene;
