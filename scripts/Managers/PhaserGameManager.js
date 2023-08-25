@@ -83,8 +83,8 @@ const PhaserGameManager = (function() {
             }
 
             //const arenaToLoad = Arenas.BridgeLevel;
-            //const arenaToLoad = Arenas.MetalLevel;
-            const arenaToLoad = Arenas.BrownLevel;
+            const arenaToLoad = Arenas.MetalLevel;
+            //const arenaToLoad = Arenas.BrownLevel;
             
             GameRoundManager.startRound(arenaToLoad);
         },
