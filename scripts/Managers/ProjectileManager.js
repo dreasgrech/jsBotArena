@@ -7,46 +7,49 @@ const ProjectileManager = (function() {
     // The minimum time between firing projectiles
     const BASE_PROJECTILE_INTERVAL_DELAY_SECONDS = 1;
 
-    /** Holds the Matter bodies of the projectiles */
-    const ProjectilesData_matterBody = [];
-
     let projectilesCollisionData;
     let gameContext;
     let currentProjectileIndex = 0;
     let totalSpawnedProjectiles = 0;
 
     const pools = [];
+    
+    /** Holds the Matter bodies of the projectiles */
+    const projectileIndex_to_ProjectileGameObject = {};
 
     const projectileMatterBodyID_to_ProjectileIndex = {};
     const queuedProjectilesForRemoval = new Set();
-    const robotsLastFiredTime = [];
+    const robotsLastFiredTime = []; // TODO: I think this array shouldn't be included in this manager because it's related more to robots as opposed to projectiles
     const robotFiringProjectilesActiveAnimationSprites = {};
+    const currentlySpawnedProjectilesIndexes = new Set();
 
-    const resolveProjectileType_from_Projectile = function(projectileMatterGameObject) {
-        const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
-        return ProjectilesData_projectileType[projectileIndex];
-    };
+    // const resolveProjectileType_from_Projectile = function(projectileMatterGameObject) {
+    //     const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
+    //     return ProjectilesData_projectileType[projectileIndex];
+    // };
 
     const destroyProjectile = function(projectileMatterGameObject) {
-        const projectileType = resolveProjectileType_from_Projectile(projectileMatterGameObject);
-        const projectilePoolIndex = pools[projectileType];
         const projectileIndex = projectileManager.resolveProjectileIndex_from_Projectile(projectileMatterGameObject);
+        
+        // const projectileType = resolveProjectileType_from_Projectile(projectileMatterGameObject);
+        const projectileType = ProjectilesData_projectileType[projectileIndex];
+        const projectilePoolIndex = pools[projectileType];
         //Logger.log("Destroying Projectile.  Resolved type:", projectileType, ".  Object type:", JSObjectOperations.getObjectTypeName(projectileMatterGameObject));
 
+        const projectileMatterBody = projectileMatterGameObject.body;
         // Remove the projectile from the arena bodies collection
-        PhysicsBodiesManager.removeArenaPhysicsBody(projectileMatterGameObject.body);
+        PhysicsBodiesManager.removeArenaPhysicsBody(projectileMatterBody);
         //RaycastManager.removeMappedGameObjects(projectileMatterGameObject);
 
         // projectilePool.push(projectileMatterGameObject);
         MatterGameObjectPoolManager.returnMatterGameObjectToPool(projectilePoolIndex, projectileMatterGameObject);
 
-        const projectileMatterBodyID = projectileMatterGameObject.id;
-        //delete ProjectilesData_matterBody[projectileIndex];
-        //delete ProjectilesData_projectileType[projectileIndex];
-        //delete projectileMatterBodyID_to_ProjectileIndex[projectileMatterBodyID];
-        ProjectilesData_matterBody[projectileIndex] = null;
+        const projectileMatterBodyID = projectileMatterBody.id;
+        delete projectileIndex_to_ProjectileGameObject[projectileIndex];
+        delete projectileMatterBodyID_to_ProjectileIndex[projectileMatterBodyID];
         ProjectilesData_projectileType[projectileIndex] = null;
-        projectileMatterBodyID_to_ProjectileIndex[projectileMatterBodyID] = null;
+        
+        currentlySpawnedProjectilesIndexes.delete(projectileIndex);
         
         totalSpawnedProjectiles--;
     };
@@ -58,6 +61,14 @@ const ProjectileManager = (function() {
             delete robotFiringProjectilesActiveAnimationSprites[spriteIndex];
         }
     });
+    
+    const removeQueuedProjectiles = function (){
+        for (const projectileMatterGameObject of queuedProjectilesForRemoval) {
+            destroyProjectile(projectileMatterGameObject);
+        }
+
+        queuedProjectilesForRemoval.clear();
+    };
 
     const projectileManager = {
         system_preloadOnce: function() {
@@ -153,11 +164,7 @@ const ProjectileManager = (function() {
             }
         },
         system_onEndOfFrame: function() {
-            for (const projectileMatterGameObject of queuedProjectilesForRemoval) {
-                destroyProjectile(projectileMatterGameObject);
-            }
-
-            queuedProjectilesForRemoval.clear();
+            removeQueuedProjectiles();
         },
         onRobotAdded: function(robotIndex) {
             robotsLastFiredTime[robotIndex] = -BASE_PROJECTILE_INTERVAL_DELAY_SECONDS;
@@ -235,7 +242,8 @@ const ProjectileManager = (function() {
             // Add the projectile as part of the arena bodies collection
             PhysicsBodiesManager.addDynamicArenaPhysicsBodies([projectileMatterBody]);
 
-            ProjectilesData_matterBody[currentProjectileIndex] = projectileMatterGameObject;
+            // todo: needs to be renamed
+            projectileIndex_to_ProjectileGameObject[currentProjectileIndex] = projectileMatterGameObject;
             ProjectilesData_projectileType[currentProjectileIndex] = projectileType;
             projectileMatterBodyID_to_ProjectileIndex[projectileMatterBody.id] = currentProjectileIndex;
             // console.log("creating bullet", projectileMatterGameObject);
@@ -273,11 +281,13 @@ const ProjectileManager = (function() {
             //);
 
             //AnimationManager.sprites[fireShotAnimationIndex].setScale(ROBOT_SCALE);
+            
+            currentlySpawnedProjectilesIndexes.add(currentProjectileIndex);
 
             robotsLastFiredTime[robotIndex] = GameContextHolder.gameTime;
 
+            // Prepare variables for the next projectile to be spawned
             currentProjectileIndex++;
-            
             totalSpawnedProjectiles++;
 
             return true;
@@ -307,8 +317,39 @@ const ProjectileManager = (function() {
         system_unloadLevel: function() {
             // TODO: Keep track of all projectiles and remove them here
             Logger.log("Resetting ProjectileManager. TODO: Needs more work here");
+            for (const projectileIndex of currentlySpawnedProjectilesIndexes) {
+                const projectileGameObject = projectileIndex_to_ProjectileGameObject[projectileIndex];
+                Logger.log("Removing projectile", projectileIndex, projectileGameObject);
+                destroyProjectile(projectileGameObject);
+            }
+            removeQueuedProjectiles();
             
+            Logger.assert(Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject).length === 0, "projectileIndex_to_ProjectileGameObject.length should be 0: " + Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject).length);
+            Logger.assert(Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex).length === 0, "projectileMatterBodyID_to_ProjectileIndex.length should be 0: " + Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex).length);
+            Logger.assert(queuedProjectilesForRemoval.size === 0, "queuedProjectilesForRemoval.size should be 0: " + queuedProjectilesForRemoval.size);
+            Logger.assert(Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites).length === 0, "robotFiringProjectilesActiveAnimationSprites.length should be 0: " + Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites).length);
+            Logger.assert(currentlySpawnedProjectilesIndexes.size === 0, "currentlySpawnedProjectilesIndexes.size should be 0: " + currentlySpawnedProjectilesIndexes.size);
+            Logger.assert(totalSpawnedProjectiles === 0, "totalSpawnedProjectiles should be 0: " + totalSpawnedProjectiles);
+
+
+            // TODO: CONTINUE CLEARING ALL THE STATE VARIABLES HERE
+            // TODO: ADD ASSERTS TO MAKE SURE EVERYTHING IS REMOVED
+            // TODO: Angelica: stay cute <3 
+            currentProjectileIndex = 0;
+            totalSpawnedProjectiles = 0;
             robotsLastFiredTime.length = 0;
+
+            for (const prop of Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject)) {
+                delete projectileIndex_to_ProjectileGameObject[prop];
+            }
+            
+            for (const prop of Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex)) {
+                delete projectileMatterBodyID_to_ProjectileIndex[prop];
+            }
+            
+            for (const prop of Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites)) {
+                delete robotFiringProjectilesActiveAnimationSprites[prop];
+            }
         }
     };
 
