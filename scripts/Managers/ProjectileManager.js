@@ -54,11 +54,14 @@ const ProjectileManager = (function() {
         totalSpawnedProjectiles--;
     };
 
+    // TODO: This function needs to be unregistered
     AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
         const robotFiringProjectileAnimationSpriteIndex = robotFiringProjectilesActiveAnimationSprites[spriteIndex];
         if (robotFiringProjectileAnimationSpriteIndex >= 0) {
             // console.log("firing animation complete", robotFiringProjectileAnimationSpriteIndex);
+            const totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete = Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites).length;
             delete robotFiringProjectilesActiveAnimationSprites[spriteIndex];
+            Logger.assert(Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites).length === totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete - 1, "robotFiringProjectilesActiveAnimationSprites.length should be 1 less than before: " + Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites).length + " vs " + totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete);
         }
     });
     
@@ -319,7 +322,6 @@ const ProjectileManager = (function() {
             Logger.log("Resetting ProjectileManager. TODO: Needs more work here");
             for (const projectileIndex of currentlySpawnedProjectilesIndexes) {
                 const projectileGameObject = projectileIndex_to_ProjectileGameObject[projectileIndex];
-                Logger.log("Removing projectile", projectileIndex, projectileGameObject);
                 destroyProjectile(projectileGameObject);
             }
             removeQueuedProjectiles();
@@ -339,17 +341,17 @@ const ProjectileManager = (function() {
             totalSpawnedProjectiles = 0;
             robotsLastFiredTime.length = 0;
 
-            for (const prop of Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject)) {
-                delete projectileIndex_to_ProjectileGameObject[prop];
-            }
-            
-            for (const prop of Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex)) {
-                delete projectileMatterBodyID_to_ProjectileIndex[prop];
-            }
-            
-            for (const prop of Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites)) {
-                delete robotFiringProjectilesActiveAnimationSprites[prop];
-            }
+            // for (const prop of Object.getOwnPropertyNames(projectileIndex_to_ProjectileGameObject)) {
+            //     delete projectileIndex_to_ProjectileGameObject[prop];
+            // }
+            //
+            // for (const prop of Object.getOwnPropertyNames(projectileMatterBodyID_to_ProjectileIndex)) {
+            //     delete projectileMatterBodyID_to_ProjectileIndex[prop];
+            // }
+            //
+            // for (const prop of Object.getOwnPropertyNames(robotFiringProjectilesActiveAnimationSprites)) {
+            //     delete robotFiringProjectilesActiveAnimationSprites[prop];
+            // }
         }
     };
 
