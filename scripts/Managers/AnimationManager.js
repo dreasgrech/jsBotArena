@@ -205,6 +205,13 @@ const AnimationManager = (function() {
 
             return spriteIndex;
         },
+        stopAnimationOnSprite: function(spriteIndex) {
+            //const animation = animations[animationType];
+            const sprite = animationManager.sprites[spriteIndex];
+
+            // Stop the animations on this sprite
+            sprite.anims.stop();
+        },
         /**
          * Anchors an animation to a GameObject
          * @param {number} spriteIndex
@@ -244,6 +251,9 @@ const AnimationManager = (function() {
          * @param {number} spriteIndex
          */
         destroySpriteAnimation: (spriteIndex) => {
+            // Make sure that animations are stopped on the sprite
+            animationManager.stopAnimationOnSprite(spriteIndex);
+            
             // Return the sprite back to the pool
             const poolIndex = spriteIndex_to_spriteIndexPool[spriteIndex];
             const sprite = animationManager.sprites[spriteIndex];

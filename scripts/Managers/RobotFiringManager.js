@@ -4,7 +4,10 @@
  * In charge of initiating a robot's firing of projectiles
  */
 const RobotFiringManager = (function() {
-    // The minimum time between firing projectiles
+    /**
+     * The minimum time between firing projectiles
+     * @type {number}
+     */
     const BASE_PROJECTILE_INTERVAL_DELAY_SECONDS = 1;
 
     /**
@@ -12,17 +15,29 @@ const RobotFiringManager = (function() {
      * @type {number[]}
      */
     const robotsLastFiredTime = [];
-    
+
+    /**
+     * A map between the muzzle flash animation sprite index and the robot index that fired it
+     * @type {{}}
+     */
     const robotMuzzleFlashAnimationSpriteIndex_to_robotIndex = {};
+
+    /**
+     * Used to clean up the robot muzzle flash animation mapping
+     * @param spriteIndex
+     */
+    const handleRobotFiringProjectileAnimationComplete = function(spriteIndex) {
+        const totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete = Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length;
+        delete robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
+        Logger.assert(Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length === totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete - 1, "robotFiringProjectilesActiveAnimationSprites.length should be 1 less than before: " + Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length + " vs " + totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete);
+    };
 
     // Hook to the animation complete callback so that we can remove the muzzle flash animation mapping
     AnimationManager.registerAnimationCompleteCallback(function(spriteIndex) {
-        const robotFiringProjectileAnimationSpriteIndex = robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
-        if (robotFiringProjectileAnimationSpriteIndex >= 0) {
-            // console.log("firing animation complete", robotFiringProjectileAnimationSpriteIndex);
-            const totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete = Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length;
-            delete robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
-            Logger.assert(Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length === totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete - 1, "robotFiringProjectilesActiveAnimationSprites.length should be 1 less than before: " + Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length + " vs " + totalRobotFiringProjectilesActiveAnimationSpritesBeforeDelete);
+        const robotIndex = robotMuzzleFlashAnimationSpriteIndex_to_robotIndex[spriteIndex];
+        if (robotIndex >= 0) {
+            console.log("firing animation complete", robotIndex);
+            handleRobotFiringProjectileAnimationComplete(spriteIndex);
         }
     });
     
@@ -109,6 +124,15 @@ const RobotFiringManager = (function() {
             robotsLastFiredTime[robotIndex] = GameContextHolder.gameTime;
         },
         system_unloadLevel: function() {
+            // Stop all currently active animations
+            const spritesIndexes = Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex);
+            for (let i = 0; i < spritesIndexes.length; i++) {
+                const spriteIndex = +spritesIndexes[i]; // The + here is to convert the string to a number
+                AnimationManager.destroySpriteAnimation(spriteIndex); 
+                handleRobotFiringProjectileAnimationComplete(spriteIndex)
+            }
+            
+            // Asserts to make sure everything is cleaned up
             Logger.assert(Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length === 0, "robotFiringProjectilesActiveAnimationSprites.length should be 0: " + Object.getOwnPropertyNames(robotMuzzleFlashAnimationSpriteIndex_to_robotIndex).length);
             
             robotsLastFiredTime.length = 0;
