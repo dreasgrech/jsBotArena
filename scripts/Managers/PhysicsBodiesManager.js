@@ -39,19 +39,19 @@ const ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS = 8;
 const PhysicsBodiesManager = (function() {
     /**
      * Contains all the physics bodies in the arena
-     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
+     * @type {Phaser.Physics.Matter.Matter.Body[]}
      */
     let allBodies = [];
     
     /**
      * Contains the arena bodies (walls, obstacles, etc..)
-     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
+     * @type {Phaser.Physics.Matter.Matter.Body[]}
      */
     let staticArenaBodies = [];
 
     /**
      * Contains the arena bodies (walls, obstacles, etc..) that the radar can't see through
-     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
+     * @type {Phaser.Physics.Matter.Matter.Body[]}
      */
     let radarBlockingArenaBodies = [];
 
@@ -304,7 +304,7 @@ const PhysicsBodiesManager = (function() {
         },
         /**
          * Returns true if the specified Matter body overlaps any Matter bodies that are currently registered
-         * @param body {Phaser.Types.Physics.Matter.MatterBody}
+         * @param body {Phaser.Physics.Matter.Matter.Body}
          * @returns {boolean}
          */
         isBodyOverlappingWithOtherBodies: function(body) {
