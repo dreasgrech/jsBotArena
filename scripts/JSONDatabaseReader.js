@@ -3,14 +3,14 @@
 const JSONDatabaseReader = (function() {
     return {
         loadDatabase: function(fileKey, filePath, onFileLoadedCallback) {
-            const gameContext = GameContextHolder.scene;
+            const scene = GameContextHolder.scene;
 
-            gameContext.load.on(`filecomplete-json-${fileKey}`, function (key, type, data) {
+            scene.load.on(`filecomplete-json-${fileKey}`, function (key, type, data) {
                 onFileLoadedCallback(data);
             });
 
             // Start loading the db json file
-            gameContext.load.json(fileKey, filePath);
+            scene.load.json(fileKey, filePath);
         }
     };
 }());

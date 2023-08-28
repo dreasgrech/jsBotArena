@@ -8,7 +8,7 @@ const RaycastManager = (function () {
 
     const raycastManager = {
         system_preloadOnce: function() {
-            const gameContext = GameContextHolder.scene;
+            const scene = GameContextHolder.scene;
 
             const raycasterOptions = {
                 debug: {
@@ -26,7 +26,7 @@ const RaycastManager = (function () {
                 }
             };
 
-            raycaster = gameContext.raycasterPlugin.createRaycaster(raycasterOptions);
+            raycaster = scene.raycasterPlugin.createRaycaster(raycasterOptions);
         },
         mapGameObjects: function(gameObjects, dynamic) {
             // Logger.log("Mapping game objects to raycast. Dynamic: ", dynamic, gameObjects);

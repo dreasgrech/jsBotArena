@@ -37,6 +37,8 @@ const arenaStaticObstacleBodiesPositions = [];
 const ARENA_STATIC_OBSTACLES_TOTAL_POINTS_PER_BOUNDS = 8;
 
 const PhysicsBodiesManager = (function() {
+    let scene;
+    
     /**
      * Contains all the physics bodies in the arena
      * @type {Phaser.Physics.Matter.Matter.Body[]}
@@ -112,6 +114,8 @@ const PhysicsBodiesManager = (function() {
             return radarBlockingArenaBodies;
         },
         system_preloadOnce: function() {
+            scene = GameContextHolder.scene;
+            
             // Create the Tweak pane data
             const dataForTweakPane = {
                 get allBodiesTotal() {
@@ -302,14 +306,14 @@ const PhysicsBodiesManager = (function() {
             matterGameObject.setActive(false);
             matterGameObject.setVisible(false);
         },
+        
         /**
          * Returns true if the specified Matter body overlaps any Matter bodies that are currently registered
-         * @param body {Phaser.Physics.Matter.Matter.Body}
+         * @param body {Phaser.Types.Physics.Matter.MatterBody}
          * @returns {boolean}
          */
         isBodyOverlappingWithOtherBodies: function(body) {
-            const gameContext = GameContextHolder.scene;
-            return gameContext.matter.overlap(body, allBodies);
+            return scene.matter.overlap(body, allBodies);
         },
         queryArenaBodiesSpatialHash: function(bounds) {
             //performance.mark('queryArenaBodiesSpatialHash:start');
@@ -340,8 +344,6 @@ const PhysicsBodiesManager = (function() {
             arenaBodySpatialHash.clear();
             
             // TODO: THIS FUNCTION NEEDS MORE WORK SO CONTINUE HERE
-            
-            const scene = GameContextHolder.scene;
             
             // Remove the static arena bodies mappings from the RaycastManager
             RaycastManager.removeMappedGameObjects(staticArenaBodies);

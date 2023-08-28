@@ -70,7 +70,7 @@ const PhaserGameManager = (function() {
             }
         },
         create: function() {
-            const gameContext = GameContextHolder.scene;
+            // const scene = GameContextHolder.scene;
 
             // Enable Matter physics
             // TODO: Check about this https://newdocs.phaser.io/docs/3.55.2/Phaser.Physics.Matter.World#setBounds

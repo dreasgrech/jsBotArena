@@ -7,7 +7,7 @@ const ProjectileManager = (function() {
     const PROJECTILES_COLLISION_DATA_PATH = './CollisionData/Projectiles_CollisionData.json';
 
     let projectilesCollisionData;
-    let gameContext;
+    let scene;
     let currentProjectileIndex = 0;
     let totalSpawnedProjectiles = 0;
 
@@ -61,7 +61,7 @@ const ProjectileManager = (function() {
 
     const projectileManager = {
         system_preloadOnce: function() {
-            gameContext = GameContextHolder.scene;
+            scene = GameContextHolder.scene;
             
             // gameContext.load.json('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH);
             JSONDatabaseReader.loadDatabase('Projectiles_CollisionData', PROJECTILES_COLLISION_DATA_PATH, function (data){
@@ -100,7 +100,7 @@ const ProjectileManager = (function() {
                     poolName: `Projectiles (${projectilePhaserImageKey})`,
                     createElement: function() {
                         const projectileCollisionDataName = ProjectilesDatabase.physicsEditorSpriteNames[projectileTypeIndex];
-                        const projectileMatterGameObject = gameContext.matter.add.sprite(
+                        const projectileMatterGameObject = scene.matter.add.sprite(
                             0,
                             0,
                             ImageDatabase.GameElementsSpritesheetKey,

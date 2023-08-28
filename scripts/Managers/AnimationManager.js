@@ -43,7 +43,7 @@ const AnimationManager = (function() {
     const animationManager = {
         sprites: [],
         system_afterPreloadOnce: function() {
-            const gameContext = GameContextHolder.scene;
+            const scene = GameContextHolder.scene;
 
             let lastAnimationIndexCreated = -1;
 
@@ -61,7 +61,7 @@ const AnimationManager = (function() {
                 const spritesheetSpritesPoolIndex = GameObjectPoolsManager.createGameObjectPool({
                     poolName: spritesheetKey,
                     createElement: function() {
-                        const sprite = gameContext.add.sprite(0, 0, spritesheetKey, null);
+                        const sprite = scene.add.sprite(0, 0, spritesheetKey, null);
                         sprite.on('animationcomplete',
                             function(animationThatCompleted, currentFrame, gameObject, frameKey) {
                                 const spriteIndex = sprite.spriteIndex;
@@ -89,7 +89,7 @@ const AnimationManager = (function() {
 
                     const animationOptions = {
                         key: animationDefinition.Key,
-                        frames: gameContext.anims.generateFrameNames(spritesheetKey,
+                        frames: scene.anims.generateFrameNames(spritesheetKey,
                             {
                                 start: animationDefinition.StartFrameNumber,
                                 end: animationDefinition.EndFrameNumber,
@@ -102,7 +102,7 @@ const AnimationManager = (function() {
                     };
 
                     // Create the animation
-                    const animation = gameContext.anims.create(animationOptions);
+                    const animation = scene.anims.create(animationOptions);
                     // Logger.log(animation);
 
                     const animationIndex = ++lastAnimationIndexCreated;

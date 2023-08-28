@@ -28,12 +28,12 @@ const ImageDatabase = (function() {
     return {
         system_preloadOnce: function(){
             //Load the game elements spritesheet
-            const gameContext = GameContextHolder.scene;
+            const scene = GameContextHolder.scene;
             //gameContext.load.on(`filecomplete-multiatlas-${GameElementsSpritesheetKey}`, function (key, type, data) {
             //    //console.log("finished loading", key, type, data, savedThis.textures.get(pt.Tiles).frames);
             //    console.log("finished loading", key, type, data);
             //});
-            gameContext.load.multiatlas(
+            scene.load.multiatlas(
                 GameElementsSpritesheetKey,
                 GameElementsSpritesheetAtlasFilePath,
                 GameElementsSpritesheetTextureDirectory);

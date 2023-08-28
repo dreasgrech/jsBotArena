@@ -3,22 +3,23 @@
 const RobotMatterFactory = (function() {
     const HULLS_COLLISION_DATA_PATH = './CollisionData/Hulls_CollisionData.json';
     
+    let scene;
+    
     const robotsTrackLeftAnimationSpriteIndex = [];
     const robotsTrackRightAnimationSpriteIndex = [];
 
     // const createProjectileSensor = function (robotIndex) {
-    //     const gameContext = GameContextHolder.scene;
     //
     //     // Get the robot's vertices
     //     const vertices = RobotsBoundsHelpers.getHullBounds(robotIndex);
     //
     //     // Create a custom-shaped sensor using the vertices
-    //     const sensorBody = gameContext.matter.add.fromVertices(300, 300, vertices, {
+    //     const sensorBody = scene.matter.add.fromVertices(300, 300, vertices, {
     //         isSensor: true // Set the body to be a sensor
     //     });
     //
     //     // Add a constraint between the hull body and the sensor body so that the sensor moves with the hull
-    //     const constraint = gameContext.matter.add.constraint(RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex].body, sensorBody, 0, 1);
+    //     const constraint = scene.matter.add.constraint(RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex].body, sensorBody, 0, 1);
     //     RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex] = constraint;
     //
     //     //const robotID = RobotsData_Instance_ids[robotIndex];
@@ -40,9 +41,7 @@ const RobotMatterFactory = (function() {
     // };
 
     const createRobot = function({ currentRobotIndex, x, y, scale, robotSetup }) {
-        const gameContext = GameContextHolder.scene;
-
-        const shapes = gameContext.cache.json.get('Hulls_CollisionData');
+        const shapes = scene.cache.json.get('Hulls_CollisionData');
 
         const hullSetup = robotSetup.hull;
         const turretSetup = robotSetup.turret;
@@ -57,8 +56,8 @@ const RobotMatterFactory = (function() {
         const hullPhysicsShapeName = hullsDB.physicsEditorSpriteNames[hullType];
 
         // ROBOT HULL
-        //const hullImage = gameContext.matter.add.image(
-        const hullImage = gameContext.matter.add.sprite(
+        //const hullImage = scene.matter.add.image(
+        const hullImage = scene.matter.add.sprite(
             x,
             y,
             ImageDatabase.GameElementsSpritesheetKey,
@@ -214,7 +213,7 @@ const RobotMatterFactory = (function() {
         //    });
         //},
         system_preloadOnce: function(){
-            const scene = GameContextHolder.scene;
+            scene = GameContextHolder.scene;
             
             scene.load.json('Hulls_CollisionData', HULLS_COLLISION_DATA_PATH);
         },
@@ -241,13 +240,11 @@ const RobotMatterFactory = (function() {
             const robotHullGameObject = RobotsData_PhysicsBodies_robotHullGameObjects[robotIndex];
             robotHullGameObject.destroy();
 
-            const gameContext = GameContextHolder.scene;
-
             /*
             // Remove the projectile sensor
-            gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
+            scene.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorBodies[robotIndex]);
             // Remove the projectile sensor constraint that ties it with the hull body
-            gameContext.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex]);
+            scene.matter.world.remove(RobotsData_PhysicsBodies_robotProjectileSensorConstraints[robotIndex]);
             */
 
             // Hide the turret image

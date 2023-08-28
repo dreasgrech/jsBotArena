@@ -10,8 +10,8 @@ const TweakPaneManager = (function(){
     let pane;
     return {
         system_preloadOnce:function(){
-            const gameContext = GameContextHolder.scene;
-            pane = gameContext.inspectorGame.pane;
+            const scene = GameContextHolder.scene;
+            pane = scene.inspectorGame.pane;
             pane.expanded = false;
         },
         createFolder: function(title, {expanded= false} = {}) {
