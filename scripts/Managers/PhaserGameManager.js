@@ -26,7 +26,8 @@ const PhaserGameManager = (function() {
         PoolsManager,
         CollisionManager,
         RobotManager,
-        PhysicsBodiesManager
+        PhysicsBodiesManager,
+        RobotsDataManager
     ];
 
     /**

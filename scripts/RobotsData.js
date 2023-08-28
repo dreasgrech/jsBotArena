@@ -3,9 +3,25 @@
 // TODO: MOST OF THESE ARRAYS STILL NEED TO BE CLEARED ON LEVEL UNLOAD
 
 // Physics bodies
+/**
+ *
+ * @type {Phaser.Physics.Matter.Sprite[]}
+ */
 const RobotsData_PhysicsBodies_robotHullGameObjects = [];
+/**
+ * 
+ * @type {Phaser.Physics.Matter.Matter.Body[]}
+ */
 const RobotsData_PhysicsBodies_robotHullMatterBodies = [];
+/**
+ * 
+ * @type {number[]}
+ */
 const RobotsData_PhysicsBodies_robotHullMatterBodyIDs = [];
+/**
+ *
+ * @type {Phaser.Physics.Matter.Sprite[]}
+ */
 const RobotsData_PhysicsBodies_robotTurretGameObjects = [];
 // const RobotsData_PhysicsBodies_robotProjectileSensorBodies = [];
 // const RobotsData_PhysicsBodies_robotProjectileSensorConstraints = [];
@@ -57,3 +73,74 @@ const RobotsDataAPI_FrameOperations_Turret = [];
  * @type {number[]}
  */
 const RobotsDataAPI_FrameOperations_Radar = [];
+
+const RobotsDataManager = (function() {
+    return {
+        system_preloadOnce: function() {
+            // Create the Tweak pane data
+            const dataForTweakPane = {
+                get PhysicsBodies_robotHullGameObjects() {
+                    return RobotsData_PhysicsBodies_robotHullGameObjects.length;
+                },
+                get PhysicsBodies_robotHullMatterBodies() {
+                    return RobotsData_PhysicsBodies_robotHullMatterBodies.length;
+                },
+                get PhysicsBodies_robotHullMatterBodyIDs() {
+                    return RobotsData_PhysicsBodies_robotHullMatterBodyIDs.length;
+                },
+                get PhysicsBodies_robotTurretGameObjects() {
+                    return RobotsData_PhysicsBodies_robotTurretGameObjects.length;
+                },
+                get CurrentData_positions() {
+                    return RobotsData_CurrentData_positions.length;
+                },
+                get CurrentData_turretPositions() {
+                    return RobotsData_CurrentData_turretPositions.length;
+                },
+                get CurrentData_currentRobotAngles_degrees() {
+                    return RobotsData_CurrentData_currentRobotAngles_degrees.length;
+                },
+                get CurrentData_currentRobotAngles_radians() {
+                    return RobotsData_CurrentData_currentRobotAngles_radians.length;
+                },
+                get CurrentData_currentRobotVelocities() {
+                    return RobotsData_CurrentData_currentRobotVelocities.length;
+                },
+                get CurrentData_currentRobotSpeedSqr() {
+                    return RobotsData_CurrentData_currentRobotSpeedSqr.length;
+                },
+                get CurrentData_currentTurretAngles_degrees() {
+                    return RobotsData_CurrentData_currentTurretAngles_degrees.length;
+                },
+                get CurrentData_currentRadarAngles_degrees() {
+                    return RobotsData_CurrentData_currentRadarAngles_degrees.length;
+                },
+                get CurrentData_currentRadarAngles_radians() {
+                    return RobotsData_CurrentData_currentRadarAngles_radians.length;
+                },
+                get CurrentData_health() {
+                    return RobotsData_CurrentData_health.length;
+                },
+                get CurrentData_alive() {
+                    return RobotsData_CurrentData_alive.length;
+                },
+            };
+            const tweakPaneFolderID = TweakPaneManager.createFolder("Robots Data", {expanded: true});
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'PhysicsBodies_robotHullGameObjects');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'PhysicsBodies_robotHullMatterBodies');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'PhysicsBodies_robotHullMatterBodyIDs');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'PhysicsBodies_robotTurretGameObjects');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_positions');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_turretPositions');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_currentRobotAngles_degrees');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_currentRobotAngles_radians');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_currentRobotVelocities');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_currentRobotSpeedSqr');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_currentTurretAngles_degrees');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_currentRadarAngles_degrees');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_currentRadarAngles_radians');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_health');
+            TweakPaneManager.createMonitorInFolder(tweakPaneFolderID, dataForTweakPane, 'CurrentData_alive');
+        },
+    };
+}());
