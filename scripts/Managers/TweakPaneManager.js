@@ -14,8 +14,9 @@ const TweakPaneManager = (function(){
             pane = gameContext.inspectorGame.pane;
             pane.expanded = false;
         },
-        createFolder: function(title, {expanded= true} = {}) {
-            const tweakPaneFolderID = lastTweakPaneFolderIDCreated + 1;
+        createFolder: function(title, {expanded= false} = {}) {
+            const tweakPaneFolderID = ++lastTweakPaneFolderIDCreated;
+            Logger.log("Creating new TweakPane folder", tweakPaneFolderID, title, expanded);
             const paneFolder = pane.addFolder({title: title, expanded: expanded});
             tweakPaneFolders[tweakPaneFolderID] = paneFolder;
             return tweakPaneFolderID;
