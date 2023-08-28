@@ -41,19 +41,19 @@ const PhysicsBodiesManager = (function() {
     
     /**
      * Contains all the physics bodies in the arena
-     * @type {Phaser.Physics.Matter.Matter.Body[]}
+     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
      */
     let allBodies = [];
     
     /**
      * Contains the arena bodies (walls, obstacles, etc..)
-     * @type {Phaser.Physics.Matter.Matter.Body[]}
+     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
      */
     let staticArenaBodies = [];
 
     /**
      * Contains the arena bodies (walls, obstacles, etc..) that the radar can't see through
-     * @type {Phaser.Physics.Matter.Matter.Body[]}
+     * @type {Phaser.Types.Physics.Matter.MatterBody[]}
      */
     let radarBlockingArenaBodies = [];
 

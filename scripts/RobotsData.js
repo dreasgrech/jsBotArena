@@ -10,7 +10,7 @@
 const RobotsData_PhysicsBodies_robotHullGameObjects = [];
 /**
  * 
- * @type {Phaser.Physics.Matter.Matter.Body[]}
+ * @type {Phaser.Types.Physics.Matter.MatterBody[]}
  */
 const RobotsData_PhysicsBodies_robotHullMatterBodies = [];
 /**
