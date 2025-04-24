@@ -1,5 +1,13 @@
 ﻿"use script";
 
+/**
+ * @type {{
+ BrownLevel: number,
+ BridgeLevel: number,
+ GreenLevel: number,
+ MetalLevel: number,
+ }}
+ */
 const Arenas = { };
 
 // const TileTypes = {
