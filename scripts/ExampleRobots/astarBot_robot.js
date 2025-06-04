@@ -1,4 +1,4 @@
-"use script";
+"use strict";
 
 const astarBot = function() {
     const DRAW_PATHFINDING_NODES = true;
