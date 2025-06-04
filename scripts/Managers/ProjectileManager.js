@@ -1,4 +1,4 @@
-"use script";
+"use strict";
 
 /**
  * In charge of creating and maintaining the projectiles

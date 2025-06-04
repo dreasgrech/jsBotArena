@@ -1,4 +1,4 @@
-﻿"use script";
+"use strict";
 
 /**
  * In charge of initiating a robot's firing of projectiles

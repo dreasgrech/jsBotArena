@@ -1,4 +1,4 @@
-"use script";
+"use strict";
 
 const EnumHelpers = (function() {
     const enumHelpers = {
